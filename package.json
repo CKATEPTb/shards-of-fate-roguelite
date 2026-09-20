@@ -1,0 +1,37 @@
+{
+  "name": "shards-of-fate",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/*"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --config apps/client/vite.config.ts --host 0.0.0.0",
+    "build": "npm run typecheck && vite build --config apps/client/vite.config.ts",
+    "preview": "vite preview --config apps/client/vite.config.ts --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "validate": "tsx tools/content-validator/src/cli.ts",
+    "simulate": "tsx tools/balance-simulator/src/cli.ts",
+    "check": "npm run validate && npm test && npm run build",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "vite": "8.3.0",
+    "vitest": "5.0.1"
+  }
+}

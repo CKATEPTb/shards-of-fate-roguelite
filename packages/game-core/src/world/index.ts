@@ -1,0 +1,10 @@
+export { generateWorld } from './graph';
+export { generateChunk } from './chunk';
+export { findPath } from './pathfinding';
+export { createExploration, requestMove, stepExploration } from './movement';
+export { validateWorld, validateChunk } from './validation';
+export { serializeExploration, deserializeExploration } from './snapshot';
+export { analyzeWorldConnectivity, validateWorldLayout } from './connectivity';
+export { chunkRegions, regionAt } from './regions';
+export { worldProfile, seasonBoundaries } from './profile';
+export { BASE_MOVEMENT_STEP_MS, MOVEMENT_TICK_MS, createMovementState, effectiveMovementSpeed, movementStepMs, withMovementBonus } from './movement-speed';
