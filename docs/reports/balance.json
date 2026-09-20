@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "contentSchemaVersion": 1,
+  "contentHash": "c871aab5",
+  "seedPrefix": "balance-v1",
+  "runsPerComposition": 100,
+  "totalBattles": 3500,
+  "rows": [
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "guardian"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 10.799999999999995,
+      "averageHpRemaining": 0.4325000000000001
+    },
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 99,
+      "defeats": 1,
+      "draws": 0,
+      "winRate": 0.99,
+      "averageRounds": 11.909999999999991,
+      "averageHpRemaining": 0.563809523809524
+    },
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "guardian",
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 8.529999999999998,
+      "averageHpRemaining": 0.8859687499999996
+    },
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 4.849999999999995,
+      "averageHpRemaining": 0.6302173913043477
+    },
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "guardian",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 4.689999999999998,
+      "averageHpRemaining": 0.8907500000000006
+    },
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 4.889999999999996,
+      "averageHpRemaining": 0.9244761904761907
+    },
+    {
+      "encounter": "mossy_path",
+      "party": [
+        "guardian",
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 4.539999999999997,
+      "averageHpRemaining": 0.9369791666666666
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "guardian"
+      ],
+      "runs": 100,
+      "victories": 85,
+      "defeats": 15,
+      "draws": 0,
+      "winRate": 0.85,
+      "averageRounds": 10.319999999999988,
+      "averageHpRemaining": 0.15356249999999985
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 38,
+      "defeats": 62,
+      "draws": 0,
+      "winRate": 0.38,
+      "averageRounds": 9.71,
+      "averageHpRemaining": 0.10352380952380956
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "guardian",
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 9.079999999999991,
+      "averageHpRemaining": 0.7702187499999998
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 94,
+      "defeats": 5,
+      "draws": 1,
+      "winRate": 0.94,
+      "averageRounds": 5.689999999999996,
+      "averageHpRemaining": 0.2523913043478261
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "guardian",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 5.629999999999992,
+      "averageHpRemaining": 0.7905312500000007
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 6.039999999999995,
+      "averageHpRemaining": 0.8182857142857147
+    },
+    {
+      "encounter": "wolf_den",
+      "party": [
+        "guardian",
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 5.739999999999991,
+      "averageHpRemaining": 0.9317708333333331
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "guardian"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 7.920000000000006,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 6.039999999999992,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "guardian",
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 79,
+      "defeats": 21,
+      "draws": 0,
+      "winRate": 0.79,
+      "averageRounds": 16.8,
+      "averageHpRemaining": 0.28568898809523813
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 1,
+      "defeats": 98,
+      "draws": 1,
+      "winRate": 0.01,
+      "averageRounds": 4.609999999999998,
+      "averageHpRemaining": 0.00010869565217391303
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "guardian",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 8.080000000000004,
+      "averageHpRemaining": 0.5462894021739131
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 97,
+      "defeats": 3,
+      "draws": 0,
+      "winRate": 0.97,
+      "averageRounds": 8.690000000000003,
+      "averageHpRemaining": 0.4176030020703934
+    },
+    {
+      "encounter": "goblin_ambush",
+      "party": [
+        "guardian",
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 7.990000000000003,
+      "averageHpRemaining": 0.7782270100069012
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "guardian"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 6.209999999999994,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 4.979999999999993,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "guardian",
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 14.140000000000011,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 3.6699999999999977,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "guardian",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 90,
+      "defeats": 10,
+      "draws": 0,
+      "winRate": 0.9,
+      "averageRounds": 13.55000000000001,
+      "averageHpRemaining": 0.19759103260869562
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 24,
+      "defeats": 76,
+      "draws": 0,
+      "winRate": 0.24,
+      "averageRounds": 11.86,
+      "averageHpRemaining": 0.0272427536231884
+    },
+    {
+      "encounter": "thorn_thicket",
+      "party": [
+        "guardian",
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 100,
+      "defeats": 0,
+      "draws": 0,
+      "winRate": 1,
+      "averageRounds": 12.870000000000008,
+      "averageHpRemaining": 0.6728759920634922
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "guardian"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 7.039999999999998,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 5.229999999999992,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "guardian",
+        "priest"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 11.869999999999989,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 4.210000000000001,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "guardian",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 9.559999999999988,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 0,
+      "defeats": 100,
+      "draws": 0,
+      "winRate": 0,
+      "averageRounds": 8.799999999999994,
+      "averageHpRemaining": 0
+    },
+    {
+      "encounter": "warden_grove",
+      "party": [
+        "guardian",
+        "priest",
+        "mage"
+      ],
+      "runs": 100,
+      "victories": 53,
+      "defeats": 45,
+      "draws": 2,
+      "winRate": 0.53,
+      "averageRounds": 18.500000000000014,
+      "averageHpRemaining": 0.14459592822636302
+    }
+  ]
+}
