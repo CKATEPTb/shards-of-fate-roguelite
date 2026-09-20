@@ -1,0 +1,101 @@
+/* Informational panels pass input through; equipment and menu controls intercept their own area. */
+.game {
+  --hud-edge: 16px;
+  --hud-party-width: 210px;
+  --hud-map-width: 216px;
+  --hud-row: 52px;
+  --hud-bottom: max(12px, env(safe-area-inset-bottom));
+  background: #0c1915;
+}
+.game .world-stage { inset: 0; border: 0; }
+/* Let edge guides reach the screen boundary without drawing over the lower HUD. */
+.game:not(:has(.combat-phase)) { --hud-bottom: max(40px, env(safe-area-inset-bottom)); }
+.information-hud { position: absolute; inset: 0; z-index: 8; user-select: none; }
+.information-hud, .information-hud *, .information-hud *::before, .information-hud *::after { pointer-events: none; }
+.game .party-hud, .game .minimap-hud { position: absolute; top: max(var(--hud-edge), env(safe-area-inset-top)); bottom: auto; padding: 0; border: 0; background: none; box-shadow: none; transition: opacity .16s ease; }
+.game .party-hud { left: max(var(--hud-edge), env(safe-area-inset-left)); right: auto; width: var(--hud-party-width); display: block; opacity: .56; }
+.game .party-list { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.game .party-member { position: relative; display: flex; align-items: center; width: 100%; height: var(--hud-row); min-width: 0; padding: 3px 7px 3px 11px; gap: 3px; border: 0; border-left: 2px solid transparent; background: linear-gradient(90deg, #0b201943, #0b201910 75%, transparent); box-shadow: none; text-align: left; text-shadow: 0 1px 3px #04130c; }
+.game .party-member.selected { border-left-color: #dbd59e; background: linear-gradient(90deg, #29432c55, #0b201910 75%, transparent); box-shadow: none; }
+.game .party-portrait { display: block; width: 39px; height: 43px; flex-shrink: 0; }
+.game .party-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 5px; }
+.game .party-line { display: flex; align-items: baseline; justify-content: space-between; gap: 5px; }
+.game .party-copy strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 20px/1.1 var(--serif); color: #f2ead2; }
+.game .minimap-hud { right: max(var(--hud-edge), env(safe-area-inset-right)); left: auto; width: var(--hud-map-width); opacity: .46; text-align: center; color: #eee7cc; text-shadow: 0 1px 4px #00150c; }
+.game .minimap-heading { font: 500 18px/1 var(--serif); letter-spacing: .6px; }
+.game .global-coordinates { font-size: 11px; line-height: 1.5; font-variant-numeric: tabular-nums; letter-spacing: .6px; }
+.game .global-coordinates i { font-style: normal; color: #b3bea0; }
+.information-hud .minimap-field { fill-opacity: .06; stroke-opacity: .22; }
+.information-hud .map-edge { stroke: #becb8a80; }
+.information-hud .map-edge.traveled { stroke: #e0d7a7; }
+.game .party-hud.hud-hovered, .game .minimap-hud.hud-hovered { opacity: 1; }
+
+/* Tooltips are read-only too; the hero row remains an uninterrupted map surface. */
+.hero-hover-details { position: fixed; left: calc(var(--hud-edge) + var(--hud-party-width)); top: max(var(--hud-edge), env(safe-area-inset-top)); width: 290px; max-width: calc(100vw - var(--hud-party-width) - var(--hud-edge) * 2); padding: 13px 15px; color: #dedfc6; background: #10251cea; border: 1px solid #91a16c55; border-radius: 3px; box-shadow: 0 6px 24px #00100955; text-shadow: none; }
+.hero-detail-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.game .hero-detail-heading strong { font: 600 23px/1.1 var(--serif); }
+.hero-detail-heading > span { color: #bfcca7; font-size: 9px; }
+.hero-hover-details > p { margin-top: 8px; font-size: 10px; line-height: 1.6; color: #b0bea1; }
+.hero-hover-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 16px; margin: 12px 0; padding: 10px 0; border-block: 1px solid #91a16c22; }
+.hero-hover-stats > div { display: grid; gap: 4px; }
+.hero-hover-stats dt { color: #9fb291; font-size: 8px; }
+.hero-hover-stats dd { margin: 0; color: #e9dfb6; font-size: 13px; }
+.hero-hover-stats > .hero-movement-speed { grid-column: 1 / -1; grid-template-columns: 1fr auto; align-items: baseline; }
+.hero-hover-skills { display: grid; gap: 10px; }
+.hero-hover-skills > div { display: grid; gap: 3px; }
+.game .hero-hover-skills strong { font: 500 10px/1.5 Manrope, Arial, sans-serif; color: #ded5ad; }
+.hero-hover-skills span { color: #a6b79a; font-size: 9px; line-height: 1.6; }
+
+/* The two corner controls share one visual treatment and touch target size. */
+.game-menu-button, .loadout-toggle { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1px solid #a4ab7847; border-radius: 5px; background: #10241ed9; box-shadow: 0 3px 12px #0003; color: #d0d5b6; font-size: 10px; }
+.game-menu-button { position: absolute; z-index: 42; right: max(var(--hud-edge), env(safe-area-inset-right)); bottom: var(--hud-bottom); }
+.game-menu-button:hover, .loadout-toggle:hover, .loadout-toggle[aria-expanded="true"] { background: #263b2ded; color: #f0d99d; }
+.game-menu-button > span { font-size: 16px; }
+.game .game-notice { bottom: calc(var(--hud-bottom) + 56px); font-size: 10px; pointer-events: none; }
+.game .game-notice button { pointer-events: auto; }
+.game:has(.combat-phase) .game-notice { bottom: calc(var(--hud-bottom) + 120px); }
+.game .combat-actions { bottom: var(--hud-bottom); }
+
+/* The encounter uses the middle and right edge, clear of the party rows. */
+.game .combat-heading { top: var(--hud-edge); left: calc(var(--hud-party-width) + var(--hud-edge) * 2); right: calc(var(--hud-map-width) + var(--hud-edge) * 2); padding: 10px 14px; gap: 14px; justify-content: space-between; }
+.game .combat-heading h2 { font-size: 27px; }
+.game .combat-enemies { top: calc(var(--hud-map-width) + var(--hud-edge) + 42px); right: var(--hud-edge); left: auto; max-width: var(--hud-map-width); }
+
+@media (max-width: 760px) {
+  .game { --hud-edge: 12px; --hud-party-width: 178px; --hud-map-width: 176px; --hud-row: 48px; }
+  .game .party-copy strong { font-size: 19px; }
+  .game .party-portrait { width: 32px; height: 39px; }
+  .hero-hover-details { top: calc(var(--hud-edge) + max(var(--hud-row) * 3 + 8px, var(--hud-map-width) + 38px)); left: var(--hud-edge); width: 290px; max-width: calc(100vw - var(--hud-edge) * 2); }
+  .game .combat-heading { top: calc(var(--hud-edge) + var(--hud-row) * 3 + 14px); left: var(--hud-edge); right: calc(var(--hud-map-width) + var(--hud-edge)); padding: 8px 10px; }
+  .game .combat-heading h2 { font-size: 21px; }
+  .game .combat-heading .eyebrow { font-size: 7px; letter-spacing: 1px; }
+  .game .combat-round { padding-left: 8px; }
+  .game .combat-round strong { font-size: 23px; }
+  .game .combat-enemies { top: calc(var(--hud-map-width) + var(--hud-edge) + 37px); }
+}
+@media (max-width: 480px) {
+  .game { --hud-edge: 8px; --hud-party-width: 158px; --hud-map-width: clamp(132px, 36vw, 158px); --hud-row: 45px; --combat-stack-top: max(calc(var(--hud-edge) + var(--hud-row) * 3 + 14px), calc(var(--hud-edge) + var(--hud-map-width) + 46px)); }
+  .game .party-member { padding-right: 3px; padding-left: 8px; gap: 2px; }
+  .game .party-portrait { width: 28px; height: 36px; }
+  .game .party-copy strong { font-size: 18px; }
+  .game .party-line { gap: 3px; }
+  .game .minimap-heading { font-size: 16px; }
+  .game .global-coordinates { font-size: 10px; }
+  .game .combat-heading { top: var(--combat-stack-top); right: var(--hud-edge); }
+  .game .combat-enemies { top: calc(var(--combat-stack-top) + 86px); max-width: calc(100% - var(--hud-edge) * 2); }
+  .game .combat-actions { bottom: calc(var(--hud-bottom) + 55px); left: max(113px, calc(env(safe-area-inset-left) + 77px)); right: var(--hud-edge); transform: none; width: auto; flex-wrap: wrap; justify-content: center; }
+  .game:has(.combat-phase) .game-notice { bottom: calc(var(--hud-bottom) + 170px); }
+}
+@media (max-height: 520px) and (min-width: 600px) {
+  .game { --hud-edge: 10px; --hud-party-width: 176px; --hud-map-width: 144px; --hud-row: 42px; --hud-bottom: max(8px, env(safe-area-inset-bottom)); }
+  .game .party-portrait { width: 32px; height: 36px; }
+  .game .party-copy strong { font-size: 18px; }
+  .game .minimap-heading { font-size: 15px; }
+  .hero-hover-details { top: var(--hud-edge); left: calc(var(--hud-edge) + var(--hud-party-width)); padding: 10px 12px; }
+  .hero-hover-details > p { margin-top: 6px; font-size: 9px; }
+  .hero-hover-stats { margin: 8px 0; padding: 7px 0; }
+  .hero-hover-skills { gap: 7px; }
+  .game .combat-heading { top: var(--hud-edge); left: calc(var(--hud-party-width) + var(--hud-edge) * 2); right: calc(var(--hud-map-width) + var(--hud-edge) * 2); }
+  .game .combat-heading h2 { font-size: 22px; }
+  .game .combat-enemies { top: calc(var(--hud-map-width) + var(--hud-edge) + 37px); right: var(--hud-edge); left: auto; max-width: var(--hud-map-width); }
+}

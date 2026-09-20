@@ -1,0 +1,30 @@
+.exit-indicators { position: absolute; inset: 0; z-index: 41; width: 100%; height: 100%; overflow: hidden; }
+.exit-indicators, .exit-indicators * { pointer-events: none; user-select: none; }
+.exit-indicator-hit-area { fill: transparent; pointer-events: all; cursor: pointer; touch-action: none; }
+.exit-indicators [role="button"] { outline: none; }
+.exit-indicators [role="button"]:hover .exit-indicator-backdrop,
+.exit-indicators [role="button"]:focus-visible .exit-indicator-backdrop { fill: #304832; stroke: #fff1c2; stroke-width: 2; }
+.exit-indicator-backdrop { fill: #102019bc; stroke: #e8d29a85; stroke-width: 1; }
+.exit-indicator-arrow { fill: #f8e6b4; stroke: #2a3021; stroke-width: .65; stroke-linejoin: round; }
+.exit-indicators [data-offscreen="true"] .exit-indicator-backdrop { fill: #102019ec; stroke: #e8d29ad9; }
+
+/* Finger targets are deliberately larger than the desktop controls. Keep the
+   extra hit area transparent while making the circle and arrow readable at a
+   glance on a narrow screen. */
+@media (pointer: coarse), (max-width: 600px) {
+  .exit-indicator-hit-area {
+    transform: scale(1.55);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .exit-indicator-backdrop {
+    transform: scale(1.3);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .exit-indicator-arrow {
+    transform: scale(1.22);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+}

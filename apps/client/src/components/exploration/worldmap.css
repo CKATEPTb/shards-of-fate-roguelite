@@ -1,0 +1,10 @@
+.world-map { display: block; width: 100%; height: auto; aspect-ratio: 1; max-height: none; pointer-events: none; }
+.minimap-field { fill: #11241d; fill-opacity: .48; stroke: #95a477; stroke-opacity: .16; }
+.world-map .map-compass-ticks { stroke: #80916945; stroke-width: 1; }
+.world-map .map-edge { stroke: #778a6650; stroke-width: 1.6; }
+.world-map .map-edge.traveled { stroke: #bdc593; stroke-width: 2; }
+.world-map .node-dot { fill: #1d2c23; stroke: currentColor; stroke-width: 1.5; }
+.world-map .visited .node-dot { fill: currentColor; }
+.world-map .current-node-ring { fill: #bdce8140; stroke: #d6da98; stroke-width: 1; }
+.world-map .current-node { fill: #f1e2a8; stroke: #102517; stroke-width: 1; }
+.world-map .altar-node { fill: #d4e2d2; }

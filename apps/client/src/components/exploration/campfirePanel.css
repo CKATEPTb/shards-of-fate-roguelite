@@ -1,0 +1,8 @@
+.game-dialog.panel-campfire, .game-dialog.panel-expedition-ended { width: min(390px, 100%); }
+.campfire-panel p, .expedition-ended-panel p { color: #c6d0b2; font-size: 12px; line-height: 1.6; }
+.campfire-panel .campfire-rest-note { margin-top: 10px; color: #98ac91; font-size: 10px; }
+.campfire-panel .campfire-rest-reason { margin-top: 12px; color: #deb08a; font-size: 11px; }
+.campfire-panel .primary-button { width: 100%; justify-content: space-between; margin-top: 20px; }
+.campfire-panel .primary-button > span { font-size: 9px; opacity: .8; }
+.expedition-ended-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.expedition-ended-actions > button { flex: 1; justify-content: center; }

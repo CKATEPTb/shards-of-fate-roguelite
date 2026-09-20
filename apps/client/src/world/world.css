@@ -1,0 +1,6 @@
+.world-canvas-frame { position: absolute; inset: 0; overflow: hidden; background: #1c2c24; }
+.world-canvas, .world-surface { width: 100%; height: 100%; min-width: 0; min-height: 0; }
+.world-canvas { position: relative; touch-action: none; outline: none; }
+.world-canvas:focus-visible { outline: 2px solid #e3cf99; outline-offset: -3px; }
+.world-surface { position: absolute; inset: 0; }
+.world-surface canvas { display: block; image-rendering: pixelated; touch-action: none; }

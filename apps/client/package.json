@@ -1,0 +1,15 @@
+{
+  "name": "@shards/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@shards/shared": "*",
+    "@shards/game-core": "*",
+    "@shards/game-data": "*",
+    "@shards/protocol": "*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "phaser": "3.90.0"
+  }
+}
