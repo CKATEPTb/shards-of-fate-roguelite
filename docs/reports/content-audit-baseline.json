@@ -1,0 +1,2672 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-23T22:27:57.480Z",
+  "assumptions": [
+    "Static action means exclude accuracy, critical hits, armor, shields, secondary statuses, cooldown opportunity cost, and target availability.",
+    "Set collection counts equipment drops only, excludes duplicate definitions, and uses possession as an upper bound on wearable thresholds. Combat also awards skills.",
+    "Uniform-catalog is a diagnostic comparison. Fixed-base scenarios reproduce repeated rarity upgrades but omit distance progression and equipped luck changes.",
+    "Zero observed events are not proof of impossibility; the report includes the rule-of-three approximate 95% upper bound.",
+    "Full-outfit stats use the guardian as a fixed reference and include cumulative 2/4/6-piece bonuses with intact anatomy."
+  ],
+  "counts": {
+    "heroes": 9,
+    "enemies": 550,
+    "ordinaryActOneEnemies": 500,
+    "bosses": 50,
+    "skills": 490,
+    "learnableSkills": 400,
+    "statuses": 150,
+    "equipmentItems": 4861,
+    "sets": 509
+  },
+  "equipment": {
+    "itemRarities": {
+      "common": 1981,
+      "epic": 959,
+      "legendary": 479,
+      "rare": 1442
+    },
+    "setRarities": {
+      "common": 200,
+      "epic": 100,
+      "legendary": 50,
+      "rare": 150,
+      "starter": 9
+    },
+    "fullOutfitReference": "guardian",
+    "fullOutfitsByRarity": {
+      "common": {
+        "maxHp": {
+          "count": 200,
+          "min": 209,
+          "median": 226,
+          "p90": 255,
+          "max": 256,
+          "mean": 230.9
+        },
+        "power": {
+          "count": 200,
+          "min": 6,
+          "median": 11,
+          "p90": 14,
+          "max": 17,
+          "mean": 11.27
+        },
+        "initiative": {
+          "count": 200,
+          "min": 2,
+          "median": 2,
+          "p90": 4,
+          "max": 5,
+          "mean": 2.7
+        },
+        "evasion": {
+          "count": 200,
+          "min": 1,
+          "median": 1,
+          "p90": 4,
+          "max": 5,
+          "mean": 2.1
+        },
+        "crit": {
+          "count": 200,
+          "min": 1,
+          "median": 1,
+          "p90": 4,
+          "max": 5,
+          "mean": 1.9
+        },
+        "agility": {
+          "count": 200,
+          "min": 1,
+          "median": 1,
+          "p90": 3,
+          "max": 5,
+          "mean": 1.8
+        },
+        "accuracy": {
+          "count": 200,
+          "min": 0,
+          "median": 0,
+          "p90": 3,
+          "max": 4,
+          "mean": 0.9
+        },
+        "resilience": {
+          "count": 200,
+          "min": 0,
+          "median": 1,
+          "p90": 4,
+          "max": 5,
+          "mean": 1.575
+        },
+        "luck": {
+          "count": 200,
+          "min": 0,
+          "median": 0,
+          "p90": 2,
+          "max": 4,
+          "mean": 0.6
+        }
+      },
+      "rare": {
+        "maxHp": {
+          "count": 150,
+          "min": 237,
+          "median": 254,
+          "p90": 283,
+          "max": 284,
+          "mean": 259.13333
+        },
+        "power": {
+          "count": 150,
+          "min": 8,
+          "median": 15,
+          "p90": 21,
+          "max": 24,
+          "mean": 15.65333
+        },
+        "initiative": {
+          "count": 150,
+          "min": 2,
+          "median": 2,
+          "p90": 8,
+          "max": 8,
+          "mean": 3.76
+        },
+        "evasion": {
+          "count": 150,
+          "min": 1,
+          "median": 1,
+          "p90": 7,
+          "max": 8,
+          "mean": 3.49333
+        },
+        "crit": {
+          "count": 150,
+          "min": 1,
+          "median": 1,
+          "p90": 7,
+          "max": 7,
+          "mean": 2.76
+        },
+        "agility": {
+          "count": 150,
+          "min": 1,
+          "median": 1,
+          "p90": 9,
+          "max": 9,
+          "mean": 3.13333
+        },
+        "accuracy": {
+          "count": 150,
+          "min": 0,
+          "median": 0,
+          "p90": 8,
+          "max": 8,
+          "mean": 1.69333
+        },
+        "resilience": {
+          "count": 150,
+          "min": 0,
+          "median": 2,
+          "p90": 6,
+          "max": 8,
+          "mean": 2.89333
+        },
+        "luck": {
+          "count": 150,
+          "min": 0,
+          "median": 0,
+          "p90": 6,
+          "max": 6,
+          "mean": 1.28
+        }
+      },
+      "epic": {
+        "maxHp": {
+          "count": 100,
+          "min": 265,
+          "median": 282,
+          "p90": 311,
+          "max": 312,
+          "mean": 286.9
+        },
+        "power": {
+          "count": 100,
+          "min": 10,
+          "median": 19,
+          "p90": 26,
+          "max": 30,
+          "mean": 19.21
+        },
+        "initiative": {
+          "count": 100,
+          "min": 2,
+          "median": 2,
+          "p90": 10,
+          "max": 10,
+          "mean": 4.56
+        },
+        "evasion": {
+          "count": 100,
+          "min": 1,
+          "median": 1,
+          "p90": 11,
+          "max": 11,
+          "mean": 4.44
+        },
+        "crit": {
+          "count": 100,
+          "min": 1,
+          "median": 1,
+          "p90": 9,
+          "max": 9,
+          "mean": 3.56
+        },
+        "agility": {
+          "count": 100,
+          "min": 1,
+          "median": 1,
+          "p90": 9,
+          "max": 12,
+          "mean": 3.16
+        },
+        "accuracy": {
+          "count": 100,
+          "min": 0,
+          "median": 0,
+          "p90": 8,
+          "max": 11,
+          "mean": 2.32
+        },
+        "resilience": {
+          "count": 100,
+          "min": 0,
+          "median": 4,
+          "p90": 8,
+          "max": 11,
+          "mean": 4.14
+        },
+        "luck": {
+          "count": 100,
+          "min": 0,
+          "median": 0,
+          "p90": 8,
+          "max": 8,
+          "mean": 1.28
+        }
+      },
+      "legendary": {
+        "maxHp": {
+          "count": 50,
+          "min": 293,
+          "median": 309,
+          "p90": 339,
+          "max": 340,
+          "mean": 314.8
+        },
+        "power": {
+          "count": 50,
+          "min": 12,
+          "median": 22,
+          "p90": 31,
+          "max": 37,
+          "mean": 22.68
+        },
+        "initiative": {
+          "count": 50,
+          "min": 2,
+          "median": 2,
+          "p90": 14,
+          "max": 14,
+          "mean": 5.24
+        },
+        "evasion": {
+          "count": 50,
+          "min": 1,
+          "median": 1,
+          "p90": 13,
+          "max": 14,
+          "mean": 5.8
+        },
+        "crit": {
+          "count": 50,
+          "min": 1,
+          "median": 1,
+          "p90": 12,
+          "max": 13,
+          "mean": 4.04
+        },
+        "agility": {
+          "count": 50,
+          "min": 1,
+          "median": 1,
+          "p90": 16,
+          "max": 16,
+          "mean": 5.68
+        },
+        "accuracy": {
+          "count": 50,
+          "min": 0,
+          "median": 0,
+          "p90": 15,
+          "max": 15,
+          "mean": 3.08
+        },
+        "resilience": {
+          "count": 50,
+          "min": 0,
+          "median": 4,
+          "p90": 12,
+          "max": 16,
+          "mean": 5.2
+        },
+        "luck": {
+          "count": 50,
+          "min": 0,
+          "median": 0,
+          "p90": 12,
+          "max": 12,
+          "mean": 2.64
+        }
+      }
+    },
+    "luckiestOutfits": [
+      {
+        "setId": "relic-battle-crown",
+        "rarity": "legendary",
+        "pieces": 9,
+        "maxHp": 339,
+        "power": 22,
+        "initiative": 2,
+        "evasion": 1,
+        "crit": 1,
+        "agility": 1,
+        "accuracy": 0,
+        "resilience": 11,
+        "luck": 12,
+        "armorByPart": {
+          "head": 4,
+          "torso": 7,
+          "leftArm": 4,
+          "rightArm": 4,
+          "leftLeg": 9,
+          "rightLeg": 9
+        },
+        "capstone": {
+          "healingShareDice": "1d6"
+        }
+      },
+      {
+        "setId": "relic-pale-annotation",
+        "rarity": "legendary",
+        "pieces": 9,
+        "maxHp": 325,
+        "power": 21,
+        "initiative": 2,
+        "evasion": 1,
+        "crit": 1,
+        "agility": 1,
+        "accuracy": 0,
+        "resilience": 11,
+        "luck": 12,
+        "armorByPart": {
+          "head": 4,
+          "torso": 6,
+          "leftArm": 5,
+          "rightArm": 5,
+          "leftLeg": 8,
+          "rightLeg": 8
+        },
+        "capstone": {
+          "healingShareDice": "1d6"
+        }
+      },
+      {
+        "setId": "relic-ruins-beneath-the-ferry",
+        "rarity": "legendary",
+        "pieces": 9,
+        "maxHp": 338,
+        "power": 20,
+        "initiative": 2,
+        "evasion": 1,
+        "crit": 1,
+        "agility": 1,
+        "accuracy": 0,
+        "resilience": 11,
+        "luck": 12,
+        "armorByPart": {
+          "head": 5,
+          "torso": 7,
+          "leftArm": 4,
+          "rightArm": 4,
+          "leftLeg": 8,
+          "rightLeg": 8
+        },
+        "capstone": {
+          "healingShareDice": "1d6"
+        }
+      },
+      {
+        "setId": "relic-open-vein-heraldry",
+        "rarity": "legendary",
+        "pieces": 10,
+        "maxHp": 294,
+        "power": 31,
+        "initiative": 2,
+        "evasion": 1,
+        "crit": 1,
+        "agility": 1,
+        "accuracy": 0,
+        "resilience": 11,
+        "luck": 12,
+        "armorByPart": {
+          "head": 3,
+          "torso": 4,
+          "leftArm": 3,
+          "rightArm": 3,
+          "leftLeg": 7,
+          "rightLeg": 7
+        },
+        "capstone": {
+          "healingShareDice": "1d6"
+        }
+      },
+      {
+        "setId": "relic-stolen-afternoon",
+        "rarity": "legendary",
+        "pieces": 10,
+        "maxHp": 295,
+        "power": 18,
+        "initiative": 2,
+        "evasion": 1,
+        "crit": 1,
+        "agility": 1,
+        "accuracy": 0,
+        "resilience": 15,
+        "luck": 12,
+        "armorByPart": {
+          "head": 3,
+          "torso": 4,
+          "leftArm": 17,
+          "rightArm": 4,
+          "leftLeg": 6,
+          "rightLeg": 6
+        },
+        "capstone": {
+          "healingShareDice": "1d6"
+        }
+      },
+      {
+        "setId": "relic-pack-without-a-leader",
+        "rarity": "legendary",
+        "pieces": 9,
+        "maxHp": 308,
+        "power": 20,
+        "initiative": 2,
+        "evasion": 1,
+        "crit": 1,
+        "agility": 1,
+        "accuracy": 0,
+        "resilience": 11,
+        "luck": 12,
+        "armorByPart": {
+          "head": 4,
+          "torso": 5,
+          "leftArm": 3,
+          "rightArm": 3,
+          "leftLeg": 6,
+          "rightLeg": 6
+        },
+        "capstone": {
+          "healingShareDice": "1d6"
+        }
+      },
+      {
+        "setId": "relic-linen-covenant",
+        "rarity": "legendary",
+        "pieces": 9,
+        "maxHp": 295,
+        "power": 16,
+        "initiative": 2,
+        "evasion": 13,
+        "crit": 1,
+        "agility": 16,
+        "accuracy": 0,
+        "resilience": 0,
+        "luck": 10,
+        "armorByPart": {
+          "head": 3,
+          "torso": 4,
+          "leftArm": 4,
+          "rightArm": 4,
+          "leftLeg": 6,
+          "rightLeg": 6
+        },
+        "capstone": {
+          "luckBonus": 5,
+          "agilityBonus": 4
+        }
+      },
+      {
+        "setId": "relic-captainless-drum",
+        "rarity": "legendary",
+        "pieces": 10,
+        "maxHp": 308,
+        "power": 12,
+        "initiative": 2,
+        "evasion": 13,
+        "crit": 1,
+        "agility": 16,
+        "accuracy": 0,
+        "resilience": 4,
+        "luck": 10,
+        "armorByPart": {
+          "head": 4,
+          "torso": 5,
+          "leftArm": 15,
+          "rightArm": 3,
+          "leftLeg": 6,
+          "rightLeg": 6
+        },
+        "capstone": {
+          "luckBonus": 5,
+          "agilityBonus": 4
+        }
+      }
+    ],
+    "capstoneFrequencies": {
+      "accuracyBonus+critBonus": 50,
+      "agilityBonus+luckBonus": 50,
+      "damageBonusDice": 50,
+      "evasionBonus+resilienceBonus": 50,
+      "healingShareDice": 50,
+      "partyGuardDice": 50,
+      "preserveHot": 50,
+      "preserveShield": 50,
+      "repeatAttack": 50,
+      "vampirismDice": 50
+    }
+  },
+  "ordinaryEnemies": {
+    "overall": {
+      "count": 500,
+      "roles": {
+        "damage": 317,
+        "healer": 81,
+        "tank": 102
+      },
+      "stats": {
+        "maxHp": {
+          "count": 500,
+          "min": 12,
+          "median": 56,
+          "p90": 140,
+          "max": 213,
+          "mean": 71.462
+        },
+        "armor": {
+          "count": 500,
+          "min": 0,
+          "median": 6,
+          "p90": 15,
+          "max": 21,
+          "mean": 7.468
+        },
+        "power": {
+          "count": 500,
+          "min": 3,
+          "median": 10,
+          "p90": 21,
+          "max": 22,
+          "mean": 10.99
+        },
+        "initiative": {
+          "count": 500,
+          "min": 0,
+          "median": 4,
+          "p90": 7,
+          "max": 7,
+          "mean": 4.204
+        },
+        "evasion": {
+          "count": 500,
+          "min": 1,
+          "median": 3,
+          "p90": 5,
+          "max": 7,
+          "mean": 2.946
+        },
+        "crit": {
+          "count": 500,
+          "min": 0,
+          "median": 2,
+          "p90": 4,
+          "max": 5,
+          "mean": 2.152
+        },
+        "agility": {
+          "count": 500,
+          "min": 0,
+          "median": 4,
+          "p90": 6,
+          "max": 6,
+          "mean": 3.542
+        },
+        "accuracy": {
+          "count": 500,
+          "min": 0,
+          "median": 1,
+          "p90": 3,
+          "max": 3,
+          "mean": 1.15
+        },
+        "resilience": {
+          "count": 500,
+          "min": 0,
+          "median": 0,
+          "p90": 3,
+          "max": 5,
+          "mean": 1.038
+        },
+        "luck": {
+          "count": 500,
+          "min": 0,
+          "median": 0,
+          "p90": 0,
+          "max": 0,
+          "mean": 0
+        }
+      }
+    },
+    "seasons": {
+      "autumn": 125,
+      "spring": 125,
+      "summer": 125,
+      "winter": 125
+    },
+    "habitats": {
+      "aquatic": 100,
+      "basement": 100,
+      "surface": 300
+    },
+    "tiers": {
+      "1": {
+        "count": 105,
+        "roles": {
+          "damage": 68,
+          "healer": 16,
+          "tank": 21
+        },
+        "stats": {
+          "maxHp": {
+            "count": 105,
+            "min": 12,
+            "median": 18,
+            "p90": 24,
+            "max": 25,
+            "mean": 17.84762
+          },
+          "armor": {
+            "count": 105,
+            "min": 0,
+            "median": 0,
+            "p90": 2,
+            "max": 8,
+            "mean": 0.57143
+          },
+          "power": {
+            "count": 105,
+            "min": 3,
+            "median": 3,
+            "p90": 4,
+            "max": 7,
+            "mean": 3.32381
+          },
+          "initiative": {
+            "count": 105,
+            "min": 0,
+            "median": 3,
+            "p90": 3,
+            "max": 5,
+            "mean": 2.32381
+          },
+          "evasion": {
+            "count": 105,
+            "min": 1,
+            "median": 1,
+            "p90": 3,
+            "max": 3,
+            "mean": 1.41905
+          },
+          "crit": {
+            "count": 105,
+            "min": 0,
+            "median": 0,
+            "p90": 1,
+            "max": 2,
+            "mean": 0.24762
+          },
+          "agility": {
+            "count": 105,
+            "min": 0,
+            "median": 2,
+            "p90": 2,
+            "max": 4,
+            "mean": 1.66667
+          },
+          "accuracy": {
+            "count": 105,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "resilience": {
+            "count": 105,
+            "min": 0,
+            "median": 0,
+            "p90": 1,
+            "max": 1,
+            "mean": 0.19048
+          },
+          "luck": {
+            "count": 105,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "2": {
+        "count": 104,
+        "roles": {
+          "damage": 65,
+          "healer": 17,
+          "tank": 22
+        },
+        "stats": {
+          "maxHp": {
+            "count": 104,
+            "min": 20,
+            "median": 33,
+            "p90": 48,
+            "max": 48,
+            "mean": 34.67308
+          },
+          "armor": {
+            "count": 104,
+            "min": 3,
+            "median": 3,
+            "p90": 6,
+            "max": 13,
+            "mean": 3.77885
+          },
+          "power": {
+            "count": 104,
+            "min": 6,
+            "median": 6,
+            "p90": 7,
+            "max": 11,
+            "mean": 6.28846
+          },
+          "initiative": {
+            "count": 104,
+            "min": 0,
+            "median": 4,
+            "p90": 4,
+            "max": 4,
+            "mean": 3.20192
+          },
+          "evasion": {
+            "count": 104,
+            "min": 1,
+            "median": 2,
+            "p90": 4,
+            "max": 4,
+            "mean": 2.16346
+          },
+          "crit": {
+            "count": 104,
+            "min": 1,
+            "median": 1,
+            "p90": 2,
+            "max": 2,
+            "mean": 1.20192
+          },
+          "agility": {
+            "count": 104,
+            "min": 0,
+            "median": 3,
+            "p90": 3,
+            "max": 3,
+            "mean": 2.54808
+          },
+          "accuracy": {
+            "count": 104,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          },
+          "resilience": {
+            "count": 104,
+            "min": 0,
+            "median": 0,
+            "p90": 2,
+            "max": 2,
+            "mean": 0.38462
+          },
+          "luck": {
+            "count": 104,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "3": {
+        "count": 100,
+        "roles": {
+          "damage": 64,
+          "healer": 16,
+          "tank": 20
+        },
+        "stats": {
+          "maxHp": {
+            "count": 100,
+            "min": 53,
+            "median": 57,
+            "p90": 87,
+            "max": 87,
+            "mean": 62.2
+          },
+          "armor": {
+            "count": 100,
+            "min": 6,
+            "median": 6,
+            "p90": 10,
+            "max": 10,
+            "mean": 6.8
+          },
+          "power": {
+            "count": 100,
+            "min": 10,
+            "median": 10,
+            "p90": 11,
+            "max": 11,
+            "mean": 10.2
+          },
+          "initiative": {
+            "count": 100,
+            "min": 3,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 4.28
+          },
+          "evasion": {
+            "count": 100,
+            "min": 1,
+            "median": 3,
+            "p90": 5,
+            "max": 5,
+            "mean": 3
+          },
+          "crit": {
+            "count": 100,
+            "min": 2,
+            "median": 2,
+            "p90": 3,
+            "max": 3,
+            "mean": 2.2
+          },
+          "agility": {
+            "count": 100,
+            "min": 2,
+            "median": 4,
+            "p90": 4,
+            "max": 4,
+            "mean": 3.6
+          },
+          "accuracy": {
+            "count": 100,
+            "min": 1,
+            "median": 1,
+            "p90": 1,
+            "max": 1,
+            "mean": 1
+          },
+          "resilience": {
+            "count": 100,
+            "min": 0,
+            "median": 0,
+            "p90": 3,
+            "max": 3,
+            "mean": 0.6
+          },
+          "luck": {
+            "count": 100,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "4": {
+        "count": 96,
+        "roles": {
+          "damage": 60,
+          "healer": 16,
+          "tank": 20
+        },
+        "stats": {
+          "maxHp": {
+            "count": 96,
+            "min": 86,
+            "median": 90,
+            "p90": 140,
+            "max": 140,
+            "mean": 99.91667
+          },
+          "armor": {
+            "count": 96,
+            "min": 10,
+            "median": 10,
+            "p90": 15,
+            "max": 17,
+            "mean": 11.0625
+          },
+          "power": {
+            "count": 96,
+            "min": 14,
+            "median": 15,
+            "p90": 16,
+            "max": 16,
+            "mean": 15.1875
+          },
+          "initiative": {
+            "count": 96,
+            "min": 2,
+            "median": 6,
+            "p90": 6,
+            "max": 6,
+            "mean": 5.22917
+          },
+          "evasion": {
+            "count": 96,
+            "min": 1,
+            "median": 4,
+            "p90": 6,
+            "max": 6,
+            "mean": 3.77083
+          },
+          "crit": {
+            "count": 96,
+            "min": 2,
+            "median": 3,
+            "p90": 4,
+            "max": 4,
+            "mean": 3.1875
+          },
+          "agility": {
+            "count": 96,
+            "min": 2,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 4.57292
+          },
+          "accuracy": {
+            "count": 96,
+            "min": 0,
+            "median": 2,
+            "p90": 2,
+            "max": 2,
+            "mean": 1.97917
+          },
+          "resilience": {
+            "count": 96,
+            "min": 0,
+            "median": 1,
+            "p90": 4,
+            "max": 4,
+            "mean": 1.58333
+          },
+          "luck": {
+            "count": 96,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "5": {
+        "count": 95,
+        "roles": {
+          "damage": 60,
+          "healer": 16,
+          "tank": 19
+        },
+        "stats": {
+          "maxHp": {
+            "count": 95,
+            "min": 132,
+            "median": 136,
+            "p90": 213,
+            "max": 213,
+            "mean": 151.98947
+          },
+          "armor": {
+            "count": 95,
+            "min": 15,
+            "median": 15,
+            "p90": 21,
+            "max": 21,
+            "mean": 16.2
+          },
+          "power": {
+            "count": 95,
+            "min": 21,
+            "median": 21,
+            "p90": 22,
+            "max": 22,
+            "mean": 21.2
+          },
+          "initiative": {
+            "count": 95,
+            "min": 5,
+            "median": 7,
+            "p90": 7,
+            "max": 7,
+            "mean": 6.26316
+          },
+          "evasion": {
+            "count": 95,
+            "min": 1,
+            "median": 5,
+            "p90": 7,
+            "max": 7,
+            "mean": 4.6
+          },
+          "crit": {
+            "count": 95,
+            "min": 4,
+            "median": 4,
+            "p90": 5,
+            "max": 5,
+            "mean": 4.2
+          },
+          "agility": {
+            "count": 95,
+            "min": 4,
+            "median": 6,
+            "p90": 6,
+            "max": 6,
+            "mean": 5.6
+          },
+          "accuracy": {
+            "count": 95,
+            "min": 3,
+            "median": 3,
+            "p90": 3,
+            "max": 3,
+            "mean": 3
+          },
+          "resilience": {
+            "count": 95,
+            "min": 2,
+            "median": 2,
+            "p90": 5,
+            "max": 5,
+            "mean": 2.6
+          },
+          "luck": {
+            "count": 95,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      }
+    }
+  },
+  "bosses": {
+    "overall": {
+      "count": 50,
+      "roles": {
+        "damage": 23,
+        "healer": 10,
+        "tank": 17
+      },
+      "stats": {
+        "maxHp": {
+          "count": 50,
+          "min": 270,
+          "median": 480,
+          "p90": 675,
+          "max": 830,
+          "mean": 496.7
+        },
+        "armor": {
+          "count": 50,
+          "min": 8,
+          "median": 15,
+          "p90": 24,
+          "max": 30,
+          "mean": 16.18
+        },
+        "power": {
+          "count": 50,
+          "min": 17,
+          "median": 27,
+          "p90": 35,
+          "max": 38,
+          "mean": 26.58
+        },
+        "initiative": {
+          "count": 50,
+          "min": 1,
+          "median": 7,
+          "p90": 11,
+          "max": 14,
+          "mean": 7.06
+        },
+        "evasion": {
+          "count": 50,
+          "min": 1,
+          "median": 4,
+          "p90": 7,
+          "max": 8,
+          "mean": 4.34
+        },
+        "crit": {
+          "count": 50,
+          "min": 2,
+          "median": 4,
+          "p90": 6,
+          "max": 7,
+          "mean": 4.48
+        },
+        "agility": {
+          "count": 50,
+          "min": 5,
+          "median": 5,
+          "p90": 5,
+          "max": 5,
+          "mean": 5
+        },
+        "accuracy": {
+          "count": 50,
+          "min": 3,
+          "median": 5,
+          "p90": 6,
+          "max": 7,
+          "mean": 4.56
+        },
+        "resilience": {
+          "count": 50,
+          "min": 4,
+          "median": 6,
+          "p90": 7,
+          "max": 11,
+          "mean": 5.84
+        },
+        "luck": {
+          "count": 50,
+          "min": 0,
+          "median": 0,
+          "p90": 0,
+          "max": 0,
+          "mean": 0
+        }
+      }
+    },
+    "bySeason": {
+      "spring": {
+        "count": 13,
+        "roles": {
+          "damage": 6,
+          "healer": 3,
+          "tank": 4
+        },
+        "stats": {
+          "maxHp": {
+            "count": 13,
+            "min": 270,
+            "median": 320,
+            "p90": 355,
+            "max": 420,
+            "mean": 325
+          },
+          "armor": {
+            "count": 13,
+            "min": 8,
+            "median": 11,
+            "p90": 16,
+            "max": 20,
+            "mean": 12.23077
+          },
+          "power": {
+            "count": 13,
+            "min": 17,
+            "median": 18,
+            "p90": 21,
+            "max": 23,
+            "mean": 19.15385
+          },
+          "initiative": {
+            "count": 13,
+            "min": 1,
+            "median": 6,
+            "p90": 9,
+            "max": 11,
+            "mean": 6.38462
+          },
+          "evasion": {
+            "count": 13,
+            "min": 1,
+            "median": 4,
+            "p90": 6,
+            "max": 7,
+            "mean": 4
+          },
+          "crit": {
+            "count": 13,
+            "min": 2,
+            "median": 4,
+            "p90": 5,
+            "max": 6,
+            "mean": 3.69231
+          },
+          "agility": {
+            "count": 13,
+            "min": 5,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 5
+          },
+          "accuracy": {
+            "count": 13,
+            "min": 3,
+            "median": 3,
+            "p90": 3,
+            "max": 5,
+            "mean": 3.15385
+          },
+          "resilience": {
+            "count": 13,
+            "min": 4,
+            "median": 4,
+            "p90": 4,
+            "max": 7,
+            "mean": 4.23077
+          },
+          "luck": {
+            "count": 13,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "summer": {
+        "count": 13,
+        "roles": {
+          "damage": 7,
+          "healer": 2,
+          "tank": 4
+        },
+        "stats": {
+          "maxHp": {
+            "count": 13,
+            "min": 385,
+            "median": 415,
+            "p90": 485,
+            "max": 535,
+            "mean": 436.15385
+          },
+          "armor": {
+            "count": 13,
+            "min": 10,
+            "median": 14,
+            "p90": 19,
+            "max": 23,
+            "mean": 14.76923
+          },
+          "power": {
+            "count": 13,
+            "min": 23,
+            "median": 25,
+            "p90": 27,
+            "max": 29,
+            "mean": 25.23077
+          },
+          "initiative": {
+            "count": 13,
+            "min": 2,
+            "median": 8,
+            "p90": 10,
+            "max": 11,
+            "mean": 7.23077
+          },
+          "evasion": {
+            "count": 13,
+            "min": 1,
+            "median": 5,
+            "p90": 6,
+            "max": 7,
+            "mean": 4.53846
+          },
+          "crit": {
+            "count": 13,
+            "min": 3,
+            "median": 4,
+            "p90": 5,
+            "max": 6,
+            "mean": 4.38462
+          },
+          "agility": {
+            "count": 13,
+            "min": 5,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 5
+          },
+          "accuracy": {
+            "count": 13,
+            "min": 4,
+            "median": 4,
+            "p90": 4,
+            "max": 7,
+            "mean": 4.23077
+          },
+          "resilience": {
+            "count": 13,
+            "min": 5,
+            "median": 5,
+            "p90": 5,
+            "max": 8,
+            "mean": 5.23077
+          },
+          "luck": {
+            "count": 13,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "autumn": {
+        "count": 12,
+        "roles": {
+          "damage": 5,
+          "healer": 3,
+          "tank": 4
+        },
+        "stats": {
+          "maxHp": {
+            "count": 12,
+            "min": 470,
+            "median": 530,
+            "p90": 630,
+            "max": 650,
+            "mean": 551.66667
+          },
+          "armor": {
+            "count": 12,
+            "min": 12,
+            "median": 17,
+            "p90": 23,
+            "max": 24,
+            "mean": 17.25
+          },
+          "power": {
+            "count": 12,
+            "min": 26,
+            "median": 28,
+            "p90": 30,
+            "max": 33,
+            "mean": 28.66667
+          },
+          "initiative": {
+            "count": 12,
+            "min": 2,
+            "median": 5,
+            "p90": 10,
+            "max": 13,
+            "mean": 6.75
+          },
+          "evasion": {
+            "count": 12,
+            "min": 1,
+            "median": 3,
+            "p90": 7,
+            "max": 7,
+            "mean": 4.16667
+          },
+          "crit": {
+            "count": 12,
+            "min": 3,
+            "median": 4,
+            "p90": 5,
+            "max": 7,
+            "mean": 4.66667
+          },
+          "agility": {
+            "count": 12,
+            "min": 5,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 5
+          },
+          "accuracy": {
+            "count": 12,
+            "min": 5,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 5
+          },
+          "resilience": {
+            "count": 12,
+            "min": 6,
+            "median": 6,
+            "p90": 6,
+            "max": 9,
+            "mean": 6.25
+          },
+          "luck": {
+            "count": 12,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      },
+      "winter": {
+        "count": 12,
+        "roles": {
+          "damage": 5,
+          "healer": 2,
+          "tank": 5
+        },
+        "stats": {
+          "maxHp": {
+            "count": 12,
+            "min": 590,
+            "median": 650,
+            "p90": 800,
+            "max": 830,
+            "mean": 693.33333
+          },
+          "armor": {
+            "count": 12,
+            "min": 14,
+            "median": 19,
+            "p90": 26,
+            "max": 30,
+            "mean": 20.91667
+          },
+          "power": {
+            "count": 12,
+            "min": 31,
+            "median": 33,
+            "p90": 36,
+            "max": 38,
+            "mean": 34
+          },
+          "initiative": {
+            "count": 12,
+            "min": 1,
+            "median": 8,
+            "p90": 12,
+            "max": 14,
+            "mean": 7.91667
+          },
+          "evasion": {
+            "count": 12,
+            "min": 1,
+            "median": 4,
+            "p90": 7,
+            "max": 8,
+            "mean": 4.66667
+          },
+          "crit": {
+            "count": 12,
+            "min": 3,
+            "median": 5,
+            "p90": 6,
+            "max": 7,
+            "mean": 5.25
+          },
+          "agility": {
+            "count": 12,
+            "min": 5,
+            "median": 5,
+            "p90": 5,
+            "max": 5,
+            "mean": 5
+          },
+          "accuracy": {
+            "count": 12,
+            "min": 6,
+            "median": 6,
+            "p90": 6,
+            "max": 6,
+            "mean": 6
+          },
+          "resilience": {
+            "count": 12,
+            "min": 7,
+            "median": 7,
+            "p90": 10,
+            "max": 11,
+            "mean": 7.83333
+          },
+          "luck": {
+            "count": 12,
+            "min": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0,
+            "mean": 0
+          }
+        }
+      }
+    },
+    "highestHp": [
+      {
+        "id": "boss_iron_icebreaker",
+        "stats": {
+          "agility": 5,
+          "accuracy": 6,
+          "resilience": 11,
+          "luck": 0,
+          "maxHp": 830,
+          "power": 38,
+          "armor": 30,
+          "initiative": 1,
+          "crit": 3,
+          "evasion": 1
+        },
+        "skillIds": [
+          "boss_iron_icebreaker_signature",
+          "boss_last_thaw",
+          "boss_winter_edict"
+        ]
+      },
+      {
+        "id": "boss_heart_of_last_glacier",
+        "stats": {
+          "agility": 5,
+          "accuracy": 6,
+          "resilience": 10,
+          "luck": 0,
+          "maxHp": 810,
+          "power": 36,
+          "armor": 26,
+          "initiative": 4,
+          "crit": 5,
+          "evasion": 2
+        },
+        "skillIds": [
+          "boss_heart_of_last_glacier_signature",
+          "boss_last_thaw",
+          "boss_stellar_oath"
+        ]
+      },
+      {
+        "id": "boss_white_sovereign",
+        "stats": {
+          "agility": 5,
+          "accuracy": 6,
+          "resilience": 10,
+          "luck": 0,
+          "maxHp": 800,
+          "power": 35,
+          "armor": 27,
+          "initiative": 5,
+          "crit": 5,
+          "evasion": 3
+        },
+        "skillIds": [
+          "boss_white_sovereign_signature",
+          "boss_glacial_shell",
+          "boss_winter_edict"
+        ]
+      },
+      {
+        "id": "boss_grave_frost",
+        "stats": {
+          "agility": 5,
+          "accuracy": 6,
+          "resilience": 7,
+          "luck": 0,
+          "maxHp": 760,
+          "power": 33,
+          "armor": 24,
+          "initiative": 3,
+          "crit": 4,
+          "evasion": 2
+        },
+        "skillIds": [
+          "boss_grave_frost_signature",
+          "boss_ossuary_wall",
+          "boss_last_thaw"
+        ]
+      },
+      {
+        "id": "boss_mother_white_web",
+        "stats": {
+          "agility": 5,
+          "accuracy": 6,
+          "resilience": 7,
+          "luck": 0,
+          "maxHp": 680,
+          "power": 32,
+          "armor": 20,
+          "initiative": 8,
+          "crit": 4,
+          "evasion": 5
+        },
+        "skillIds": [
+          "boss_mother_white_web_signature",
+          "boss_spore_carapace",
+          "boss_winter_edict"
+        ]
+      }
+    ]
+  },
+  "scaling": {
+    "difficulties": {
+      "normal": {
+        "id": "normal",
+        "name": "Легкая",
+        "description": "Стандартная сила врагов и частота опасных встреч.",
+        "enemyHpMultiplier": 1,
+        "enemyDamageMultiplier": 1,
+        "epicGroupChance": 0.26,
+        "minibossChunkChance": 0.08,
+        "rareLootMultiplier": 1
+      },
+      "hard": {
+        "id": "hard",
+        "name": "Нормальная",
+        "description": "Враги крепче, наносят больше урона; опасные группы встречаются чаще.",
+        "enemyHpMultiplier": 1.3,
+        "enemyDamageMultiplier": 1.2,
+        "epicGroupChance": 0.36,
+        "minibossChunkChance": 0.12,
+        "rareLootMultiplier": 1.25
+      },
+      "nightmare": {
+        "id": "nightmare",
+        "name": "Сложная",
+        "description": "Самые стойкие и опасные враги, больше эпических групп и мини-боссов.",
+        "enemyHpMultiplier": 1.6,
+        "enemyDamageMultiplier": 1.4,
+        "epicGroupChance": 0.46,
+        "minibossChunkChance": 0.18,
+        "rareLootMultiplier": 1.5
+      }
+    },
+    "party": {
+      "1": {
+        "hp": 1,
+        "damage": 1
+      },
+      "2": {
+        "hp": 1.65,
+        "damage": 1.12
+      },
+      "3": {
+        "hp": 2.2,
+        "damage": 1.2
+      },
+      "4": {
+        "hp": 2.7,
+        "damage": 1.27
+      }
+    },
+    "note": "Party damage scaling multiplies enemy power, not the flat dice portion. Difficulty damage scaling multiplies direct and ordinary status damage, excluding fixed decay damage."
+  },
+  "rarity": {
+    "rule": "Each rarity step succeeds when d20 >= 20 - luck; repeat until failure or legendary.",
+    "curves": [
+      {
+        "luck": 0,
+        "fromCommon": {
+          "common": 0.95,
+          "rare": 0.0475,
+          "epic": 0.0023750000000000004,
+          "legendary": 0.00012500000000000003
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0.95,
+          "legendary": 0.05
+        }
+      },
+      {
+        "luck": 2,
+        "fromCommon": {
+          "common": 0.85,
+          "rare": 0.1275,
+          "epic": 0.019125,
+          "legendary": 0.003375
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0.85,
+          "legendary": 0.15
+        }
+      },
+      {
+        "luck": 5,
+        "fromCommon": {
+          "common": 0.7,
+          "rare": 0.21,
+          "epic": 0.063,
+          "legendary": 0.027
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0.7,
+          "legendary": 0.3
+        }
+      },
+      {
+        "luck": 10,
+        "fromCommon": {
+          "common": 0.44999999999999996,
+          "rare": 0.2475,
+          "epic": 0.136125,
+          "legendary": 0.16637500000000005
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0.44999999999999996,
+          "legendary": 0.55
+        }
+      },
+      {
+        "luck": 15,
+        "fromCommon": {
+          "common": 0.19999999999999996,
+          "rare": 0.15999999999999998,
+          "epic": 0.128,
+          "legendary": 0.5120000000000001
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0.19999999999999996,
+          "legendary": 0.8
+        }
+      },
+      {
+        "luck": 19,
+        "fromCommon": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0,
+          "legendary": 1
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0,
+          "legendary": 1
+        }
+      },
+      {
+        "luck": 25,
+        "fromCommon": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0,
+          "legendary": 1
+        },
+        "fromEpic": {
+          "common": 0,
+          "rare": 0,
+          "epic": 0,
+          "legendary": 1
+        }
+      }
+    ]
+  },
+  "skillExtremes": {
+    "highestDirectSingleTargetDamageAtPower20": [
+      {
+        "id": "five_knives_of_midnight",
+        "rarity": "legendary",
+        "cooldown": 8,
+        "target": "randomEnemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 67.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 67.5
+      },
+      {
+        "id": "limit_of_incantation",
+        "rarity": "legendary",
+        "cooldown": 10,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 54,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 54
+      },
+      {
+        "id": "heart_of_the_black_sun",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 49.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 49.5
+      },
+      {
+        "id": "nightfang",
+        "rarity": "epic",
+        "cooldown": 5,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 49,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 49
+      },
+      {
+        "id": "duel_at_the_furnace",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 49,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 49
+      },
+      {
+        "id": "spear_of_the_storm_king",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 47.5,
+          "heal": 0,
+          "shield": 27
+        },
+        "allTargetDamageAtPower20": 47.5
+      },
+      {
+        "id": "thunder_judgement",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 43.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 174
+      },
+      {
+        "id": "crown_of_the_crimson_sovereign",
+        "rarity": "legendary",
+        "cooldown": 8,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 43.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 43.5
+      },
+      {
+        "id": "impossible_equation",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "randomUnit",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 43.5,
+          "heal": 27.5,
+          "shield": 33.5
+        },
+        "allTargetDamageAtPower20": 43.5
+      },
+      {
+        "id": "starless_sentence",
+        "rarity": "legendary",
+        "cooldown": 8,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 42.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 42.5
+      },
+      {
+        "id": "fall_of_the_heavenly_vault",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 41,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 41
+      },
+      {
+        "id": "dance_of_the_hidden_edge",
+        "rarity": "epic",
+        "cooldown": 7,
+        "target": "enemy",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 40.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 40.5
+      }
+    ],
+    "highestFourTargetDamageAtPower20": [
+      {
+        "id": "thunder_judgement",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 43.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 174
+      },
+      {
+        "id": "birth_of_a_thousand_blades",
+        "rarity": "legendary",
+        "cooldown": 10,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 37.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 150
+      },
+      {
+        "id": "sun_pyre",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 34,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 136
+      },
+      {
+        "id": "covenant_of_the_red_moon",
+        "rarity": "legendary",
+        "cooldown": 9,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 30.5,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 122
+      },
+      {
+        "id": "double_helix_of_ruin",
+        "rarity": "epic",
+        "cooldown": 7,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 27,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 108
+      },
+      {
+        "id": "fruiting_thornfield",
+        "rarity": "epic",
+        "cooldown": 7,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 25,
+          "heal": 22.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 100
+      },
+      {
+        "id": "boss_heart_of_last_glacier_signature",
+        "rarity": "innate-or-enemy",
+        "cooldown": 6,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 20.5,
+          "heal": 0,
+          "shield": 13.5
+        },
+        "allTargetDamageAtPower20": 82
+      },
+      {
+        "id": "forest_closes_in",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 19,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 76
+      },
+      {
+        "id": "sanguine_tribunal",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 19,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 76
+      },
+      {
+        "id": "boss_harvest_reaper_signature",
+        "rarity": "innate-or-enemy",
+        "cooldown": 5,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 19,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 76
+      },
+      {
+        "id": "boss_white_sovereign_signature",
+        "rarity": "innate-or-enemy",
+        "cooldown": 5,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 19,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 76
+      },
+      {
+        "id": "bells_of_reckoning",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "allEnemies",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 17,
+          "heal": 0,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 68
+      }
+    ],
+    "highestDirectHealingAtPower20": [
+      {
+        "id": "mercy_resonance",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "ally",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 38,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "scales_of_the_eclipse",
+        "rarity": "legendary",
+        "cooldown": 8,
+        "target": "any",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 38,
+          "heal": 38,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 38
+      },
+      {
+        "id": "healer_mend",
+        "rarity": "innate-or-enemy",
+        "cooldown": 6,
+        "target": "ally",
+        "condition": "allyWounded",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "priest_prayer",
+        "rarity": "innate-or-enemy",
+        "cooldown": 6,
+        "target": "allAllies",
+        "condition": "allyWounded",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "flame_tending",
+        "rarity": "rare",
+        "cooldown": 5,
+        "target": "ally",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "mercy_of_the_unsetting_sun",
+        "rarity": "legendary",
+        "cooldown": 10,
+        "target": "ally",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "fleeting_miracle",
+        "rarity": "epic",
+        "cooldown": 7,
+        "target": "lowestHealthAlly",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "verdict_of_the_elder_grove",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "any",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 33.5,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 33.5
+      },
+      {
+        "id": "coin_of_unlived_hours",
+        "rarity": "epic",
+        "cooldown": 6,
+        "target": "randomUnit",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 33.5,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 33.5
+      },
+      {
+        "id": "vessel_of_the_northern_light",
+        "rarity": "epic",
+        "cooldown": 7,
+        "target": "ally",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 33.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "mercy_lottery",
+        "rarity": "rare",
+        "cooldown": 4,
+        "target": "randomAlly",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 0,
+          "heal": 30.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 0
+      },
+      {
+        "id": "spirits_crossroads",
+        "rarity": "epic",
+        "cooldown": 5,
+        "target": "randomUnit",
+        "condition": "always",
+        "directAtPower20": {
+          "damage": 30.5,
+          "heal": 30.5,
+          "shield": 0
+        },
+        "allTargetDamageAtPower20": 30.5
+      }
+    ]
+  },
+  "statuses": {
+    "invulnerability": [
+      {
+        "statusId": "bastion",
+        "stacking": "refresh",
+        "expiresAt": "TURN_STARTED",
+        "applications": [
+          {
+            "skillId": "guardian_bastion",
+            "cooldown": 3,
+            "target": "self",
+            "duration": 1
+          },
+          {
+            "skillId": "mercy_of_the_unsetting_sun",
+            "cooldown": 10,
+            "target": "ally",
+            "duration": 1
+          },
+          {
+            "skillId": "fleeting_miracle",
+            "cooldown": 7,
+            "target": "lowestHealthAlly",
+            "duration": 1
+          }
+        ]
+      }
+    ],
+    "indefiniteApplications": [
+      {
+        "skillId": "scattered_tinder",
+        "statusId": "burning",
+        "cooldown": 4,
+        "stacking": "decay"
+      }
+    ],
+    "remainingDurationScaling": [],
+    "independentPositiveStatuses": [
+      "regrowth",
+      "inspired",
+      "fortified",
+      "battle_fervor",
+      "crimson_mending",
+      "sanguine_veil",
+      "dawn_mending",
+      "wild_renewal",
+      "seed_of_return",
+      "aether_barrier",
+      "furnace_heart",
+      "embers_of_life",
+      "flameward",
+      "crystal_shell",
+      "thawing_pulse",
+      "thunder_shell",
+      "gravel_guard",
+      "moss_of_ages",
+      "iron_bloom",
+      "bitter_balm",
+      "venom_coating",
+      "spore_mantle",
+      "soul_mending",
+      "bone_cyclone",
+      "last_warmth",
+      "hourglass_mending",
+      "suspended_barrier",
+      "constellation_guard",
+      "moonwell"
+    ]
+  },
+  "setCollection": [
+    {
+      "draws": 20,
+      "trials": 20000,
+      "base": "uniform-catalog",
+      "luck": 0,
+      "meanLargestSet": 1.3003,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.2964,
+          "meanSets": 0.34005
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.00005,
+          "meanSets": 0.00005
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 20,
+      "trials": 20000,
+      "base": "common",
+      "luck": 0,
+      "meanLargestSet": 1.5633,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.5477,
+          "meanSets": 0.7383
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.00015,
+          "meanSets": 0.00015
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 20,
+      "trials": 20000,
+      "base": "epic",
+      "luck": 0,
+      "meanLargestSet": 1.8771,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.8102,
+          "meanSets": 1.42265
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.0024,
+          "meanSets": 0.0024
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 30,
+      "trials": 20000,
+      "base": "uniform-catalog",
+      "luck": 0,
+      "meanLargestSet": 1.5625,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.5505,
+          "meanSets": 0.7497
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 30,
+      "trials": 20000,
+      "base": "common",
+      "luck": 0,
+      "meanLargestSet": 1.90495,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.8455,
+          "meanSets": 1.6494
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.001,
+          "meanSets": 0.001
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 30,
+      "trials": 20000,
+      "base": "epic",
+      "luck": 0,
+      "meanLargestSet": 2.19355,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.9802,
+          "meanSets": 3.0824
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.01065,
+          "meanSets": 0.01075
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0.00005,
+          "meanSets": 0.00005
+        }
+      ]
+    },
+    {
+      "draws": 40,
+      "trials": 20000,
+      "base": "uniform-catalog",
+      "luck": 0,
+      "meanLargestSet": 1.78945,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.7625,
+          "meanSets": 1.3422
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.00015,
+          "meanSets": 0.00015
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 40,
+      "trials": 20000,
+      "base": "common",
+      "luck": 0,
+      "meanLargestSet": 2.09935,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.9653,
+          "meanSets": 2.89255
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.0047,
+          "meanSets": 0.0047
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 40,
+      "trials": 20000,
+      "base": "epic",
+      "luck": 0,
+      "meanLargestSet": 2.4392,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.9992,
+          "meanSets": 5.25155
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.0293,
+          "meanSets": 0.0295
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 60,
+      "trials": 20000,
+      "base": "uniform-catalog",
+      "luck": 0,
+      "meanLargestSet": 2.05435,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.96435,
+          "meanSets": 2.97445
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.00245,
+          "meanSets": 0.00245
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 60,
+      "trials": 20000,
+      "base": "common",
+      "luck": 0,
+      "meanLargestSet": 2.3925,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 0.99955,
+          "meanSets": 6.20885
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.02125,
+          "meanSets": 0.02145
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0,
+          "meanSets": 0,
+          "zeroObserved95PercentUpperBound": 0.00015
+        }
+      ]
+    },
+    {
+      "draws": 60,
+      "trials": 20000,
+      "base": "epic",
+      "luck": 0,
+      "meanLargestSet": 2.9847,
+      "thresholds": [
+        {
+          "pieces": 2,
+          "probabilityAny": 1,
+          "meanSets": 10.78815
+        },
+        {
+          "pieces": 4,
+          "probabilityAny": 0.1505,
+          "meanSets": 0.16005
+        },
+        {
+          "pieces": 6,
+          "probabilityAny": 0.00055,
+          "meanSets": 0.00055
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "complete": true,
+  "wallSeconds": 275.30964170000004,
+  "uniqueEnemies": 550,
+  "mobs": 500,
+  "bosses": 50,
+  "uniqueCells": 6600,
+  "expectedCells": 6600,
+  "allCellsHaveFiveSeeds": true,
+  "trials": 33000,
+  "summary": {
+    "victory": 31158,
+    "defeat": 1822,
+    "draw": 20,
+    "escaped": 0,
+    "error": 0
+  },
+  "contentHash": "edc887b4",
+  "engineHashAtStart": "fe311b9149166d460bfb1c7ecf35bb04fdfa854184e1d2ac99d1ba167bd39c5b",
+  "engineHashAtEnd": "fe311b9149166d460bfb1c7ecf35bb04fdfa854184e1d2ac99d1ba167bd39c5b",
+  "engineUnchanged": true,
+  "policyHashAtStart": "06c69c7ed117bc919f3352299dff93e65d60a1f06ffe18afa4cc0c31f03e7f48",
+  "policyHashAtEnd": "06c69c7ed117bc919f3352299dff93e65d60a1f06ffe18afa4cc0c31f03e7f48",
+  "policyUnchanged": true,
+  "mutualEliminationDraws": 20,
+  "roundLimitDraws": 0,
+  "maxRounds": 77,
+  "candidate3Comparison": {
+    "contentIdentical": true,
+    "outcomeChanges": 0,
+    "changedTrials": 6,
+    "roundChanges": 5,
+    "changed": [
+      {
+        "enemyId": "act1_ember_hive_13",
+        "fixtureId": "solo-mage-rare",
+        "difficultyId": "nightmare",
+        "index": 1,
+        "before": {
+          "index": 1,
+          "outcome": "victory",
+          "rounds": 5,
+          "turns": 10,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.9234234234234234,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        },
+        "after": {
+          "index": 1,
+          "outcome": "victory",
+          "rounds": 6,
+          "turns": 12,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.8873873873873874,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        }
+      },
+      {
+        "enemyId": "act1_ember_hive_13",
+        "fixtureId": "solo-priest-rare",
+        "difficultyId": "nightmare",
+        "index": 3,
+        "before": {
+          "index": 3,
+          "outcome": "victory",
+          "rounds": 2,
+          "turns": 4,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.9649122807017544,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        },
+        "after": {
+          "index": 3,
+          "outcome": "victory",
+          "rounds": 3,
+          "turns": 6,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.9342105263157895,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        }
+      },
+      {
+        "enemyId": "act1_ember_hive_17",
+        "fixtureId": "solo-mage-rare",
+        "difficultyId": "nightmare",
+        "index": 1,
+        "before": {
+          "index": 1,
+          "outcome": "victory",
+          "rounds": 2,
+          "turns": 3,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.7477477477477478,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        },
+        "after": {
+          "index": 1,
+          "outcome": "victory",
+          "rounds": 3,
+          "turns": 5,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.7252252252252253,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        }
+      },
+      {
+        "enemyId": "act1_ember_hive_20",
+        "fixtureId": "solo-priest-rare",
+        "difficultyId": "hard",
+        "index": 0,
+        "before": {
+          "index": 0,
+          "outcome": "defeat",
+          "rounds": 1,
+          "turns": 2,
+          "livingHeroes": 0,
+          "heroHealthFraction": 0.8157894736842105,
+          "lostParts": 1,
+          "enemyHealthFraction": 0.35714285714285715
+        },
+        "after": {
+          "index": 0,
+          "outcome": "defeat",
+          "rounds": 1,
+          "turns": 2,
+          "livingHeroes": 0,
+          "heroHealthFraction": 0.8157894736842105,
+          "lostParts": 1,
+          "enemyHealthFraction": 0.38095238095238093
+        }
+      },
+      {
+        "enemyId": "act1_harvest_clan_17",
+        "fixtureId": "solo-mage-rare",
+        "difficultyId": "nightmare",
+        "index": 3,
+        "before": {
+          "index": 3,
+          "outcome": "victory",
+          "rounds": 3,
+          "turns": 6,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.8963963963963963,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        },
+        "after": {
+          "index": 3,
+          "outcome": "victory",
+          "rounds": 4,
+          "turns": 7,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.8963963963963963,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        }
+      },
+      {
+        "enemyId": "act1_rot_court_13",
+        "fixtureId": "solo-mage-rare",
+        "difficultyId": "nightmare",
+        "index": 0,
+        "before": {
+          "index": 0,
+          "outcome": "victory",
+          "rounds": 4,
+          "turns": 7,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.9684684684684685,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        },
+        "after": {
+          "index": 0,
+          "outcome": "victory",
+          "rounds": 5,
+          "turns": 9,
+          "livingHeroes": 1,
+          "heroHealthFraction": 0.9504504504504504,
+          "lostParts": 0,
+          "enemyHealthFraction": 0
+        }
+      }
+    ]
+  },
+  "rawRowsSha256": "886bf475f98152173907127157c9d4bbb9b75f0eece1b08f7dd4d099b3a749d2"
+}

@@ -1,0 +1,40 @@
+{
+  "trials": 240,
+  "baselineReport": "combat-census-pilot-baseline.json",
+  "results": [
+    {
+      "variant": "baseline",
+      "contentHash": "3c1207dc",
+      "rowsSha256": "eb4940c02bf7e44fb69dec24ee569d9dfed83413156ad4ee9d43450ad2eca894",
+      "matchesBaseline": true,
+      "completed": true,
+      "errors": 0,
+      "seconds": 2.5797424,
+      "policyHash": "ea1f5b95f889517bdcc0caeb2355ca6692fc88211e519f889cf1d0e04fea8f0e",
+      "engineHash": "c9c2434b665e3398725c23394e6e3fde54b94290d66f2f331562bd58d0bd0fc6"
+    },
+    {
+      "variant": "parallel",
+      "contentHash": "3c1207dc",
+      "rowsSha256": "eb4940c02bf7e44fb69dec24ee569d9dfed83413156ad4ee9d43450ad2eca894",
+      "matchesBaseline": true,
+      "completed": true,
+      "errors": 0,
+      "seconds": 10.9402801,
+      "policyHash": "ea1f5b95f889517bdcc0caeb2355ca6692fc88211e519f889cf1d0e04fea8f0e",
+      "engineHash": "1722d90b24da5c9f5b015f99c44c0e59e070564a8b304e65199bec85cb02366a"
+    },
+    {
+      "variant": "cache",
+      "contentHash": "3c1207dc",
+      "rowsSha256": "eb4940c02bf7e44fb69dec24ee569d9dfed83413156ad4ee9d43450ad2eca894",
+      "matchesBaseline": true,
+      "completed": true,
+      "errors": 0,
+      "seconds": 5.9404791999999995,
+      "policyHash": "06c69c7ed117bc919f3352299dff93e65d60a1f06ffe18afa4cc0c31f03e7f48",
+      "engineHash": "93885f39b349a1baa10ed09a4b15c7ba786d50d629573172345f45b6a211ab57"
+    }
+  ],
+  "note": "Parallel four-worker replay and per-decision damage-reduction memoization preserve every trial field, including outcomes, turns, rounds, body loss and remaining health."
+}

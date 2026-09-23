@@ -1,0 +1,6 @@
+{
+  "difficulties": {
+    "normal": { "enemyHpMultiplier": 1.28, "enemyDamageMultiplier": 1.14 },
+    "hard": { "enemyHpMultiplier": 1.36, "enemyDamageMultiplier": 1.23 }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "complete": true,
+  "trials": 33000,
+  "uniqueEnemies": 550,
+  "mobs": 500,
+  "bosses": 50,
+  "uniqueCells": 6600,
+  "allCellsHaveFiveSeeds": true,
+  "outcomes": {
+    "victory": 31140,
+    "defeat": 1841,
+    "draw": 19,
+    "escaped": 0,
+    "error": 0
+  },
+  "wallSeconds": 259.2415918,
+  "contentHash": "9e3b9b58",
+  "engineHashAtStart": "fe311b9149166d460bfb1c7ecf35bb04fdfa854184e1d2ac99d1ba167bd39c5b",
+  "engineHashAtEnd": "fe311b9149166d460bfb1c7ecf35bb04fdfa854184e1d2ac99d1ba167bd39c5b",
+  "engineStable": true,
+  "policyHashAtStart": "06c69c7ed117bc919f3352299dff93e65d60a1f06ffe18afa4cc0c31f03e7f48",
+  "policyHashAtEnd": "06c69c7ed117bc919f3352299dff93e65d60a1f06ffe18afa4cc0c31f03e7f48",
+  "policyStable": true,
+  "mutualDeathDraws": 19,
+  "roundLimitDraws": 0,
+  "maxRounds": 77,
+  "comparisonWith": "combat-census-final.json",
+  "pairedDifficultyComparisons": [
+    {
+      "difficulty": "normal",
+      "trials": 11000,
+      "beforeWins": 10569,
+      "afterWins": 10497,
+      "gains": 10,
+      "losses": 82,
+      "unchangedTrials": 5849,
+      "changedTrials": 5151
+    },
+    {
+      "difficulty": "hard",
+      "trials": 11000,
+      "beforeWins": 10346,
+      "afterWins": 10400,
+      "gains": 62,
+      "losses": 8,
+      "unchangedTrials": 6379,
+      "changedTrials": 4621
+    },
+    {
+      "difficulty": "nightmare",
+      "trials": 11000,
+      "beforeWins": 10243,
+      "afterWins": 10243,
+      "gains": 0,
+      "losses": 0,
+      "unchangedTrials": 11000,
+      "changedTrials": 0
+    }
+  ],
+  "worstBosses": [
+    {
+      "id": "boss_grave_frost",
+      "season": "winter",
+      "wins": 0,
+      "trials": 60,
+      "meanRounds": 20.283333333333335
+    },
+    {
+      "id": "boss_iron_icebreaker",
+      "season": "winter",
+      "wins": 0,
+      "trials": 60,
+      "meanRounds": 18.8
+    },
+    {
+      "id": "boss_heart_of_last_glacier",
+      "season": "winter",
+      "wins": 0,
+      "trials": 60,
+      "meanRounds": 16.4
+    },
+    {
+      "id": "boss_ossuary_archon",
+      "season": "autumn",
+      "wins": 0,
+      "trials": 60,
+      "meanRounds": 15.216666666666667
+    },
+    {
+      "id": "boss_glass_empress",
+      "season": "winter",
+      "wins": 0,
+      "trials": 60,
+      "meanRounds": 12.816666666666666
+    },
+    {
+      "id": "boss_frozen_executioner",
+      "season": "winter",
+      "wins": 0,
+      "trials": 60,
+      "meanRounds": 11.75
+    },
+    {
+      "id": "boss_white_sovereign",
+      "season": "winter",
+      "wins": 1,
+      "trials": 60,
+      "meanRounds": 16.633333333333333
+    },
+    {
+      "id": "boss_polar_devourer",
+      "season": "winter",
+      "wins": 1,
+      "trials": 60,
+      "meanRounds": 10.416666666666666
+    }
+  ],
+  "rawRowsSha256": "e1f0dd6b527f95f0038cf457f87c1f7822b72c5b18f4311449742ca8b798eee6"
+}

@@ -1,0 +1,4196 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-23T23:23:43.874Z",
+  "sources": {
+    "progression": "balance-holdout-final.json.gz",
+    "starter": "balance-starter-control.json.gz"
+  },
+  "methods": {
+    "rates": "95% Wilson intervals; errors excluded from win-rate denominators and audited separately.",
+    "paired": "Same first 126 index values per party size and difficulty, seed and exact ordered hero roster. Paired difference normal interval with Wilson zero-event floor, matching statistics.ts.",
+    "timeouts": "Combat draw at 100 rounds; 100-minute deadline during a live battle; deadline between battles; unexplained cases flagged.",
+    "duration": "Minutes are simulated game time including actual presentation event duration; >90 is a strict comparison. Winning duration is conditional on victory.",
+    "labels": "Victory requires four defeated stages, living hero and at least 80 minutes. Non-victory with all stages defeated and survivors is flagged. A defeat with a survivor is flagged.",
+    "aggregateUncertainty": "Difficulty rows are primary. Overall aggregates combine paired difficulties and heterogeneous compositions; their Wilson intervals are descriptive and do not account for that clustering."
+  },
+  "validation": {
+    "progression": {
+      "complete": true,
+      "recorded": 3024,
+      "actual": 3024,
+      "requested": 3024,
+      "allRequestedPresent": true,
+      "computedBattles": 55922,
+      "recordedBattles": 55922,
+      "battlesMatch": true,
+      "invalidOutcomeLabels": 0,
+      "issues": [],
+      "sourceStable": true,
+      "contentHash": "3bc9af6c",
+      "sourceHashAtStart": "9f7a515bf3fc2d94546312ed8929d8a5f6634589cfe4f67ca4134cebcfe035b0",
+      "sourceHashAtEnd": "9f7a515bf3fc2d94546312ed8929d8a5f6634589cfe4f67ca4134cebcfe035b0",
+      "timeoutCategories": [
+        {
+          "category": "combat_round_limit",
+          "n": 326,
+          "duration": {
+            "count": 326,
+            "mean": 67.67451124744383,
+            "p10": 34.913333333333334,
+            "median": 70.71600000000001,
+            "p90": 95.82166666666666
+          }
+        },
+        {
+          "category": "time_limit_between_battles",
+          "n": 53,
+          "duration": {
+            "count": 53,
+            "mean": 100,
+            "p10": 100,
+            "median": 100,
+            "p90": 100
+          }
+        },
+        {
+          "category": "time_limit_in_battle",
+          "n": 137,
+          "duration": {
+            "count": 137,
+            "mean": 100,
+            "p10": 100,
+            "median": 100,
+            "p90": 100
+          }
+        }
+      ],
+      "timeoutByDifficulty": [
+        {
+          "group": "hard:combat_round_limit",
+          "n": 103
+        },
+        {
+          "group": "hard:time_limit_between_battles",
+          "n": 11
+        },
+        {
+          "group": "hard:time_limit_in_battle",
+          "n": 39
+        },
+        {
+          "group": "nightmare:combat_round_limit",
+          "n": 109
+        },
+        {
+          "group": "nightmare:time_limit_between_battles",
+          "n": 5
+        },
+        {
+          "group": "nightmare:time_limit_in_battle",
+          "n": 19
+        },
+        {
+          "group": "normal:combat_round_limit",
+          "n": 114
+        },
+        {
+          "group": "normal:time_limit_between_battles",
+          "n": 37
+        },
+        {
+          "group": "normal:time_limit_in_battle",
+          "n": 79
+        }
+      ],
+      "timeoutByStage": [
+        {
+          "group": "combat_round_limit:autumn",
+          "n": 98
+        },
+        {
+          "group": "combat_round_limit:roaming",
+          "n": 32
+        },
+        {
+          "group": "combat_round_limit:spring",
+          "n": 52
+        },
+        {
+          "group": "combat_round_limit:summer",
+          "n": 88
+        },
+        {
+          "group": "combat_round_limit:winter",
+          "n": 56
+        },
+        {
+          "group": "time_limit_between_battles:roaming",
+          "n": 53
+        },
+        {
+          "group": "time_limit_in_battle:autumn",
+          "n": 1
+        },
+        {
+          "group": "time_limit_in_battle:roaming",
+          "n": 70
+        },
+        {
+          "group": "time_limit_in_battle:winter",
+          "n": 66
+        }
+      ],
+      "mostFrequentStalledEnemies": [
+        {
+          "enemyId": "boss_ossuary_archon",
+          "count": 50
+        },
+        {
+          "enemyId": "boss_salt_prophet",
+          "count": 46
+        },
+        {
+          "enemyId": "act1_briar_court_19",
+          "count": 19
+        },
+        {
+          "enemyId": "boss_ember_phoenix",
+          "count": 17
+        },
+        {
+          "enemyId": "act1_briar_court_18",
+          "count": 16
+        },
+        {
+          "enemyId": "boss_buried_bell",
+          "count": 15
+        },
+        {
+          "enemyId": "boss_grave_frost",
+          "count": 13
+        },
+        {
+          "enemyId": "boss_iron_icebreaker",
+          "count": 12
+        },
+        {
+          "enemyId": "boss_black_snow_abbess",
+          "count": 12
+        },
+        {
+          "enemyId": "boss_rot_gardener",
+          "count": 11
+        },
+        {
+          "enemyId": "boss_glass_seed",
+          "count": 11
+        },
+        {
+          "enemyId": "act1_briar_court_16",
+          "count": 10
+        }
+      ]
+    },
+    "starter": {
+      "complete": true,
+      "recorded": 1512,
+      "actual": 1512,
+      "requested": 1512,
+      "allRequestedPresent": true,
+      "computedBattles": 13587,
+      "recordedBattles": 13587,
+      "battlesMatch": true,
+      "invalidOutcomeLabels": 0,
+      "issues": [],
+      "sourceStable": true,
+      "contentHash": "3bc9af6c",
+      "sourceHashAtStart": "9f7a515bf3fc2d94546312ed8929d8a5f6634589cfe4f67ca4134cebcfe035b0",
+      "sourceHashAtEnd": "9f7a515bf3fc2d94546312ed8929d8a5f6634589cfe4f67ca4134cebcfe035b0",
+      "timeoutCategories": [
+        {
+          "category": "combat_round_limit",
+          "n": 65,
+          "duration": {
+            "count": 65,
+            "mean": 40.659220512820504,
+            "p10": 31.904,
+            "median": 35.62533333333333,
+            "p90": 56.020133333333334
+          }
+        }
+      ],
+      "timeoutByDifficulty": [
+        {
+          "group": "hard:combat_round_limit",
+          "n": 18
+        },
+        {
+          "group": "nightmare:combat_round_limit",
+          "n": 19
+        },
+        {
+          "group": "normal:combat_round_limit",
+          "n": 28
+        }
+      ],
+      "timeoutByStage": [
+        {
+          "group": "combat_round_limit:autumn",
+          "n": 1
+        },
+        {
+          "group": "combat_round_limit:roaming",
+          "n": 3
+        },
+        {
+          "group": "combat_round_limit:spring",
+          "n": 46
+        },
+        {
+          "group": "combat_round_limit:summer",
+          "n": 15
+        }
+      ],
+      "mostFrequentStalledEnemies": [
+        {
+          "enemyId": "boss_buried_bell",
+          "count": 14
+        },
+        {
+          "enemyId": "boss_blind_florist",
+          "count": 8
+        },
+        {
+          "enemyId": "boss_glass_seed",
+          "count": 8
+        },
+        {
+          "enemyId": "boss_salt_prophet",
+          "count": 7
+        },
+        {
+          "enemyId": "boss_plague_beekeeper",
+          "count": 6
+        },
+        {
+          "enemyId": "boss_meltwater_lady",
+          "count": 4
+        },
+        {
+          "enemyId": "boss_locust_emperor",
+          "count": 3
+        },
+        {
+          "enemyId": "boss_mirage_sultan",
+          "count": 3
+        },
+        {
+          "enemyId": "boss_briar_king",
+          "count": 3
+        },
+        {
+          "enemyId": "boss_moss_colossus",
+          "count": 2
+        },
+        {
+          "enemyId": "act1_briar_court_13",
+          "count": 1
+        },
+        {
+          "enemyId": "act1_briar_court_12",
+          "count": 1
+        }
+      ]
+    },
+    "sameContent": true,
+    "sameSource": true,
+    "sameSeedPrefix": true
+  },
+  "progression": {
+    "overall": {
+      "attempts": 3024,
+      "wins": 579,
+      "n": 3024,
+      "rate": 0.19146825396825398,
+      "confidence95": [
+        0.177839699121134,
+        0.2058796846781804
+      ],
+      "outcomes": {
+        "victory": 579,
+        "defeat": 1909,
+        "timeout": 516,
+        "escaped": 20,
+        "error": 0
+      },
+      "allDuration": {
+        "count": 3024,
+        "mean": 63.73661089065253,
+        "p10": 24.109333333333332,
+        "median": 66.20366666666666,
+        "p90": 94.43046666666669
+      },
+      "winningDuration": {
+        "count": 579,
+        "mean": 87.15927230857794,
+        "p10": 81.98173333333334,
+        "median": 86.30133333333333,
+        "p90": 93.50160000000001
+      },
+      "over90All": {
+        "wins": 492,
+        "n": 3024,
+        "rate": 0.1626984126984127,
+        "confidence95": [
+          0.14997276722662148,
+          0.17627993531925282
+        ]
+      },
+      "over90Winners": {
+        "wins": 158,
+        "n": 579,
+        "rate": 0.27288428324697755,
+        "confidence95": [
+          0.23818726213429464,
+          0.31057510536758615
+        ]
+      },
+      "bossesDefeated": [
+        540,
+        770,
+        569,
+        566,
+        579
+      ]
+    },
+    "byDifficulty": [
+      {
+        "group": "hard",
+        "attempts": 1008,
+        "wins": 114,
+        "n": 1008,
+        "rate": 0.1130952380952381,
+        "confidence95": [
+          0.09499463900752002,
+          0.1341336071219738
+        ],
+        "outcomes": {
+          "victory": 114,
+          "defeat": 733,
+          "timeout": 153,
+          "escaped": 8,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 1008,
+          "mean": 60.712210317460276,
+          "p10": 24.203266666666668,
+          "median": 61.32333333333334,
+          "p90": 92.55486666666667
+        },
+        "winningDuration": {
+          "count": 114,
+          "mean": 87.4820584795322,
+          "p10": 81.84573333333334,
+          "median": 86.832,
+          "p90": 93.45566666666667
+        },
+        "over90All": {
+          "wins": 141,
+          "n": 1008,
+          "rate": 0.13988095238095238,
+          "confidence95": [
+            0.11983220097066044,
+            0.16266408965756074
+          ]
+        },
+        "over90Winners": {
+          "wins": 40,
+          "n": 114,
+          "rate": 0.3508771929824561,
+          "confidence95": [
+            0.2694345476379373,
+            0.44204220816382256
+          ]
+        },
+        "bossesDefeated": [
+          193,
+          284,
+          218,
+          199,
+          114
+        ]
+      },
+      {
+        "group": "nightmare",
+        "attempts": 1008,
+        "wins": 70,
+        "n": 1008,
+        "rate": 0.06944444444444445,
+        "confidence95": [
+          0.055330741817953936,
+          0.08682735772102126
+        ],
+        "outcomes": {
+          "victory": 70,
+          "defeat": 797,
+          "timeout": 133,
+          "escaped": 8,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 1008,
+          "mean": 54.14826917989418,
+          "p10": 22.006866666666667,
+          "median": 48.929,
+          "p90": 88.48166666666667
+        },
+        "winningDuration": {
+          "count": 70,
+          "mean": 86.59568571428571,
+          "p10": 82.267,
+          "median": 85.07733333333334,
+          "p90": 92.54926666666667
+        },
+        "over90All": {
+          "wins": 81,
+          "n": 1008,
+          "rate": 0.08035714285714286,
+          "confidence95": [
+            0.06512476395955794,
+            0.09877587222704695
+          ]
+        },
+        "over90Winners": {
+          "wins": 14,
+          "n": 70,
+          "rate": 0.2,
+          "confidence95": [
+            0.12304739248362952,
+            0.30816644496253065
+          ]
+        },
+        "bossesDefeated": [
+          262,
+          338,
+          203,
+          135,
+          70
+        ]
+      },
+      {
+        "group": "normal",
+        "attempts": 1008,
+        "wins": 395,
+        "n": 1008,
+        "rate": 0.39186507936507936,
+        "confidence95": [
+          0.36219403989131693,
+          0.42235718787307996
+        ],
+        "outcomes": {
+          "victory": 395,
+          "defeat": 379,
+          "timeout": 230,
+          "escaped": 4,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 1008,
+          "mean": 76.34935317460317,
+          "p10": 41.706,
+          "median": 83.80000000000001,
+          "p90": 100
+        },
+        "winningDuration": {
+          "count": 395,
+          "mean": 87.16598987341769,
+          "p10": 82.0972,
+          "median": 86.36933333333333,
+          "p90": 93.65186666666666
+        },
+        "over90All": {
+          "wins": 270,
+          "n": 1008,
+          "rate": 0.26785714285714285,
+          "confidence95": [
+            0.2414381492121439,
+            0.29603879846555237
+          ]
+        },
+        "over90Winners": {
+          "wins": 104,
+          "n": 395,
+          "rate": 0.26329113924050634,
+          "confidence95": [
+            0.22228801377871793,
+            0.3088540080338414
+          ]
+        },
+        "bossesDefeated": [
+          85,
+          148,
+          148,
+          232,
+          395
+        ]
+      }
+    ],
+    "byPartySize": [
+      {
+        "group": "hard:1",
+        "attempts": 252,
+        "wins": 26,
+        "n": 252,
+        "rate": 0.10317460317460317,
+        "confidence95": [
+          0.07138596885628287,
+          0.14687990203929577
+        ],
+        "outcomes": {
+          "victory": 26,
+          "defeat": 201,
+          "timeout": 25,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 50.58519312169314,
+          "p10": 20.7588,
+          "median": 41.84866666666667,
+          "p90": 85.2398
+        },
+        "winningDuration": {
+          "count": 26,
+          "mean": 84.01923076923079,
+          "p10": 81.822,
+          "median": 83.58566666666667,
+          "p90": 87.208
+        },
+        "over90All": {
+          "wins": 15,
+          "n": 252,
+          "rate": 0.05952380952380952,
+          "confidence95": [
+            0.036400508742579975,
+            0.09587460795151231
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 26,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.1287289218592153
+          ]
+        },
+        "bossesDefeated": [
+          71,
+          79,
+          41,
+          35,
+          26
+        ]
+      },
+      {
+        "group": "hard:2",
+        "attempts": 252,
+        "wins": 20,
+        "n": 252,
+        "rate": 0.07936507936507936,
+        "confidence95": [
+          0.05196178512707833,
+          0.11940003802223503
+        ],
+        "outcomes": {
+          "victory": 20,
+          "defeat": 185,
+          "timeout": 45,
+          "escaped": 2,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 54.49583068783067,
+          "p10": 22.750933333333336,
+          "median": 50.29866666666667,
+          "p90": 87.12906666666667
+        },
+        "winningDuration": {
+          "count": 20,
+          "mean": 85.04783333333333,
+          "p10": 81.49773333333333,
+          "median": 83.81833333333333,
+          "p90": 90.8226
+        },
+        "over90All": {
+          "wins": 18,
+          "n": 252,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.045656398873952675,
+            0.11007074169327227
+          ]
+        },
+        "over90Winners": {
+          "wins": 3,
+          "n": 20,
+          "rate": 0.15,
+          "confidence95": [
+            0.052368745896216595,
+            0.36041886474075696
+          ]
+        },
+        "bossesDefeated": [
+          66,
+          79,
+          45,
+          42,
+          20
+        ]
+      },
+      {
+        "group": "hard:3",
+        "attempts": 252,
+        "wins": 28,
+        "n": 252,
+        "rate": 0.1111111111111111,
+        "confidence95": [
+          0.07800084087216042,
+          0.15589971260550667
+        ],
+        "outcomes": {
+          "victory": 28,
+          "defeat": 183,
+          "timeout": 37,
+          "escaped": 4,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 65.77697354497356,
+          "p10": 38.24926666666667,
+          "median": 66.48766666666666,
+          "p90": 93.6104
+        },
+        "winningDuration": {
+          "count": 28,
+          "mean": 87.72359523809526,
+          "p10": 83.04053333333333,
+          "median": 87.03,
+          "p90": 93.3328
+        },
+        "over90All": {
+          "wins": 40,
+          "n": 252,
+          "rate": 0.15873015873015872,
+          "confidence95": [
+            0.11878456552232407,
+            0.20892408344787355
+          ]
+        },
+        "over90Winners": {
+          "wins": 7,
+          "n": 28,
+          "rate": 0.25,
+          "confidence95": [
+            0.12676494919293316,
+            0.4335567031899896
+          ]
+        },
+        "bossesDefeated": [
+          34,
+          64,
+          62,
+          64,
+          28
+        ]
+      },
+      {
+        "group": "hard:4",
+        "attempts": 252,
+        "wins": 40,
+        "n": 252,
+        "rate": 0.15873015873015872,
+        "confidence95": [
+          0.11878456552232407,
+          0.20892408344787355
+        ],
+        "outcomes": {
+          "victory": 40,
+          "defeat": 164,
+          "timeout": 46,
+          "escaped": 2,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 71.99084391534397,
+          "p10": 43.651066666666665,
+          "median": 77.71433333333333,
+          "p90": 98.48866666666666
+        },
+        "winningDuration": {
+          "count": 40,
+          "mean": 90.78093333333332,
+          "p10": 84.00826666666667,
+          "median": 90.79166666666667,
+          "p90": 96.08013333333334
+        },
+        "over90All": {
+          "wins": 68,
+          "n": 252,
+          "rate": 0.2698412698412698,
+          "confidence95": [
+            0.2187966251144129,
+            0.3277975800050228
+          ]
+        },
+        "over90Winners": {
+          "wins": 30,
+          "n": 40,
+          "rate": 0.75,
+          "confidence95": [
+            0.5980603857923197,
+            0.858128813609037
+          ]
+        },
+        "bossesDefeated": [
+          22,
+          62,
+          70,
+          58,
+          40
+        ]
+      },
+      {
+        "group": "nightmare:1",
+        "attempts": 252,
+        "wins": 22,
+        "n": 252,
+        "rate": 0.0873015873015873,
+        "confidence95": [
+          0.05835861778096857,
+          0.1286378879504332
+        ],
+        "outcomes": {
+          "victory": 22,
+          "defeat": 211,
+          "timeout": 18,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 43.51996825396824,
+          "p10": 20.322466666666667,
+          "median": 38.711666666666666,
+          "p90": 83.36500000000001
+        },
+        "winningDuration": {
+          "count": 22,
+          "mean": 84.05581818181817,
+          "p10": 82.30106666666667,
+          "median": 83.72999999999999,
+          "p90": 86.39266666666667
+        },
+        "over90All": {
+          "wins": 8,
+          "n": 252,
+          "rate": 0.031746031746031744,
+          "confidence95": [
+            0.016172286655053436,
+            0.061381441001729375
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 22,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.14865487460862087
+          ]
+        },
+        "bossesDefeated": [
+          100,
+          78,
+          31,
+          21,
+          22
+        ]
+      },
+      {
+        "group": "nightmare:2",
+        "attempts": 252,
+        "wins": 19,
+        "n": 252,
+        "rate": 0.07539682539682539,
+        "confidence95": [
+          0.04879689285085013,
+          0.11474758900741902
+        ],
+        "outcomes": {
+          "victory": 19,
+          "defeat": 192,
+          "timeout": 39,
+          "escaped": 2,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 51.35661375661377,
+          "p10": 22.0508,
+          "median": 46.03066666666667,
+          "p90": 85.04726666666667
+        },
+        "winningDuration": {
+          "count": 19,
+          "mean": 85.76564912280702,
+          "p10": 82.33053333333334,
+          "median": 85.01666666666667,
+          "p90": 90.20479999999999
+        },
+        "over90All": {
+          "wins": 15,
+          "n": 252,
+          "rate": 0.05952380952380952,
+          "confidence95": [
+            0.036400508742579975,
+            0.09587460795151231
+          ]
+        },
+        "over90Winners": {
+          "wins": 2,
+          "n": 19,
+          "rate": 0.10526315789473684,
+          "confidence95": [
+            0.02935856029887013,
+            0.31394082711109006
+          ]
+        },
+        "bossesDefeated": [
+          82,
+          78,
+          41,
+          32,
+          19
+        ]
+      },
+      {
+        "group": "nightmare:3",
+        "attempts": 252,
+        "wins": 12,
+        "n": 252,
+        "rate": 0.047619047619047616,
+        "confidence95": [
+          0.027446934423204533,
+          0.08137615839775514
+        ],
+        "outcomes": {
+          "victory": 12,
+          "defeat": 199,
+          "timeout": 39,
+          "escaped": 2,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 58.6056216931217,
+          "p10": 26.394066666666667,
+          "median": 56.83233333333333,
+          "p90": 89.41826666666667
+        },
+        "winningDuration": {
+          "count": 12,
+          "mean": 86.1921111111111,
+          "p10": 81.45986666666667,
+          "median": 85.64699999999999,
+          "p90": 89.553
+        },
+        "over90All": {
+          "wins": 22,
+          "n": 252,
+          "rate": 0.0873015873015873,
+          "confidence95": [
+            0.05835861778096857,
+            0.1286378879504332
+          ]
+        },
+        "over90Winners": {
+          "wins": 1,
+          "n": 12,
+          "rate": 0.08333333333333333,
+          "confidence95": [
+            0.014865094404917095,
+            0.35387991114111694
+          ]
+        },
+        "bossesDefeated": [
+          44,
+          90,
+          65,
+          41,
+          12
+        ]
+      },
+      {
+        "group": "nightmare:4",
+        "attempts": 252,
+        "wins": 17,
+        "n": 252,
+        "rate": 0.06746031746031746,
+        "confidence95": [
+          0.04254209307182908,
+          0.10536770620435165
+        ],
+        "outcomes": {
+          "victory": 17,
+          "defeat": 195,
+          "timeout": 37,
+          "escaped": 3,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 63.110873015873025,
+          "p10": 37.334666666666664,
+          "median": 61.30366666666667,
+          "p90": 92.64466666666667
+        },
+        "winningDuration": {
+          "count": 17,
+          "mean": 91.09513725490194,
+          "p10": 85.17333333333333,
+          "median": 91.31133333333334,
+          "p90": 96.81866666666666
+        },
+        "over90All": {
+          "wins": 36,
+          "n": 252,
+          "rate": 0.14285714285714285,
+          "confidence95": [
+            0.10500705695999608,
+            0.19143222684602473
+          ]
+        },
+        "over90Winners": {
+          "wins": 11,
+          "n": 17,
+          "rate": 0.6470588235294118,
+          "confidence95": [
+            0.41300363485218694,
+            0.8269027960275627
+          ]
+        },
+        "bossesDefeated": [
+          36,
+          92,
+          66,
+          41,
+          17
+        ]
+      },
+      {
+        "group": "normal:1",
+        "attempts": 252,
+        "wins": 105,
+        "n": 252,
+        "rate": 0.4166666666666667,
+        "confidence95": [
+          0.357494045802278,
+          0.4783417870857936
+        ],
+        "outcomes": {
+          "victory": 105,
+          "defeat": 105,
+          "timeout": 41,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 67.40017460317455,
+          "p10": 21.7022,
+          "median": 81.51666666666667,
+          "p90": 91.95433333333334
+        },
+        "winningDuration": {
+          "count": 105,
+          "mean": 83.50693333333334,
+          "p10": 81.29973333333334,
+          "median": 82.86666666666666,
+          "p90": 86.21706666666667
+        },
+        "over90All": {
+          "wins": 28,
+          "n": 252,
+          "rate": 0.1111111111111111,
+          "confidence95": [
+            0.07800084087216042,
+            0.15589971260550667
+          ]
+        },
+        "over90Winners": {
+          "wins": 3,
+          "n": 105,
+          "rate": 0.02857142857142857,
+          "confidence95": [
+            0.00976383903870233,
+            0.08065629063731557
+          ]
+        },
+        "bossesDefeated": [
+          45,
+          32,
+          28,
+          42,
+          105
+        ]
+      },
+      {
+        "group": "normal:2",
+        "attempts": 252,
+        "wins": 85,
+        "n": 252,
+        "rate": 0.3373015873015873,
+        "confidence95": [
+          0.28175951773104946,
+          0.39772948933613794
+        ],
+        "outcomes": {
+          "victory": 85,
+          "defeat": 101,
+          "timeout": 66,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 72.5398306878307,
+          "p10": 41.10626666666666,
+          "median": 82.435,
+          "p90": 95.65320000000001
+        },
+        "winningDuration": {
+          "count": 85,
+          "mean": 86.00082352941176,
+          "p10": 82.31613333333334,
+          "median": 85.148,
+          "p90": 91.43053333333334
+        },
+        "over90All": {
+          "wins": 45,
+          "n": 252,
+          "rate": 0.17857142857142858,
+          "confidence95": [
+            0.13621984768587647,
+            0.23057550773954227
+          ]
+        },
+        "over90Winners": {
+          "wins": 13,
+          "n": 85,
+          "rate": 0.15294117647058825,
+          "confidence95": [
+            0.09161380494530419,
+            0.2442818367609198
+          ]
+        },
+        "bossesDefeated": [
+          26,
+          51,
+          38,
+          52,
+          85
+        ]
+      },
+      {
+        "group": "normal:3",
+        "attempts": 252,
+        "wins": 98,
+        "n": 252,
+        "rate": 0.3888888888888889,
+        "confidence95": [
+          0.33079801903712364,
+          0.4503164248136385
+        ],
+        "outcomes": {
+          "victory": 98,
+          "defeat": 96,
+          "timeout": 56,
+          "escaped": 2,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 80.53910846560846,
+          "p10": 47.2066,
+          "median": 86.214,
+          "p90": 100
+        },
+        "winningDuration": {
+          "count": 98,
+          "mean": 88.60150340136056,
+          "p10": 83.66146666666667,
+          "median": 88.48866666666666,
+          "p90": 94.55113333333334
+        },
+        "over90All": {
+          "wins": 86,
+          "n": 252,
+          "rate": 0.3412698412698413,
+          "confidence95": [
+            0.2855057512192996,
+            0.40180059713893196
+          ]
+        },
+        "over90Winners": {
+          "wins": 35,
+          "n": 98,
+          "rate": 0.35714285714285715,
+          "confidence95": [
+            0.2693153421722757,
+            0.4557475121482044
+          ]
+        },
+        "bossesDefeated": [
+          10,
+          33,
+          42,
+          69,
+          98
+        ]
+      },
+      {
+        "group": "normal:4",
+        "attempts": 252,
+        "wins": 107,
+        "n": 252,
+        "rate": 0.4246031746031746,
+        "confidence95": [
+          0.36515741137113394,
+          0.4863131040990261
+        ],
+        "outcomes": {
+          "victory": 107,
+          "defeat": 77,
+          "timeout": 67,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 252,
+          "mean": 84.918298941799,
+          "p10": 60.39540000000001,
+          "median": 89.04866666666666,
+          "p90": 100
+        },
+        "winningDuration": {
+          "count": 107,
+          "mean": 90.36748286604366,
+          "p10": 85.74586666666667,
+          "median": 89.948,
+          "p90": 95.9896
+        },
+        "over90All": {
+          "wins": 111,
+          "n": 252,
+          "rate": 0.44047619047619047,
+          "confidence95": [
+            0.380531229568261,
+            0.5022086510660758
+          ]
+        },
+        "over90Winners": {
+          "wins": 53,
+          "n": 107,
+          "rate": 0.4953271028037383,
+          "confidence95": [
+            0.402410704021837,
+            0.5885674010063757
+          ]
+        },
+        "bossesDefeated": [
+          4,
+          32,
+          40,
+          69,
+          107
+        ]
+      }
+    ],
+    "soloByHero": [
+      {
+        "group": "hard:druid",
+        "attempts": 28,
+        "wins": 4,
+        "n": 28,
+        "rate": 0.14285714285714285,
+        "confidence95": [
+          0.05699005319749392,
+          0.31489802163525293
+        ],
+        "outcomes": {
+          "victory": 4,
+          "defeat": 20,
+          "timeout": 4,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 61.1127619047619,
+          "p10": 37.683600000000006,
+          "median": 58.49966666666667,
+          "p90": 86.22026666666667
+        },
+        "winningDuration": {
+          "count": 4,
+          "mean": 83.4185,
+          "p10": 82.82353333333333,
+          "median": 83.445,
+          "p90": 83.99226666666667
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 4,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.4898908364545973
+          ]
+        },
+        "bossesDefeated": [
+          4,
+          9,
+          5,
+          6,
+          4
+        ]
+      },
+      {
+        "group": "hard:guardian",
+        "attempts": 28,
+        "wins": 2,
+        "n": 28,
+        "rate": 0.07142857142857142,
+        "confidence95": [
+          0.019812064115305755,
+          0.22645362568399052
+        ],
+        "outcomes": {
+          "victory": 2,
+          "defeat": 20,
+          "timeout": 6,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 48.89969047619047,
+          "p10": 22.0002,
+          "median": 40.94966666666667,
+          "p90": 88.93906666666666
+        },
+        "winningDuration": {
+          "count": 2,
+          "mean": 86.25133333333332,
+          "p10": 84.46146666666667,
+          "median": 86.25133333333332,
+          "p90": 88.04119999999999
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 2,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.6576197724933469
+          ]
+        },
+        "bossesDefeated": [
+          11,
+          7,
+          4,
+          4,
+          2
+        ]
+      },
+      {
+        "group": "hard:mage",
+        "attempts": 28,
+        "wins": 7,
+        "n": 28,
+        "rate": 0.25,
+        "confidence95": [
+          0.12676494919293316,
+          0.4335567031899896
+        ],
+        "outcomes": {
+          "victory": 7,
+          "defeat": 21,
+          "timeout": 0,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 52.91483333333333,
+          "p10": 20.446733333333334,
+          "median": 44.70433333333334,
+          "p90": 85.7862
+        },
+        "winningDuration": {
+          "count": 7,
+          "mean": 84.56504761904762,
+          "p10": 82.54866666666666,
+          "median": 83.01866666666666,
+          "p90": 88.5592
+        },
+        "over90All": {
+          "wins": 1,
+          "n": 28,
+          "rate": 0.03571428571428571,
+          "confidence95": [
+            0.0063325198490377516,
+            0.1771219774335332
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 7,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.35433043506668743
+          ]
+        },
+        "bossesDefeated": [
+          7,
+          7,
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": "hard:necromancer",
+        "attempts": 28,
+        "wins": 1,
+        "n": 28,
+        "rate": 0.03571428571428571,
+        "confidence95": [
+          0.0063325198490377516,
+          0.1771219774335332
+        ],
+        "outcomes": {
+          "victory": 1,
+          "defeat": 23,
+          "timeout": 4,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 46.934880952380944,
+          "p10": 21.335,
+          "median": 41.025666666666666,
+          "p90": 85.16233333333334
+        },
+        "winningDuration": {
+          "count": 1,
+          "mean": 85.43533333333333,
+          "p10": 85.43533333333333,
+          "median": 85.43533333333333,
+          "p90": 85.43533333333333
+        },
+        "over90All": {
+          "wins": 1,
+          "n": 28,
+          "rate": 0.03571428571428571,
+          "confidence95": [
+            0.0063325198490377516,
+            0.1771219774335332
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 1,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.7934506856227626
+          ]
+        },
+        "bossesDefeated": [
+          11,
+          8,
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "group": "hard:paladin",
+        "attempts": 28,
+        "wins": 0,
+        "n": 28,
+        "rate": 0,
+        "confidence95": [
+          1.3877787807814457e-17,
+          0.12064330476584563
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 26,
+          "timeout": 2,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 48.4907142857143,
+          "p10": 20.862266666666667,
+          "median": 41.70033333333333,
+          "p90": 82.77926666666667
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          8,
+          8,
+          8,
+          4,
+          0
+        ]
+      },
+      {
+        "group": "hard:priest",
+        "attempts": 28,
+        "wins": 4,
+        "n": 28,
+        "rate": 0.14285714285714285,
+        "confidence95": [
+          0.05699005319749392,
+          0.31489802163525293
+        ],
+        "outcomes": {
+          "victory": 4,
+          "defeat": 23,
+          "timeout": 1,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 48.32438095238097,
+          "p10": 21.257133333333332,
+          "median": 42.07033333333334,
+          "p90": 81.86959999999999
+        },
+        "winningDuration": {
+          "count": 4,
+          "mean": 82.67633333333333,
+          "p10": 81.80839999999999,
+          "median": 81.87866666666666,
+          "p90": 84.1824
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 28,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.12064330476584563
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 4,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.4898908364545973
+          ]
+        },
+        "bossesDefeated": [
+          7,
+          10,
+          4,
+          3,
+          4
+        ]
+      },
+      {
+        "group": "hard:ranger",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 24,
+          "timeout": 1,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 43.796595238095236,
+          "p10": 20.5156,
+          "median": 37.80566666666667,
+          "p90": 83.31073333333335
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 84.09355555555557,
+          "p10": 83.0252,
+          "median": 83.75266666666667,
+          "p90": 85.29826666666668
+        },
+        "over90All": {
+          "wins": 1,
+          "n": 28,
+          "rate": 0.03571428571428571,
+          "confidence95": [
+            0.0063325198490377516,
+            0.1771219774335332
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          11,
+          9,
+          4,
+          1,
+          3
+        ]
+      },
+      {
+        "group": "hard:rogue",
+        "attempts": 28,
+        "wins": 2,
+        "n": 28,
+        "rate": 0.07142857142857142,
+        "confidence95": [
+          0.019812064115305755,
+          0.22645362568399052
+        ],
+        "outcomes": {
+          "victory": 2,
+          "defeat": 22,
+          "timeout": 4,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 54.63554761904761,
+          "p10": 21.383466666666667,
+          "median": 41.62266666666666,
+          "p90": 100
+        },
+        "winningDuration": {
+          "count": 2,
+          "mean": 81.55233333333334,
+          "p10": 81.5126,
+          "median": 81.55233333333334,
+          "p90": 81.59206666666667
+        },
+        "over90All": {
+          "wins": 4,
+          "n": 28,
+          "rate": 0.14285714285714285,
+          "confidence95": [
+            0.05699005319749392,
+            0.31489802163525293
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 2,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.6576197724933469
+          ]
+        },
+        "bossesDefeated": [
+          5,
+          10,
+          5,
+          6,
+          2
+        ]
+      },
+      {
+        "group": "hard:vampire",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 22,
+          "timeout": 3,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 50.157333333333334,
+          "p10": 20.591333333333335,
+          "median": 41.33566666666667,
+          "p90": 85.52646666666666
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 84.94733333333333,
+          "p10": 83.78466666666667,
+          "median": 85.24866666666667,
+          "p90": 85.98946666666667
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          7,
+          11,
+          2,
+          5,
+          3
+        ]
+      },
+      {
+        "group": "nightmare:druid",
+        "attempts": 28,
+        "wins": 5,
+        "n": 28,
+        "rate": 0.17857142857142858,
+        "confidence95": [
+          0.07878501945604277,
+          0.35591424789342946
+        ],
+        "outcomes": {
+          "victory": 5,
+          "defeat": 16,
+          "timeout": 7,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 53.760238095238094,
+          "p10": 21.74266666666667,
+          "median": 50.02633333333333,
+          "p90": 85.58573333333334
+        },
+        "winningDuration": {
+          "count": 5,
+          "mean": 84.298,
+          "p10": 82.35426666666666,
+          "median": 83.86333333333333,
+          "p90": 86.53386666666667
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 28,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.12064330476584563
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 5,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.43448246478317476
+          ]
+        },
+        "bossesDefeated": [
+          9,
+          8,
+          3,
+          3,
+          5
+        ]
+      },
+      {
+        "group": "nightmare:guardian",
+        "attempts": 28,
+        "wins": 0,
+        "n": 28,
+        "rate": 0,
+        "confidence95": [
+          1.3877787807814457e-17,
+          0.12064330476584563
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 22,
+          "timeout": 6,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 43.03228571428571,
+          "p10": 20.932333333333336,
+          "median": 40.35933333333333,
+          "p90": 72.17286666666666
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          14,
+          6,
+          6,
+          2,
+          0
+        ]
+      },
+      {
+        "group": "nightmare:mage",
+        "attempts": 28,
+        "wins": 0,
+        "n": 28,
+        "rate": 0,
+        "confidence95": [
+          1.3877787807814457e-17,
+          0.12064330476584563
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 27,
+          "timeout": 1,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 36.41023809523811,
+          "p10": 18.857666666666667,
+          "median": 25.262999999999998,
+          "p90": 63.083200000000005
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          14,
+          7,
+          6,
+          1,
+          0
+        ]
+      },
+      {
+        "group": "nightmare:necromancer",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 23,
+          "timeout": 2,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 40.57397619047619,
+          "p10": 21.001133333333335,
+          "median": 37.217666666666666,
+          "p90": 83.7934
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 85.57044444444445,
+          "p10": 83.65426666666667,
+          "median": 84.76733333333334,
+          "p90": 87.80786666666667
+        },
+        "over90All": {
+          "wins": 1,
+          "n": 28,
+          "rate": 0.03571428571428571,
+          "confidence95": [
+            0.0063325198490377516,
+            0.1771219774335332
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          13,
+          9,
+          2,
+          1,
+          3
+        ]
+      },
+      {
+        "group": "nightmare:paladin",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 24,
+          "timeout": 1,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 46.77485714285714,
+          "p10": 20.86466666666667,
+          "median": 39.205333333333336,
+          "p90": 84.48259999999999
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 84.23977777777777,
+          "p10": 83.61533333333334,
+          "median": 84.258,
+          "p90": 84.85693333333333
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          9,
+          10,
+          2,
+          4,
+          3
+        ]
+      },
+      {
+        "group": "nightmare:priest",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 25,
+          "timeout": 0,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 42.901523809523816,
+          "p10": 19.705399999999997,
+          "median": 37.62166666666667,
+          "p90": 82.14346666666667
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 83.52399999999999,
+          "p10": 82.6356,
+          "median": 82.898,
+          "p90": 84.6628
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 28,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.12064330476584563
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          8,
+          12,
+          2,
+          3,
+          3
+        ]
+      },
+      {
+        "group": "nightmare:ranger",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 24,
+          "timeout": 0,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 36.795500000000004,
+          "p10": 20.31246666666667,
+          "median": 22.008000000000003,
+          "p90": 81.8352
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 82.69488888888888,
+          "p10": 81.6308,
+          "median": 83.266,
+          "p90": 83.53053333333334
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 28,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.12064330476584563
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          17,
+          5,
+          2,
+          1,
+          3
+        ]
+      },
+      {
+        "group": "nightmare:rogue",
+        "attempts": 28,
+        "wins": 2,
+        "n": 28,
+        "rate": 0.07142857142857142,
+        "confidence95": [
+          0.019812064115305755,
+          0.22645362568399052
+        ],
+        "outcomes": {
+          "victory": 2,
+          "defeat": 25,
+          "timeout": 1,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 51.467619047619046,
+          "p10": 20.8808,
+          "median": 44.527,
+          "p90": 82.98026666666667
+        },
+        "winningDuration": {
+          "count": 2,
+          "mean": 83.02000000000001,
+          "p10": 81.86906666666667,
+          "median": 83.02000000000001,
+          "p90": 84.17093333333334
+        },
+        "over90All": {
+          "wins": 1,
+          "n": 28,
+          "rate": 0.03571428571428571,
+          "confidence95": [
+            0.0063325198490377516,
+            0.1771219774335332
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 2,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.6576197724933469
+          ]
+        },
+        "bossesDefeated": [
+          7,
+          9,
+          5,
+          5,
+          2
+        ]
+      },
+      {
+        "group": "nightmare:vampire",
+        "attempts": 28,
+        "wins": 3,
+        "n": 28,
+        "rate": 0.10714285714285714,
+        "confidence95": [
+          0.03711836682929999,
+          0.27195851548672156
+        ],
+        "outcomes": {
+          "victory": 3,
+          "defeat": 25,
+          "timeout": 0,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 39.96347619047619,
+          "p10": 20.3954,
+          "median": 36.98733333333333,
+          "p90": 72.90726666666667
+        },
+        "winningDuration": {
+          "count": 3,
+          "mean": 84.53688888888888,
+          "p10": 83.0456,
+          "median": 84.48666666666666,
+          "p90": 86.04826666666666
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 28,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.12064330476584563
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 3,
+          "rate": 0,
+          "confidence95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ]
+        },
+        "bossesDefeated": [
+          9,
+          12,
+          3,
+          1,
+          3
+        ]
+      },
+      {
+        "group": "normal:druid",
+        "attempts": 28,
+        "wins": 15,
+        "n": 28,
+        "rate": 0.5357142857142857,
+        "confidence95": [
+          0.358126892344679,
+          0.7046843001720462
+        ],
+        "outcomes": {
+          "victory": 15,
+          "defeat": 7,
+          "timeout": 6,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 74.83585714285714,
+          "p10": 43.68046666666667,
+          "median": 82.96266666666666,
+          "p90": 89.89920000000001
+        },
+        "winningDuration": {
+          "count": 15,
+          "mean": 84.33955555555555,
+          "p10": 81.8308,
+          "median": 84.19733333333333,
+          "p90": 87.06920000000001
+        },
+        "over90All": {
+          "wins": 3,
+          "n": 28,
+          "rate": 0.10714285714285714,
+          "confidence95": [
+            0.03711836682929999,
+            0.27195851548672156
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 15,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.20388330103584862
+          ]
+        },
+        "bossesDefeated": [
+          2,
+          4,
+          2,
+          5,
+          15
+        ]
+      },
+      {
+        "group": "normal:guardian",
+        "attempts": 28,
+        "wins": 9,
+        "n": 28,
+        "rate": 0.32142857142857145,
+        "confidence95": [
+          0.1793324692249496,
+          0.5066115681914238
+        ],
+        "outcomes": {
+          "victory": 9,
+          "defeat": 12,
+          "timeout": 7,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 69.45714285714287,
+          "p10": 28.440733333333334,
+          "median": 78.682,
+          "p90": 96.73846666666667
+        },
+        "winningDuration": {
+          "count": 9,
+          "mean": 85.6354074074074,
+          "p10": 82.05,
+          "median": 84.41666666666667,
+          "p90": 90.89
+        },
+        "over90All": {
+          "wins": 4,
+          "n": 28,
+          "rate": 0.14285714285714285,
+          "confidence95": [
+            0.05699005319749392,
+            0.31489802163525293
+          ]
+        },
+        "over90Winners": {
+          "wins": 1,
+          "n": 9,
+          "rate": 0.1111111111111111,
+          "confidence95": [
+            0.019890887638544907,
+            0.434999705576656
+          ]
+        },
+        "bossesDefeated": [
+          5,
+          3,
+          6,
+          5,
+          9
+        ]
+      },
+      {
+        "group": "normal:mage",
+        "attempts": 28,
+        "wins": 12,
+        "n": 28,
+        "rate": 0.42857142857142855,
+        "confidence95": [
+          0.26508547124123694,
+          0.6092921437253123
+        ],
+        "outcomes": {
+          "victory": 12,
+          "defeat": 13,
+          "timeout": 3,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 66.51611904761906,
+          "p10": 20.9468,
+          "median": 81.71566666666666,
+          "p90": 95.14526666666667
+        },
+        "winningDuration": {
+          "count": 12,
+          "mean": 84.09005555555555,
+          "p10": 81.89386666666667,
+          "median": 82.87899999999999,
+          "p90": 86.7606
+        },
+        "over90All": {
+          "wins": 4,
+          "n": 28,
+          "rate": 0.14285714285714285,
+          "confidence95": [
+            0.05699005319749392,
+            0.31489802163525293
+          ]
+        },
+        "over90Winners": {
+          "wins": 1,
+          "n": 12,
+          "rate": 0.08333333333333333,
+          "confidence95": [
+            0.014865094404917095,
+            0.35387991114111694
+          ]
+        },
+        "bossesDefeated": [
+          7,
+          1,
+          2,
+          6,
+          12
+        ]
+      },
+      {
+        "group": "normal:necromancer",
+        "attempts": 28,
+        "wins": 9,
+        "n": 28,
+        "rate": 0.32142857142857145,
+        "confidence95": [
+          0.1793324692249496,
+          0.5066115681914238
+        ],
+        "outcomes": {
+          "victory": 9,
+          "defeat": 10,
+          "timeout": 9,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 69.0552619047619,
+          "p10": 28.148466666666668,
+          "median": 79.82133333333334,
+          "p90": 87.1924
+        },
+        "winningDuration": {
+          "count": 9,
+          "mean": 83.978,
+          "p10": 82.61493333333333,
+          "median": 83.91533333333334,
+          "p90": 85.19319999999999
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 9,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.2991450484195441
+          ]
+        },
+        "bossesDefeated": [
+          5,
+          2,
+          5,
+          7,
+          9
+        ]
+      },
+      {
+        "group": "normal:paladin",
+        "attempts": 28,
+        "wins": 9,
+        "n": 28,
+        "rate": 0.32142857142857145,
+        "confidence95": [
+          0.1793324692249496,
+          0.5066115681914238
+        ],
+        "outcomes": {
+          "victory": 9,
+          "defeat": 14,
+          "timeout": 5,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 62.943833333333316,
+          "p10": 21.212533333333333,
+          "median": 81.47766666666666,
+          "p90": 100
+        },
+        "winningDuration": {
+          "count": 9,
+          "mean": 83.022,
+          "p10": 81.48986666666667,
+          "median": 82.62733333333334,
+          "p90": 84.6364
+        },
+        "over90All": {
+          "wins": 5,
+          "n": 28,
+          "rate": 0.17857142857142858,
+          "confidence95": [
+            0.07878501945604277,
+            0.35591424789342946
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 9,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.2991450484195441
+          ]
+        },
+        "bossesDefeated": [
+          5,
+          6,
+          3,
+          5,
+          9
+        ]
+      },
+      {
+        "group": "normal:priest",
+        "attempts": 28,
+        "wins": 14,
+        "n": 28,
+        "rate": 0.5,
+        "confidence95": [
+          0.32633127457293465,
+          0.6736687254270654
+        ],
+        "outcomes": {
+          "victory": 14,
+          "defeat": 12,
+          "timeout": 2,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 67.42540476190477,
+          "p10": 35.2328,
+          "median": 81.29733333333334,
+          "p90": 84.731
+        },
+        "winningDuration": {
+          "count": 14,
+          "mean": 82.71147619047619,
+          "p10": 81.6168,
+          "median": 82.23566666666667,
+          "p90": 84.767
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 28,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.12064330476584563
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 14,
+          "rate": 0,
+          "confidence95": [
+            1.3877787807814457e-17,
+            0.2153108027376358
+          ]
+        },
+        "bossesDefeated": [
+          3,
+          3,
+          6,
+          2,
+          14
+        ]
+      },
+      {
+        "group": "normal:ranger",
+        "attempts": 28,
+        "wins": 9,
+        "n": 28,
+        "rate": 0.32142857142857145,
+        "confidence95": [
+          0.1793324692249496,
+          0.5066115681914238
+        ],
+        "outcomes": {
+          "victory": 9,
+          "defeat": 17,
+          "timeout": 1,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 60.63257142857143,
+          "p10": 20.8202,
+          "median": 73.43633333333332,
+          "p90": 83.81526666666666
+        },
+        "winningDuration": {
+          "count": 9,
+          "mean": 83.7257037037037,
+          "p10": 81.41706666666667,
+          "median": 83.34266666666667,
+          "p90": 85.45146666666666
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 1,
+          "n": 9,
+          "rate": 0.1111111111111111,
+          "confidence95": [
+            0.019890887638544907,
+            0.434999705576656
+          ]
+        },
+        "bossesDefeated": [
+          9,
+          3,
+          2,
+          5,
+          9
+        ]
+      },
+      {
+        "group": "normal:rogue",
+        "attempts": 28,
+        "wins": 13,
+        "n": 28,
+        "rate": 0.4642857142857143,
+        "confidence95": [
+          0.2953156998279538,
+          0.6418731076553209
+        ],
+        "outcomes": {
+          "victory": 13,
+          "defeat": 9,
+          "timeout": 6,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 69.72171428571428,
+          "p10": 30.586933333333334,
+          "median": 80.94833333333332,
+          "p90": 100
+        },
+        "winningDuration": {
+          "count": 13,
+          "mean": 81.29348717948717,
+          "p10": 80.70266666666667,
+          "median": 80.98866666666666,
+          "p90": 82.01373333333333
+        },
+        "over90All": {
+          "wins": 6,
+          "n": 28,
+          "rate": 0.21428571428571427,
+          "confidence95": [
+            0.1021246033289788,
+            0.3953858565372187
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 13,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.22809537235419838
+          ]
+        },
+        "bossesDefeated": [
+          2,
+          8,
+          1,
+          4,
+          13
+        ]
+      },
+      {
+        "group": "normal:vampire",
+        "attempts": 28,
+        "wins": 15,
+        "n": 28,
+        "rate": 0.5357142857142857,
+        "confidence95": [
+          0.358126892344679,
+          0.7046843001720462
+        ],
+        "outcomes": {
+          "victory": 15,
+          "defeat": 11,
+          "timeout": 2,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 28,
+          "mean": 66.01366666666667,
+          "p10": 21.323666666666668,
+          "median": 82.14633333333333,
+          "p90": 85.67266666666667
+        },
+        "winningDuration": {
+          "count": 15,
+          "mean": 83.46853333333334,
+          "p10": 81.85626666666667,
+          "median": 83.40866666666666,
+          "p90": 84.26453333333333
+        },
+        "over90All": {
+          "wins": 2,
+          "n": 28,
+          "rate": 0.07142857142857142,
+          "confidence95": [
+            0.019812064115305755,
+            0.22645362568399052
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 15,
+          "rate": 0,
+          "confidence95": [
+            0,
+            0.20388330103584862
+          ]
+        },
+        "bossesDefeated": [
+          7,
+          2,
+          1,
+          3,
+          15
+        ]
+      }
+    ]
+  },
+  "starter": {
+    "overall": {
+      "attempts": 1512,
+      "wins": 0,
+      "n": 1512,
+      "rate": 0,
+      "confidence95": [
+        0,
+        0.0025342088371713574
+      ],
+      "outcomes": {
+        "victory": 0,
+        "defeat": 1429,
+        "timeout": 65,
+        "escaped": 18,
+        "error": 0
+      },
+      "allDuration": {
+        "count": 1512,
+        "mean": 30.02520017636684,
+        "p10": 20.474666666666668,
+        "median": 24.493333333333332,
+        "p90": 44.3648
+      },
+      "winningDuration": {
+        "count": 0,
+        "mean": null,
+        "p10": null,
+        "median": null,
+        "p90": null
+      },
+      "over90All": {
+        "wins": 0,
+        "n": 1512,
+        "rate": 0,
+        "confidence95": [
+          0,
+          0.0025342088371713574
+        ]
+      },
+      "over90Winners": {
+        "wins": 0,
+        "n": 0,
+        "rate": null,
+        "confidence95": [
+          0,
+          1
+        ]
+      },
+      "bossesDefeated": [
+        1063,
+        427,
+        22,
+        0,
+        0
+      ]
+    },
+    "byDifficulty": [
+      {
+        "group": "hard",
+        "attempts": 504,
+        "wins": 0,
+        "n": 504,
+        "rate": 0,
+        "confidence95": [
+          4.336808689942018e-19,
+          0.007564287542838142
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 484,
+          "timeout": 18,
+          "escaped": 2,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 504,
+          "mean": 28.89854365079365,
+          "p10": 20.509266666666665,
+          "median": 24.006,
+          "p90": 43.15486666666667
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 504,
+          "rate": 0,
+          "confidence95": [
+            4.336808689942018e-19,
+            0.007564287542838142
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          374,
+          125,
+          5,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "nightmare",
+        "attempts": 504,
+        "wins": 0,
+        "n": 504,
+        "rate": 0,
+        "confidence95": [
+          4.336808689942018e-19,
+          0.007564287542838142
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 473,
+          "timeout": 19,
+          "escaped": 12,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 504,
+          "mean": 27.063194444444452,
+          "p10": 20.120066666666666,
+          "median": 23.022,
+          "p90": 41.443200000000004
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 504,
+          "rate": 0,
+          "confidence95": [
+            4.336808689942018e-19,
+            0.007564287542838142
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          408,
+          95,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "normal",
+        "attempts": 504,
+        "wins": 0,
+        "n": 504,
+        "rate": 0,
+        "confidence95": [
+          4.336808689942018e-19,
+          0.007564287542838142
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 472,
+          "timeout": 28,
+          "escaped": 4,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 504,
+          "mean": 34.11386243386242,
+          "p10": 21.083933333333334,
+          "median": 34.87233333333333,
+          "p90": 47.713
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 504,
+          "rate": 0,
+          "confidence95": [
+            4.336808689942018e-19,
+            0.007564287542838142
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          281,
+          207,
+          16,
+          0,
+          0
+        ]
+      }
+    ],
+    "byPartySize": [
+      {
+        "group": "hard:1",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 125,
+          "timeout": 1,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 25.453121693121687,
+          "p10": 20.086333333333336,
+          "median": 21.321333333333335,
+          "p90": 37.46333333333334
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          98,
+          28,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "hard:2",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 117,
+          "timeout": 9,
+          "escaped": 0,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 25.943560846560846,
+          "p10": 20.71066666666667,
+          "median": 22.184333333333335,
+          "p90": 37.32
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          108,
+          18,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "hard:3",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 118,
+          "timeout": 7,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 30.442952380952402,
+          "p10": 21.613333333333333,
+          "median": 25.96066666666667,
+          "p90": 43.162333333333336
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          90,
+          36,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "hard:4",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 124,
+          "timeout": 1,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 33.754539682539686,
+          "p10": 22.072666666666667,
+          "median": 28.858333333333334,
+          "p90": 47.52066666666666
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          78,
+          43,
+          5,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "nightmare:1",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 123,
+          "timeout": 0,
+          "escaped": 3,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 23.407248677248667,
+          "p10": 18.775666666666666,
+          "median": 20.745333333333335,
+          "p90": 34.47833333333334
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          107,
+          19,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "nightmare:2",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 115,
+          "timeout": 10,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 25.00079894179894,
+          "p10": 19.668333333333333,
+          "median": 22.019,
+          "p90": 36.723
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          115,
+          11,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "nightmare:3",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 120,
+          "timeout": 5,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 29.023984126984107,
+          "p10": 21.110333333333333,
+          "median": 23.97866666666667,
+          "p90": 43.64266666666667
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          94,
+          32,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "nightmare:4",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 115,
+          "timeout": 4,
+          "escaped": 7,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 30.820746031746033,
+          "p10": 21.415666666666667,
+          "median": 26.10033333333333,
+          "p90": 45.437
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          92,
+          33,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "normal:1",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 124,
+          "timeout": 1,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 29.750571428571416,
+          "p10": 20.41433333333333,
+          "median": 24.613999999999997,
+          "p90": 41.751000000000005
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          78,
+          46,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "normal:2",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 113,
+          "timeout": 12,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 30.289978835978825,
+          "p10": 21.157666666666664,
+          "median": 24.400666666666666,
+          "p90": 43.324666666666666
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          91,
+          34,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "normal:3",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 116,
+          "timeout": 9,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 36.78248677248678,
+          "p10": 22.611333333333334,
+          "median": 38.99433333333333,
+          "p90": 52.32266666666666
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          59,
+          61,
+          6,
+          0,
+          0
+        ]
+      },
+      {
+        "group": "normal:4",
+        "attempts": 126,
+        "wins": 0,
+        "n": 126,
+        "rate": 0,
+        "confidence95": [
+          1.734723475976807e-18,
+          0.02958576448219845
+        ],
+        "outcomes": {
+          "victory": 0,
+          "defeat": 119,
+          "timeout": 6,
+          "escaped": 1,
+          "error": 0
+        },
+        "allDuration": {
+          "count": 126,
+          "mean": 39.63241269841268,
+          "p10": 23.575,
+          "median": 41.87533333333333,
+          "p90": 53.840333333333334
+        },
+        "winningDuration": {
+          "count": 0,
+          "mean": null,
+          "p10": null,
+          "median": null,
+          "p90": null
+        },
+        "over90All": {
+          "wins": 0,
+          "n": 126,
+          "rate": 0,
+          "confidence95": [
+            1.734723475976807e-18,
+            0.02958576448219845
+          ]
+        },
+        "over90Winners": {
+          "wins": 0,
+          "n": 0,
+          "rate": null,
+          "confidence95": [
+            0,
+            1
+          ]
+        },
+        "bossesDefeated": [
+          53,
+          66,
+          7,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "pairedProgressionVsStarter": {
+    "requestedPairs": 1512,
+    "matchedPairs": 1512,
+    "missingPairs": [],
+    "overall": {
+      "n": 1512,
+      "progressionWins": 302,
+      "starterWins": 0,
+      "progressionOnly": 302,
+      "starterOnly": 0,
+      "winRateDifference": 0.19973544973544974,
+      "confidence95": [
+        0.17957685637608048,
+        0.219894043094819
+      ],
+      "durationDifference": {
+        "count": 1512,
+        "mean": 33.680109347442645,
+        "p10": 0.8919333333333351,
+        "median": 34.57866666666666,
+        "p90": 64.20873333333333
+      },
+      "bossesDifference": {
+        "count": 1512,
+        "mean": 1.6593915343915344,
+        "p10": 0,
+        "median": 2,
+        "p90": 4
+      }
+    },
+    "byDifficulty": [
+      {
+        "group": "hard",
+        "n": 504,
+        "progressionWins": 54,
+        "starterWins": 0,
+        "progressionOnly": 54,
+        "starterOnly": 0,
+        "winRateDifference": 0.10714285714285714,
+        "confidence95": [
+          0.08011343887420838,
+          0.1341722754115059
+        ],
+        "durationDifference": {
+          "count": 504,
+          "mean": 31.853621693121692,
+          "p10": 0.711200000000001,
+          "median": 28.988999999999997,
+          "p90": 63.97533333333333
+        },
+        "bossesDifference": {
+          "count": 504,
+          "mean": 1.496031746031746,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "nightmare",
+        "n": 504,
+        "progressionWins": 38,
+        "starterWins": 0,
+        "progressionOnly": 38,
+        "starterOnly": 0,
+        "winRateDifference": 0.07539682539682539,
+        "confidence95": [
+          0.052323068177389964,
+          0.09847058261626082
+        ],
+        "durationDifference": {
+          "count": 504,
+          "mean": 26.63089682539682,
+          "p10": 0.489733333333335,
+          "median": 20.881666666666668,
+          "p90": 63.4822
+        },
+        "bossesDifference": {
+          "count": 504,
+          "mean": 1.2261904761904763,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "normal",
+        "n": 504,
+        "progressionWins": 210,
+        "starterWins": 0,
+        "progressionOnly": 210,
+        "starterOnly": 0,
+        "winRateDifference": 0.4166666666666667,
+        "confidence95": [
+          0.37358258160845315,
+          0.4597507517248802
+        ],
+        "durationDifference": {
+          "count": 504,
+          "mean": 42.555809523809536,
+          "p10": 5.4445333333333386,
+          "median": 46.221333333333334,
+          "p90": 65.50446666666667
+        },
+        "bossesDifference": {
+          "count": 504,
+          "mean": 2.255952380952381,
+          "p10": 0,
+          "median": 2,
+          "p90": 4
+        }
+      }
+    ],
+    "byPartySize": [
+      {
+        "group": "hard:1",
+        "n": 126,
+        "progressionWins": 10,
+        "starterWins": 0,
+        "progressionOnly": 10,
+        "starterOnly": 0,
+        "winRateDifference": 0.07936507936507936,
+        "confidence95": [
+          0.031978917454215834,
+          0.1267512412759429
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 25.06564021164022,
+          "p10": 0.08433333333333337,
+          "median": 18.565666666666665,
+          "p90": 62.657000000000004
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.2222222222222223,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "hard:2",
+        "n": 126,
+        "progressionWins": 12,
+        "starterWins": 0,
+        "progressionOnly": 12,
+        "starterOnly": 0,
+        "winRateDifference": 0.09523809523809523,
+        "confidence95": [
+          0.0437785921614455,
+          0.14669759831474496
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 29.39308994708995,
+          "p10": 1.016666666666664,
+          "median": 24.836333333333336,
+          "p90": 61.10033333333333
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.4206349206349207,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "hard:3",
+        "n": 126,
+        "progressionWins": 10,
+        "starterWins": 0,
+        "progressionOnly": 10,
+        "starterOnly": 0,
+        "winRateDifference": 0.07936507936507936,
+        "confidence95": [
+          0.031978917454215834,
+          0.1267512412759429
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 35.01344973544973,
+          "p10": 3.7183333333333373,
+          "median": 36.26533333333334,
+          "p90": 63.655
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.619047619047619,
+          "p10": 0,
+          "median": 2,
+          "p90": 3
+        }
+      },
+      {
+        "group": "hard:4",
+        "n": 126,
+        "progressionWins": 22,
+        "starterWins": 0,
+        "progressionOnly": 22,
+        "starterOnly": 0,
+        "winRateDifference": 0.1746031746031746,
+        "confidence95": [
+          0.10805279309574324,
+          0.24115355611060596
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 37.94230687830689,
+          "p10": 3.150666666666666,
+          "median": 41.26566666666666,
+          "p90": 69.06866666666666
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.7222222222222223,
+          "p10": 0,
+          "median": 2,
+          "p90": 3
+        }
+      },
+      {
+        "group": "nightmare:1",
+        "n": 126,
+        "progressionWins": 11,
+        "starterWins": 0,
+        "progressionOnly": 11,
+        "starterOnly": 0,
+        "winRateDifference": 0.0873015873015873,
+        "confidence95": [
+          0.03781724502953837,
+          0.13678592957363622
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 18.670962962962953,
+          "p10": -0.007666666666665378,
+          "median": 10.830000000000002,
+          "p90": 60.61266666666667
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 0.9444444444444444,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "nightmare:2",
+        "n": 126,
+        "progressionWins": 11,
+        "starterWins": 0,
+        "progressionOnly": 11,
+        "starterOnly": 0,
+        "winRateDifference": 0.0873015873015873,
+        "confidence95": [
+          0.03781724502953837,
+          0.13678592957363622
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 27.14847089947089,
+          "p10": 0.44466666666666654,
+          "median": 21.078,
+          "p90": 62.96233333333333
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.2777777777777777,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "nightmare:3",
+        "n": 126,
+        "progressionWins": 6,
+        "starterWins": 0,
+        "progressionOnly": 6,
+        "starterOnly": 0,
+        "winRateDifference": 0.047619047619047616,
+        "confidence95": [
+          0.010286400294475154,
+          0.08495169494362008
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 30.709783068783075,
+          "p10": 2.492000000000001,
+          "median": 23.679666666666666,
+          "p90": 64.25900000000001
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.373015873015873,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "nightmare:4",
+        "n": 126,
+        "progressionWins": 10,
+        "starterWins": 0,
+        "progressionOnly": 10,
+        "starterOnly": 0,
+        "winRateDifference": 0.07936507936507936,
+        "confidence95": [
+          0.031978917454215834,
+          0.1267512412759429
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 29.99437037037038,
+          "p10": 1.5359999999999996,
+          "median": 24.725666666666662,
+          "p90": 64.38366666666667
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.3095238095238095,
+          "p10": 0,
+          "median": 1,
+          "p90": 3
+        }
+      },
+      {
+        "group": "normal:1",
+        "n": 126,
+        "progressionWins": 48,
+        "starterWins": 0,
+        "progressionOnly": 48,
+        "starterOnly": 0,
+        "winRateDifference": 0.38095238095238093,
+        "confidence95": [
+          0.2958208468856397,
+          0.46608391501912216
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 36.325174603174595,
+          "p10": 0.28433333333333266,
+          "median": 43.54466666666667,
+          "p90": 63.10666666666667
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 1.9841269841269842,
+          "p10": 0,
+          "median": 2,
+          "p90": 4
+        }
+      },
+      {
+        "group": "normal:2",
+        "n": 126,
+        "progressionWins": 46,
+        "starterWins": 0,
+        "progressionOnly": 46,
+        "starterOnly": 0,
+        "winRateDifference": 0.36507936507936506,
+        "confidence95": [
+          0.2806785873130687,
+          0.4494801428456614
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 43.92794708994709,
+          "p10": 11.368333333333334,
+          "median": 46.70766666666667,
+          "p90": 65.832
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 2.2936507936507935,
+          "p10": 0,
+          "median": 2,
+          "p90": 4
+        }
+      },
+      {
+        "group": "normal:3",
+        "n": 126,
+        "progressionWins": 61,
+        "starterWins": 0,
+        "progressionOnly": 61,
+        "starterOnly": 0,
+        "winRateDifference": 0.48412698412698413,
+        "confidence95": [
+          0.39651890963566977,
+          0.5717350586182985
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 46.28871428571428,
+          "p10": 15.483666666666664,
+          "median": 48.542666666666676,
+          "p90": 67.68100000000001
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 2.4682539682539684,
+          "p10": 1,
+          "median": 3,
+          "p90": 4
+        }
+      },
+      {
+        "group": "normal:4",
+        "n": 126,
+        "progressionWins": 55,
+        "starterWins": 0,
+        "progressionOnly": 55,
+        "starterOnly": 0,
+        "winRateDifference": 0.4365079365079365,
+        "confidence95": [
+          0.34956524942968203,
+          0.523450623586191
+        ],
+        "durationDifference": {
+          "count": 126,
+          "mean": 43.681402116402104,
+          "p10": 21.32333333333333,
+          "median": 45.68466666666667,
+          "p90": 62.571666666666665
+        },
+        "bossesDifference": {
+          "count": 126,
+          "mean": 2.2777777777777777,
+          "p10": 1,
+          "median": 2,
+          "p90": 4
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "Held-out seeds assess this deterministic combat policy and scripted route, not human win probability. No human navigation, simultaneous split groups, roaming reinforcements, connection delay or decision time.",
+    "The party stays together, prefers normal encounters, follows the radial route, and uses generated campfires and a greedy gear/skill policy. Changing those decisions can materially change success.",
+    "Difficulty comparisons reuse seeds and party rosters. Aggregate observations across difficulties are correlated; use per-difficulty intervals and paired differences.",
+    "Per-hero solo samples are 28 campaigns per difficulty. Wide intervals and multiple comparisons prevent a precise hero balance ranking.",
+    "The starter control also forbids learned skills, so its contrast measures the combined benefit of progression equipment and skills, not equipment alone.",
+    "Zero wins in a finite control sample is not proof of impossibility. Control and progression routes can diverge after combat timing, injuries and equipment choices change.",
+    "The experiment stops at 100 simulated minutes and combat at 100 rounds. Timeout outcomes include stalemates and deadline censorship, not automatic player deaths.",
+    "Successful-duration summaries exclude defeats, escapes and timeouts; they cannot be read as the average length of every run."
+  ],
+  "validationRole": "First independent holdout for candidate 3; calibration rejected. These seeds are now observed validation data and must not be reused as an independent acceptance holdout after retuning.",
+  "accepted": false,
+  "calibrationAssessment": {
+    "status": "misses_targets",
+    "rates": [
+      {
+        "difficulty": "normal",
+        "target": 0.3,
+        "observed": 0.39186507936507936,
+        "confidence95": [
+          0.36219403989131693,
+          0.42235718787307996
+        ],
+        "targetInsideConfidenceInterval": false,
+        "deviationPercentagePoints": 9.186507936507937
+      },
+      {
+        "difficulty": "hard",
+        "target": 0.15,
+        "observed": 0.1130952380952381,
+        "confidence95": [
+          0.09499463900752002,
+          0.1341336071219738
+        ],
+        "targetInsideConfidenceInterval": false,
+        "deviationPercentagePoints": -3.69047619047619
+      },
+      {
+        "difficulty": "nightmare",
+        "targetRange": [
+          0.05,
+          0.1
+        ],
+        "observed": 0.06944444444444445,
+        "confidence95": [
+          0.055330741817953936,
+          0.08682735772102126
+        ],
+        "observedAndIntervalWithinRange": true
+      }
+    ],
+    "duration": {
+      "interpretation": "Duration is described against the user target range 60–90 simulated minutes. Neither every run inside that range nor a majority above 90 is an acceptance criterion.",
+      "targetRangeMinutes": [
+        60,
+        90
+      ],
+      "winningOver90": {
+        "wins": 158,
+        "n": 579,
+        "rate": 0.27288428324697755,
+        "confidence95": [
+          0.23818726213429464,
+          0.31057510536758615
+        ]
+      },
+      "meanSuccessfulMinutes": 87.15927230857794,
+      "medianSuccessfulMinutes": 86.30133333333333,
+      "p90SuccessfulMinutes": 93.50160000000001,
+      "medianWithinTargetRange": true
+    }
+  }
+}

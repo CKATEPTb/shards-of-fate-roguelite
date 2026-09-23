@@ -1,0 +1,39 @@
+Baseline npm test: incomplete; stopped after >10 minutes with one remaining worker.
+Observed failed files: 31; failed cases: 544.
+Log:
+C:\Users\Daniel\AppData\Local\Temp\shards-balance-audit-20260924\test.log
+Probable blocker: packages/game-core/src/__tests__/combat.test.ts unbounded stepCombat loops at lines 10 and 50 wait forever after the manual combat action boundary.
+Root subsequently fixed those two legacy loops; this file records the earlier baseline.
+
+Failed files (actual runner output):
+ ❯ tests/roaming-expedition.test.ts (13 tests | 12 failed) 517ms
+ ❯ tests/hero-mechanics.test.ts (21 tests | 8 failed) 119ms
+ ❯ tests/anatomy-combat.test.ts (12 tests | 8 failed) 384ms
+ ❯ tests/multiplayer-sync.test.ts (10 tests | 5 failed) 1307ms
+ ❯ tests/world-connectivity.test.ts (6 tests | 2 failed) 768ms
+ ❯ tests/campfire-collision.test.ts (12 tests | 4 failed) 619ms
+ ❯ tests/difficulty.test.ts (11 tests | 9 failed) 697ms
+ ❯ tests/party-health-expedition.test.ts (9 tests | 7 failed) 317ms
+ ❯ tests/expedition.test.ts (6 tests | 5 failed) 477ms
+ ❯ packages/game-core/src/__tests__/effects.test.ts (8 tests | 6 failed) 18ms
+ ❯ tests/loadout-model.test.ts (15 tests | 3 failed) 89ms
+ ❯ tests/house-generation.test.ts (5 tests | 4 failed) 211ms
+ ❯ tests/movement-save-compat.test.ts (8 tests | 6 failed) 2304ms
+ ❯ tests/hero-injury-art.test.ts (567 tests | 14 failed) 3612ms
+ ❯ tests/unit-art.test.ts (1674 tests | 399 failed) 14039ms
+ ❯ tools/content-validator/src/validator.test.ts (26 tests | 3 failed) 1034ms
+ ❯ tests/anatomy.test.ts (8 tests | 4 failed) 19ms
+ ❯ tests/session-storage.test.ts (7 tests | 3 failed) 444ms
+ ❯ packages/game-core/src/__tests__/snapshot.test.ts (21 tests | 1 failed) 28ms
+ ❯ tests/multiplayer-relay.test.ts (10 tests | 10 failed) 40082ms
+ ❯ tests/roaming-generation.test.ts (3 tests | 1 failed) 88ms
+ ❯ tests/multiplayer-commands.test.ts (5 tests | 2 failed) 727ms
+ ❯ tests/house-save-compat.test.ts (5 tests | 3 failed) 489ms
+ ❯ tests/world-structures.test.ts (4 tests | 1 failed) 244ms
+ ❯ tests/victory-chance.test.ts (10 tests | 1 failed) 890ms
+ ❯ tests/hero-roster-art.test.ts (14 tests | 13 failed) 39ms
+ ❯ tests/combat-integration.test.ts (3 tests | 2 failed) 77ms
+ ❯ tests/body-hud.test.ts (3 tests | 2 failed) 133ms
+ ❯ tests/movement-content.test.ts (11 tests | 1 failed) 706ms
+ ❯ tests/actor-depth.test.ts (3 tests | 3 failed) 5ms
+ ❯ packages/game-core/src/__tests__/random.test.ts (15 tests | 2 failed) 10ms

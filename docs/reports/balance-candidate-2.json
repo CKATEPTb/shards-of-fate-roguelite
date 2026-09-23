@@ -1,0 +1,9 @@
+{
+  "partyScaling": {
+    "1": { "hp": 0.33, "damage": 0.5 },
+    "2": { "hp": 0.9, "damage": 0.94 },
+    "3": { "hp": 1.6, "damage": 1.18 },
+    "4": { "hp": 2.4, "damage": 1.48 }
+  },
+  "bossHpMultiplier": 0.65
+}
