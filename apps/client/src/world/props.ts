@@ -1,5 +1,5 @@
 import type Phaser from 'phaser';
-import type { GridPoint, WorldChunk } from '@shards/shared';
+import type { GridPoint, WorldChunk, WorldPoi } from '@shards/shared';
 import { OcclusionIndex, occlusionAlpha, type Bounds, type Occluder, type OcclusionProbe } from './occlusion';
 import { grain } from './palette';
 import { ensurePropTexture, type PropKind } from './propArt';
@@ -14,6 +14,7 @@ import { createCampfires } from './campfires';
 import { createHouseHeroReveal, type HeroAppearance } from './house-hero-reveal';
 import { RenderedVisibility } from './rendered-visibility';
 import { textureAlpha } from './texture-alpha';
+import { containsPoint, entersHouse } from './house-visibility';
 
 export interface EnvironmentUpdate {
   /** Interpolated character feet and cursor use world pixels. The route uses tiles. */
@@ -25,11 +26,14 @@ export interface EnvironmentUpdate {
   delta: number;
   reducedMotion: boolean;
   visibleBounds?: Bounds;
+  campfireLit?: boolean;
 }
 export interface EnvironmentRenderer {
   update(input: EnvironmentUpdate): void;
   /** Transmission through rendered foreground image pixels at a world point. */
   pointVisibility(point: GridPoint, depth: number): number;
+  /** Closed house contents cannot be discovered through pointer interaction. */
+  isPoiVisible(poi: WorldPoi): boolean;
   destroy(): void;
   readonly count: number;
   readonly occludedCount: number;
@@ -80,7 +84,7 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
     } else if (isBush) object.foliage = { image, x: base.x, y: base.y, phase: variant % 628 / 100 };
     objects.set(id, object);
   }
-  const formations = [...createRocks(scene, chunk), ...createStructures(scene, chunk)];
+  const formations = [...(chunk.layer === 'basement' ? [] : createRocks(scene, chunk)), ...createStructures(scene, chunk)];
   formations.forEach((object, index) => {
     const id = chunk.size * chunk.size + index;
     objects.set(id, object);
@@ -89,6 +93,7 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
   const water = createWater(scene, chunk);
   const houseHeroReveal = createHouseHeroReveal(scene, formations);
   const roofs = formations.filter(object => object.occluder.house?.part === 'roof');
+  const enteredHouses = new Set<string>();
   const smoke = createChimneySmoke(scene, formations.flatMap(object => object.smokeSource ? [object.smokeSource] : []));
   const campfires = createCampfires(scene, chunk.pois.filter(poi => poi.kind === 'campfire').map(poi => tileCenter(poi.position)));
   const animatedCount = water.count + smoke.count + campfires.count + [...objects.values()].filter(object => object.foliage).length;
@@ -108,7 +113,17 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
     get revealedRoofs() { return roofs.reduce((count, object) => count + Number(object.images[0].alpha < 0.999), 0); },
     get exteriorReveals() { return houseHeroReveal.count; },
     pointVisibility(point, depth) { return visibility.pointVisibility(point, depth); },
-    update({ heroes, heroSprites, mobProbes = [], cursor, path, delta, reducedMotion, visibleBounds }) {
+    isPoiVisible(poi) {
+      const point = tileCenter(poi.position);
+      return roofs.every(roof => {
+        const house = roof.occluder.house!.geometry;
+        if (poi.structureId !== house.id && !containsPoint(house.interior, point)) return true;
+        // Require a hero inside now, even while a previously opened roof is
+        // still fading closed. Cursor and route probes cannot discover a room.
+        return enteredHouses.has(house.id) && roof.images[0].alpha < 0.999;
+      });
+    },
+    update({ heroes, heroSprites, mobProbes = [], cursor, path, delta, reducedMotion, visibleBounds, campfireLit = true }) {
       if (destroyed) return;
       if (!reducedMotion) ambientTime += Math.max(0, delta);
       for (const object of objects.values()) {
@@ -121,13 +136,18 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
       }
       water.update(delta, reducedMotion, visibleBounds);
       smoke.update(delta, reducedMotion, visibleBounds);
-      campfires.update(delta, reducedMotion, visibleBounds);
+      campfires.update(delta, reducedMotion, visibleBounds, campfireLit);
       // The full route changes on simulation ticks, not on animation frames.
       if (previousPath !== path) {
         routeOcclusion = index.find(path.map(point => ({ point: tileCenter(point), width: 7, height: 7, ground: true })));
         previousPath = path;
       }
       const probes: OcclusionProbe[] = heroes.map(point => ({ point, width: 25, height: 43 }));
+      enteredHouses.clear();
+      for (const roof of roofs) {
+        const house = roof.occluder.house!.geometry;
+        if (probes.some(probe => entersHouse(house, probe))) enteredHouses.add(house.id);
+      }
       probes.push(...mobProbes);
       if (cursor) probes.push({ point: { x: cursor.x, y: cursor.y + 0.5 }, groundPoint: cursor, width: 1, height: 1, ground: true });
       const next = index.find(probes);
@@ -173,6 +193,7 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
       campfires.destroy();
       fading.clear();
       obscured.clear();
+      enteredHouses.clear();
     },
   };
 }

@@ -21,11 +21,11 @@ export function createCampfires(scene: Phaser.Scene, sources: GridPoint[]) {
 
   return {
     count: fires.length + smoke.count,
-    update(delta: number, reducedMotion: boolean, viewport?: Bounds) {
+    update(delta: number, reducedMotion: boolean, viewport?: Bounds, lit = true) {
       if (destroyed) return;
       if (!reducedMotion && Number.isFinite(delta)) elapsed = (elapsed + Math.max(0, delta)) % (FLAME_FRAMES * FLAME_FRAME_MS);
       for (const fire of fires) {
-        const visible = intersectsViewport(fire.bounds, viewport);
+        const visible = lit && intersectsViewport(fire.bounds, viewport);
         fire.image.setVisible(visible);
         if (!visible || reducedMotion) continue;
         const frame = (Math.floor(elapsed / FLAME_FRAME_MS) + fire.offset) % FLAME_FRAMES;
@@ -33,7 +33,7 @@ export function createCampfires(scene: Phaser.Scene, sources: GridPoint[]) {
         fire.image.setTexture(flameTexture(frame));
         fire.frame = frame;
       }
-      smoke.update(delta, reducedMotion, viewport);
+      smoke.update(delta, reducedMotion, viewport, lit);
     },
     destroy() {
       if (destroyed) return;

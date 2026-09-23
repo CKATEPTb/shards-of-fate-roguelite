@@ -1,4 +1,5 @@
 import type { GridPoint, WorldChunk } from '@shards/shared';
+import { surfaceNodeIdForChunk } from '@shards/game-core';
 import { grain } from './palette';
 
 export interface RockFormation {
@@ -12,7 +13,7 @@ export interface RockFormation {
 /** Pure visual packing: every blocked rock cell is covered once, without changing simulation. */
 export function planRockLayout(chunk: WorldChunk): RockFormation[] {
   const occupied = new Uint8Array(chunk.tiles.length);
-  const [nodeX, nodeY] = chunk.id.split(',').map(Number);
+  const [nodeX, nodeY] = (chunk.surfaceNodeId ?? surfaceNodeIdForChunk(chunk.id)).split(',').map(Number);
   const salt = grain(Number.isFinite(nodeX) ? nodeX : 0, Number.isFinite(nodeY) ? nodeY : 0, chunk.season.length);
   const priority = (x: number, y: number, shape = 0) => grain(x, y, salt + shape);
   const fits = (x: number, y: number, width: number, height: number) => {

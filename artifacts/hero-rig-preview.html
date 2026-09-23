@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Осколки судьбы · Хват и движение</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101718;color:#d2c9b6;font:14px system-ui}main{max-width:1180px;margin:auto;padding:30px 24px}header{display:flex;justify-content:space-between;align-items:end;gap:20px;border-bottom:1px solid #36403d;padding-bottom:18px}small{color:#ac9270;letter-spacing:.2em;font-size:10px}h1{font:36px Georgia;margin:8px 0}h2{font:28px Georgia;margin:0}p{color:#949e93;line-height:1.6;margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr);gap:28px;margin-top:26px}.viewer{min-width:0}.stage{position:relative;display:grid;place-items:center;min-height:370px;background:radial-gradient(ellipse at 50% 76%,#66604435,transparent 62%),linear-gradient(#151f1e,#131c1b);border:1px solid #38413c;border-radius:10px;overflow:hidden}.stage:before{content:'';position:absolute;bottom:37px;width:180px;height:19px;border-radius:50%;background:#050b0960}.stage>canvas{position:relative;width:min(100%,352px);height:auto}.stage-label{position:absolute;top:14px;left:16px;color:#aaa68c;font-size:11px;letter-spacing:.08em}.stage-badge{position:absolute;right:13px;top:12px;border:1px solid #575843;border-radius:20px;padding:5px 9px;font-size:10px;color:#c4b78e}.angles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}.angle{padding:3px 4px 8px;cursor:pointer;background:#141f1d;border-color:#303d36}.angle canvas{display:block;width:min(100%,108px);height:auto;margin:auto}.angle span{font-size:11px;color:#b6b3a1}.angle[aria-pressed=true]{border-color:#b89964;background:#252e25}.transport{display:flex;align-items:center;gap:12px;margin-top:16px}.play{width:112px;flex:none;border-color:#8a7854}.scrubber{flex:1;min-width:0;display:grid;gap:5px}.scrubber-top{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#a9ae9f}input[type=range]{width:100%;margin:0;accent-color:#c0a272;cursor:pointer}.speed{width:82px;padding:9px}.controls{display:grid;align-content:start;gap:14px}.identity{min-height:76px}.identity p{font-size:13px;margin-top:6px}.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}label{display:grid;gap:7px;color:#aaa895;font-size:12px}select,button{background:#1c2725;border:1px solid #49524a;border-radius:5px;color:#e0d6c1;padding:10px;font:inherit;min-width:0}select{width:100%}button{cursor:pointer}select:focus,button:focus-visible,input:focus-visible{outline:2px solid #c8a66b;outline-offset:3px}canvas{image-rendering:pixelated}button:hover{border-color:#ac9769}.hint{font-size:11px;line-height:1.5;color:#8f9b90;margin-top:-6px;min-height:17px}.check{display:flex;align-items:center;gap:8px;cursor:pointer}.check input{accent-color:#bd9d64}.roster{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px;margin-top:26px}.hero{padding:7px 3px;background:#15211f;cursor:pointer}.hero[aria-pressed=true]{border-color:#bc9e69;background:#27322a}.hero canvas{display:block;width:100%;height:auto}.hero strong{font-size:10px;font-weight:500}.note{font-size:12px;margin-top:18px}.review-note{font-size:11px;color:#819084;margin-top:10px}.controls-end{display:flex;justify-content:space-between;align-items:center;gap:8px}.reset{font-size:11px;padding:7px 9px;background:transparent}
+select:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:760px){main{padding:20px 14px}.layout{grid-template-columns:1fr;gap:22px}.stage{min-height:270px}.stage>canvas{width:272px}.stage:before{bottom:27px;width:135px}.angles{gap:6px}.angle canvas{max-width:84px}.transport{gap:9px}.play{width:98px;padding:9px 5px}.speed{width:72px;padding:9px 4px}.roster{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}h1{font-size:29px}header p{display:none}.identity{min-height:0}.controls{gap:12px}.review-note{display:none}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+<main>
+<header><div><small>ОСКОЛКИ СУДЬБЫ · МАСТЕРСКАЯ ГЕРОЕВ</small><h1>Хват и движение</h1></div><p>Один герой · четыре ракурса</p></header>
+<section class="layout">
+  <div class="viewer">
+    <div class="stage"><span class="stage-label" id="viewLabel">Лицом</span><span class="stage-badge" id="grip">Стартовое снаряжение</span><canvas id="hero" width="64" height="64" aria-label="Крупный вид выбранного персонажа"></canvas></div>
+    <div class="angles" id="angles" aria-label="Синхронные ракурсы"></div>
+    <div class="transport">
+      <button class="play" id="play" type="button">Ⅱ Пауза</button>
+      <label class="scrubber"><span class="scrubber-top"><span>Кадр</span><output id="frameValue">1 / 4</output></span><input id="frame" aria-label="Кадр анимации" type="range" min="0" max="3" step="1" value="0"></label>
+      <select id="speed" class="speed" aria-label="Скорость просмотра"><option value="0.5">× 0,5</option><option value="1" selected>× 1</option><option value="1.5">× 1,5</option></select>
+    </div>
+    <p class="review-note">Все ракурсы показывают один и тот же кадр. Нажмите на ракурс, чтобы рассмотреть его крупнее.</p>
+  </div>
+  <div class="controls">
+    <div class="identity"><h2 id="name"></h2><p id="title"></p></div>
+    <div class="row"><label>Движение<select id="motion"><option value="idle">Покой</option><option value="walk">Ходьба</option><option value="attack">Атака оружием</option><option value="cast">Заклинание</option><option value="dodge">Уклонение</option><option value="block">Блок оружием</option><option value="shieldBlock">Блок щитом</option><option value="hit">Получение урона</option><option value="death">Падение</option></select></label><label>Крупный ракурс<select id="facing"><option value="south">Лицом</option><option value="east">Вправо</option><option value="north">Со спины</option><option value="west">Влево</option></select></label></div>
+    <div class="row"><label>Правая рука<select id="rightHand"></select></label><label>Левая рука<select id="leftHand"></select></label></div>
+    <p class="hint" id="weaponHint" aria-live="polite">В каждую свободную руку можно взять оружие или щит.</p>
+    <label>Комплект доспехов<select id="armorSet"></select></label>
+    <div class="row"><label>Шлем / капюшон<select id="head"></select></label><label>Одежда / доспех<select id="chest"></select></label></div>
+    <div class="row"><label>Перчатки<select id="gloves"></select></label><label>Поножи<select id="pants"></select></label></div>
+    <label>Сапоги<select id="boots"></select></label>
+    <label>Состояние тела<select id="body"><option value="healthy">Здоров</option><option value="limp">Повреждена левая нога</option><option value="disabledArm">Левая рука не действует</option><option value="disabledLegs">Ноги не действуют</option><option value="leftArm">Без левой руки</option><option value="rightArm">Без правой руки</option><option value="leftLeg">Без левой ноги</option><option value="crawl">Без обеих ног</option></select></label>
+    <div class="controls-end"><label class="check"><input id="bones" type="checkbox"> Скелет и крепления</label><button class="reset" id="reset" type="button">Стартовая экипировка</button></div>
+  </div>
+</section>
+<section class="roster" id="roster" aria-label="Герои"></section>
+<p class="note">Это просмотр внешности и движений. Оружие, предметы и состояние тела здесь не меняют сохранённую игру.</p>
+</main>
+<script type="module">
+import { gameContent } from '/src/catalog.ts';
+import { unitFramePixels } from '/src/art/unitFrames.ts';
+import { getHeroRig } from '/src/art/heroRig.ts';
+import { UNIT_CLIPS } from '/src/art/unitPose.ts';
+import { EQUIPMENT_ITEMS, EQUIPMENT_SETS, resolveHeroVisualLoadout } from '/src/art/heroLoadout.ts';
+import { HERO_WEAPONS } from '/src/art/heroWeapons.ts';
+
+const $ = id => document.getElementById(id);
+const heroes = gameContent.characters;
+const armorSlots = ['head', 'chest', 'gloves', 'pants', 'boots'];
+const handSlots = ['rightHand', 'leftHand'];
+const slots = [...handSlots, ...armorSlots];
+const equipmentItems = Object.values(EQUIPMENT_ITEMS);
+const equipmentSets = Object.values(EQUIPMENT_SETS);
+const facings = [['south', 'Лицом'], ['east', 'Вправо'], ['north', 'Со спины'], ['west', 'Влево']];
+const angleViews = new Map();
+const cache = new Map();
+let selected = heroes[0], body, loadout, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+let phase = 0, previousTime = performance.now(), shownFrame = 0, dirty = true;
+let attackSequence = ['attack'];
+
+for (const slot of slots) {
+  const select = $(slot);
+  select.add(new Option('Без предмета', 'none'));
+  for (const item of equipmentItems.filter(item => item.slot === (handSlots.includes(slot) ? 'hand' : slot))) {
+    const weapon = HERO_WEAPONS.find(weapon => weapon.kind === item.weapon?.kind);
+    const detail = weapon ? ` · ${weapon.name.toLowerCase()}${item.weapon.hands === 2 ? ', две руки' : ''}` : '';
+    select.add(new Option(`${item.name}${detail}`, item.id));
+  }
+}
+$('armorSet').add(new Option('Свой набор', 'custom'));
+for (const set of equipmentSets) $('armorSet').add(new Option(set.name, set.id));
+
+function paint(canvas, pixels) {
+  const context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  for (const pixel of pixels) { context.fillStyle = pixel.color; context.fillRect(pixel.x, pixel.y, 1, 1); }
+}
+
+for (const [facing, label] of facings) {
+  const button = document.createElement('button');
+  button.className = 'angle'; button.type = 'button'; button.setAttribute('aria-label', `Рассмотреть: ${label.toLowerCase()}`);
+  const canvas = document.createElement('canvas'); canvas.width = canvas.height = 64; canvas.setAttribute('aria-hidden', 'true');
+  const text = document.createElement('span'); text.textContent = label;
+  button.append(canvas, text); $('angles').append(button); angleViews.set(facing, { button, canvas });
+  button.onclick = () => { $('facing').value = facing; dirty = true; };
+}
+
+for (const hero of heroes) {
+  const button = document.createElement('button'); button.className = 'hero'; button.type = 'button'; button.dataset.id = hero.id;
+  const canvas = document.createElement('canvas'); canvas.width = canvas.height = 64; canvas.setAttribute('aria-hidden', 'true');
+  const name = document.createElement('strong'); name.textContent = hero.name;
+  button.append(canvas, name); $('roster').append(button);
+  paint(canvas, unitFramePixels(hero.sprite, hero.role, false, 'south', 'idle', 0, undefined, resolveHeroVisualLoadout(hero)));
+  button.onclick = () => { selected = hero; resetEquipment(); };
+}
+
+function clip() {
+  const motion = $('motion').value;
+  return motion === 'attack' ? { ...UNIT_CLIPS.attack, frames: UNIT_CLIPS.attack.frames * attackSequence.length }
+    : UNIT_CLIPS[motion] ?? UNIT_CLIPS.idle;
+}
+function poseFrame(motion, frame) {
+  if (motion !== 'attack') return { motion, frame };
+  const count = UNIT_CLIPS.attack.frames;
+  return { motion: attackSequence[Math.min(attackSequence.length - 1, Math.floor(frame / count))], frame: frame % count };
+}
+function updateHandAvailability() {
+  for (const slot of handSlots) {
+    const opposite = slot === 'rightHand' ? 'leftHand' : 'rightHand';
+    const otherItem = EQUIPMENT_ITEMS[loadout[opposite]];
+    const occupied = otherItem?.weapon?.hands === 2;
+    $(slot).disabled = occupied;
+    $(slot).title = occupied ? `${otherItem.name} занимает обе руки` : '';
+    $(slot).options[0].textContent = occupied ? 'Занята двуручным оружием' : 'Без предмета';
+    for (const option of $(slot).options) {
+      option.disabled = EQUIPMENT_ITEMS[option.value]?.weapon?.hands === 2 && !!otherItem;
+    }
+  }
+}
+function updateArmorSet() {
+  const matching = equipmentSets.find(set => armorSlots.every(slot => {
+    const item = set.itemIds.map(id => EQUIPMENT_ITEMS[id]).find(item => item?.slot === slot);
+    return item && loadout[slot] === item.id;
+  }));
+  $('armorSet').value = matching?.id ?? 'custom';
+}
+function refreshAppearance() {
+  body = Object.fromEntries(['head', 'torso', 'leftArm', 'rightArm', 'leftLeg', 'rightLeg'].map(part => [part, { current: 10, max: 10, lost: false }]));
+  const injury = $('body').value;
+  if (injury === 'limp') body.leftLeg.current = 3;
+  else if (injury === 'disabledArm') body.leftArm.current = 0;
+  else if (injury === 'disabledLegs') { body.leftLeg.current = 0; body.rightLeg.current = 0; }
+  else if (injury === 'crawl') { for (const part of ['leftLeg', 'rightLeg']) { body[part].current = -5; body[part].lost = true; } }
+  else if (injury !== 'healthy') { body[injury].current = -5; body[injury].lost = true; }
+  const overrides = {};
+  for (const slot of slots) { const value = $(slot).value; overrides[slot] = value === 'none' ? null : value; }
+  loadout = resolveHeroVisualLoadout(selected, overrides);
+  for (const slot of slots) $(slot).value = loadout[slot] ?? 'none';
+  updateHandAvailability(); updateArmorSet();
+  $('name').textContent = selected.name; $('title').textContent = selected.title;
+  document.querySelectorAll('.hero').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.id === selected.id)));
+  const rig = getHeroRig(selected.id, 'south', 'idle', 0, body, loadout);
+  const offensive = weapon => !!weapon && weapon.kind !== 'shield';
+  attackSequence = [offensive(rig.rightHandWeapon) && 'attack', offensive(rig.leftHandWeapon) && 'attackLeft'].filter(Boolean);
+  if (!attackSequence.length) attackSequence = ['attack'];
+  const heldItems = handSlots.map(slot => EQUIPMENT_ITEMS[loadout[slot]]).filter(Boolean);
+  const twoHanded = heldItems.find(item => item.weapon?.hands === 2);
+  $('grip').textContent = heldItems.length ? heldItems.map(item => HERO_WEAPONS.find(weapon => weapon.kind === item.weapon?.kind)?.name ?? item.name).join(' · ') + (twoHanded ? ' · две руки' : '') : 'Руки свободны';
+  $('weaponHint').textContent = attackSequence.length === 2 ? 'Сначала удар правой рукой, затем левой. Каждое оружие бросает свой кубик урона.'
+    : twoHanded ? `${twoHanded.name} занимает обе руки. Снимите его, чтобы освободить другую руку.`
+    : 'Одноручное оружие и щит можно взять в любую свободную руку. Для двуручного оружия освободите обе.';
+  $('motion').querySelector('option[value="attack"]').textContent = attackSequence.length === 2 ? 'Атака: правая → левая рука' : 'Атака оружием';
+  resetClip();
+}
+function resetEquipment() {
+  const starter = resolveHeroVisualLoadout(selected);
+  for (const slot of slots) $(slot).value = starter[slot] ?? 'none';
+  refreshAppearance();
+}
+function setPlaying(value) {
+  playing = value; previousTime = performance.now();
+  $('play').textContent = value ? 'Ⅱ Пауза' : '▶ Играть';
+  $('play').setAttribute('aria-label', value ? 'Приостановить анимацию' : 'Воспроизвести анимацию');
+  $('play').setAttribute('aria-pressed', String(value));
+}
+function resetClip() {
+  phase = 0; shownFrame = 0; $('frame').value = '0'; $('frame').max = String(clip().frames - 1);
+  cache.clear(); dirty = true;
+}
+$('play').onclick = () => setPlaying(!playing);
+$('reset').onclick = resetEquipment;
+$('frame').addEventListener('input', () => { setPlaying(false); shownFrame = Number($('frame').value); phase = shownFrame / clip().frameRate * 1000; dirty = true; });
+$('motion').onchange = resetClip;
+$('facing').onchange = () => { dirty = true; };
+$('bones').onchange = () => { cache.clear(); dirty = true; };
+$('body').onchange = refreshAppearance;
+for (const slot of slots) $(slot).onchange = () => {
+  if (handSlots.includes(slot)) {
+    const opposite = slot === 'rightHand' ? 'leftHand' : 'rightHand';
+    const selectedItem = EQUIPMENT_ITEMS[$(slot).value];
+    const otherItem = EQUIPMENT_ITEMS[$(opposite).value];
+    if (selectedItem?.weapon?.hands === 2 && otherItem || otherItem?.weapon?.hands === 2) {
+      $(slot).value = loadout[slot] ?? 'none';
+      return;
+    }
+  }
+  refreshAppearance();
+};
+$('armorSet').onchange = () => {
+  const set = EQUIPMENT_SETS[$('armorSet').value];
+  if (!set) return;
+  for (const itemId of set.itemIds) {
+    const item = EQUIPMENT_ITEMS[itemId];
+    if (item && armorSlots.includes(item.slot)) $(item.slot).value = item.id;
+  }
+  refreshAppearance();
+};
+document.addEventListener('visibilitychange', () => { previousTime = performance.now(); });
+
+function frameCanvas(facing, motion, frame) {
+  const key = `${facing}:${motion}:${frame}`;
+  if (cache.has(key)) return cache.get(key);
+  const canvas = document.createElement('canvas'); canvas.width = canvas.height = 64;
+  paint(canvas, unitFramePixels(selected.sprite, selected.role, false, facing, motion, frame, body, loadout));
+  if ($('bones').checked) {
+    const rig = getHeroRig(selected.id, facing, motion, frame, body, loadout), context = canvas.getContext('2d');
+    context.strokeStyle = '#71f2c8b8'; context.lineWidth = 0.5;
+    for (const [name, bone] of Object.entries(rig.bones)) {
+      if (!bone.parent) continue;
+      const a = rig.points[bone.parent], b = rig.points[name];
+      context.beginPath(); context.moveTo(a.x + 0.5, a.y + 0.5); context.lineTo(b.x + 0.5, b.y + 0.5); context.stroke();
+    }
+    for (const socket of Object.values(rig.sockets)) { context.fillStyle = '#fff0bd'; context.fillRect(socket.x - 1, socket.y - 1, 2, 2); }
+  }
+  cache.set(key, canvas);
+  if (cache.size > 96) cache.delete(cache.keys().next().value);
+  return canvas;
+}
+function copyFrame(target, source) {
+  const context = target.getContext('2d'); context.clearRect(0, 0, 64, 64); context.imageSmoothingEnabled = false; context.drawImage(source, 0, 0);
+}
+function render(now) {
+  const elapsed = Math.min(100, Math.max(0, now - previousTime)); previousTime = now;
+  const motion = $('motion').value, current = clip();
+  if (playing && !document.hidden) {
+    const hold = current.repeat === 0 ? motion === 'death' ? 360 : 140 : 0;
+    phase = (phase + elapsed * Number($('speed').value)) % (current.frames / current.frameRate * 1000 + hold);
+    const frame = Math.min(current.frames - 1, Math.floor(phase * current.frameRate / 1000));
+    if (shownFrame !== frame) { shownFrame = frame; dirty = true; }
+  }
+  if (dirty) {
+    dirty = false;
+    const facing = $('facing').value;
+    const posed = poseFrame(motion, shownFrame);
+    for (const [direction, { button, canvas }] of angleViews) {
+      copyFrame(canvas, frameCanvas(direction, posed.motion, posed.frame)); button.setAttribute('aria-pressed', String(direction === facing));
+    }
+    copyFrame($('hero'), angleViews.get(facing).canvas);
+    $('viewLabel').textContent = facings.find(([direction]) => direction === facing)[1];
+    $('frame').max = String(current.frames - 1); $('frame').value = String(shownFrame);
+    const strikeLabel = motion === 'attack' && attackSequence.length === 2 ? `${posed.motion === 'attackLeft' ? 'Левая' : 'Правая'} рука · ` : '';
+    $('frameValue').textContent = `${strikeLabel}${shownFrame + 1} / ${current.frames}`;
+    $('frame').setAttribute('aria-valuetext', `Кадр ${shownFrame + 1} из ${current.frames}`);
+  }
+  requestAnimationFrame(render);
+}
+resetEquipment(); resetClip(); setPlaying(playing); requestAnimationFrame(render);
+</script>
+</html>

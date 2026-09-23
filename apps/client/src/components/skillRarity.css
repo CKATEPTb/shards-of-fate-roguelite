@@ -1,0 +1,9 @@
+[data-rarity="common"] { --skill-rarity: #b9c7bd; }
+[data-rarity="rare"] { --skill-rarity: #84c1ee; }
+[data-rarity="epic"] { --skill-rarity: #cda0f2; }
+[data-rarity="legendary"] { --skill-rarity: #edc071; }
+.skill-rarity-badge { display: inline-flex; align-items: center; gap: .45em; width: max-content; max-width: 100%; padding: 3px 7px; border: 1px solid color-mix(in srgb, var(--skill-rarity) 27%, transparent); border-radius: 4px; background: color-mix(in srgb, var(--skill-rarity) 7%, #0a1622d9); color: var(--skill-rarity); font: 500 9px/1.25 'Manrope', Arial, sans-serif; letter-spacing: .03em; white-space: nowrap; }
+.skill-rarity-badge > span { font-size: .65em; opacity: .85; }
+.battle-card-rarity { position: absolute; left: 7px; top: 7px; color: var(--skill-rarity); font-size: 7px; line-height: 1; filter: drop-shadow(0 0 3px color-mix(in srgb, var(--skill-rarity) 55%, transparent)); }
+.battle-card-detail .skill-rarity-badge { margin-top: 6px; }
+.character-skill-content > .skill-rarity-badge { margin: 5px 0 1px; }

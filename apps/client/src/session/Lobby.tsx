@@ -1,42 +1,106 @@
-import { useState, type CSSProperties } from 'react';
-import { DIFFICULTY_PROFILES } from '@shards/game-data';
+import { useEffect, useState } from 'react';
 import type { DifficultyId } from '@shards/shared';
-import { gameContent, roleNames } from '../catalog';
-import { Portrait } from '../components/Portrait';
+import { gameContent } from '../catalog';
+import { ExpeditionGame } from '../ExpeditionGame';
+import { CampfireRoster } from './CampfireRoster';
+import { CampHeroDetails } from './CampHeroDetails';
+import { CampDifficulty } from './CampDifficulty';
+import { CampIcon } from './CampIcon';
+import { MenuFrame } from './MenuFrame';
+import { InviteDialog } from './InviteDialog';
+import { RoomUnavailableDialog } from './RoomUnavailableDialog';
+import { createInviteLink, type LobbyInvitation } from './invitations';
+import { useLobbyNetwork } from './useLobbyNetwork';
+import type { SavedSession } from './storage';
+import './campLobby.css';
+import './multiplayer.css';
 
 function randomSeed(): string { return [...crypto.getRandomValues(new Uint8Array(6))].map(value => value.toString(16).padStart(2, '0')).join('').toUpperCase(); }
-const number = (value: number) => value.toLocaleString('ru-RU');
-const roster = ['tank', 'healer', 'damage'].flatMap(role => gameContent.characters.filter(hero => hero.role === role));
+const checkpoint = () => true;
+const ended = () => {};
 
-export function Lobby({ hasSave, onBack, onStart }: { hasSave: boolean; onBack: () => void; onStart: (hero: string, difficulty: DifficultyId, seed: string) => void }) {
-  const [selected, setSelected] = useState('guardian');
-  const [difficultyId, setDifficulty] = useState<DifficultyId>('normal');
-  const [seed, setSeed] = useState(randomSeed);
+export function Lobby({ onBack, onStart, invitation = null, savedRun }: { onBack: () => void; onStart: (hero: string, difficulty: DifficultyId, seed: string) => void; invitation?: LobbyInvitation | null; savedRun?: SavedSession }) {
+  const [selected, setSelected] = useState(savedRun?.cooperative ? savedRun.hostHeroId : 'guardian');
+  const [difficultyId, setDifficulty] = useState<DifficultyId>(savedRun?.cooperative?.difficultyId ?? 'normal');
+  const [seed, setSeed] = useState(() => savedRun?.cooperative?.seed ?? randomSeed());
   const [starting, setStarting] = useState(false);
-  const hero = gameContent.characters.find(character => character.id === selected)!;
-  const difficulty = DIFFICULTY_PROFILES[difficultyId];
-  return <form className="lobby" aria-label="Лобби" onSubmit={event => { event.preventDefault(); if (starting || !seed.trim()) return; setStarting(true); try { onStart(selected, difficultyId, seed); } finally { setStarting(false); } }}>
-    <header className="lobby-heading"><div><span className="eyebrow">Новое путешествие</span><h1>У первого костра</h1></div><button type="button" className="lobby-back" onClick={onBack}>← Назад</button></header>
-    <div className="lobby-body">
-      <section className="lobby-roster"><h2><span>01</span> Выберите героя</h2><div className="hero-choices" role="group" aria-label="Персонаж">
-        {roster.map(character => <button type="button" key={character.id} className="hero-choice" data-character={character.id} aria-pressed={selected === character.id} onClick={() => setSelected(character.id)} style={{ '--hero-color': character.color } as CSSProperties}>
-          <Portrait unit={character} /><strong>{character.name}</strong><small>{roleNames[character.role]}</small>
-        </button>)}
-      </div></section>
-      <section className="lobby-hero" aria-label="Выбранный герой" style={{ '--hero-color': hero.color } as CSSProperties}>
-        <div className="lobby-portrait"><Portrait unit={hero} /></div><span className="eyebrow">{roleNames[hero.role]}</span><h2>{hero.name}</h2><p className="hero-title">{hero.title}</p><p className="hero-description">{hero.description}</p>
-        <div className="lobby-skills">{hero.skillIds.map(id => { const skill = gameContent.skills.find(item => item.id === id)!; return <div key={id}><strong>{skill.name}</strong><p>{skill.description}</p></div>; })}
-          {hero.passive && <div><strong>{hero.passive.name} · пассивно</strong><p>{hero.passive.description}</p></div>}
-        </div>
-      </section>
-      <section className="lobby-options"><h2><span>02</span> Сложность</h2><div className="difficulty-choices" role="group" aria-label="Сложность">
-        {Object.values(DIFFICULTY_PROFILES).map(profile => <button key={profile.id} type="button" onClick={() => setDifficulty(profile.id)} aria-pressed={profile.id === difficultyId}>{profile.name}</button>)}
-      </div><p className="difficulty-description">{difficulty.description}</p><dl className="difficulty-stats">
-        <div><dt>Здоровье врагов</dt><dd>×{number(difficulty.enemyHpMultiplier)}</dd></div><div><dt>Урон врагов</dt><dd>×{number(difficulty.enemyDamageMultiplier)}</dd></div>
-        <div><dt>Эпические группы</dt><dd>{Math.round(difficulty.epicGroupChance * 100)}%</dd></div><div><dt>Мини-босс в чанке</dt><dd>{Math.round(difficulty.minibossChunkChance * 100)}%</dd></div>
-      </dl><label className="seed-label" htmlFor="session-seed"><span>03</span> Сид мира</label><div className="seed-control"><input id="session-seed" maxLength={120} required value={seed} onChange={event => setSeed(event.target.value)} spellCheck={false} autoComplete="off" /><button type="button" onClick={() => setSeed(randomSeed())} aria-label="Случайный сид">⟳</button></div><p className="seed-note">Одинаковый сид создаёт тот же мир. Сложность остаётся неизменной до конца сессии.</p>
-      </section>
-    </div>
-    <footer className="lobby-footer"><p>{hasSave ? 'При запуске предыдущее сохранение будет заменено.' : 'Путешествие закончится со смертью героя.'}</p><button className="primary-button" type="submit" disabled={starting || !seed.trim()}>{starting ? 'Создаём мир…' : 'Начать'}<span aria-hidden="true">→</span></button></footer>
-  </form>;
+  const [inviteOpen, setInviteOpen] = useState(false);
+  const lobby = useLobbyNetwork(invitation, savedRun);
+  const { network, view, busy, networked, roomMissing } = lobby;
+  const room = view.room;
+  const guest = !!invitation;
+  const member = room?.members.find(participant => participant.id === view.memberId);
+  const ready = member?.ready ?? false;
+  const connectedToRoom = view.status === 'connected' && !!room && !!member;
+  const canStart = connectedToRoom && room.phase === 'lobby' && network.isHost && room.members.length > 0 && room.members.every(participant => participant.ready);
+  const fixedRun = room?.run ?? savedRun?.cooperative;
+  const allowedHeroIds = fixedRun?.characterIds ?? room?.heroIds;
+  const frozenWorld = guest || !!fixedRun;
+  const controlledHeroId = network.controlledHeroId;
+  const currentSelection = controlledHeroId ?? selected;
+  const heroId = allowedHeroIds && !allowedHeroIds.includes(currentSelection) ? allowedHeroIds[0] : currentSelection;
+  const hero = gameContent.characters.find(character => character.id === heroId)!;
+  const occupants = Object.fromEntries((room?.members ?? []).filter(participant => participant.ready).map(member => [member.heroId, { name: member.name, isSelf: member.id === view.memberId, ready: true }]));
+  const inviteLink = room ? createInviteLink(room.code) : '';
+  useEffect(() => { if (controlledHeroId) setSelected(controlledHeroId); }, [controlledHeroId]);
+
+  const leave = () => { lobby.disconnect(); onBack(); };
+  const invite = () => {
+    if (busy || starting || guest && !room) return;
+    setInviteOpen(true);
+    if (!room) void lobby.createRoom(heroId);
+  };
+  const changeReadinessOrStart = () => {
+    if (starting || busy || roomMissing || !connectedToRoom) return;
+    if (canStart) {
+      if (seed.trim()) void lobby.startRun(seed.trim(), difficultyId);
+    } else {
+      void lobby.setReady(!ready);
+    }
+  };
+
+  if (view.status === 'connected' && room?.phase === 'playing' && ready && view.initialState) {
+    return <ExpeditionGame key={room.code} initial={view.initialState} network={network} onCheckpoint={checkpoint} onEnded={ended} onLeave={leave} />;
+  }
+
+  return <MenuFrame><form className={`lobby camp-lobby${networked ? ' online-lobby' : ''}`} aria-label="Лобби" onSubmit={event => {
+    event.preventDefault();
+    if (starting || busy || roomMissing) return;
+    if (networked) {
+      changeReadinessOrStart();
+      return;
+    }
+    if (!seed.trim()) return;
+    setStarting(true);
+    try { onStart(selected, difficultyId, seed.trim()); } finally { setStarting(false); }
+  }}>
+    <header className="lobby-heading">
+      <button type="button" className="camp-tool lobby-back" aria-label="Назад" title="Назад" onClick={leave}><CampIcon name="back" /></button>
+      <CampDifficulty value={fixedRun?.difficultyId ?? (guest ? undefined : difficultyId)} onChange={setDifficulty} disabled={busy || starting || frozenWorld} />
+    </header>
+    <div className="camp-lobby-body"><div className="camp-stage">
+      <CampfireRoster selectedId={heroId} occupants={occupants} allowedHeroIds={allowedHeroIds} disabled={starting || busy || ready || networked && !connectedToRoom} onSelect={id => {
+        if (ready) return;
+        if (room) void lobby.selectHero(id); else setSelected(id);
+      }} action={guest && !room
+        ? <button type="button" className="camp-invite-button" disabled={busy || !!invitation.error} onClick={() => { void lobby.retryJoin(); }}>{busy ? 'Подключение…' : 'Повторить'}</button>
+        : <button type="button" className="camp-invite-button" disabled={busy || starting} onClick={invite} aria-label="Пригласить" aria-haspopup="dialog"><CampIcon name="party" /><span>Пригласить</span>{room && <span className="camp-party-count" aria-label={`Отряд: ${room.members.length} из 4`}>{room.members.length}/4</span>}</button>
+      } />
+      <CampHeroDetails key={hero.id} hero={hero} />
+    </div></div>
+    <footer className="lobby-footer">
+      <div className="camp-world-controls">
+        {guest ? <p className="camp-host-note">{room?.phase === 'playing' ? 'Выберите героя и нажмите «Готов», чтобы войти в поход' : 'Мир и сложность выбирает хост'}</p> : <div className="camp-seed-field"><label htmlFor="session-seed">Сид мира</label><span className="seed-control"><input id="session-seed" maxLength={120} required pattern=".*\S.*" value={fixedRun?.seed ?? seed} disabled={starting || busy || frozenWorld} onChange={event => setSeed(event.target.value)} spellCheck={false} autoComplete="off" /><button type="button" disabled={starting || busy || frozenWorld} onClick={() => setSeed(randomSeed())} aria-label="Случайный сид" title="Случайный сид">⟳</button></span></div>}
+        {networked
+          ? <button className="primary-button" type="button" disabled={starting || busy || roomMissing || !connectedToRoom || canStart && !seed.trim()} aria-pressed={connectedToRoom && !canStart ? ready : undefined} onClick={changeReadinessOrStart}>
+            {starting || busy ? room ? 'Подождите…' : 'Подключение…' : !connectedToRoom ? 'Нет подключения' : canStart ? 'Играть' : ready ? 'Не готов' : 'Готов'}
+            {canStart && <span aria-hidden="true">→</span>}
+          </button>
+          : <button className="primary-button" type="submit" disabled={starting || !seed.trim()}>{starting ? 'Подождите…' : 'Играть'}<span aria-hidden="true">→</span></button>}
+      </div>
+      {lobby.error && !inviteOpen && !roomMissing && <p className="online-error" role="alert">{lobby.error}</p>}
+    </footer>
+    {inviteOpen && !roomMissing && <InviteDialog link={inviteLink} busy={busy} error={lobby.error} onClose={() => setInviteOpen(false)} />}
+    {roomMissing && <RoomUnavailableDialog onExit={leave} />}
+  </form></MenuFrame>;
 }

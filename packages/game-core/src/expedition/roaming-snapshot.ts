@@ -25,9 +25,9 @@ function restoreGroup(value: unknown, expected: RoamingGroup[], chunk: WorldChun
   if (targetActorId !== null && !world.actors.some(actor => actor.id === targetActorId)
     || mode === 'chase' && !targetActorId || mode === 'patrol' && targetActorId !== null) throw new Error('Invalid pursuit target');
   const regions = chunkRegions(chunk);
-  const members = array(data.members, 'group.members', 4).map((value, index) => {
+  const members = array(data.members, 'group.members', 4).map(value => {
     const mob = record(value, 'mob', ['id', 'definitionId', 'position', 'path', 'movement']);
-    const template = original.members[index];
+    const template = original.members.find(member => member.id === mob.id);
     if (!template) throw new Error('Too many group members');
     same(mob.id, template.id, 'mob.id'); same(mob.definitionId, template.definitionId, 'mob.definitionId');
     const position = point(mob.position, chunk);
@@ -54,7 +54,7 @@ function restoreGroup(value: unknown, expected: RoamingGroup[], chunk: WorldChun
     }
     return member;
   });
-  if (members.length !== original.members.length) throw new Error('Incomplete group roster');
+  if (!members.length || new Set(members.map(member => member.id)).size !== members.length) throw new Error('Invalid surviving group roster');
   return { ...original, home, mode, targetActorId, members, decision: integer(data.decision, 'group.decision'), pauseMs: finite(data.pauseMs, 'group.pauseMs', 0, 60_000) };
 }
 

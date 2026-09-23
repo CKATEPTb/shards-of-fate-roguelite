@@ -8,13 +8,33 @@ import { planChunk } from './plan';
 import { withinStructure } from './structures';
 import { applyCampfireObstacles } from './campfires';
 import { applyBushes } from './bushes';
+import { parseBasementChunkId, resolveWorldNode } from './chunk-identity';
+import { buildBasementChunk } from './basements';
+import { applySeasonAltar } from './season-altars';
 
 const MID = Math.floor(CHUNK_SIZE / 2);
 /** The local stream and shared seam streams are independent of visitation order. */
 export function generateChunk(graph: WorldGraph, nodeId: string): WorldChunk {
-  const node = graph.nodes.find(candidate => candidate.id === nodeId);
+  if (graph.generatorVersion !== 3) throw new Error('Unsupported world generator version');
+  const node = resolveWorldNode(graph, nodeId);
   if (!node) throw new Error(`Unknown world node: ${nodeId}`);
+  if (nodeId !== node.id) {
+    if ((graph.structureVersion ?? 1) < 3 || !parseBasementChunkId(nodeId)) throw new Error(`Unknown world chunk: ${nodeId}`);
+    const plan = planChunk(graph, node);
+    const entrance = plan.pois.find(poi => poi.kind === 'stairs-down' && poi.destination?.chunkId === nodeId);
+    if (!entrance) throw new Error(`Unknown basement: ${nodeId}`);
+    return buildBasementChunk(graph, node, entrance, plan.pois.find(poi => poi.kind === 'encounter')!.encounterId!);
+  }
   return buildChunk(graph, node);
+}
+
+/** Existence checks only inspect small deterministic plans, without allocating chunk terrain. */
+export function isWorldChunkId(graph: WorldGraph, chunkId: string): boolean {
+  const node = resolveWorldNode(graph, chunkId);
+  if (!node) return false;
+  if (node.id === chunkId) return true;
+  return (graph.structureVersion ?? 1) >= 3 && !!parseBasementChunkId(chunkId)
+    && planChunk(graph, node).pois.some(poi => poi.kind === 'stairs-down' && poi.destination?.chunkId === chunkId);
 }
 
 /** Bulk audit callers already hold a node and avoid repeating a whole-graph lookup. */
@@ -28,7 +48,7 @@ export function buildChunk(graph: WorldGraph, node: WorldNode): WorldChunk {
   const patchSize = Math.ceil(CHUNK_SIZE / 4);
   const patches = Array.from({ length: patchSize * patchSize }, (_, index) => hashString(`${node.id}:${index % patchSize}:${Math.floor(index / patchSize)}:${seedHash}`) % 13);
   const chunk: WorldChunk = {
-    id: node.id, size: CHUNK_SIZE, season: node.season,
+    id: node.id, ...((graph.structureVersion ?? 1) >= 3 ? { layer: 'surface' as const, surfaceNodeId: node.id } : {}), size: CHUNK_SIZE, season: node.season,
     tiles: Array.from({ length: CHUNK_SIZE * CHUNK_SIZE }, (_, index) => {
       const x = index % CHUNK_SIZE; const y = Math.floor(index / CHUNK_SIZE);
       const patch = patches[Math.floor(y / 4) * patchSize + Math.floor(x / 4)];
@@ -53,6 +73,8 @@ export function buildChunk(graph: WorldGraph, node: WorldNode): WorldChunk {
     paint(chunk, pocket.gate.position, 'path');
   }
   for (const poi of chunk.pois) {
+    // Interior loot/stairs are reached through the real doorway after the walls are painted.
+    if (poi.structureId) continue;
     if (!insidePocketMask(poi.position, pocket)) connectToMaze(chunk, poi.position, reserved, rng);
     for (let y = poi.position.y - 1; y <= poi.position.y + 1; y++) for (let x = poi.position.x - 1; x <= poi.position.x + 1; x++) paint(chunk, { x, y }, ground);
   }
@@ -63,6 +85,7 @@ export function buildChunk(graph: WorldGraph, node: WorldNode): WorldChunk {
   }
   applyCampfireObstacles(chunk);
   applyBushes(chunk, graph.seed);
+  applySeasonAltar(graph, chunk);
   const result = validateChunk(chunk);
   if (!result.valid) throw new Error(`Chunk generation invariant failed at ${node.id}: ${result.errors.join('; ')}`);
   return chunk;

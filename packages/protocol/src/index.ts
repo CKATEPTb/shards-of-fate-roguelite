@@ -1,9 +1,11 @@
 import { z } from 'zod';
 
+export * from './multiplayer';
+
 /** Transport contracts only. Authentication and host authority live in the Phase 2 coordinator. */
 export const PROTOCOL_VERSION = 1 as const;
 const id = z.string().min(1).max(128);
-const slot = z.enum(['helmet', 'chest', 'gloves', 'belt', 'pants', 'boots', 'amulet', 'ring1', 'ring2', 'mainHand', 'offHand', 'scroll1', 'scroll2']);
+const slot = z.enum(['helmet', 'chest', 'gloves', 'belt', 'pants', 'boots', 'amulet', 'ring1', 'ring2', 'rightHand', 'leftHand', 'scroll1', 'scroll2']);
 const header = {
   protocolVersion: z.literal(PROTOCOL_VERSION), messageId: id, lobbyId: id,
   runId: id, senderId: id, senderSequence: z.number().int().nonnegative().safe(),

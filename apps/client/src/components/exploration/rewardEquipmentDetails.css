@@ -1,0 +1,31 @@
+.reward-equipment-details { min-width: 0; margin-top: 10px; color: #c5d1ba; font: 400 14px/1.55 Manrope, Arial, sans-serif; }
+.reward-equipment-details p { margin: 0; overflow-wrap: anywhere; }
+.reward-equipment-details p.reward-equipment-condition { margin-top: 8px; color: #e0bd91; font-size: 13px; }
+.reward-equipment-weapon { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-top: 8px; color: #c8d6b5; }
+.reward-equipment-weapon > span { color: #b0bea0; font-size: 13px; }
+.reward-equipment-weapon strong { color: #e3d4a6; font-weight: 650; }
+.reward-equipment-attributes, .reward-equipment-parts { margin-top: 8px; padding-top: 8px; border-top: 1px solid #a2b08030; }
+.reward-equipment-attributes dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 5px 16px; margin: 0; font-size: 13px; }
+.reward-equipment-attributes dl > div { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.reward-equipment-attributes dt { min-width: 0; overflow-wrap: anywhere; }
+.reward-equipment-attributes dd { display: flex; flex: none; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 4px; margin: 0; font-variant-numeric: tabular-nums; font-weight: 650; }
+.reward-equipment-attributes dd small { color: #b3bda2; font-size: 12px; font-weight: 400; }
+.reward-equipment-details [data-change='gain'] { color: #c0e19b; }
+.reward-equipment-details [data-change='loss'] { color: #e6aea4; }
+.reward-equipment-details [data-change='same'] { color: #b1bba3; }
+.reward-equipment-parts { display: grid; gap: 6px; font-size: 13px; }
+.reward-equipment-parts > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; }
+.reward-equipment-parts strong { color: #b5c3a4; font-size: inherit; font-weight: 500; }
+.reward-equipment-parts > div > div { display: flex; flex-wrap: wrap; gap: 2px 12px; }
+.reward-equipment-parts span { display: inline-flex; gap: 4px; }
+.reward-equipment-parts b { color: #d5e1c1; font-weight: 600; font-variant-numeric: tabular-nums; }
+.reward-equipment-parts [data-lost='true'] { color: #b9a791; }
+.reward-equipment-parts small { flex-basis: 100%; color: #d4b795; font-size: 12px; }
+@media (max-width: 700px) {
+  .reward-equipment-details { margin-top: 8px; font-size: 12px; line-height: 1.5; }
+  .reward-equipment-details p.reward-equipment-condition, .reward-equipment-weapon > span,
+  .reward-equipment-attributes dl, .reward-equipment-parts { font-size: 12px; }
+  .reward-equipment-attributes, .reward-equipment-parts { margin-top: 7px; padding-top: 7px; }
+  .reward-equipment-parts > div { gap: 2px 6px; }
+  .reward-equipment-parts > div > div { gap: 2px 8px; }
+}

@@ -1,5 +1,47 @@
-# Session coordinator — Phase 2
+# RSocket session relay
 
-Reserved for the Node.js + RSocket relay. No server gameplay simulation.
-Phase 0–1 runs locally in the browser. Multiplayer, reconnect and host migration are not implemented yet.
-See docs/adr/0001-phase-boundary.md and docs/adr/0002-authority-and-determinism.md.
+The server uses [CKATEPTb/rsocket-ts](https://github.com/CKATEPTb/rsocket-ts), specifically `rsocket-server-ts`, over WebSocket at `/rsocket`. It keeps rooms and membership in memory and forwards compact host event frames to guests and guest movement, rest, and battle requests to the host. The host browser runs the game simulation. No database is required.
+
+## Local network
+
+From the repository root, install with `npm install`, then run these in two terminals:
+
+```sh
+npm run dev:server
+npm run dev
+```
+
+Open the game using the host computer's LAN IP with Vite's port, accessible to friends on the same network. Vite proxies `/rsocket` to `127.0.0.1:8787`, so every browser connects through the game's origin. Allow incoming connections to Vite's port in the host computer's firewall. Administrators can configure a different relay using `VITE_RELAY_URL` before building the client or `RELAY_TARGET` when starting Vite. The lobby has no server address field.
+
+Choose “Новая игра”, select a hero, difficulty and seed, then press “Пригласить” beneath the fire inside the character picker. This creates a room and opens a dialog with a shareable link containing `#invite=ABC234`, plus “Скопировать” and “ОК” buttons. Every participant, including the host, presses “Готов” to claim their chosen hero. Selection alone does not reserve a hero: when several players select the same character, the first to become ready claims it. Ready players must press “Не готов” before changing their hero. When everyone is ready, the host's “Не готов” button becomes “Играть”. The link retains the opened site's address; localhost links are not rewritten to a guessed LAN address. A room holds up to four connected players.
+
+Guests can also open the invitation after the expedition has started. They choose from its original hero pool and claim an unoccupied hero by becoming ready. The host sends a compact checkpoint before that guest receives live events. A disconnected guest's hero remains in the expedition and becomes available to another participant. When the host leaves, the room closes for everyone. Continuing the host's local save creates a new room and invitation, with the original seed, difficulty, and hero pool.
+
+## Hosting
+
+Run `npm run start:server` with Node.js 22.12 or newer. The process uses `tsx` from the repository install. Serve the built frontend and reverse-proxy `/rsocket` to this process with WebSocket Upgrade support. An HTTPS site needs a `wss://` relay URL. Invitation links contain a room code, never a relay address; the site determines the relay. A room code works only against the same relay process, so use one process or sticky routing for multiple instances.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `HOST` | `0.0.0.0` | Listening interface |
+| `PORT` | `8787` | HTTP/WebSocket port |
+| `ALLOWED_ORIGINS` | unset | Optional comma-separated browser origins allowed to connect |
+
+`GET /health` returns `{"status":"ok"}`. SIGINT/SIGTERM close rooms and connections.
+
+## Session behavior
+
+- Players and host authority are bound to the RSocket connection. Clients cannot supply another player's identity with a command.
+- Protocol version 6 checks protocol and content versions for `inspect`, `create`, and `join`. `inspect` reads room status without joining or claiming a character. Older clients with incompatible enemy-counter and patrol rules cannot join the new simulation.
+- Members enter unready. `ready: true` requires an active event stream and atomically claims the selected hero. A claim remains exclusive until `ready: false` or disconnect. Subscribing alone does not mark a player ready; selecting a hero is permitted while unready in both lobby and running rooms. Repeating readiness does not change the room revision.
+- `start` requires the current room revision and every participant to be ready with an active stream. A new run's immutable `characterIds` must match the ready roster; a resumed run preserves its entire original roster even if fewer people currently control it. The bootstrap contains the seed, difficulty, generator version, and hero pool. A resumed run also includes a compact mutable checkpoint.
+- Live `publish` frames have consecutive sequence numbers starting at 1, are limited to 128 KiB, and are forwarded only to ready, synchronized guests. The `frame` string may contain one `CoopFrame` or an ordered JSON array of `CoopFrame` objects; a batch uses one publication sequence while retaining each frame's own tick and events. Publication acknowledgements do not repeat the room roster. Frames, including client input acknowledgements within them, remain opaque to the relay; maps are generated by clients from the shared run recipe.
+- Dice belong to individual entities. Room seed, a stable `hero:<character ID>` or `enemy:<seeded mob ID>`, and that owner's count select each roll. Hero counters persist across battles. Each enemy starts at zero in every new battle; its counter lives only in that battle's state and checkpoint, preserving an ongoing battle across reconnect/resume. No enemy counter is retained in the persistent room bank or carried to another battle. `2d4` advances only its owner's count twice; unrelated heroes, enemies and concurrent battles do not shift its sequence. Battle steps carry sparse owner counter advances; full hero counters and active-battle enemy counters are checkpoint data. World AI uses independent temporary RNG scoped to group and decision and emits no `dice-advance` events. The frame's aggregate `diceIndex` is diagnostic and does not seed future rolls. The relay neither rolls dice nor manages their counters.
+- When a guest becomes ready in a running room, the relay sends the host a `sync-request`. The host serializes `sync` with its publications and supplies a checkpoint at the current sequence. The relay queues that bootstrap before enabling live frames for the guest. It stores no checkpoint or event journal after delivery.
+- Guest movement/rest/battle commands require an active event stream and a ready, synchronized hero. Commands are bound to the connection's claimed hero; the host validates and simulates their effects. A command request may include `input: { id, tick }`, where `id` is a positive safe integer and `tick` is a nonnegative safe integer. The relay forwards this optional metadata unchanged to the host and does not track or acknowledge input IDs itself. Move commands may include `from` and `fromElapsedMs` (a finite number from 0 to 10,000) so the host can preserve progress within the client's current tile step.
+- Unsubscribed room members expire after 15 seconds. Host disconnect closes the room and all guests. There is no host migration, persistent identity, or transport session recovery.
+- Restarting the server drops all rooms. Saves remain on the host's device; the relay persists no snapshots, saves, accounts, or reconnect tokens.
+- Continuing a host save with a new room code preserves hero counters and counters inside battles already in progress. Loading a version 5 save discards persistent enemy entries while retaining current battles' enemy counters. Older cooperative saves with only one room count migrate client-side with zeroed individual counters while retaining world and character progress; prior individual counts cannot be inferred from their old total. Starting a new battle always initializes its enemy counters to zero.
+- Defaults limit the process to 100 rooms/400 sockets, 120 requests per second per connection, 128 KiB per live frame, 16 MiB per checkpoint, 64 MiB of published data per second, and 64 events/32 MiB queued per subscriber. WebSocket payloads are bounded by the checkpoint envelope limit (32 MiB plus 4 KiB); RSocket fragments remain 64 KiB. Slow subscribers are removed rather than accumulating an unbounded backlog.
+
+Room codes are an invitation mechanism for friends, not accounts or durable access credentials. Configure allowed origins and HTTPS at the reverse proxy for a public deployment.

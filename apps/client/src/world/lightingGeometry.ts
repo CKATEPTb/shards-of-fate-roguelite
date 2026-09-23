@@ -1,4 +1,4 @@
-import type { GridPoint } from '@shards/shared';
+import { HERO_LIGHT_RADIUS_TILES, WORLD_TILE_PIXELS, type GridPoint } from '@shards/shared';
 import type { WorldProjection } from './projection';
 
 export type WorldLightKind = 'hero' | 'campfire';
@@ -6,7 +6,7 @@ export const WORLD_DARKNESS = 0.82;
 export const LIGHT_RESOLUTION = 0.5;
 export const LIGHT_STYLES = {
   // Patrol bodies and heads must be legible before the five-tile pursuit radius.
-  hero: { radius: 320, reveal: 0.95, warmth: 0.035, color: '237,190,122' },
+  hero: { radius: HERO_LIGHT_RADIUS_TILES * WORLD_TILE_PIXELS, reveal: 0.95, warmth: 0.035, color: '237,190,122' },
   campfire: { radius: 212, reveal: 0.98, warmth: 0.085, color: '255,166,81' },
 } satisfies Record<WorldLightKind, { radius: number; reveal: number; warmth: number; color: string }>;
 

@@ -1,0 +1,50 @@
+.battle-turn-queue { --queue-card-width: 68px; --queue-gap: 8px; --queue-height: 93px; position: absolute; top: max(8px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); z-index: 9; width: min(100% - 24px, 1020px); padding: 0 8px 4px; color: #c5cbb5; }
+.battle-queue-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 22px; padding-inline: 3px; color: #e8dbb5; font-size: 9px; letter-spacing: .35px; text-shadow: 0 1px 3px #040c09, 0 0 7px #040c09; }
+.battle-queue-heading small { color: #a3b298; white-space: nowrap; font-size: 8px; }
+.battle-queue-heading > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.battle-queue-scroll { overflow-x: auto; overflow-y: hidden; padding: 2px 2px 5px; scrollbar-width: thin; scrollbar-color: #ad9a644f transparent; touch-action: pan-x; }
+.battle-queue-scroll:focus-visible { outline: 1px solid #d4bd80; outline-offset: 1px; border-radius: 4px; }
+.battle-queue-track { position: relative; width: calc(var(--queue-count) * (var(--queue-card-width) + var(--queue-gap)) - var(--queue-gap)); height: var(--queue-height); padding: 0; margin: 0; list-style: none; }
+.battle-queue-entry { --queue-color: #9eb99b; position: absolute; top: 0; left: 0; width: var(--queue-card-width); height: var(--queue-height); transform: translateX(calc(var(--queue-position) * (var(--queue-card-width) + var(--queue-gap)))); transition: transform 520ms cubic-bezier(.2,.75,.15,1), border-color 180ms, box-shadow 180ms; border: 1px solid #90aa8763; border-radius: 5px 5px 8px 8px; padding: 0; background: linear-gradient(145deg, #344239c9, #10231eb8 65%); box-shadow: inset 0 0 0 2px #091611b5, 0 3px 7px #040c0a60; }
+.battle-queue-entry[data-team="enemies"] { --queue-color: #cd9b83; border-color: #b3886a73; background: linear-gradient(145deg, #503a30c9, #282224b8 65%); }
+.battle-queue-entry[data-current="true"] { border-color: #efda9c; box-shadow: 0 0 0 1px #f4dea147, 0 0 15px #d3ad5447, inset 0 0 0 2px #221f18; }
+.battle-queue-entry[data-next="true"] { border-color: #c5c29499; }
+.battle-queue-position { display: block; height: 14px; padding: 2px 3px 0; color: var(--queue-color); font-size: 7px; font-weight: 600; line-height: 10px; text-align: center; text-transform: uppercase; letter-spacing: .8px; }
+.battle-queue-entry[data-current="true"] .battle-queue-position { color: #ffe6a2; background: linear-gradient(90deg, transparent, #dabb7730, transparent); }
+.battle-queue-art { position: relative; height: 59px; margin-inline: 3px; overflow: visible; background: radial-gradient(ellipse at 50% 35%, #c0d8b522, #111c1c05 72%); }
+.battle-queue-portrait { display: block; width: 100%; height: 100%; image-rendering: pixelated; overflow: hidden; filter: drop-shadow(1px 2px 0 #080f1390); }
+.battle-queue-name { display: block; position: absolute; bottom: 1px; left: 1px; right: 1px; padding: 4px 3px 3px; border-radius: 0 0 6px 6px; color: #e1dec5; background: linear-gradient(0deg, #0a1415f0, #0a1415b0); font-size: 8px; line-height: 11px; text-align: center; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+.battle-queue-total { position: absolute; bottom: 0; right: 0; min-width: 21px; height: 21px; display: grid; place-items: center; padding: 2px; clip-path: polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); background: #d1ba82; color: #202b27; font: 700 13px/1 Georgia,serif; font-variant-numeric: tabular-nums; }
+.battle-initiative-roll { position: absolute; inset: 4px 0 0; display: flex; justify-content: center; align-items: flex-end; pointer-events: none; filter: drop-shadow(0 2px 5px #030907); }
+.battle-initiative-roll > svg { width: 43px; height: 43px; overflow: visible; }
+.battle-initiative-roll text { fill: #fff0c8; stroke: #443727; stroke-width: .35px; paint-order: stroke; font: 700 18px/1 Georgia,serif; font-variant-numeric: tabular-nums; }
+.battle-initiative-bonus { position: absolute; right: 1px; bottom: -4px; z-index: 2; padding: 0 2px; border-radius: 2px; background: #1e3226db; color: #daf0a8; text-shadow: 0 1px 2px #0a130e; font: 700 14px/16px Georgia,serif; }
+.battle-initiative-roll > small { position: absolute; right: 0; top: 0; color: #ebd3a0; font-size: 7px; }
+.battle-queue-entry[data-rolling="true"] .battle-queue-portrait { opacity: .67; }
+.battle-turn-queue[data-reduced="true"] .battle-queue-entry { transition: none; }
+@media (max-width: 600px) {
+  .battle-turn-queue { --queue-card-width: 55px; --queue-gap: 6px; --queue-height: 79px; width: calc(100% - 12px); padding-inline: 5px; top: max(5px, env(safe-area-inset-top)); }
+  .battle-queue-heading { font-size: 8px; min-height: 20px; letter-spacing: 0; }
+  .battle-queue-art { height: 49px; margin-inline: 2px; }
+  .battle-queue-name { font-size: 7px; line-height: 9px; padding: 3px 2px; }
+  .battle-queue-position { height: 13px; font-size: 6px; letter-spacing: .5px; }
+  .battle-initiative-roll { top: 0; }
+  .battle-initiative-roll > svg { width: 36px; height: 36px; }
+  .battle-initiative-bonus { font-size: 12px; }
+  .battle-queue-total { width: 18px; min-width: 18px; height: 18px; font-size: 11px; }
+}
+@media (max-height: 540px) {
+  .battle-turn-queue { --queue-card-width: 45px; --queue-gap: 6px; --queue-height: 65px; top: max(4px, env(safe-area-inset-top)); padding-bottom: 0; }
+  .battle-queue-heading { min-height: 17px; font-size: 8px; }
+  .battle-queue-position { height: 10px; padding-top: 0; font-size: 6px; }
+  .battle-queue-art { height: 42px; }
+  .battle-queue-name { font-size: 6px; line-height: 8px; padding: 2px; }
+  .battle-initiative-roll > svg { width: 31px; height: 31px; }
+  .battle-initiative-roll > small { font-size: 6px; }
+  .battle-initiative-bonus { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) { .battle-queue-entry { transition: none; } }
+
+/* Reserve space for floating controls in battleLayout, never by cropping the scene. */
+.battle-canvas { --battle-inset-top: env(safe-area-inset-top, 0px); --battle-inset-bottom: env(safe-area-inset-bottom, 0px); }
+.battle-canvas .battle-renderer, .battle-canvas .battle-unit-controls { inset: 0; }

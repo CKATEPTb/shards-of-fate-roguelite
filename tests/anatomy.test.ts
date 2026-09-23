@@ -77,7 +77,7 @@ describe('six-part hero anatomy', () => {
     expect(effectiveBodyArmor(guardian, body)).toBe(18);
     body.rightArm.current = 0;
     const gloves = guardian.anatomy!.equipment.find(item => item.slot === 'gloves')!;
-    const weapon = guardian.anatomy!.equipment.find(item => item.slot === 'mainHand')!;
+    const weapon = guardian.anatomy!.equipment.find(item => item.slot === 'rightHand')!;
     expect(equipmentCondition(gloves, body)).toMatchObject({ active: true, fraction: 0.5, armor: 1, resources: { leftArm: 30 } });
     expect(equipmentCondition(weapon, body).active).toBe(false);
     expect(effectiveBodyArmor(guardian, body)).toBe(17);

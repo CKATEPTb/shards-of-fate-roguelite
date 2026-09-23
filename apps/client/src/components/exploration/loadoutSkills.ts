@@ -1,6 +1,7 @@
-import type { Combatant, SkillDefinition, UnitDefinition } from '@shards/shared';
+import type { Combatant, GameContent, SkillDefinition, UnitDefinition } from '@shards/shared';
 import { gameContent } from '../../catalog';
 import type { LoadoutIconKind, LoadoutSlot } from './loadoutModel';
+import { passiveDiceRules, skillDiceRules } from './diceRules';
 
 const skillIcons: Record<string, LoadoutIconKind> = {
   tank_taunt: 'class', healer_mend: 'mend', damage_burst: 'burst',
@@ -13,28 +14,33 @@ const passiveIcons: Record<string, LoadoutIconKind> = {
   druid: 'regrowth', necromancer: 'ward', rogue: 'evasion', ranger: 'volley', mage: 'fire',
 };
 
-export function activeLoadoutSlot(id: 'class' | 'characterActive', category: string, skill: SkillDefinition | undefined, unit?: Combatant): LoadoutSlot {
-  return { id, icon: skill ? skillIcons[skill.id] ?? id : id, category, name: skill?.name ?? 'Не назначен',
+export function activeLoadoutSlot(id: 'class' | 'characterActive' | 'extra1' | 'extra2', category: string, skill: SkillDefinition | undefined, unit?: Combatant, content: GameContent = gameContent): LoadoutSlot {
+  const owner = unit && [...content.characters, ...content.enemies].find(definition => definition.id === unit.definitionId);
+  const fallback = id === 'extra1' || id === 'extra2' ? 'extra' : id;
+  return { id, icon: skill ? skillIcons[skill.id] ?? fallback : fallback, category, name: skill?.name ?? 'Не назначен',
     description: skill?.description ?? 'Способность в этом слоте пока не назначена.', empty: !skill,
+    diceRules: skill ? skillDiceRules(skill, owner || undefined, content) : [],
+    rarity: skill?.rarity,
     contentId: skill?.id, cooldown: skill ? { base: skill.cooldown, remaining: unit?.cooldowns[skill.id] ?? 0 } : undefined };
 }
 
 /** Metadata describes modifier passives too; effects still supply their real cooldown. */
-export function passiveLoadoutSlot(definition?: UnitDefinition, unit?: Combatant): LoadoutSlot {
-  const reduction = definition?.modifiers.partyDamageReduction;
-  const effect = gameContent.effects.find(candidate => definition?.effectIds.includes(candidate.id));
+export function passiveLoadoutSlot(definition?: UnitDefinition, unit?: Combatant, content: GameContent = gameContent): LoadoutSlot {
+  const protection = definition?.modifiers.partyGuardDice;
+  const effect = content.effects.find(candidate => definition?.effectIds.includes(candidate.id));
   const metadata = definition?.passive;
-  const partyProtection = reduction !== undefined && reduction > 0;
+  const partyProtection = !!protection;
   return {
     id: 'passive', icon: definition ? passiveIcons[definition.id] ?? 'passive' : 'passive',
     category: 'Пассивная способность героя',
     name: metadata?.name ?? (partyProtection ? 'Защита союзников' : effect?.name ?? 'Не назначен'),
     description: metadata?.description ?? (partyProtection
-      ? `Снижает входящий урон всех союзников, включая самого героя, на ${Math.round(reduction * 100)}%, пока герой в строю.`
+      ? `Перед каждым ударом по союзнику бросает ${protection} и уменьшает входящий урон на результат броска, пока герой в строю.`
       : effect?.description ?? 'Пассивная способность пока не назначена.'),
     empty: !metadata && !partyProtection && !effect,
-    contentId: partyProtection ? 'partyDamageReduction' : effect?.id ?? (metadata ? `${definition!.id}:passive` : undefined),
-    badge: partyProtection ? `${Math.round(reduction * 100)}%` : undefined,
+    contentId: definition && (metadata || partyProtection) ? `${definition.id}:passive` : effect?.id,
+    diceRules: passiveDiceRules(definition, content),
+    badge: partyProtection ? `−${protection}` : undefined,
     cooldown: effect && effect.internalCooldown > 0 ? { base: effect.internalCooldown, remaining: unit?.effectCooldowns[effect.id] ?? 0 } : undefined,
   };
 }

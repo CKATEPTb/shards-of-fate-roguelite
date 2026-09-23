@@ -35,6 +35,29 @@ export class PixelCanvas {
     }
   }
 
+  /** Scan-convert a rigid skin piece without antialiasing or fractional edge pixels. */
+  polygon(points: readonly { x: number; y: number }[], color: string) {
+    if (points.length < 3) return;
+    const first = Math.max(0, Math.floor(Math.min(...points.map(point => point.y))));
+    const last = Math.min(this.size - 1, Math.ceil(Math.max(...points.map(point => point.y))));
+    for (let y = first; y <= last; y++) {
+      const crossings: number[] = [];
+      const scan = y + 0.5;
+      for (let i = 0; i < points.length; i++) {
+        const a = points[i], b = points[(i + 1) % points.length];
+        if ((a.y <= scan && b.y > scan) || (b.y <= scan && a.y > scan)) {
+          crossings.push(a.x + (scan - a.y) * (b.x - a.x) / (b.y - a.y));
+        }
+      }
+      crossings.sort((a, b) => a - b);
+      for (let i = 0; i + 1 < crossings.length; i += 2) {
+        const from = Math.max(0, Math.ceil(crossings[i] - 0.5));
+        const to = Math.min(this.size - 1, Math.floor(crossings[i + 1] - 0.5));
+        for (let x = from; x <= to; x++) this.point(x, y, color);
+      }
+    }
+  }
+
   result(): Pixel[] {
     return [...this.pixels.values()].sort((left, right) => left.y - right.y || left.x - right.x);
   }

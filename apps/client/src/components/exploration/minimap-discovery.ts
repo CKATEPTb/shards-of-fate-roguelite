@@ -40,12 +40,13 @@ export function buildMinimapDiscovery(byId: ReadonlyMap<string, WorldNode>, visi
 
 /** The three-ring window limits the view; it does not discover its contents. */
 export function minimapViewport(byId: ReadonlyMap<string, WorldNode>, discovery: MinimapDiscovery,
-  currentChunkId: string, altarNodeId: string): { nodes: MinimapNode[]; edges: MinimapEdge[] } {
+  currentChunkId: string, altarNodeIds: string | readonly string[]): { nodes: MinimapNode[]; edges: MinimapEdge[] } {
   const current = byId.get(currentChunkId);
   if (!current) return { nodes: [], edges: [] };
   const { radius, spacing } = MINIMAP_GEOMETRY;
   const range = Math.floor(radius / spacing);
   const nodes: MinimapNode[] = [];
+  const altars = new Set(typeof altarNodeIds === 'string' ? [altarNodeIds] : altarNodeIds);
   const edges = new Map<string, MinimapEdge>();
   for (let y = current.y - range; y <= current.y + range; y++) {
     for (let x = current.x - range; x <= current.x + range; x++) {
@@ -56,7 +57,7 @@ export function minimapViewport(byId: ReadonlyMap<string, WorldNode>, discovery:
       if (!node) continue;
       const visited = discovery.visited.has(id);
       nodes.push({ id, x, y, current: id === currentChunkId, visited,
-        ...(visited ? { season: node.season } : {}), altar: visited && id === altarNodeId });
+        ...(visited ? { season: node.season } : {}), altar: visited && altars.has(id) });
       // Remembered passages may extend to the clipped rim, but their off-rim
       // endpoint must not create a dot outside the circular viewport.
       for (const edge of discovery.edgesByNode.get(id) ?? []) edges.set(edge.id, edge);

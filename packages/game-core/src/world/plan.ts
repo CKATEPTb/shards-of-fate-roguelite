@@ -3,6 +3,10 @@ import { createRng, drawRandom, hashString } from '../random';
 import { choosePocket, fromBoundary, type DetachedPocket } from './pockets';
 import { gatesForNode } from './seams';
 import { planStructures } from './structures';
+import { hasCampfire } from './campfires';
+import { portalForNode } from './portals';
+import { structurePois } from './structure-pois';
+import { worldDie } from './generation-dice';
 
 const ENCOUNTERS = {
   spring: ['mossy_path', 'wolf_den'], summer: ['wolf_den', 'goblin_ambush'],
@@ -20,14 +24,18 @@ export function planChunk(graph: WorldGraph, node: WorldNode): ChunkPlan {
   const random = () => drawRandom(rng, 'WORLD');
   const pois: WorldPoi[] = [];
   const start = node.id === graph.startId;
-  if (start) pois.push({ id: `${node.id}:campfire`, kind: 'campfire', position: { x: 17, y: 17 } });
+  const interactive = (graph.structureVersion ?? 1) >= 3;
+  if (hasCampfire(graph, node)) pois.push({ id: `${node.id}:campfire`, kind: 'campfire', position: { x: 17, y: 17 } });
   const encounterPosition = start ? { x: 23, y: 17 }
-    : pocket && random() < 0.45 ? fromBoundary(pocket.gate.direction, 4, pocket.coordinate)
-      : { x: 11 + Math.floor(random() * 3), y: 11 + Math.floor(random() * 3) };
+    : pocket && (interactive ? worldDie(rng, 20) <= 9 : random() < 0.45) ? fromBoundary(pocket.gate.direction, 4, pocket.coordinate)
+      : { x: interactive ? 10 + worldDie(rng, 3) : 11 + Math.floor(random() * 3), y: interactive ? 10 + worldDie(rng, 3) : 11 + Math.floor(random() * 3) };
   const pool = ENCOUNTERS[node.season];
   pois.push({ id: `${node.id}:encounter`, kind: 'encounter', position: encounterPosition,
-    encounterId: start ? 'mossy_path' : pool[Math.floor(random() * pool.length)] });
+    encounterId: start ? 'mossy_path' : pool[interactive ? worldDie(rng, pool.length) - 1 : Math.floor(random() * pool.length)] });
   if (node.id === graph.altarNodeId) pois.push({ id: `${node.id}:altar`, kind: 'altar', position: { x: 25, y: 25 } });
+  const portal = interactive ? portalForNode(graph, node, pocket, pois) : undefined;
+  if (portal) pois.push(portal);
   const structures = planStructures(node.id, start, createRng(`structures-v3:${seed}:${node.id}`), pocket, pois, graph.structureVersion ?? 1);
+  if (interactive) pois.push(...structurePois(graph.seed, node, structures));
   return { exits, pocket, pois, structures };
 }

@@ -6,13 +6,13 @@ import { findPath } from './pathfinding';
 import { normalizeCampfireOccupancy } from './campfire-occupancy';
 import { BASE_MOVEMENT_STEP_MS, createMovementState, movementStepMs } from './movement-speed';
 import { placePartyAtCampfire, placePartyAtEntrance } from './party-placement';
-import { isBodyAlive } from '../anatomy';
+import { bodyMovementMultiplier } from '../anatomy';
 
 export function validateActorIds(characterIds: string[]): void {
   if (!Array.isArray(characterIds) || characterIds.length < 1 || characterIds.length > 4 || new Set(characterIds).size !== characterIds.length || characterIds.some(id => typeof id !== 'string' || !/^[a-z][a-z0-9_-]{0,63}$/.test(id))) throw new Error('Choose 1–4 distinct valid character IDs');
 }
 
-export function createExploration(options: { seed: string; characterIds: string[]; movementSpeeds?: Record<string, number>; structureVersion?: 1 | 2 }): ExplorationState {
+export function createExploration(options: { seed: string; characterIds: string[]; movementSpeeds?: Record<string, number>; structureVersion?: 1 | 2 | 3 }): ExplorationState {
   validateActorIds(options.characterIds);
   const graph = generateWorld(options.seed, { structureVersion: options.structureVersion });
   const chunk = generateChunk(graph, graph.startId);
@@ -30,9 +30,9 @@ export function requestMove(state: ExplorationState, actorId: string, target: Gr
   state = normalizeCampfireOccupancy(state);
   const actor = state.actors.find(candidate => candidate.id === actorId);
   if (!actor) return { state, accepted: false, reason: 'Герой не найден.' };
-  if (actor.body && !isBodyAlive(actor.body)) return { state, accepted: false };
+  if (actor.body && bodyMovementMultiplier(actor.body) <= 0) return { state, accepted: false, reason: 'Нет действующих конечностей для передвижения.' };
   if (!inBounds(target, state.chunk.size) || !isWalkable(state.chunk, target)) return { state, accepted: false, reason: 'Сюда не пройти. Выберите свободную клетку.' };
-  const path = findPath(state.chunk, actor.position, target);
+  const path = findPath(state.chunk, actor.position, target, actor);
   if (!path.length && !samePoint(actor.position, target)) return { state, accepted: false, reason: 'Нужен другой вход. Эта область отделена: обойдите её через соседний участок.' };
   const movement = actor.movement ?? createMovementState();
   const keepProgress = path[0] && actor.path[0] && samePoint(path[0], actor.path[0]);
@@ -41,7 +41,8 @@ export function requestMove(state: ExplorationState, actorId: string, target: Gr
 }
 
 export function advanceActor(actor: WorldActor, chunk: WorldChunk, elapsedMs: number): WorldActor {
-  if (actor.body && !isBodyAlive(actor.body)) return actor.path.length ? { ...actor, path: [], movement: { ...(actor.movement ?? createMovementState()), elapsedMs: 0 } } : actor;
+  if (actor.body && bodyMovementMultiplier(actor.body) <= 0) return actor.path.length || actor.movement?.elapsedMs
+    ? { ...actor, path: [], movement: { ...(actor.movement ?? createMovementState()), elapsedMs: 0 } } : actor;
   const next = actor.path[0];
   if (!next) return actor;
   const movement = actor.movement ?? createMovementState();

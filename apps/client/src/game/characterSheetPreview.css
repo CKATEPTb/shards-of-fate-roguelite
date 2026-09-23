@@ -1,0 +1,9 @@
+.character-workshop .game { background: radial-gradient(ellipse at 55% 15%, #3b4931, transparent 60%), linear-gradient(150deg, #1a2b20, #0c1512); }
+.character-workshop-controls { position: fixed; z-index: 100; top: 7px; left: 50%; transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; width: max-content; max-width: calc(100vw - 12px); padding: 5px 8px; background: #0e1c17ed; border: 1px solid #8d9a6255; border-radius: 5px; }
+.character-workshop-controls select { width: auto; max-width: 180px; min-height: 26px; padding: 2px 5px; background: #1a2b21; border: 1px solid #a8b27e55; color: #d3d4b5; font-size: 11px; }
+.character-workshop-controls label { display: flex; align-items: center; gap: 4px; white-space: nowrap; color: #bdc4a3; font-size: 10px; }
+@media (max-width: 500px) {
+  .character-workshop-controls { gap: 5px; padding: 4px; }
+  .character-workshop-controls select { font-size: 9px; max-width: 134px; }
+  .character-workshop-controls label { font-size: 8px; }
+}

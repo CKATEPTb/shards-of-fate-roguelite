@@ -1,0 +1,42 @@
+.camp-hero-details { display: grid; grid-template-columns: minmax(0,1fr); align-content: start; gap: 7px; flex-shrink: 0; padding: 10px 4px 0; border-top: 1px solid #acb98c22; min-width: 0; }
+.camp-hero-names,.camp-hero-summaries { display: grid; min-width: 0; }
+.camp-hero-names > *,.camp-hero-summaries > * { grid-area: 1 / 1; }
+.camp-layout-reserve { visibility: hidden; pointer-events: none; }
+.camp-hero-name { min-width: 0; display: flex; align-items: center; gap: 10px; }
+.camp-hero-name h2 { margin: 0; color: var(--hero-color,#dec798); font: 500 clamp(25px,2.5vw,32px)/1 var(--serif); }
+.camp-role { flex-shrink: 0; padding: 4px 6px; border: 1px solid #a9b28b2a; border-radius: 3px; color: #a7b59a; font-size: 9px; line-height: 1; }
+.camp-hero-summary { margin: 0; color: #a9b79f; font-size: 11px; line-height: 1.45; }
+.camp-hero-skills { min-width: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; }
+.camp-skill-button { position: relative; min-width: 0; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 5px 8px; border: 1px solid #9ca78230; border-radius: 5px; background: linear-gradient(135deg,#b3c8930c,#21312550); color: #9cae92; }
+.camp-skill-button:hover { border-color: #bfaa706e; background: #a9976018; color: #e5d6aa; }
+.camp-skill-button[aria-pressed="true"] { border-color: #c5b5819c; background: linear-gradient(135deg,#c9b47524,#86723b13); color: #e5d5a7; box-shadow: inset 0 -2px #d0b47875; }
+.camp-skill-icon { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; color: var(--hero-color,#cbbb87); }
+.camp-skill-icon svg { width: 28px; height: 28px; }
+.camp-skill-label { font-size: 10px; line-height: 1.2; }
+/* Shared heading and text rows reserve the tallest content across the entire roster. */
+.camp-skill-descriptions { display: grid; grid-template-columns: minmax(0,1fr); min-width: 0; padding: 9px 10px; border: 1px solid #a9b28b24; border-radius: 5px; background: #03100c38; }
+.camp-skill-description { display: contents; }
+.camp-skill-description-heading { grid-area: 1 / 1; min-width: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
+.camp-skill-description-heading h3 { min-width: 0; margin: 0; color: #d4d4b2; font-size: 12px; line-height: 1.35; font-weight: 500; }
+.camp-skill-cooldown { flex-shrink: 0; color: #9fad8e; font-size: 9px; line-height: 1.4; white-space: nowrap; }
+.camp-skill-cooldown > span { margin-right: 2px; color: #c9b376; }
+.camp-skill-description > p { grid-area: 2 / 1; min-width: 0; margin: 0; color: #b9c5aa; font-size: 11px; line-height: 1.45; }
+@media (max-width:480px) {
+  .camp-hero-details { gap: 6px; padding: 7px 2px 0; }
+  .camp-hero-name h2 { font-size: 25px; }
+  .camp-hero-name { gap: 8px; }
+  .camp-role { font-size: 8px; padding: 4px 5px; }
+  .camp-hero-skills { gap: 5px; }
+  .camp-skill-button { gap: 5px; padding: 5px; }
+  .camp-skill-label { font-size: 9px; }
+  .camp-skill-descriptions { padding: 8px; }
+}
+@media (max-height:650px) {
+  .camp-hero-details { gap: 4px; padding-top: 5px; }
+  .camp-hero-name h2 { font-size: 23px; }
+  .camp-hero-summary,.camp-skill-description > p { font-size: 10px; line-height: 1.4; }
+  .camp-skill-button { min-height: 44px; padding-block: 4px; }
+  .camp-skill-descriptions { padding: 6px 8px; }
+  .camp-skill-description-heading { margin-bottom: 4px; }
+  .camp-skill-description-heading h3 { font-size: 11px; line-height: 1.3; }
+}

@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@shards/shared": "*",
     "@shards/game-core": "*",
     "@shards/game-data": "*",
     "@shards/protocol": "*",
+    "@shards/shared": "*",
+    "phaser": "3.90.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "phaser": "3.90.0"
+    "rsocket-browser": "5.0.0",
+    "rsocket-frames-ts": "3.0.0"
   }
 }

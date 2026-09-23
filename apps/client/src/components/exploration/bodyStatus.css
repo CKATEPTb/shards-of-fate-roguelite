@@ -27,3 +27,11 @@
 .hero-hover-details .body-status-detailed .body-part { padding: 4px; }
 .hero-hover-details .body-part-name { font-size: 8px; }
 .hero-hover-details .body-part-condition { display: none; }
+.body-disabled { color: #e58e63; }
+.body-part-reserve { display: block; height: 3px; margin-top: 2px; background: #471f29; border-radius: 1px; overflow: hidden; }
+.body-part-reserve > span { display: block; height: 100%; background: #e57965; transition: width .2s; }
+.body-part-limit { display: block; margin-top: 3px; color: #c49a89; font-size: 8px; }
+.body-part-armor { display: flex; justify-content: space-between; gap: 4px; margin-top: 5px; color: #aac1d0; font-size: 9px; }
+.body-part-armor b { color: #ccdfdf; font-weight: 500; }
+.character-body-disabled .character-body-fill { fill: #ad593f; }
+.character-body-disabled .character-body-outline { stroke: #eeaa73; }

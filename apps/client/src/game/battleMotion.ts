@@ -5,7 +5,9 @@ import type { UnitMotion } from '../art/unitPose';
 export function battleMotion(unit: Pick<Combatant, 'id' | 'hp'>, events: readonly CombatEvent[]): UnitMotion | undefined {
   if (unit.hp <= 0) return 'death';
   if (events.some((event) => event.type === 'DAMAGE' && event.targetId === unit.id && (event.amount ?? 0) > 0)) return 'hit';
+  if (events.some((event) => event.type === 'BLOCKED' && event.targetId === unit.id)) return 'block';
   if (events.some((event) => event.actorId === unit.id && event.type === 'SKILL_USED')) return 'cast';
-  if (events.some((event) => event.actorId === unit.id && event.type === 'ATTACK_STARTED')) return 'attack';
+  const attack = events.find((event) => event.actorId === unit.id && event.type === 'ATTACK_STARTED');
+  if (attack) return attack.skillId === 'mage_ignite' ? 'cast' : attack.attackSlot === 'leftHand' ? 'attackLeft' : 'attack';
   return undefined;
 }

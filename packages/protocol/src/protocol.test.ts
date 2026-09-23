@@ -14,7 +14,7 @@ describe('versioned peer intent contracts', () => {
     { ...move, runSequence: 100 },
   ])('rejects malformed or authoritative peer mutations %#', value => expect(() => parseIntent(value)).toThrow());
   it('requires an explicit confirmation before equipment replacement', () => {
-    const equip = { ...move, type: 'EQUIP_ITEM', payload: { itemId: 'item-1', slot: 'mainHand', confirmed: true } };
+    const equip = { ...move, type: 'EQUIP_ITEM', payload: { itemId: 'item-1', slot: 'rightHand', confirmed: true } };
     expect(parseIntent(equip).type).toBe('EQUIP_ITEM');
     expect(() => parseIntent({ ...equip, payload: { ...equip.payload, confirmed: false } })).toThrow();
   });

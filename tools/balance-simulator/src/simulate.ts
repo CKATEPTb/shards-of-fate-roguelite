@@ -1,5 +1,6 @@
 import { createCombat, runCombat } from '@shards/game-core';
 import type { GameContent } from '@shards/shared';
+import { simulationPolicy } from '../../../packages/game-core/src/simulation-policy';
 
 export interface SimulationRow {
   encounter: string; party: string[]; runs: number;
@@ -25,7 +26,7 @@ export function simulateBalance(content: GameContent, runs: number, seedPrefix =
     for (const party of partyCompositions(content.characters.map(character => character.id))) {
       const row: SimulationRow = { encounter: encounter.id, party, runs, victories: 0, defeats: 0, draws: 0, winRate: 0, averageRounds: 0, averageHpRemaining: 0 };
       for (let i = 0; i < runs; i++) {
-        const result = runCombat(createCombat({ seed: `${seedPrefix}:${i}`, characterIds: party, encounterId: encounter.id }, content), content);
+        const result = runCombat(createCombat({ seed: `${seedPrefix}:${i}`, characterIds: party, encounterId: encounter.id }, content), content, simulationPolicy);
         if (result.status === 'victory') row.victories++;
         else if (result.status === 'defeat') row.defeats++;
         else if (result.status === 'draw') row.draws++;

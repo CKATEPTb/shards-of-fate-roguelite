@@ -1,0 +1,47 @@
+.audio-settings {
+  width: 100%;
+  min-width: 0;
+  padding: 18px 22px;
+  border: 1px solid #a1aa7540;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #27372be0, #112319ed);
+  color: #d8dec5;
+  font: 400 14px/1.45 Manrope, Arial, sans-serif;
+  text-align: left;
+}
+.audio-settings, .audio-settings * { box-sizing: border-box; }
+.menu-message.menu-audio-settings { width: min(460px, 100%); max-height: 100%; overflow-y: auto; padding: 6px; scrollbar-width: thin; }
+.menu-message > .audio-settings { margin: 18px 0; }
+.audio-settings-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid #a1aa7529; }
+.audio-settings-heading h2 { margin: 0; color: #e2d3ad; font: 500 26px/1.1 var(--serif, Georgia, serif); }
+.audio-settings-mute { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 7px 11px; border: 1px solid #a4b28b55; border-radius: 7px; background: #9fb1820a; color: #c4d0b4; font: 500 13px/1.4 Manrope, Arial, sans-serif; cursor: pointer; touch-action: manipulation; }
+.audio-settings-mute svg { flex: none; }
+.audio-settings-mute[aria-pressed='true'] { border-color: #d2b7849c; background: #b59b5929; color: #eddaab; }
+.audio-settings-channels { display: grid; gap: 9px; padding-top: 16px; }
+.audio-volume-control { display: grid; grid-template-columns: minmax(0, 1fr) 48px; grid-template-areas: 'label value' 'slider slider'; gap: 0 10px; align-items: center; min-width: 0; }
+.audio-volume-control label { grid-area: label; color: #ccd5bd; cursor: pointer; }
+.audio-volume-control output { grid-area: value; color: #dbcba1; font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
+.audio-volume-control input { grid-area: slider; appearance: none; -webkit-appearance: none; display: block; width: 100%; min-width: 0; min-height: 44px; height: 44px; padding: 0; margin: 0; border: 0; border-radius: 7px; outline: none; background: transparent; cursor: pointer; accent-color: #c4ae78; touch-action: pan-y; }
+.audio-volume-control input::-webkit-slider-runnable-track { height: 6px; border-radius: 6px; background: linear-gradient(to right, #bba977 0 var(--audio-volume), #6e806449 var(--audio-volume) 100%); }
+.audio-volume-control input::-moz-range-track { height: 6px; border-radius: 6px; background: #6e806449; }
+.audio-volume-control input::-moz-range-progress { height: 6px; border-radius: 6px; background: #bba977; }
+.audio-volume-control input::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border: 2px solid #e6d7b0; border-radius: 50%; background: #bdab7a; box-shadow: 0 2px 7px #0006; }
+.audio-volume-control input::-moz-range-thumb { width: 18px; height: 18px; border: 2px solid #e6d7b0; border-radius: 50%; background: #bdab7a; box-shadow: 0 2px 7px #0006; }
+.audio-settings-mute:focus-visible, .audio-volume-control input:focus-visible { outline: 2px solid #edcf8b; outline-offset: 3px; }
+.audio-settings .audio-settings-note { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid #a1aa7529; color: #acbca1; font: 400 12px/1.5 Manrope, Arial, sans-serif; }
+.audio-settings[data-compact='true'] { padding: 12px 14px; }
+.audio-settings[data-compact='true'] .audio-settings-heading { padding-bottom: 8px; }
+.audio-settings[data-compact='true'] .audio-settings-heading h2 { font-size: 23px; }
+.audio-settings[data-compact='true'] .audio-settings-channels { gap: 4px; padding-top: 8px; }
+.audio-settings[data-compact='true'] .audio-volume-control { grid-template-columns: minmax(84px, .9fr) minmax(88px, 1.2fr) 38px; grid-template-areas: 'label slider value'; gap: 0 9px; min-height: 44px; }
+.audio-settings[data-compact='true'] .audio-volume-control label { font-size: 13px; }
+@media (hover: hover) {
+  .audio-settings-mute:hover { border-color: #d5c28f; background-color: #b5ac791c; }
+  .audio-volume-control input:hover::-webkit-slider-thumb { background: #d3c18e; }
+  .audio-volume-control input:hover::-moz-range-thumb { background: #d3c18e; }
+}
+@media (max-width: 600px) {
+  .audio-settings { padding: 14px 16px; }
+  .audio-settings[data-compact='true'] { padding: 10px 12px; }
+  .audio-settings[data-compact='true'] .audio-volume-control { grid-template-columns: minmax(80px, .9fr) minmax(76px, 1.2fr) 36px; gap: 0 7px; }
+}

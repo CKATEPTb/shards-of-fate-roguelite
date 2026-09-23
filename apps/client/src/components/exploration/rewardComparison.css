@@ -1,0 +1,70 @@
+.reward-comparison { display: grid; gap: 10px; min-width: 0; color: #d2dac8; font: 400 14px/1.55 Manrope, Arial, sans-serif; }
+.reward-comparison *, .reward-comparison *::before, .reward-comparison *::after { box-sizing: border-box; }
+.reward-comparison h4 { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin: 0 0 10px; color: #c2b58f; font: 600 13px/1.4 Manrope, Arial, sans-serif; }
+.reward-comparison h4 > span { padding: 2px 5px; border: 1px solid #9ebd6e42; border-radius: 5px; color: #c4dea4; font-size: 12px; font-weight: 500; }
+.reward-comparison p { margin: 0; overflow-wrap: anywhere; }
+.reward-comparison-target { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.reward-comparison-target > span { color: #b5bca6; font-size: 13px; }
+.reward-comparison-target > div { display: flex; flex: 1; gap: 6px; }
+.reward-comparison-target button { flex: 1; min-width: 0; min-height: 44px; padding: 6px 9px; border: 1px solid #9ba98042; border-radius: 7px; background: #a5b28408; color: #bbc7ae; font: 500 13px/1.4 Manrope, Arial, sans-serif; cursor: pointer; }
+.reward-comparison-target button[aria-pressed='true'] { border-color: #c7b58294; background: #b8a46d19; color: #eadbb7; }
+.reward-comparison-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+.reward-comparison-side { min-width: 0; padding: 12px; border: 1px solid #a6b18430; border-radius: 10px; background: #09161035; }
+.reward-comparison-side:last-child { border-color: #c6b27b48; background: linear-gradient(155deg, #bdad7320, #a6b87d05 55%); }
+.reward-comparison-item { display: flex; align-items: flex-start; min-width: 0; gap: 9px; }
+.reward-comparison-equipped + .reward-comparison-equipped { margin-top: 12px; padding-top: 12px; border-top: 1px solid #9ca98030; }
+.reward-comparison-icon { display: grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; padding: 6px; border: 1px solid var(--equipment-rarity-border, #a9b08744); border-radius: 7px; background: #101a1633; color: var(--equipment-rarity, #cad0b7); }
+.reward-comparison-icon > svg { display: block; width: 100%; height: 100%; }
+.reward-comparison-icon.reward-comparison-equipment-icon { padding: 0; border: 0; background: transparent; }
+.reward-comparison-identity { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; gap: 4px; }
+.reward-comparison-identity > strong { color: var(--equipment-rarity, #d3dbc6); font-size: 15px; font-weight: 650; line-height: 1.4; overflow-wrap: anywhere; }
+.reward-comparison .equipment-rarity-badge { max-width: 100%; font-size: 12px; white-space: normal; }
+.reward-comparison .equipment-rarity-badge > span { font-size: 12px; }
+.reward-comparison-identity > small { color: #a7b59b; font-size: 12px; line-height: 1.4; }
+.reward-comparison-empty { padding: 12px 0; color: #a6b299; }
+.reward-comparison-restored { padding: 0 2px; color: #bdc8aa; font-size: 13px; }
+.reward-comparison p.reward-comparison-description { margin-top: 10px; color: #c5d0bb; font-size: 14px; line-height: 1.55; }
+.reward-comparison p.reward-comparison-cooldown { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 10px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #a5b28325; color: #bcb392; font-size: 13px; }
+.reward-comparison-cooldown b { color: #ded9be; font-weight: 600; }
+.reward-comparison-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; padding: 10px 12px; border: 1px solid #a6b18430; border-radius: 8px; background: #09161020; }
+.reward-comparison-parts > h4 { grid-column: 1 / -1; margin-bottom: 2px; }
+.reward-comparison-part { min-width: 0; }
+.reward-comparison-part > strong { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-bottom: 4px; color: #c4cdb5; font-size: 13px; font-weight: 600; }
+.reward-comparison-part > strong > small { color: #cfb398; font-size: 12px; font-weight: 400; }
+.reward-comparison-part dl { display: grid; gap: 4px; margin: 0; font-size: 13px; }
+.reward-comparison-part dl > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 8px; min-width: 0; }
+.reward-comparison-part dt { min-width: 0; color: #b3c0a5; overflow-wrap: anywhere; }
+.reward-comparison-part dd { margin: 0; }
+.reward-comparison-values { display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.reward-comparison-values > span { color: #a6b59b; }
+.reward-comparison-values > span:nth-child(2) { color: #87977a; }
+.reward-comparison-values > b { color: #e0e7d1; font-weight: 600; }
+.reward-comparison-values > em { padding: 1px 4px; border-radius: 4px; background: #a4b78910; font-size: inherit; font-style: normal; font-weight: 650; }
+.reward-comparison [data-change='gain'] { color: #c0e19b; }
+.reward-comparison [data-change='loss'] { color: #e5ada3; }
+.reward-comparison [data-change='same'] { color: #b1bba3; }
+.reward-comparison-skill-change { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 12px; padding: 10px 12px; border: 1px solid #a6b18430; border-radius: 8px; color: #bec9ae; font-size: 13px; }
+.reward-comparison-sets { display: grid; gap: 8px; }
+.reward-comparison button:focus-visible { outline: 2px solid #d9cc9e; outline-offset: 3px; }
+@media (hover: hover) {
+  .reward-comparison-target button:hover { border-color: #d7c48e; background-color: #bca57522; }
+}
+@media (max-width: 700px) {
+  .reward-comparison { gap: 8px; font-size: 12px; }
+  .reward-comparison h4 { margin-bottom: 8px; font-size: 12px; }
+  .reward-comparison-target { gap: 5px 8px; }
+  .reward-comparison-target > span, .reward-comparison-target button { font-size: 12px; }
+  .reward-comparison-target > span { max-width: 86px; }
+  .reward-comparison-target button { padding-inline: 5px; }
+  .reward-comparison-pair { gap: 7px; }
+  .reward-comparison-side { padding: 9px; }
+  .reward-comparison-item { flex-wrap: wrap; gap: 7px; }
+  .reward-comparison-icon { flex-basis: 32px; width: 32px; height: 32px; }
+  .reward-comparison-identity { flex: 1 1 80px; }
+  .reward-comparison-identity > strong { font-size: 13px; }
+  .reward-comparison p.reward-comparison-description { font-size: 12px; }
+  .reward-comparison p.reward-comparison-cooldown { font-size: 12px; }
+  .reward-comparison-restored { font-size: 12px; }
+  .reward-comparison-parts { gap: 8px; padding: 9px; }
+  .reward-comparison-part > strong, .reward-comparison-part dl, .reward-comparison-skill-change { font-size: 12px; }
+}

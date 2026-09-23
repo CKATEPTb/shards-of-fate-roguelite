@@ -17,6 +17,10 @@
 }
 * { box-sizing: border-box; }
 html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; overscroll-behavior: none; }
+@media (any-pointer: coarse) {
+  /* Cover scroll containers and portaled dialogs while keeping one-finger scrolling. */
+  * { touch-action: pan-x pan-y; }
+}
 button, input, select { font: inherit; color: inherit; }
 button { border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 button:disabled { opacity: .4; cursor: not-allowed; }
@@ -78,7 +82,7 @@ input { accent-color: var(--gold); }
 .menu-controls p { margin-top: 7px; }
 .menu-controls kbd { font: 9px Manrope, sans-serif; border: 1px solid #526844; padding: 1px 4px; }
 .menu-controls p > span { padding: 0 7px; }
-/* Combat occupies the same screen, with the persistent party and loadout. */
+/* Combat owns the screen; exploration panels are unmounted until it ends. */
 .combat-phase { position: absolute; z-index: 6; inset: 0; background: #0e1c14; }
 .combat-scene { position: absolute; inset: 0; }
 .battle-canvas { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse, #203629, #102219); }
@@ -159,3 +163,9 @@ input { accent-color: var(--gold); }
   .battle-result p { margin: 8px 0 12px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+.adventure-bag-button { position: absolute; z-index: 12; right: 18px; top: 76px; display: flex; gap: 8px; align-items: center; padding: 9px 12px; border: 1px solid #dbc58d40; border-radius: 16px; color: #edd7a0; background: #101812bb; backdrop-filter: blur(12px); box-shadow: 0 4px 16px #0003; }
+.adventure-bag-button small { font-size: 10px; color: #b5b6a7; }
+.adventure-coin-counter { pointer-events: none; }
+.adventure-bag-button b { display: grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: #bc9745; color: #161b14; font-size: 11px; }
+@media (max-width: 600px) { .adventure-bag-button { right: 10px; top: 66px; padding: 7px 9px; } .adventure-bag-button small { display: none; } }

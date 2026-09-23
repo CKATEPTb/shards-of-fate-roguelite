@@ -6,10 +6,12 @@ import { MAX_SEASON_RINGS, MAX_WORLD_NODES, MIN_SEASON_RINGS, SEASONS } from './
 import { validateStructures } from './structure-validation';
 import { campfireTileIndices } from './campfires';
 import { poiApproachCells } from './poi-access';
+import { parseBasementChunkId } from './chunk-identity';
 
 export function validateWorld(graph: WorldGraph): MapValidation {
   const errors: string[] = [];
   if (graph.version !== 1 || graph.generatorVersion !== 3 || typeof graph.seed !== 'string' || !graph.seed.length || graph.seed.length > 256) errors.push('Invalid world header');
+  if (graph.structureVersion !== undefined && ![1, 2, 3].includes(graph.structureVersion)) errors.push('Invalid structure generator version');
   if (!graph.seasonRings || SEASONS.some(season => !Number.isInteger(graph.seasonRings[season]) || graph.seasonRings[season] < MIN_SEASON_RINGS || graph.seasonRings[season] > MAX_SEASON_RINGS)
     || graph.radius !== SEASONS.reduce((sum, season) => sum + graph.seasonRings[season], 0)) return { valid: false, errors: [...errors, 'Invalid seasonal ring profile'] };
   if (!graph.nodes.length || graph.nodes.length > MAX_WORLD_NODES) return { valid: false, errors: [...errors, 'Invalid world size'] };
@@ -17,7 +19,13 @@ export function validateWorld(graph: WorldGraph): MapValidation {
   if (nodes.size !== graph.nodes.length) errors.push('Duplicate world node');
   const center = nodes.get(graph.startId);
   if (!center || center.x !== 0 || center.y !== 0 || center.season !== 'spring') errors.push('Missing spring center');
-  if (nodes.get(graph.altarNodeId)?.season !== 'winter') errors.push('The single altar must be in winter');
+  if (nodes.get(graph.altarNodeId)?.season !== 'winter') errors.push('The legacy altar must be in winter');
+  if (graph.seasonalAltarNodeIds) {
+    if (Object.keys(graph.seasonalAltarNodeIds).length !== SEASONS.length
+      || SEASONS.some(season => nodes.get(graph.seasonalAltarNodeIds![season])?.season !== season)
+      || graph.seasonalAltarNodeIds.winter !== graph.altarNodeId
+      || graph.seasonalAltarNodeIds.spring === graph.startId) errors.push('Invalid seasonal altar locations');
+  }
   for (const node of graph.nodes) {
     if (!Number.isInteger(node.x) || !Number.isInteger(node.y) || Math.hypot(node.x, node.y) > graph.radius || node.id !== nodeId(node)) errors.push(`Invalid coordinates at ${node.id}`);
     if (node.season !== seasonAt(node, graph)) errors.push(`Invalid seasonal ring at ${node.id}`);
@@ -43,6 +51,10 @@ export function validateWorld(graph: WorldGraph): MapValidation {
 export function validateChunk(chunk: WorldChunk): MapValidation {
   const errors: string[] = [];
   if (chunk.size !== CHUNK_SIZE || chunk.tiles.length !== CHUNK_SIZE * CHUNK_SIZE) return { valid: false, errors: ['Invalid chunk dimensions'] };
+  const basement = parseBasementChunkId(chunk.id);
+  if (chunk.layer !== undefined && chunk.layer !== 'surface' && chunk.layer !== 'basement') errors.push('Invalid chunk layer');
+  if (chunk.layer === 'basement' && (!basement || chunk.surfaceNodeId !== basement.surfaceNodeId || chunk.exits.length)
+    || chunk.layer === 'surface' && chunk.surfaceNodeId !== chunk.id) errors.push('Invalid chunk parent');
   const terrain = new Set(['grass', 'path', 'water', 'rock', 'tree', 'snow', 'wall', 'bush']);
   const fires = campfireTileIndices(chunk);
   for (let index = 0; index < chunk.tiles.length; index++) {
@@ -79,13 +91,32 @@ export function validateChunk(chunk: WorldChunk): MapValidation {
     if ((x === 0 || y === 0 || x === chunk.size - 1 || y === chunk.size - 1) && chunk.tiles[index].walkable && !exitPositions.has(index)) errors.push('Open boundary without an exit');
   }
   const poiIds = new Set<string>();
+  const poiPositions = new Set<number>();
   for (const poi of chunk.pois) {
     const reachable = poiApproachCells(chunk, poi).some(point => regionAt(chunk, regions, point) >= 0);
-    if (!inBounds(poi.position, chunk.size) || !reachable || poiIds.has(poi.id) || chunk.exits.some(exit => samePoint(exit.position, poi.position))) errors.push('Invalid or unreachable point of interest');
-    if (!['campfire', 'encounter', 'altar'].includes(poi.kind) || (poi.kind === 'encounter' && !poi.encounterId)) errors.push('Invalid point of interest kind');
+    const position = tileIndex(poi.position, chunk.size);
+    if (!poi.id || !inBounds(poi.position, chunk.size) || !reachable || poiIds.has(poi.id) || poiPositions.has(position) || chunk.exits.some(exit => samePoint(exit.position, poi.position))) errors.push('Invalid or unreachable point of interest');
+    if (!['campfire', 'encounter', 'altar', 'portal', 'chest', 'well', 'stairs-down', 'stairs-up'].includes(poi.kind) || (poi.kind === 'encounter' && !poi.encounterId)) errors.push('Invalid point of interest kind');
+    if (poi.bossSeason !== undefined && (poi.kind !== 'altar' || poi.bossSeason !== chunk.season)) errors.push('Invalid seasonal altar');
+    const transports = poi.kind === 'portal' || poi.kind === 'stairs-down' || poi.kind === 'stairs-up';
+    if (transports ? !poi.destination?.chunkId || !poi.destination.poiId || poi.destination.chunkId === chunk.id : poi.destination !== undefined) errors.push('Invalid point of interest destination');
+    if (poi.kind === 'stairs-down' && (chunk.layer !== 'surface' || parseBasementChunkId(poi.destination?.chunkId ?? '')?.surfaceNodeId !== chunk.id)
+      || poi.kind === 'stairs-up' && (chunk.layer !== 'basement' || poi.destination?.chunkId !== chunk.surfaceNodeId)
+      || poi.kind === 'portal' && chunk.layer !== 'surface') errors.push('Invalid travel layer');
+    if (poi.structureId) {
+      const structure = chunk.structures.find(candidate => candidate.id === poi.structureId);
+      if (!structure || poi.kind === 'well' && (structure.kind !== 'well' || !samePoint(poi.position, structure.approach))
+        || (poi.kind === 'chest' || poi.kind === 'stairs-down') && (structure?.kind !== 'house'
+          || poi.position.x <= structure.origin.x || poi.position.x >= structure.origin.x + structure.width - 1
+          || poi.position.y <= structure.origin.y || poi.position.y >= structure.origin.y + structure.height - 1)) errors.push('Invalid structure point');
+    } else if (poi.kind === 'well' || poi.kind === 'stairs-down') errors.push('Missing structure point owner');
     poiIds.add(poi.id);
+    poiPositions.add(position);
   }
   if (chunk.pois.filter(poi => poi.kind === 'altar').length > 1) errors.push('Duplicate altar');
+  if (chunk.pois.filter(poi => poi.kind === 'campfire').length > 1) errors.push('Duplicate campfire');
+  if (chunk.layer === 'basement' && (chunk.pois.filter(poi => poi.kind === 'stairs-up').length !== 1
+    || chunk.pois.some(poi => poi.kind === 'altar' || poi.kind === 'campfire'))) errors.push('Invalid basement landmarks');
   errors.push(...validateStructures(chunk));
   return { valid: errors.length === 0, errors };
 }

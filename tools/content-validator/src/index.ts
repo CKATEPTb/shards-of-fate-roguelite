@@ -3,6 +3,7 @@ import { contentSchema } from './schema';
 import { validateReferences, type ValidationIssue } from './references';
 
 export type { ValidationIssue } from './references';
+export { validateEquipmentCatalog, assertValidEquipmentCatalog, EquipmentCatalogValidationError } from './equipment-catalog';
 export interface ValidationResult { valid: boolean; issues: ValidationIssue[] }
 
 /** Never throws for malformed content. Performs schemas first, then cross-reference checks. */

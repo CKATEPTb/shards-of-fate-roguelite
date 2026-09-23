@@ -1,6 +1,7 @@
 import type { GridPoint, RngState, WorldPoi, WorldStructure } from '@shards/shared';
 import { createRng, drawRandom, hashString } from '../random';
 import { insidePocketMask, type DetachedPocket } from './pockets';
+import { worldDie } from './generation-dice';
 
 export function withinStructure(point: GridPoint, structure: WorldStructure, margin = 0): boolean {
   return point.x >= structure.origin.x - margin && point.y >= structure.origin.y - margin
@@ -22,8 +23,12 @@ function structureAt(nodeId: string, kind: WorldStructure['kind'], origin: GridP
     approach: { x: origin.x + door, y: origin.y + height }, variant };
 }
 
-function settlementHouseCount(rng: RngState, structureVersion: 1 | 2): number {
+function settlementHouseCount(rng: RngState, structureVersion: 1 | 2 | 3): number {
   if (structureVersion === 1) return 2;
+  if (structureVersion === 3) {
+    const roll = worldDie(createRng(`house-count-v3:${hashString(rng.seed)}`), 20);
+    return roll <= 12 ? 1 : roll <= 19 ? 2 : 3;
+  }
   // Count selection must not shift the variants or placement of existing houses.
   const countRng = createRng(`house-count-v2:${hashString(rng.seed)}`);
   const roll = drawRandom(countRng, 'WORLD');
@@ -31,7 +36,7 @@ function settlementHouseCount(rng: RngState, structureVersion: 1 | 2): number {
 }
 
 /** Footprints are shared with the renderer. Placement is decided before any corridor is carved. */
-export function planStructures(nodeId: string, start: boolean, rng: RngState, pocket: DetachedPocket | null, pois: WorldPoi[], structureVersion: 1 | 2 = 1): WorldStructure[] {
+export function planStructures(nodeId: string, start: boolean, rng: RngState, pocket: DetachedPocket | null, pois: WorldPoi[], structureVersion: 1 | 2 | 3 = 1): WorldStructure[] {
   const random = () => drawRandom(rng, 'WORLD');
   const structures: WorldStructure[] = [];
   const protectedPoints = [{ x: 17, y: 17 }, ...pois.map(poi => poi.position)];
@@ -44,7 +49,7 @@ export function planStructures(nodeId: string, start: boolean, rng: RngState, po
     return true;
   };
   const add = (kind: WorldStructure['kind'], origins: GridPoint[]) => {
-    const variant = Math.floor(random() * 4);
+    const variant = structureVersion === 3 ? worldDie(rng, 4) - 1 : Math.floor(random() * 4);
     const choices = start ? origins : origins.map((point, index) => origins[(index + variant) % origins.length]);
     for (const origin of choices) {
       const candidate = structureAt(nodeId, kind, { ...origin }, variant, structures.length);
@@ -52,7 +57,7 @@ export function planStructures(nodeId: string, start: boolean, rng: RngState, po
     }
   };
   const slots = [{ x: 7, y: 7 }, { x: 23, y: 7 }, { x: 7, y: 23 }, { x: 23, y: 23 }];
-  const roll = start ? 0 : random();
+  const roll = start ? 0 : structureVersion === 3 ? (worldDie(rng, 100) - 1) / 100 : random();
   if (roll < 0.24) {
     const houseCount = settlementHouseCount(rng, structureVersion);
     for (let index = 0; index < houseCount; index++) add('house', index % 2 === 0 ? slots : slots.slice().reverse());

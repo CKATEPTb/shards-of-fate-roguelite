@@ -2,11 +2,13 @@ import { z } from 'zod';
 import { fraction, nonnegative, positive, turns } from './common';
 import { effectSchema, encounterSchema, enemySchema, skillSchema, statusSchema, unitSchema } from './definitions';
 import { difficultiesSchema } from './difficulty';
+import { catalogueSchema } from './equipment-catalog';
 
 const scaling = z.object({ hp: positive, damage: positive }).strict();
 
 export const contentSchema = z.object({
   schemaVersion: z.literal(1),
+  equipmentCatalog: catalogueSchema.optional(),
   difficulties: difficultiesSchema.optional(),
   characters: z.array(unitSchema).min(1).max(1000),
   enemies: z.array(enemySchema).min(1).max(10_000),
@@ -17,8 +19,8 @@ export const contentSchema = z.object({
   balance: z.object({
     maxRounds: turns, maxTriggerDepth: z.number().int().min(1).max(100),
     maxEventsPerStep: z.number().int().min(1).max(1_000_000),
-    armorFactor: nonnegative, maxDamageReduction: z.number().finite().min(0).lt(1),
-    critMultiplier: z.number().finite().min(1).max(10), healThreshold: fraction,
+    armorFactor: nonnegative, maxDamageReduction: nonnegative,
+    healThreshold: fraction,
     partyScaling: z.object({ 1: scaling, 2: scaling, 3: scaling, 4: scaling }).strict(),
   }).strict(),
 }).strict();

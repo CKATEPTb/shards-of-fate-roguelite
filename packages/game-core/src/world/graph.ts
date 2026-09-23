@@ -3,11 +3,12 @@ import { createRng, drawRandom, hashString } from '../random';
 import { DELTAS, nodeId, OPPOSITE, seasonAt } from './grid';
 import { validateWorld } from './validation';
 import { worldProfile } from './profile';
+import { seasonAltarNodeIds } from './season-altars';
 
 interface CandidateEdge { from: number; to: number; direction: Direction; protected: boolean }
 
 /** The four cardinal spokes are independent by construction; remaining edges are seeded. */
-export function generateWorld(seed: string, options: { structureVersion?: 1 | 2 } = {}): WorldGraph {
+export function generateWorld(seed: string, options: { structureVersion?: 1 | 2 | 3 } = {}): WorldGraph {
   createRng(seed); // Apply the common seed contract before deriving a bounded stream key.
   const rng = createRng(`world-v3:${hashString(seed)}`);
   const random = () => drawRandom(rng, 'WORLD');
@@ -57,8 +58,9 @@ export function generateWorld(seed: string, options: { structureVersion?: 1 | 2 
     if (!edge.protected && (root(edge.from) !== root(edge.to) || random() < 0.36)) connect(edge);
   }
   const winter = nodes.filter(node => node.season === 'winter');
-  const graph: WorldGraph = { version: 1, generatorVersion: 3, structureVersion: options.structureVersion ?? 2,
+  const graph: WorldGraph = { version: 1, generatorVersion: 3, structureVersion: options.structureVersion ?? 3,
     ...profile, seed, startId: '0,0', altarNodeId: winter[Math.floor(random() * winter.length)].id, nodes };
+  graph.seasonalAltarNodeIds = seasonAltarNodeIds(graph);
   const result = validateWorld(graph);
   if (!result.valid) throw new Error(`World generation invariant failed: ${result.errors.join('; ')}`);
   return graph;

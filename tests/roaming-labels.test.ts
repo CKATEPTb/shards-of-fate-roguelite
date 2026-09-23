@@ -79,41 +79,41 @@ beforeEach(() => {
   });
 });
 
-describe('world attached enemy percentages', () => {
-  it('gives every pack member the same caption without inspection at its own foot depth', () => {
+describe('world enemy visibility without automatic battle estimates', () => {
+  it('keeps prediction captions empty and hidden for every visible pack member', () => {
     const { renderer, labels } = fixture();
-    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: () => 1 }, false, [], { pack: 73 });
+    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: () => 1 }, false, []);
     const frames = JSON.parse(renderer.frames());
     expect(frames).toHaveLength(2);
     expect(frames.every((entry: { labelVisible: boolean; labelText: string; labelDepth: number; depth: number }) =>
-      entry.labelVisible && entry.labelText === '73%' && entry.labelDepth === entry.depth)).toBe(true);
+      !entry.labelVisible && entry.labelText === '' && entry.labelDepth === entry.depth)).toBe(true);
     for (const label of labels) expect(label.parent?.children).toContain(label);
     expect(labels[0].parent).not.toBe(labels[1].parent);
   });
 
   it('never relocates an offscreen body caption to the viewport edge', () => {
     const { renderer } = fixture();
-    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: () => 1 }, false, [], {});
+    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: () => 1 }, false, []);
     const before = JSON.parse(renderer.frames());
-    expect(before[0].labelText).toBe('…');
+    expect(before[0].labelText).toBe('');
     const captionOnlyViewport = { x: before[0].labelX - 12, y: before[0].labelY - 12, width: 24, height: 14 };
-    renderer.updateVisibility({ heroes: [hero], viewport: captionOnlyViewport, pointVisibility: () => 1 }, false, [], { pack: 100 });
+    renderer.updateVisibility({ heroes: [hero], viewport: captionOnlyViewport, pointVisibility: () => 1 }, false, []);
     const after = JSON.parse(renderer.frames());
     expect(after[0]).toMatchObject({ labelX: before[0].labelX, labelY: before[0].labelY, bodyVisible: false, labelVisible: false });
     expect(renderer.isGroupVisible('pack')).toBe(false);
   });
 
-  it('shares scenery visibility with captions, selection marks and inspection', () => {
+  it('shares scenery visibility with selection marks and inspection', () => {
     const { renderer } = fixture();
     const feet = tileCenter(group.members[0].position);
     const body = { x: feet.x + 0.5 * 1.65, y: feet.y - 11.5 * 1.65 };
-    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: () => 0 }, false, ['pack'], { pack: 0 });
+    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: () => 0 }, false, ['pack']);
     expect(JSON.parse(renderer.frames()).every((entry: { labelVisible: boolean }) => !entry.labelVisible)).toBe(true);
     expect(renderer.inspect(body)).toBeUndefined();
     expect(actors.createActorView.mock.results[0].value.marker.setVisible).toHaveBeenLastCalledWith(false);
-    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: point => point.y < feet.y - 10 ? 1 : 0 }, false, ['pack'], { pack: 0 });
+    renderer.updateVisibility({ heroes: [hero], viewport, pointVisibility: point => point.y < feet.y - 10 ? 1 : 0 }, false, ['pack']);
     expect(renderer.inspect(body)).toEqual({ groupId: 'pack', mobId: 'a' });
-    expect(JSON.parse(renderer.frames())[0]).toMatchObject({ labelVisible: true, labelText: '0%' });
+    expect(JSON.parse(renderer.frames())[0]).toMatchObject({ bodyVisible: true, labelVisible: false, labelText: '' });
     expect(actors.createActorView.mock.results[0].value.marker.setVisible).toHaveBeenLastCalledWith(true);
   });
 
@@ -122,8 +122,8 @@ describe('world attached enemy percentages', () => {
     const feet = tileCenter(group.members[0].position);
     const body = { x: feet.x + 0.5 * 1.65, y: feet.y - 11.5 * 1.65 };
     const check = (heroes: { x: number; y: number }[], visible: boolean) => {
-      renderer.updateVisibility({ heroes, viewport, pointVisibility: () => 1 }, false, ['pack'], { pack: 73 });
-      expect(JSON.parse(renderer.frames())[0]).toMatchObject({ bodyVisible: visible, labelVisible: visible });
+      renderer.updateVisibility({ heroes, viewport, pointVisibility: () => 1 }, false, ['pack']);
+      expect(JSON.parse(renderer.frames())[0]).toMatchObject({ bodyVisible: visible, labelVisible: false });
       expect(actors.createActorView.mock.results[0].value.marker.setVisible).toHaveBeenLastCalledWith(visible);
       expect(renderer.inspect(body)).toEqual(visible ? { groupId: 'pack', mobId: 'a' } : undefined);
     };

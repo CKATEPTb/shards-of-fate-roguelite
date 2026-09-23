@@ -1,0 +1,80 @@
+.grimoire .atlas-header h1 { font-size: 45px; }
+.grimoire-workspace { grid-template-columns: minmax(260px, 315px) minmax(400px, 1fr) minmax(270px, 330px); }
+.grimoire .atlas-catalog { height: min(70vh, 730px); }
+.grimoire-entry { padding-top: 9px; }
+.grimoire-entry[data-rarity] { border-color: color-mix(in srgb, var(--skill-rarity) 18%, transparent); background: linear-gradient(155deg, color-mix(in srgb, var(--skill-rarity) 6%, transparent), #0918204d 68%); }
+.grimoire-entry[data-rarity][aria-pressed="true"] { border-color: color-mix(in srgb, var(--skill-rarity) 75%, transparent); box-shadow: inset 0 0 15px color-mix(in srgb, var(--skill-rarity) 9%, transparent); }
+.grimoire-entry > .skill-rarity-badge { font-size: 7px; padding: 2px 3px; letter-spacing: 0; }
+.grimoire .atlas-catalog.list .grimoire-entry > .aura-art { grid-row: 1 / 4; }
+.grimoire .atlas-catalog.list .grimoire-entry > .skill-rarity-badge { grid-column: 2; justify-self: start; margin-top: 3px; font-size: 8px; }
+.grimoire-rarity-filter[data-rarity] select { color: var(--skill-rarity); border-color: color-mix(in srgb, var(--skill-rarity) 35%, transparent); }
+.grimoire-filters > label:last-child { grid-column: 1 / -1; }
+.grimoire-entry-cooldown { position: absolute; right: 2px; top: 2px; padding: 1px 3px; border: 1px solid #a3a06b55; border-radius: 2px; background: #11251eeb; color: #d0c792; font: 9px/1.2 'Manrope', Arial, sans-serif; }
+.grimoire .atlas-entry-name { min-height: 28px; }
+.grimoire .atlas-catalog.list .grimoire-entry-cooldown { top: 8px; right: 5px; font-size: 9px; }
+.grimoire .atlas-catalog.list .atlas-entry-name { padding-right: 25px; min-height: 0; }
+.grimoire .atlas-stage-heading h2 { font-size: 29px; }
+.grimoire .atlas-stage-heading > div { min-width: 0; }
+.grimoire .atlas-pause { flex: 0 0 auto; }
+.grimoire-preview-note { max-width: 490px; margin: -7px auto 0; padding: 0 22px; text-align: center; color: #95a592; font: 10px/1.65 'Manrope', Arial, sans-serif; }
+.grimoire-release { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 16px 21px; }
+.grimoire-release > span { color: #93aa91; font-size: 10px; }
+.grimoire-release button { padding: 9px 13px; font-size: 11px; min-height: 35px; }
+.grimoire-visible-count { justify-self: end; align-self: center; color: #94aa8e; font-size: 10px; }
+.grimoire-detail .atlas-detail-art { padding-bottom: 18px; }
+.grimoire-detail[data-rarity] .atlas-detail-art { background: radial-gradient(ellipse, color-mix(in srgb, var(--skill-rarity) 13%, transparent), transparent 70%); }
+.grimoire-detail .atlas-detail-art .skill-rarity-badge + .atlas-polarity { margin-top: -6px; }
+.grimoire-detail .atlas-description { line-height: 1.8; }
+.grimoire-detail .atlas-rules { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 10px; }
+.grimoire-detail .atlas-rules > div:first-child, .grimoire-detail .atlas-rules > div:last-child { grid-column: 1 / -1; }
+.grimoire-random { margin: 17px 0 0; padding: 10px 11px; border: 1px solid #83956e40; border-radius: 4px; background: #152c295e; font-size: 10px; color: #b8c6aa; line-height: 1.65; }
+.grimoire-random b { display: block; color: #d4c591; font-size: 9px; font-weight: 600; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 1px; }
+.grimoire-actions { border-top: 1px solid #71847535; padding-top: 15px; margin-top: 18px; }
+.grimoire-actions ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; counter-reset: skill-action; }
+.grimoire-actions li { position: relative; padding: 9px 9px 9px 30px; background: #142c2973; border-left: 2px solid color-mix(in srgb, var(--atlas-accent) 60%, transparent); font-size: 10px; color: #d0d8bc; line-height: 1.65; counter-increment: skill-action; }
+.grimoire-actions li::before { content: counter(skill-action); position: absolute; left: 10px; top: 10px; font: 500 12px/1.2 'Cormorant Garamond', Georgia, serif; color: #baa66e; }
+.grimoire-actions li > strong { display: block; color: #d9bc85; font-size: 9px; font-weight: 500; margin-bottom: 3px; }
+.grimoire-actions li > small { display: block; color: #96b29c; font-size: 9px; margin-top: 4px; }
+.grimoire-detail > .dice-legend { margin-top: 13px; }
+.grimoire-linked-auras { border-top: 1px solid #71847535; padding: 17px 18px; background: #0a191d9e; }
+.grimoire-linked-heading { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 6px; margin-bottom: 11px; }
+.grimoire-linked-heading h3 { margin: 0; color: #c7bb92; font: 500 22px/1 'Cormorant Garamond', Georgia, serif; }
+.grimoire-linked-heading > span { color: #819984; font-size: 8px; }
+.grimoire-aura { display: grid; grid-template-columns: 41px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-top: 1px solid #74896f25; }
+.grimoire-aura-toggle { position: relative; width: 41px; height: 41px; border: 1px solid #8e9e7266; padding: 0; border-radius: 3px; background: #0e201ccc; }
+.grimoire-aura-toggle .aura-art { display: block; width: 39px; height: 39px; }
+.grimoire-aura-toggle[aria-pressed="false"] .aura-art { opacity: .5; }
+.grimoire-aura-toggle > span { position: absolute; bottom: -3px; right: -3px; display: grid; place-items: center; width: 13px; height: 13px; border: 1px solid #a5b376; border-radius: 3px; background: #183027; color: #dde6b3; font-size: 10px; line-height: 1; }
+.grimoire-aura h4 { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 8px; color: #d5d7b5; font-size: 11px; line-height: 1.4; font-weight: 500; margin: 0; }
+.grimoire-aura h4 > small { color: #a0b68d; font-size: 9px; font-weight: 400; }
+.grimoire-aura[data-negative="true"] h4 { color: #d8b7a2; }
+.grimoire-aura[data-negative="true"] h4 > small { color: #be9f81; }
+.grimoire-aura p { margin: 7px 0 0; color: #b5c2a6; font-size: 10px; line-height: 1.65; }
+.grimoire-aura .grimoire-aura-condition { margin-top: 3px; color: #849e8c; font-size: 8px; }
+.grimoire-aura .grimoire-aura-timing { color: #c1b484; font-size: 9px; }
+.grimoire-aura details { margin-top: 6px; font-size: 9px; color: #96af8a; }
+.grimoire-aura summary { width: max-content; max-width: 100%; cursor: pointer; }
+.grimoire-aura summary:focus-visible { outline: 1px solid #d4c28d; outline-offset: 3px; }
+.grimoire-no-aura { margin: 5px 0 0; font-size: 10px; color: #8fa590; line-height: 1.6; }
+@media (min-width: 1500px) { .grimoire-workspace { grid-template-columns: 350px minmax(400px, 1fr) 330px; } }
+@media (max-width: 1240px) and (min-width: 1161px) { .grimoire-workspace { grid-template-columns: 260px minmax(340px, 1fr) 270px; } .grimoire .atlas-stage-heading { padding-inline: 15px; } .grimoire .atlas-stage-heading h2 { font-size: 25px; } }
+@media (max-width: 1160px) { .grimoire-workspace { grid-template-columns: 260px minmax(350px, 1fr); } .grimoire .atlas-catalog { height: 1260px; } .grimoire-detail { grid-row: 2; } }
+@media (max-width: 740px) {
+  .grimoire .atlas-header h1 { font-size: 34px; }
+  .grimoire .atlas-header > div { min-width: 0; }
+  .grimoire .atlas-header > p { flex-shrink: 0; margin-left: 10px; }
+  .grimoire-workspace { grid-template-columns: minmax(0, 1fr); }
+  .grimoire .atlas-catalog { height: 325px; }
+  .grimoire-detail { grid-row: 3; }
+  .grimoire .atlas-stage-heading h2 { font-size: 25px; }
+  .grimoire-preview-note { padding-inline: 16px; font-size: 9px; }
+  .grimoire-release { margin: 13px 15px; }
+  .grimoire-release > span { font-size: 9px; }
+  .grimoire-release button { padding: 8px 10px; font-size: 10px; }
+  .grimoire .atlas-entry-name { font-size: 8px; }
+  .grimoire .atlas-catalog.grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grimoire-linked-auras { padding: 15px; }
+  .grimoire-filters select { font-size: 16px; }
+  .grimoire-detail .atlas-rules { clear: both; }
+}
+@media (max-width: 360px) { .grimoire .atlas-catalog.grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

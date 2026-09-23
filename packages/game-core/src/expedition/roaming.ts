@@ -5,6 +5,7 @@ import { hashString } from '../random';
 import { resetMovementProgress } from './movement-speeds';
 import { generateChunk } from '../world/chunk';
 import { partyBodies } from './party-health';
+import { expeditionCombatDice } from './dice';
 
 export function roamingBattleSeed(seed: string, chunkId: string, serial: number): string {
   return `roaming:${hashString(seed)}:${chunkId}:${serial}`;
@@ -44,7 +45,8 @@ export function beginRoamingBattle(state: ExpeditionState, encounter: RoamingEnc
   return {
     ...state, world, activePoiId: encounter.mobId,
     roaming: { ...roaming, battleSerial, active: { ...encounter, triggerRadius: 1, includePursuers: true }, chunks: { ...roaming.chunks, [world.currentChunkId]: groups } },
-    combat: createCombat({ seed: roamingBattleSeed(world.graph.seed, world.currentChunkId, battleSerial),
+    combat: expeditionCombatDice(state, createCombat({ seed: world.graph.seed,
       characterIds: world.actors.map(actor => actor.id), heroBodies: partyBodies(world.actors), encounterId: 'roaming', enemyIds: encounter.enemyIds, difficultyId: state.difficultyId }, content),
+      encounter.groupIds.flatMap(id => groups.find(group => group.id === id)?.members.map(mob => mob.id) ?? [])),
   };
 }

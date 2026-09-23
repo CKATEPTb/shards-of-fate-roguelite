@@ -8,7 +8,7 @@ const createParty = () => createCombat({ seed: 'loadout-hud', characterIds: ['gu
 describe('informational loadout model', () => {
   it('shows ten equipment slots and five abilities in three complete columns', () => {
     const model = buildLoadout(createParty(), 'guardian');
-    expect(model.equipment.map(slot => slot.id)).toEqual(['helmet', 'chest', 'gloves', 'pants', 'boots', 'amulet', 'ring1', 'ring2', 'mainHand', 'offHand']);
+    expect(model.equipment.map(slot => slot.id)).toEqual(['helmet', 'chest', 'gloves', 'pants', 'boots', 'amulet', 'ring1', 'ring2', 'rightHand', 'leftHand']);
     expect(model.equipment.filter(slot => !slot.empty)).toHaveLength(gameContent.characters.find(hero => hero.id === 'guardian')!.anatomy!.equipment.length);
     expect(model.equipment.filter(slot => slot.empty).map(slot => slot.id)).toEqual(['amulet', 'ring1', 'ring2']);
     expect(model.equipment.filter(slot => !slot.empty).every(slot => slot.contentId && slot.condition === 'active' && !slot.cooldown)).toBe(true);
@@ -66,9 +66,9 @@ describe('informational loadout model', () => {
     const original = buildLoadout(state, 'guardian');
     unit.body!.rightArm.current = 0;
     const model = buildLoadout(state, 'guardian');
-    expect(model.equipment.find(slot => slot.id === 'mainHand')).toMatchObject({ empty: false, condition: 'unavailable', bodyParts: ['rightArm'], bonuses: { power: 0 } });
+    expect(model.equipment.find(slot => slot.id === 'rightHand')).toMatchObject({ empty: false, condition: 'unavailable', bodyParts: ['rightArm'], bonuses: { power: 0 } });
     expect(model.equipment.find(slot => slot.id === 'ring1')).toMatchObject({ empty: true, condition: 'unavailable', bodyParts: ['rightArm'] });
-    expect(model.equipment.find(slot => slot.id === 'offHand')?.condition).toBe('active');
+    expect(model.equipment.find(slot => slot.id === 'leftHand')?.condition).toBe('active');
     expect(model.equipment.find(slot => slot.id === 'ring2')?.condition).toBeUndefined();
     const gloves = model.equipment.find(slot => slot.id === 'gloves')!;
     expect(gloves).toMatchObject({ condition: 'partial', badge: '½' });
@@ -99,10 +99,10 @@ describe('informational loadout model', () => {
     const passive = model.skills.find(slot => slot.id === 'passive')!;
     expect(passive.name).toBe(definition.passive!.name);
     expect(passive.description).toBe(definition.passive!.description);
-    expect(model.equipment.filter(slot => !slot.empty).map(slot => slot.name))
+    expect(model.equipment.filter(slot => !slot.empty && !slot.occupiedBy).map(slot => slot.name))
       .toEqual(definition.anatomy!.equipment.map(item => item.name));
     expect(loadoutColumns(model).map(column => column.slots.length)).toEqual([5, 5, 5]);
     state.units[0].body!.rightArm.current = 0;
-    expect(buildLoadout(state, definition.id).equipment.find(slot => slot.id === 'mainHand')!.condition).toBe('unavailable');
+    expect(buildLoadout(state, definition.id).equipment.find(slot => slot.id === 'rightHand')!.condition).toBe('unavailable');
   });
 });

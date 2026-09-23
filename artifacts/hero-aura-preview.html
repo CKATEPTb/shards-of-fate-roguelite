@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Осколки судьбы · Ауры и заклинания</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101718;color:#d2c9b6;font:14px system-ui}main{max-width:1150px;margin:auto;padding:30px 24px}header{display:flex;align-items:end;justify-content:space-between;gap:20px;border-bottom:1px solid #36403d;padding-bottom:20px}small{font-size:10px;color:#ac9270;letter-spacing:.2em}h1{font:34px Georgia;margin:8px 0 0}h2{font:25px Georgia;margin:0 0 8px}p{color:#939f95;font-size:13px;line-height:1.6;margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(270px,1fr);gap:28px;margin-top:26px}.viewer{min-width:0}.stage{border:1px solid #3c463f;border-radius:10px;overflow:hidden;background:radial-gradient(ellipse at 50% 77%,#71634045,transparent 61%),linear-gradient(#162121,#111a19);position:relative}.stage canvas{display:block;width:100%!important;height:auto!important;image-rendering:pixelated}.stage-tag{position:absolute;z-index:1;top:14px;left:16px;font-size:10px;letter-spacing:.15em;color:#acb098}.controls{display:grid;align-content:start;gap:17px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:grid;gap:7px;color:#a9ac9b;font-size:12px}select,button{background:#1c2725;color:#e0d6c1;border:1px solid #49524a;border-radius:5px;padding:10px;font:inherit;min-width:0}button{cursor:pointer}button:hover{border-color:#ad986b}select:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #c8a66b;outline-offset:3px}.auras{display:grid;grid-template-columns:1fr 1fr;gap:7px}.aura{display:flex;align-items:center;gap:8px;border:1px solid #39453c;border-radius:5px;background:#192520;padding:9px 8px;cursor:pointer;font-size:11px}.aura:has(input:checked){border-color:#a7986c;background:#2c3428;color:#e3d3b0}.aura input{accent-color:#c9af77;margin:0}.check{display:flex;align-items:center;gap:8px;cursor:pointer}.check input{accent-color:#c9af77}.transport{display:flex;gap:10px;align-items:center;margin-top:14px}.transport button{min-width:125px}.transport p{margin-left:auto;font-size:11px}.description{min-height:70px;border-top:1px solid #334239;padding-top:15px}.note{margin-top:21px;font-size:12px}input[type=range]{width:100%;accent-color:#c29657}.stack-row{padding-top:2px}.stack-row[hidden]{display:none}.stage-error{padding:24px;color:#e3af8c;white-space:pre-wrap}
+@media(max-width:760px){main{padding:20px 14px}.layout{grid-template-columns:1fr;gap:23px}h1{font-size:27px}header p{display:none}.stage{max-height:420px}.description{min-height:0}.transport p{display:none}}
+</style>
+<main>
+<header><div><small>ОСКОЛКИ СУДЬБЫ · МАСТЕРСКАЯ ГЕРОЕВ</small><h1>Ауры и заклинания</h1></div><p>Ветер, свет, пепел и кости</p></header>
+<section class="layout">
+  <div class="viewer">
+    <div id="auraStage" class="stage"><span class="stage-tag">ПОСТОЯННЫЕ ЭФФЕКТЫ</span></div>
+    <div class="transport"><button id="pause" type="button">Ⅱ Пауза</button><button id="cast" type="button">Применить умение</button><p>Эффекты можно сочетать</p></div>
+    <p class="note">Отдельный просмотр внешности и эффектов. Сохранённая игра не меняется.</p>
+  </div>
+  <div class="controls">
+    <div><h2 id="heroName">Хранитель последней грани</h2><p id="heroTitle"></p></div>
+    <label>Персонаж<select id="hero"></select></label>
+    <div class="row"><label>Ракурс<select id="facing"><option value="south">Лицом</option><option value="east">Вправо</option><option value="north">Со спины</option><option value="west">Влево</option></select></label><label>Движение<select id="motion"><option value="idle">Покой</option><option value="walk">Ходьба</option><option value="attack">Атака</option><option value="cast">Заклинание</option><option value="shieldBlock">Блок щитом</option><option value="dodge">Уклонение</option></select></label></div>
+    <div><label style="margin-bottom:8px">Активные ауры</label><div id="auras" class="auras"></div></div>
+    <label id="stackRow" class="stack-row" hidden>Стаки горения: <output id="stackValue">6</output><input id="stacks" type="range" min="1" max="12" value="6"></label>
+    <label class="check"><input id="reduced" type="checkbox"> Уменьшить движение</label>
+    <div class="description"><p id="auraDescription"></p></div>
+  </div>
+</section>
+</main>
+<script type="module" src="/src/game/auraPreview.ts"></script>
+</html>

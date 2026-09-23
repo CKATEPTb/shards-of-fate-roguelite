@@ -7,8 +7,17 @@ import { enemies } from './enemies';
 import { skills } from './skills';
 import { statuses } from './statuses';
 import { DIFFICULTY_PROFILES } from './difficulty';
+import { EQUIPMENT_ITEMS, EQUIPMENT_SETS } from './equipment';
 
 export { balance, characters, effects, encounters, enemies, skills, statuses, DIFFICULTY_PROFILES };
+export { additionalSkills, skillPoolsByRarity } from './skill-catalog';
 export { MOVEMENT_SPEED_PROFILES } from './movement';
 export { STARTER_ANATOMY } from './anatomy';
-export const gameContent: GameContent = { schemaVersion: 1, characters, enemies, skills, effects, statuses, encounters, balance, difficulties: DIFFICULTY_PROFILES };
+export { EQUIPMENT_ITEMS, EQUIPMENT_SETS, equipItem } from './equipment';
+export { CATALOG_EQUIPMENT_ITEMS, CATALOG_EQUIPMENT_SETS, equipmentSetPoolsByRarity } from './equipment-catalog';
+export { EQUIPMENT_ATTRIBUTE_NAMES } from './equipment-catalog-profiles';
+export { EQUIPMENT_THEME_COLLECTIONS } from './equipment-themes';
+export { actOneEnemyMetadata, selectActOneEnemyPool, ACT_ONE_ENEMY_FAMILIES } from './enemy-catalog';
+export { actOneBosses, bossSkills, actOneBossPoolsBySeason, actOneBossMetadata } from './boss-catalog';
+export { applyEquipmentToHero, equipmentForSet } from './equipment-loadout';
+export const gameContent: GameContent = Object.freeze({ equipmentCatalog: { items: EQUIPMENT_ITEMS, sets: EQUIPMENT_SETS }, schemaVersion: 1, characters, enemies, skills, effects, statuses, encounters, balance, difficulties: DIFFICULTY_PROFILES });

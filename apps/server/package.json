@@ -1,1 +1,14 @@
-{"name":"@shards/server","version":"0.1.0","private":true,"type":"module"}
+{
+  "name": "@shards/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@shards/game-data": "0.1.0",
+    "@shards/protocol": "0.1.0",
+    "reactor-core-ts": "3.2.4",
+    "rsocket-frames-ts": "3.0.0",
+    "rsocket-server-ts": "2.0.0",
+    "ws": "8.21.3"
+  }
+}

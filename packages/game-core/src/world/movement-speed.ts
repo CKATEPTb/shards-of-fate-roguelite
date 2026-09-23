@@ -1,5 +1,5 @@
 import type { MovementState, Terrain, WorldActor } from '@shards/shared';
-import { bodyMovementMultiplier } from '../anatomy';
+import { bodyMovementMultiplier, isBodyPartFunctional } from '../anatomy';
 
 /** Enemy definitions identify roaming mobs; heroes keep ordinary terrain penalties. */
 export type MovementActor = Pick<WorldActor, 'movement' | 'body'> & { definitionId?: string };
@@ -16,7 +16,7 @@ export function createMovementState(baseSpeed = 100): MovementState {
 /** Equipment and temporary bonuses affect exploration without changing initiative. */
 export function effectiveMovementSpeed(actor: Pick<WorldActor, 'movement' | 'body'>): number {
   const baseSpeed = actor.movement?.baseSpeed ?? 100;
-  const feet = actor.body ? (Number(actor.body.leftLeg.current > 0) + Number(actor.body.rightLeg.current > 0)) / 2 : 1;
+  const feet = actor.body ? (Number(isBodyPartFunctional(actor.body, 'leftLeg')) + Number(isBodyPartFunctional(actor.body, 'rightLeg'))) / 2 : 1;
   const bonusPercent = (actor.movement?.bonusPercent ?? 0) - (actor.movement?.bootsBonusPercent ?? 0) * (1 - feet);
   const healthySpeed = Math.max(10, Math.min(300, baseSpeed * (1 + bonusPercent / 100)));
   return healthySpeed * (actor.body ? bodyMovementMultiplier(actor.body) : 1);

@@ -1,0 +1,21 @@
+.boss-summon-dialog { width: min(420px, 100%); }
+.boss-summon-dialog .dialog-content { padding: 12px 24px 24px; text-align: center; }
+.boss-summon-emblem { display: grid; place-items: center; width: 82px; height: 82px; margin: 0 auto 15px; color: #afd48b; background: radial-gradient(circle, #97b96520, transparent 68%); }
+.boss-summon-emblem[data-season="summer"] { color: #e7c778; }
+.boss-summon-emblem[data-season="autumn"] { color: #dba180; }
+.boss-summon-emblem[data-season="winter"] { color: #acd8e9; }
+.boss-summon-emblem > svg { width: 68px; height: 68px; filter: drop-shadow(0 0 12px currentColor); }
+.boss-summon-question { margin: 0; color: #eee2c2; font: 500 26px/1.18 var(--serif); text-wrap: balance; }
+.boss-summon-description { margin: 14px 0 0; color: #bdc5ab; font-size: 12px; line-height: 1.65; }
+.boss-summon-next { margin: 12px 0 0; color: #8fa389; font-size: 10px; line-height: 1.6; }
+.boss-summon-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
+.boss-summon-actions > button { min-height: 44px; }
+@media (max-width: 480px) {
+  .boss-summon-dialog .dialog-content { padding: 10px 18px 20px; }
+  .boss-summon-question { font-size: 24px; }
+}
+@media (max-height: 520px) {
+  .boss-summon-emblem { width: 40px; height: 40px; margin-bottom: 8px; }
+  .boss-summon-emblem > svg { width: 40px; height: 40px; }
+  .boss-summon-actions { margin-top: 14px; }
+}

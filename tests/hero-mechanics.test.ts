@@ -59,8 +59,8 @@ describe('complete starting roster', () => {
 describe('received healing and vampirism', () => {
   it('shares actual healing with the receiver and allies once, including another sharing hero', () => {
     const content = contentFixture();
-    content.characters[0].modifiers.healingShare = 0.25;
-    content.characters.push({ ...hero('ally'), modifiers: { healingShare: 1 } });
+    content.characters[0].modifiers.healingShareDice = '1d4';
+    content.characters.push({ ...hero('ally'), modifiers: { healingShareDice: '1d4' } });
     const state = createCombat({ ...options, characterIds: ['hero', 'ally'] }, content);
     for (const unit of state.units.filter(unit => unit.team === 'heroes')) {
       unit.body = legacyHeroBody(content.characters.find(hero => hero.id === unit.definitionId)!, 20, 100);
@@ -74,7 +74,7 @@ describe('received healing and vampirism', () => {
   });
 
   it('does not distribute overheal or regrow a limb through secondary healing', () => {
-    const content = contentFixture(); content.characters[0].modifiers.healingShare = 0.25;
+    const content = contentFixture(); content.characters[0].modifiers.healingShareDice = '1d4';
     const state = createCombat(options, content); const unit = state.units[0];
     unit.body!.leftArm.current = 0; unit.body!.torso.current -= 4; syncBodyCombatant(unit, content.characters[0]);
     applyHealing(createContext(state, content), unit, unit, 100);
@@ -84,7 +84,7 @@ describe('received healing and vampirism', () => {
   });
 
   it('vampirism heals only actual direct health damage, not shield absorption or overkill', () => {
-    const content = contentFixture(); content.characters[0].modifiers.vampirism = 0.5;
+    const content = contentFixture(); content.characters[0].modifiers.vampirismDice = '1d6';
     const state = createCombat({ ...options, seed: 'vampire-lifesteal' }, content);
     const unit = state.units[0]; unit.body!.torso.current -= 15; syncBodyCombatant(unit, content.characters[0]);
     const before = unit.hp;
@@ -98,7 +98,7 @@ describe('received healing and vampirism', () => {
 
 describe('regeneration and expiring absorption', () => {
   it('preserves a HoT tick on a successful source roll and otherwise spends the tick', () => {
-    const content = contentFixture(); content.characters[0].modifiers.preserveHotChance = 1;
+    const content = contentFixture(); content.characters[0].modifiers.preserveHot = { dice: '1d4', atLeast: 1 };
     content.statuses.push({ schemaVersion: 1, id: 'hot', name: 'Hot', description: 'Hot', color: '#ffffff', trigger: 'TURN_ENDED', actions: [{ type: 'heal', scaling: 'healing' }], modifiers: {}, tags: ['HOT'] });
     const state = createCombat(options, content); const unit = state.units[0];
     unit.body!.torso.current -= 20; syncBodyCombatant(unit, content.characters[0]);
@@ -107,18 +107,18 @@ describe('regeneration and expiring absorption', () => {
     tickStatuses(ctx, unit, 'TURN_ENDED'); expireStatuses(ctx, unit);
     expect(unit.hp - before).toBe(10); expect(unit.statuses[0].remaining).toBe(4);
     expect(state.events.some(event => event.type === 'DICE_ROLLED' && event.message.includes('сохранение исцеления'))).toBe(true);
-    content.characters[0].modifiers.preserveHotChance = 0; state.turn++;
+    delete content.characters[0].modifiers.preserveHot; state.turn++;
     tickStatuses(ctx, unit, 'TURN_ENDED'); expireStatuses(ctx, unit);
     expect(unit.hp - before).toBe(20); expect(unit.statuses[0].remaining).toBe(3);
   });
 
   it('can absorb without consuming capacity but still expires after four recipient turns', () => {
-    const content = contentFixture(); content.characters[0].modifiers.preserveShieldChance = 1;
+    const content = contentFixture(); content.characters[0].modifiers.preserveShield = { dice: '1d4', atLeast: 1 };
     const state = createCombat(options, content); const [source, target] = state.units; const ctx = createContext(state, content);
     runActions(ctx, [{ type: 'shield', scaling: 'power', factor: 2, duration: 4 }], { source, target: 'enemy', origin: 'effect' });
     runActions(ctx, [{ type: 'damage', scaling: 'power' }], { source, target: 'enemy', origin: 'effect' });
     expect(target.shield).toBe(20); expect(target.hp).toBe(100);
-    content.characters[0].modifiers.preserveShieldChance = 0;
+    delete content.characters[0].modifiers.preserveShield;
     runActions(ctx, [{ type: 'damage', scaling: 'power' }], { source, target: 'enemy', origin: 'effect' });
     expect(target.shield).toBe(10); expect(target.shieldLayers?.[0].capacity).toBe(10);
     for (let turn = 1; turn <= 3; turn++) { state.turn = turn; expireShields(ctx, target); expect(target.shield).toBe(10); }
@@ -162,7 +162,7 @@ describe('precision and repeat attacks', () => {
   });
 
   it('repeats once and turns excess repeat rating into direct damage, never another repeat', () => {
-    const content = contentFixture(); content.characters[0].modifiers.repeatChance = 1.2;
+    const content = contentFixture(); content.characters[0].modifiers.repeatAttack = { dice: '1d4', atLeast: 1 }; content.characters[0].modifiers.damageBonus = 2;
     const state = createCombat({ ...options, seed: 'repeat' }, content); const ctx = createContext(state, content);
     runAttackTurn(ctx, state.units[0], [content.characters[0].basicAttack], 'enemy');
     expect(state.events.filter(event => event.type === 'ATTACK_STARTED')).toHaveLength(2);

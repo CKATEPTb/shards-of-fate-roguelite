@@ -1,0 +1,6 @@
+[data-equipment-rarity='common'] { --equipment-rarity: #b9c4cb; --equipment-rarity-border: #a7b4bd48; }
+[data-equipment-rarity='rare'] { --equipment-rarity: #8fbbe2; --equipment-rarity-border: #77abdb55; }
+[data-equipment-rarity='epic'] { --equipment-rarity: #bea4de; --equipment-rarity-border: #aa8bce55; }
+[data-equipment-rarity='legendary'] { --equipment-rarity: #d9bd7f; --equipment-rarity-border: #caae6d60; }
+.equipment-rarity-badge { display: inline-flex; align-items: center; gap: 5px; width: fit-content; padding: 3px 6px; border: 1px solid var(--equipment-rarity-border); border-radius: 4px; color: var(--equipment-rarity); background: #10161b24; font: 500 9px/1.3 Manrope, Arial, sans-serif; white-space: nowrap; }
+.equipment-rarity-badge > span { font-size: 10px; line-height: 1; }

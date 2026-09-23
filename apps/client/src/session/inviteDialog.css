@@ -1,0 +1,23 @@
+.invite-dialog { position: fixed; inset: 0; margin: auto; padding: 0; width: min(460px,calc(100% - 24px)); max-height: calc(100dvh - 24px); overflow: hidden; border: 1px solid #929d6966; border-radius: 9px; background: linear-gradient(140deg,#1c2a21,#101f18); color: #d6ddbd; box-shadow: 0 24px 100px #0009,inset 0 1px #d4c89c15; }
+.invite-dialog[open] { display: flex; flex-direction: column; }
+.invite-dialog::backdrop { background: #030a07bd; backdrop-filter: blur(5px); }
+.invite-dialog-heading { display: flex; align-items: center; flex-shrink: 0; gap: 12px; padding: 21px 22px 17px; border-bottom: 1px solid #a4b58324; }
+.invite-dialog-heading > svg { width: 25px; height: 25px; flex-shrink: 0; color: #cab27a; }
+.invite-dialog-heading h2 { margin: 0; min-width: 0; color: #e2d7b1; font: 500 30px/1.12 var(--serif); }
+.invite-dialog-content { min-height: 0; overflow: auto; padding: 20px 22px 22px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #65764e #152319; }
+.invite-dialog-label { display: block; margin-bottom: 8px; color: #a9b79a; font-size: 11px; }
+.invite-dialog-link { display: block; width: 100%; min-width: 0; height: 46px; padding: 0 12px; border: 1px solid #a4af7a4a; border-radius: 4px; background: #07130d60; color: #d4dabd; font-size: 12px; }
+.invite-dialog-link::placeholder { color: #82967d; }
+.invite-dialog-status { min-height: 3em; margin: 10px 0 14px; color: #b9c597; font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.invite-dialog-error { color: #e0ad90; }
+.invite-dialog-actions { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap: 10px; }
+.invite-dialog-actions > button { width: 100%; min-width: 0; min-height: 44px; padding-inline: 12px; border-radius: 4px; }
+.invite-dialog button:focus-visible,.invite-dialog input:focus-visible { outline: 2px solid #d9bf82; outline-offset: 2px; }
+@media (any-pointer:coarse), (max-width:600px) {
+  .invite-dialog-link { font-size: 16px; }
+}
+@media (max-width:380px), (max-height:450px) {
+  .invite-dialog-heading { padding: 16px; gap: 10px; }
+  .invite-dialog-heading h2 { font-size: 27px; }
+  .invite-dialog-content { padding: 16px; }
+}

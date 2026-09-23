@@ -1,7 +1,7 @@
 import type Phaser from 'phaser';
 import type { GridPoint, RoamingGroup, RoamingMob, WorldChunk } from '@shards/shared';
 import { animateActor, createActorView, updateActorView, type ActorView } from './actors';
-import { RoamingVisibility, victoryChanceColor } from './roaming-visibility';
+import { RoamingVisibility } from './roaming-visibility';
 import type { OcclusionProbe } from './occlusion';
 import { containsPoint, overlapsBounds } from './house-visibility';
 import { roamingBodySamples } from './roaming-body-samples';
@@ -86,7 +86,7 @@ export function createRoamingViews(scene: Phaser.Scene) {
     },
 
     /** Runs after environment fading, so labels and input use the same painted frame as the body. */
-    updateVisibility(frame: RoamingSight, paused: boolean, highlighted: readonly string[], groupChances: Readonly<Record<string, number | undefined>>) {
+    updateVisibility(frame: RoamingSight, paused: boolean, highlighted: readonly string[]) {
       sight = frame;
       const selected = new Set(highlighted);
       for (const view of views.values()) {
@@ -97,10 +97,7 @@ export function createRoamingViews(scene: Phaser.Scene) {
             { ...frame, pointVisibility: point => pointVisibility(view, point) });
         actor.marker.setVisible(view.bodyVisible);
         drawMarker(view, view.bodyVisible && selected.has(view.group.id));
-        const percent = groupChances[view.group.id];
-        const text = percent === undefined ? '…' : `${percent}%`;
-        if (label.text !== text) label.setText(text).setColor(percent === undefined ? '#edc165' : victoryChanceColor(percent));
-        label.setVisible(view.bodyVisible && overlapsBounds(label.getBounds(), frame.viewport));
+        label.setVisible(false);
       }
     },
 

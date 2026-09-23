@@ -1,0 +1,60 @@
+.session-content:has(.camp-lobby) { padding: clamp(8px,2.2vw,28px); }
+.lobby.camp-lobby { width: min(1040px,100%); height: min(960px,100%); padding: 14px 20px 12px; background: linear-gradient(130deg,#0a1614f7,#0a1512f2); border-color: #82977c30; box-shadow: 0 30px 100px #0008,inset 0 1px #bca97809; }
+.camp-lobby .lobby-heading { display: grid; grid-template-columns: 44px minmax(0,340px); justify-content: center; align-items: center; min-width: 0; padding: 0 0 10px; gap: 12px; }
+.camp-tool { display: grid; place-items: center; width: 44px; min-width: 44px; height: 44px; padding: 10px; color: #a8b69b; border: 1px solid transparent; border-radius: 5px; }
+.camp-tool > svg { width: 22px; height: 22px; }
+.camp-tool:hover { color: #edd29a; border-color: #aa946333; background: #cdb87e09; }
+.camp-lobby .lobby-back { position: static; width: 44px; min-width: 44px; border-color: #a4b18a38; background: #a4b18a0a; }
+.camp-difficulties { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; width: 100%; min-width: 0; }
+.camp-difficulty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; min-width: 0; min-height: 62px; padding: 6px 8px; border: 1px solid transparent; border-radius: 6px; color: #839580; transition: color .15s,border-color .15s,background .15s; }
+.camp-difficulty > svg { width: 28px; height: 28px; }
+.camp-difficulty > span { font-size: 10px; font-weight: 600; white-space: nowrap; }
+.camp-difficulty-normal { --difficulty-color: #b1c698; }
+.camp-difficulty-hard { --difficulty-color: #d7b674; }
+.camp-difficulty-nightmare { --difficulty-color: #d9947a; }
+.camp-difficulty:hover:not(:disabled) { color: var(--difficulty-color); background: #a2b6860a; }
+.camp-difficulty[aria-pressed=true] { color: var(--difficulty-color); border-color: color-mix(in srgb,var(--difficulty-color) 40%,transparent); background: linear-gradient(180deg,#bcb47b10,#bcb47b04); box-shadow: inset 0 -2px color-mix(in srgb,var(--difficulty-color) 60%,transparent); }
+.camp-lobby-body { min-height: 0; min-width: 0; display: flex; padding: 10px 0; }
+.camp-stage { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; min-height: 0; }
+.camp-stage > .campfire-roster { flex: 1 1 0; min-height: 0; }
+.camp-lobby .lobby-footer { display: flex; flex-direction: column; align-items: stretch; gap: 5px; padding-top: 9px; }
+.camp-world-controls { display: flex; align-items: flex-end; gap: 14px; width: 100%; }
+.camp-seed-field { display: grid; gap: 5px; flex: 1; min-width: 0; color: #9aac8b; font-size: 9px; }
+.camp-seed-field > .seed-control { height: 44px; }
+.camp-seed-field input { font-size: 11px; letter-spacing: .05em; }
+.camp-lobby .camp-world-controls > .primary-button { flex: 0 0 auto; width: auto; min-width: 170px; min-height: 44px; justify-content: space-between; }
+.camp-lobby button:focus-visible,.camp-lobby summary:focus-visible,.camp-lobby select:focus-visible { outline: 2px solid #d9bf82; outline-offset: 2px; }
+@media (max-width:600px) {
+  .session-content:has(.camp-lobby) { padding: max(6px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left)); }
+  .lobby.camp-lobby { padding: 8px 10px; }
+  .camp-lobby .lobby-heading { padding: 0 0 7px; gap: 8px; }
+  .camp-difficulties { gap: 5px; }
+  .camp-difficulty { min-height: 55px; gap: 4px; padding: 4px; }
+  .camp-difficulty > svg { width: 25px; height: 25px; }
+  .camp-difficulty > span { font-size: 9px; }
+  .camp-lobby-body { padding: 7px 0; }
+  .camp-stage { gap: 7px; }
+  .camp-lobby .lobby-footer { padding-top: 7px; }
+  .camp-world-controls { gap: 8px; }
+  .camp-lobby .camp-world-controls > .primary-button { min-width: 108px; padding-inline: 12px; }
+  .camp-seed-field input { font-size: 10px; padding-inline: 8px; }
+}
+@media (max-height:500px) and (min-width:650px) {
+  .session-content:has(.camp-lobby) { padding: 6px 10px; }
+  .lobby.camp-lobby { padding: 6px 12px; }
+  .camp-lobby .lobby-heading { padding-bottom: 5px; }
+  .camp-difficulty { min-height: 44px; gap: 2px; padding: 2px 8px; }
+  .camp-difficulty > svg { width: 22px; height: 22px; }
+  .camp-difficulty > span { font-size: 9px; }
+  .camp-stage { display: grid; grid-template-columns: minmax(0,1fr) minmax(285px,42%); gap: 16px; align-items: stretch; }
+  .camp-stage > .campfire-roster { height: 100%; }
+  .camp-lobby-body { padding: 6px 0; }
+  .camp-lobby .lobby-footer { padding-top: 5px; }
+  .camp-seed-field { display: flex; align-items: center; gap: 8px; }
+  .camp-seed-field > label { white-space: nowrap; }
+  .camp-seed-field > .seed-control { flex: 1; }
+}
+@media (any-pointer:coarse), (max-width:600px) {
+  .camp-seed-field input { font-size: 16px; }
+}
+@media (prefers-reduced-motion:reduce) { .camp-difficulty { transition: none; } }

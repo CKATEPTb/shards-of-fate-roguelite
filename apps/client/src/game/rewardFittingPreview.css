@@ -1,0 +1,49 @@
+.reward-fitting-preview { --reward-preview-toolbar: 56px; height: 100dvh; overflow: hidden; background: radial-gradient(ellipse at 50% 28%, #42523c66, transparent 62%), linear-gradient(140deg, #1a2a24, #0a1512 75%); }
+.reward-preview-controls { height: var(--reward-preview-toolbar); display: flex; align-items: center; gap: 18px; padding: 4px 22px; border-bottom: 1px solid #a7af8e26; background: #0e1c18f2; }
+.reward-preview-controls > div { display: grid; gap: 3px; }
+.reward-preview-controls > div > span { color: #a6b19d; font-size: 12px; }
+.reward-preview-controls strong { color: #ddd6b7; font: 500 22px/1 var(--serif, Georgia, serif); }
+.reward-preview-controls label { margin-left: auto; }
+.reward-preview-controls select { min-height: 44px; max-width: 210px; padding: 5px 28px 5px 10px; border: 1px solid #95a38048; border-radius: 5px; color: #d0d5bf; background: #203227; font-size: 13px; }
+.reward-preview-controls select:disabled { opacity: .5; }
+.reward-preview-controls select:focus-visible { outline: 2px solid #d6c48e; outline-offset: 2px; }
+.reward-preview-controls > small { color: #a1b19d; font-size: 12px; }
+.reward-fitting-preview .adventure-rewards-overlay { top: var(--reward-preview-toolbar); }
+.reward-fitting-preview .reward-workspace { max-height: 100%; }
+.reward-preview-stage { height: calc(100% - var(--reward-preview-toolbar)); display: grid; place-items: center; overflow: auto; padding: 20px; }
+.reward-preview-splash { width: min(460px, 100%); text-align: center; padding: 20px 16px 30px; }
+.reward-preview-hero { position: relative; display: grid; justify-items: center; margin: 0 auto 16px; width: 220px; height: 216px; background: radial-gradient(ellipse at 50% 66%, #c2b36a20, transparent 62%); }
+.reward-preview-hero::after { content: ''; position: absolute; bottom: 23px; left: 34px; right: 34px; height: 19px; border: 1px solid #bdc08235; border-radius: 50%; transform: rotate(-5deg); box-shadow: 0 0 35px #c2b36a18; }
+.reward-preview-hero canvas { position: relative; z-index: 1; width: 212px; height: 212px; image-rendering: pixelated; filter: drop-shadow(0 11px 7px #0009); }
+.reward-preview-hero > span { position: absolute; bottom: -6px; color: #c3b27d; font-size: 13px; }
+.reward-preview-eyebrow { color: #a7b59a; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.reward-preview-splash h1 { color: #e5dcc0; font: 500 44px/1.15 var(--serif, Georgia, serif); margin: 9px 0 7px; }
+.reward-preview-splash > p { color: #b4c1aa; font-size: 13px; line-height: 1.6; }
+.reward-preview-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 16px 0; margin: 18px 0 0; border-block: 1px solid #a6ad8226; }
+.reward-preview-summary dt { color: #a0b194; font-size: 12px; }
+.reward-preview-summary dd { color: #d3d4b1; font-size: 19px; margin: 6px 0 0; font-variant-numeric: tabular-nums; }
+.reward-preview-open { display: flex; align-items: center; justify-content: space-between; gap: 28px; width: min(280px, 100%); min-height: 46px; margin: 25px auto 18px; padding: 10px 20px; color: #263021; background: linear-gradient(#d1c293, #b3a16e); border: 1px solid #e0cfa07a; border-radius: 5px; font-size: 12px; font-weight: 700; box-shadow: 0 6px 28px #0004; }
+.reward-preview-open:hover { filter: brightness(1.1); }
+.reward-preview-open.reward-preview-more { margin-top: -8px; background: #203227; color: #d7d6b8; border-color: #9ca97d50; box-shadow: none; }
+.reward-preview-splash .reward-preview-notice { min-height: 20px; margin-top: 12px; color: #d9cba7; }
+.reward-preview-open > span { font-size: 20px; font-weight: 400; }
+.reward-preview-splash > small { display: block; color: #9bb2a2; font-size: 12px; line-height: 1.6; }
+@media (max-width: 700px) {
+  .reward-fitting-preview { --reward-preview-toolbar: 44px; }
+  .reward-preview-controls { padding: 0 8px; gap: 8px; }
+  .reward-preview-controls > div { min-width: 0; flex: 1; }
+  .reward-preview-controls > div > span { display: none; }
+  .reward-preview-controls strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; }
+  .reward-preview-controls label { flex: none; }
+  .reward-preview-controls select { min-height: 44px; max-width: 145px; width: 39vw; font-size: 16px; padding: 2px 13px 2px 7px; }
+  .reward-preview-controls > small { display: none; }
+  .reward-preview-stage { padding: 12px; }
+  .reward-preview-splash { padding-top: 0; }
+}
+@media (max-height: 690px) {
+  .reward-preview-hero { width: 155px; height: 150px; margin-bottom: 10px; }
+  .reward-preview-hero canvas { width: 148px; height: 148px; }
+  .reward-preview-splash h1 { font-size: 34px; }
+  .reward-preview-summary { margin-top: 12px; padding-block: 10px; }
+  .reward-preview-open { margin-top: 17px; }
+}

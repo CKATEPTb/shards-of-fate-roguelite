@@ -1,0 +1,95 @@
+.game:has(.manual-combat) .information-hud { display: none; }
+.manual-combat:has(.aura-detail-backdrop) { z-index: 60; }
+.manual-combat { background: radial-gradient(ellipse at 50% 75%, #26352a, #101d17 65%, #0a1512); }
+.manual-combat .combat-scene { inset: 0; }
+.battle-turn-indicator { position: absolute; z-index: 8; top: max(13px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: center; gap: 9px; width: max-content; max-width: calc(100% - 24px); padding: 7px 15px; border: 1px solid #b2a5762e; border-radius: 30px; background: #101b17b3; box-shadow: 0 3px 20px #050b0860; color: #c5c6aa; font-size: 10px; text-align: center; pointer-events: none; }
+.battle-turn-indicator > span { color: #a7ab90; white-space: nowrap; }
+.battle-turn-indicator > i { font-style: normal; color: #b99e66; }
+.battle-turn-indicator > strong { font-weight: 500; color: #ecdcac; }
+
+.battle-hand { --card-width: clamp(70px, 22vw, 118px); --card-height: 174px; }
+.battle-hand { position: absolute; z-index: 14; bottom: max(8px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: max-content; max-width: 100%; height: calc(var(--card-height) + 32px); pointer-events: none; }
+.battle-card-fan { height: calc(var(--card-height) + 16px); display: flex; justify-content: center; align-items: flex-start; padding-top: 2px; }
+.battle-card { --card-rim: #a69163; --card-glow: #c1b177; position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: center; flex: 0 0 var(--card-width); width: var(--card-width); height: var(--card-height); padding: 7px 7px 8px; border: 1px solid var(--card-rim); border-radius: 9px 9px 5px 5px; background: linear-gradient(155deg, #3f4435db 0%, #1e302ac9 15%, #17251fcd 56%, #283326db 100%); box-shadow: 0 5px 13px #030a0780, inset 0 0 0 3px #0b1415a8, inset 0 0 0 4px #a3915b4d; color: #ede5c7; text-align: center; transform-origin: 50% 100%; transform: translateY(var(--card-offset, 0px)) rotate(var(--card-angle, 0deg)); transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease; z-index: var(--card-layer, 1); pointer-events: auto; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.battle-card + .battle-card { margin-left: -8px; }
+.battle-card::before { content: ''; position: absolute; inset: 6px; border: 1px solid #c6b88320; border-radius: 3px; pointer-events: none; z-index: -1; }
+.battle-card::after { content: '◆'; position: absolute; bottom: -5px; left: calc(50% - 4px); color: var(--card-rim); font-size: 8px; line-height: 8px; }
+.battle-card[data-tone="attack"] { --card-rim: #a78167; --card-glow: #d7a282; background: linear-gradient(150deg, #574137dc, #302825cc 16%, #241f22cc 60%, #342c26db); }
+.battle-card[data-tone="escape"] { --card-rim: #8597a0; --card-glow: #b3c4d0; background: linear-gradient(150deg, #444953dc, #242d37cc 17%, #1d252acc 62%, #2c3036db); }
+.battle-card:is(:hover, :focus-visible), .battle-card[data-selected="true"] { z-index: 20; transform: translateY(-18px) rotate(0deg); box-shadow: 0 12px 28px #030a07, 0 0 16px color-mix(in srgb, var(--card-glow) 30%, transparent), inset 0 0 0 3px #0b1415, inset 0 0 0 4px #d9c18c77; border-color: #e2cc8e; }
+.battle-card[data-selected="true"] { outline: 1px solid #f3d991a6; outline-offset: 2px; }
+.battle-card[aria-disabled="true"] { cursor: default; filter: saturate(.42) brightness(.72); }
+.battle-card[aria-disabled="true"]:is(:hover, :focus-visible) { filter: saturate(.65) brightness(.87); }
+.battle-card[data-drag-source="true"] { z-index: 22; opacity: 1; transform: translateY(-22px) rotate(0deg); border-color: #f4dca0; box-shadow: 0 8px 20px #030a0790, 0 0 18px color-mix(in srgb, var(--card-glow) 30%, transparent), inset 0 0 0 3px #0b1415b8; }
+.battle-card-type { display: block; width: 100%; color: #c4ba99; text-transform: uppercase; font-size: 7px; letter-spacing: .75px; line-height: 15px; white-space: nowrap; }
+.battle-card-art { display: grid; flex-shrink: 0; place-items: center; width: 68px; height: 64px; margin: 2px 0 3px; background: radial-gradient(ellipse, #b39d7b17, transparent 70%); }
+.battle-card-art .aura-art { filter: drop-shadow(0 3px 4px #070f10); }
+.battle-card-name { display: flex; align-items: center; justify-content: center; flex: 1; width: 100%; min-height: 30px; font: 600 16px/.97 var(--serif); text-wrap: balance; }
+.battle-card-formula { color: #d8c28f; font-size: 8px; line-height: 17px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.battle-card-footer { display: block; width: 100%; margin-top: 2px; padding-top: 4px; border-top: 1px solid #b5a7782e; color: #a5b095; font-size: 7px; line-height: 10px; white-space: nowrap; }
+.battle-card-cooldown { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 43px; height: 44px; border: 1px solid #b1a58c88; border-radius: 50%; background: #10191eee; color: #eddfb7; font: 600 26px/24px var(--serif); box-shadow: 0 0 18px #050908; }
+.battle-card-cooldown > small { font: 7px/9px Manrope, sans-serif; }
+.battle-card-detail { position: absolute; z-index: 25; bottom: calc(100% + 17px); left: 50%; transform: translateX(-50%); width: min(350px, calc(100vw - 24px)); padding: 11px 15px; background: linear-gradient(130deg, #19251efa, #10191dfa); border: 1px solid #b8a47085; box-shadow: 0 7px 30px #050a0990, inset 0 0 0 3px #ac9d630b; border-radius: 5px; color: #d4d3b8; pointer-events: none; }
+.battle-card-detail strong { color: #ebd7a9; font: 600 21px/1.1 var(--serif); }
+.battle-card-detail p { margin-top: 5px; font-size: 10px; line-height: 1.55; }
+.battle-card-detail small { display: block; margin-top: 5px; color: #bdaa80; font-size: 9px; }
+.battle-hand-hint { position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 14px); padding: 4px 11px; border-radius: 15px; background: #09140bab; color: #d4c296; font-size: 9px; line-height: 13px; text-align: center; text-shadow: 0 1px 5px #000; }
+.battle-hand[data-active="false"] .battle-hand-hint { color: #9aab96; }
+.battle-hand[data-dragging="true"] .battle-card { cursor: grabbing; }
+.combat-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.battle-unit-auras { position: absolute; left: 0; transform: translateX(-50%); width: max-content; max-width: 108px; pointer-events: auto; }
+.aura-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; }
+.aura-icon { position: relative; display: grid; place-items: center; width: 25px; height: 25px; min-height: 0; padding: 2px; color: var(--aura-color, #ccd1a2); background: #142c23ed; border: 1px solid #a3b17b99; border-radius: 4px; }
+.aura-icon[data-negative="true"] { background: #3c201deb; border-color: #d2957999; }
+.aura-icon:hover, .aura-icon:focus-visible { outline: 2px solid #f0d698; outline-offset: 1px; }
+.aura-turns { position: absolute; bottom: -3px; right: -2px; padding: 0 2px; background: #102019; border-radius: 2px; font: 9px/1.2 Arial, sans-serif; color: #fff0bc; }
+.aura-stacks { position: absolute; top: -5px; right: -3px; min-width: 12px; border-radius: 5px; font: 9px/1.2 Arial, sans-serif; background: #eee0ad; color: #183422; }
+.aura-detail-backdrop { position: fixed; z-index: 90; inset: 0; display: grid; place-items: center; padding: 20px; background: #06140ac4; }
+.aura-detail { position: relative; width: min(380px, 100%); max-height: calc(100dvh - 40px); overflow-y: auto; padding: 24px; background: #182c22fa; }
+.aura-detail h3 { margin: 10px 0; color: #ecdeae; font: 27px/1.2 var(--serif); }
+.aura-detail p { font-size: 12px; line-height: 1.65; color: #c6cdb5; margin: 10px 0; }
+.aura-detail .aura-timing { color: #e0ca8a; }
+.aura-detail ul { margin: 8px 0 0; padding-left: 18px; color: #b4c59c; font-size: 11px; }
+.aura-close { position: absolute; top: 4px; right: 4px; width: 36px; height: 36px; background: none; border: 0; color: #dddfc2; font-size: 25px; }
+
+@media (max-width: 600px) {
+  .battle-hand { --card-height: 143px; }
+  .battle-hand { bottom: max(5px, env(safe-area-inset-bottom)); }
+  .battle-card { padding: 5px 5px 6px; }
+  .battle-card-type { font-size: 6px; letter-spacing: .35px; line-height: 13px; }
+  .battle-card-art { width: 52px; height: 49px; margin: 0 0 2px; }
+  .battle-card-art .aura-art { width: 47px; height: 47px; }
+  .battle-card-name { font-size: 13px; min-height: 26px; }
+  .battle-card-formula { font-size: 6.5px; line-height: 14px; }
+  .battle-card-footer { font-size: 6.5px; padding-top: 3px; }
+  .battle-card-cooldown { top: 25px; width: 37px; height: 38px; font-size: 23px; }
+  .battle-card-detail { bottom: calc(100% + 14px); padding: 9px 12px; }
+  .battle-card-detail strong { font-size: 19px; }
+  .battle-card-detail p { font-size: 9px; }
+  .battle-hand-hint { font-size: 8px; }
+  .battle-turn-indicator { padding: 6px 11px; font-size: 9px; }
+  .battle-unit-auras { max-width: 68px; }
+  .battle-unit-auras .aura-grid { gap: 2px; }
+  .battle-unit-auras .aura-icon { width: 19px; height: 19px; }
+  .battle-unit-auras .aura-icon svg { width: 13px; height: 13px; }
+  .battle-unit-auras .aura-turns, .battle-unit-auras .aura-stacks { font-size: 8px; }
+}
+@media (max-height: 540px) {
+  .battle-hand { --card-height: 123px; --card-width: clamp(70px, 22vw, 96px); }
+  .battle-hand { bottom: max(3px, env(safe-area-inset-bottom)); }
+  .battle-card { padding-top: 4px; }
+  .battle-card-art { height: 35px; width: 39px; margin-block: 0; }
+  .battle-card-art .aura-art { height: 35px; width: 35px; }
+  .battle-card-name { font-size: 13px; min-height: 26px; }
+  .battle-card-formula { font-size: 7px; line-height: 13px; }
+  .battle-card-type { font-size: 6px; line-height: 12px; }
+  .battle-card-footer { padding-top: 2px; font-size: 6px; }
+  .battle-card-cooldown { top: 21px; width: 31px; height: 32px; font-size: 21px; }
+  .battle-card-detail { bottom: calc(100% + 9px); max-width: 380px; padding: 8px 12px; }
+  .battle-card-detail p { font-size: 9px; line-height: 1.4; }
+  .battle-turn-indicator { top: max(7px, env(safe-area-inset-top)); padding: 5px 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .battle-card { transition: none; }
+}

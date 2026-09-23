@@ -1,0 +1,46 @@
+.character-effects { min-width: 0; }
+.character-effects-heading { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin-bottom: 9px; }
+.character-effects-heading h3 { display: flex; align-items: center; gap: 8px; margin: 0; color: #bcb083; font: 500 19px/1.2 var(--serif); }
+.character-sheet-layout .character-effects-heading h3 { flex: 1; margin: 0; }
+.character-effects-heading h3 > span { color: #a5b095; font: 9px/1.2 Manrope, Arial, sans-serif; border: 1px solid #a1ab732c; border-radius: 3px; padding: 1px 4px; }
+.character-effects-heading > p { margin: 0; color: #869c89; font: 9px/1.4 Manrope, Arial, sans-serif; }
+.character-effects-empty { margin: 0; padding: 9px 11px; color: #8ca08a; border: 1px dashed #a3ae7830; border-radius: 4px; background: #06170f26; font: 10px/1.4 Manrope, Arial, sans-serif; }
+.character-effects-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 0; margin: 0; list-style: none; }
+.character-effect { display: flex; align-items: flex-start; gap: 9px; min-width: 0; padding: 10px; border: 1px solid #a3b18b29; border-left: 2px solid color-mix(in srgb, var(--effect-color, #b1c48f) 60%, transparent); border-radius: 4px; background: #07191169; }
+.character-effect[data-negative="true"] { background: #29191543; border-top-color: #ad786730; border-right-color: #ad786730; border-bottom-color: #ad786730; }
+.character-effect-icon { flex-shrink: 0; padding-top: 1px; }
+.character-effect-icon .aura-art { display: block; width: 36px; height: 36px; image-rendering: pixelated; filter: drop-shadow(0 2px 2px #0006); }
+.character-effect-content { flex: 1; min-width: 0; }
+.character-effect-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; }
+.character-effect-heading h4 { margin: 0; color: #e0d5b3; font: 500 12px/1.45 Manrope, Arial, sans-serif; overflow-wrap: anywhere; }
+.character-effect-heading h4 > span { margin-left: 5px; color: #d8ce94; font-size: 10px; white-space: nowrap; }
+.character-effect-duration { color: #b4c295; font: 9px/1.4 Manrope, Arial, sans-serif; }
+.character-effect[data-negative="true"] .character-effect-duration { color: #c69e89; }
+.character-effect-description { margin: 6px 0 0; color: #c7d0b9; font: 11px/1.6 Manrope, Arial, sans-serif; }
+.character-effect-bonuses { display: grid; gap: 4px; padding: 0; margin: 7px 0 0; list-style: none; }
+.character-effect-bonuses li { color: #c4d5a7; font: 10px/1.55 Manrope, Arial, sans-serif; }
+.character-effect-bonuses li::before { content: '·'; color: var(--effect-color); margin-right: 5px; }
+.character-effect-bonuses li[data-overridden="true"] { color: #899b88; }
+.character-effect-timing { display: flex; align-items: baseline; gap: 5px; color: #bfba8a; margin: 7px 0; font: 9px/1.5 Manrope, Arial, sans-serif; }
+.character-effect-timing > span { color: #90a07e; font-size: 12px; flex-shrink: 0; }
+.character-effect-sources { display: grid; gap: 5px; padding: 6px 0 0; margin: 0; border-top: 1px solid #a5ab7d20; list-style: none; }
+.character-effect-sources li { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 2px 6px; font: 9px/1.5 Manrope, Arial, sans-serif; }
+.character-effect-sources li > span { min-width: 0; }
+.character-effect-sources b { color: #a4b398; font-weight: 500; }
+.character-effect-sources em, .character-effect-sources i { font-style: normal; color: #8da18b; }
+.character-effect-source-duration { color: #a0b18d; margin-left: auto; }
+.character-effect-sources small { flex-basis: 100%; color: #8faaa0; font-size: 8px; line-height: 1.6; }
+.character-effect-details { margin-top: 6px; color: #98ae8c; font: 9px/1.55 Manrope, Arial, sans-serif; }
+.character-effect-details summary { width: max-content; max-width: 100%; cursor: pointer; }
+.character-effect-details summary:hover { color: #e4d7a7; }
+.character-effect-details summary:focus-visible { outline: 1px solid #dcca91; outline-offset: 3px; }
+.character-effect-details p { margin: 5px 0 0; color: #abbba0; font-size: 10px; line-height: 1.6; }
+.character-effects-legend { margin-top: 8px; }
+@media (max-width: 640px) {
+  .character-effects-heading h3 { font-size: 17px; }
+  .character-effects-heading > p { font-size: 8px; }
+  .character-effects-list { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .character-effect { padding: 9px; }
+  .character-effect-icon .aura-art { width: 31px; height: 31px; }
+  .character-effect-description { margin-top: 4px; }
+}

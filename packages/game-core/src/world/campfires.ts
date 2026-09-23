@@ -1,5 +1,15 @@
-import type { WorldChunk } from '@shards/shared';
+import type { WorldChunk, WorldGraph, WorldNode } from '@shards/shared';
 import { inBounds, isWalkable, neighbors, tileIndex } from './grid';
+import { createRng, hashString } from '../random';
+import { worldDie } from './generation-dice';
+
+/** One private die per node: fires grow rarer towards the outer seasonal rings. */
+export function hasCampfire(graph: WorldGraph, node: WorldNode): boolean {
+  if (node.id === graph.startId) return true;
+  if ((graph.structureVersion ?? 1) < 3) return false;
+  const sides = 4 + Math.ceil(Math.hypot(node.x, node.y) / 3);
+  return worldDie(createRng(`campfire-v3:${hashString(graph.seed)}:${node.id}`), sides) === 1;
+}
 
 /** Fire occupies its ground tile without replacing the terrain underneath it. */
 export function campfireTileIndices(chunk: Pick<WorldChunk, 'size' | 'pois'>): Set<number> {

@@ -1,4 +1,4 @@
-import type { GridPoint, RoamingGroup, RoamingMob, WorldActor, WorldChunk } from '@shards/shared';
+import type { GridPoint, RngState, RoamingGroup, RoamingMob, WorldActor, WorldChunk } from '@shards/shared';
 import { samePoint, tileIndex } from '../world/grid';
 import { advanceActor } from '../world/movement';
 import { createMovementState } from '../world/movement-speed';
@@ -7,6 +7,7 @@ import { ROAMING_AGGRO_RADIUS, ROAMING_SPECIAL_DETECTION_RADIUS } from './encoun
 import { distanceSquared, formationPoints, inRoamingRange, roamingNavigation, sameRoamingRegion } from './navigation';
 import { roamingRandom, shuffled } from './random';
 import { isBodyAlive } from '../anatomy';
+import { drawDie } from '../dice';
 
 function routeMember(member: RoamingMob, chunk: WorldChunk, target: GridPoint): RoamingMob {
   if (member.path.length && samePoint(member.path[member.path.length - 1], target)) return member;
@@ -34,11 +35,11 @@ function nearestHero(group: RoamingGroup, chunk: WorldChunk, heroes: WorldActor[
   return target;
 }
 
-function patrolRoute(group: RoamingGroup, chunk: WorldChunk, seed: string): RoamingGroup {
+function patrolRoute(group: RoamingGroup, chunk: WorldChunk, seed: string, rng?: RngState): RoamingGroup {
   const leader = group.members[0];
   if (!leader) return group;
-  const random = roamingRandom(seed, `patrol:${group.id}:${group.decision}`);
-  const candidates = shuffled(formationPoints(chunk, leader.position, 4), random)
+  const random = roamingRandom(seed, `patrol:${group.id}:${group.decision}`, rng);
+  const candidates = shuffled(formationPoints(chunk, leader.position, 4), random, rng)
     .filter(point => !samePoint(point, leader.position) && distanceSquared(point, group.home) <= 49);
   const returnPath = candidates.length ? [] : findPath(chunk, leader.position, group.home, leader);
   const anchor = candidates[0] ?? returnPath[Math.min(3, returnPath.length - 1)] ?? leader.position;
@@ -66,7 +67,7 @@ function chaseRoute(group: RoamingGroup, chunk: WorldChunk, heroes: WorldActor[]
   return { ...group, members, pauseMs: 320 };
 }
 
-function stepGroup(initial: RoamingGroup, chunk: WorldChunk, heroes: WorldActor[], elapsedMs: number, seed: string): RoamingGroup {
+function stepGroup(initial: RoamingGroup, chunk: WorldChunk, heroes: WorldActor[], elapsedMs: number, seed: string, rng?: RngState): RoamingGroup {
   let group = initial;
   const target = nearestHero(group, chunk, heroes);
   if (target && (group.mode !== 'chase' || group.targetActorId !== target.id)) {
@@ -77,19 +78,20 @@ function stepGroup(initial: RoamingGroup, chunk: WorldChunk, heroes: WorldActor[
   if (group.mode === 'chase') {
     group = { ...group, pauseMs: Math.max(0, group.pauseMs - elapsedMs) };
     if (!group.pauseMs || group.members.every(member => !member.path.length)) group = chaseRoute(group, chunk, heroes);
-  } else if (group.members.every(member => !member.path.length)) group = patrolRoute(group, chunk, seed);
+  } else if (group.members.every(member => !member.path.length)) group = patrolRoute(group, chunk, seed, rng);
   const members = group.members.map(member => advanceActor(member, chunk, elapsedMs) as RoamingMob);
   if (group.mode === 'patrol' && members.every(member => !member.path.length)) {
-    const random = roamingRandom(seed, `pause:${group.id}:${group.decision}`);
-    return { ...group, members, pauseMs: 500 + Math.floor(random() * 1400) };
+    const random = roamingRandom(seed, `pause:${group.id}:${group.decision}`, rng);
+    const pause = rng ? drawDie(1400, rng, 'ENCOUNTER') - 1 : Math.floor(random() * 1400);
+    return { ...group, members, pauseMs: 500 + pause };
   }
   return { ...group, members };
 }
 
-/** Pure clocks and saved decision counters make pause/save/load deterministic. */
-export function stepRoamingGroups(groups: RoamingGroup[], chunk: WorldChunk, heroes: WorldActor[], elapsedMs: number, seed: string): RoamingGroup[] {
+/** Groups stay immutable; an optional room RNG advances in the supplied group order. */
+export function stepRoamingGroups(groups: RoamingGroup[], chunk: WorldChunk, heroes: WorldActor[], elapsedMs: number, seed: string, rng?: RngState): RoamingGroup[] {
   if (!Number.isFinite(elapsedMs) || elapsedMs < 0) throw new Error('Invalid roaming elapsed time');
   if (!elapsedMs || !groups.length) return groups;
   heroes = heroes.filter(hero => !hero.body || isBodyAlive(hero.body));
-  return groups.map(group => stepGroup(group, chunk, heroes, elapsedMs, seed));
+  return groups.map(group => stepGroup(group, chunk, heroes, elapsedMs, seed, rng));
 }

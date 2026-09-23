@@ -1,5 +1,5 @@
 import { SCHEMA_VERSION, type CombatOptions, type CombatState, type Combatant, type GameContent, type Team, type UnitDefinition } from '@shards/shared';
-import { createRng } from './random';
+import { createCombatEntityRng } from './random';
 import { hashValue } from './canonical';
 import { restoreHeroBody, startHeroBody, syncBodyCombatant } from './anatomy';
 import { getDifficultyProfile } from './difficulty';
@@ -40,5 +40,7 @@ export function createCombat(options: CombatOptions, content: GameContent): Comb
     if (!definition) throw new Error(`Unknown enemy: ${id}`);
     return makeUnit(definition, 'enemies', index);
   });
-  return { schemaVersion: SCHEMA_VERSION, contentHash: hashValue(content), seed: options.seed, encounterId: options.encounterId, characterIds: [...options.characterIds], difficultyId: difficulty.id, ...(dynamic ? { enemyIds: [...enemyIds] } : {}), status: 'ready', round: 0, turn: 0, turnOrder: [], turnIndex: 0, units: [...heroes, ...enemies], rng: createRng(options.seed), events: [], nextSequence: 1 };
+  const units = [...heroes, ...enemies];
+  const owners = Object.fromEntries(units.map(unit => [unit.id, unit.team === 'heroes' ? `hero:${unit.definitionId}` : `enemy:${options.encounterId}:${unit.id}`]));
+  return { schemaVersion: SCHEMA_VERSION, contentHash: hashValue(content), seed: options.seed, encounterId: options.encounterId, characterIds: [...options.characterIds], difficultyId: difficulty.id, ...(dynamic ? { enemyIds: [...enemyIds] } : {}), status: 'ready', round: 0, turn: 0, turnOrder: [], turnIndex: 0, units, rng: createCombatEntityRng(options.seed, owners, {}), events: [], nextSequence: 1 };
 }

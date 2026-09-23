@@ -1,12 +1,14 @@
 // @refresh reset
 // Phaser owns cached textures and effects; hot updates must rebuild the scene, not the expedition.
 import { useEffect, useMemo, useRef } from 'react';
-import type { ExplorationState, GridPoint, RoamingGroup } from '@shards/shared';
+import type { ExplorationState, GameContent, GridPoint, RoamingGroup } from '@shards/shared';
 import { findPath } from '@shards/game-core';
 import { mountWorld } from './mountWorld';
 import type { WorldScene } from './WorldScene';
 import { TILE_SIZE, type WorldProjection } from './projection';
 import { ExitIndicators, updateExitIndicators } from './ExitMarkerOverlay';
+import { isInteractivePoi, type CampfireTimes } from './poiInteraction';
+import { gameContent } from '../catalog';
 import './world.css';
 
 export interface WorldCanvasProps {
@@ -15,16 +17,20 @@ export interface WorldCanvasProps {
   reducedMotion: boolean;
   onMove: (point: GridPoint) => void;
   disabled?: boolean;
+  /** Pause world animation separately from input; by default disabled input also pauses it. */
+  paused?: boolean;
   inCombat?: boolean;
   clearedPoiIds?: string[];
   groups?: RoamingGroup[];
   previewGroupIds?: string[];
   inspectedGroupId?: string | null;
-  groupChances?: Readonly<Record<string, number | undefined>>;
   onInspectMob?: (groupId: string | null) => void;
+  onInteract?: (poiId: string) => void;
+  campfires?: CampfireTimes;
+  content?: GameContent;
 }
 
-export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, disabled = false, inCombat = false, clearedPoiIds = [], groups, previewGroupIds, inspectedGroupId, groupChances, onInspectMob }: WorldCanvasProps) {
+export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, disabled = false, paused = disabled, inCombat = false, clearedPoiIds = [], groups, previewGroupIds, inspectedGroupId, onInspectMob, onInteract, campfires, content = gameContent }: WorldCanvasProps) {
   const actor = state.actors.find(item => item.id === controlledActorId);
   // Reuse the actual movement rules, including the ban on passing through other gates.
   // Only tile arrivals or terrain changes recompute routes; animation frames do not.
@@ -39,10 +45,13 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
   const scene = useRef<WorldScene | null>(null);
   const move = useRef(onMove);
   const inspect = useRef(onInspectMob);
-  const presentation = useRef({ state, controlledActorId, reducedMotion, disabled, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, groupChances });
+  const interact = useRef(onInteract);
+  const canInteract = Boolean(onInteract);
+  const presentation = useRef({ state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, content });
   move.current = onMove;
   inspect.current = onInspectMob;
-  presentation.current = { state, controlledActorId, reducedMotion, disabled, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, groupChances };
+  interact.current = onInteract;
+  presentation.current = { state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, content };
 
   // Recreate scene effects together with their owning canvas surface.
   useEffect(() => {
@@ -72,6 +81,7 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
         element.dataset.exteriorHeroReveals = String(view.exteriorReveals);
       },
       groupId => inspect.current?.(groupId),
+      poiId => interact.current?.(poiId),
     );
     return () => { scene.current = null; dispose(); };
   }, []);
@@ -80,7 +90,7 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
     scene.current?.showWorld(presentation.current);
     // Loading another seed may change the gates while leaving the camera still.
     if (projection.current) updateExitIndicators(exitMarkers.current, reachableExits, projection.current);
-  }, [state, controlledActorId, reducedMotion, disabled, inCombat, clearedPoiIds, reachableExits, groups, previewGroupIds, inspectedGroupId, groupChances]);
+  }, [state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, reachableExits, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, content]);
 
   return (
     <div className="world-canvas-frame">
@@ -90,15 +100,24 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
         data-testid="world-canvas"
         data-tile-size={TILE_SIZE}
         data-chunk-id={state.currentChunkId}
+        data-layer={state.chunk.layer ?? 'surface'}
         data-actor-id={actor?.id}
         data-actor-x={actor?.position.x}
         data-actor-y={actor?.position.y}
         role="region"
-        aria-label="Карта мира. Нажмите на карту, чтобы ваш герой пошёл в указанную клетку. Стрелки на клавиатуре перемещают вашего героя. Камера автоматически следует за ним."
+        aria-label="Карта мира. Нажмите на землю для движения, на сундук, колодец, портал или лестницу для взаимодействия. Стрелки перемещают героя, E использует ближайший объект. Камера следует за героем."
         tabIndex={disabled ? -1 : 0}
         onPointerDown={() => { if (!disabled) host.current?.focus({ preventScroll: true }); }}
         onKeyDown={(event) => {
           if (disabled || !actor) return;
+          if (event.code === 'KeyE' || event.key === 'Enter') {
+            if (event.repeat) { event.preventDefault(); return; }
+            const nearby = state.chunk.pois.filter(isInteractivePoi).map(poi => ({ poi,
+              distance: Math.abs(poi.position.x - actor.position.x) + Math.abs(poi.position.y - actor.position.y),
+            })).filter(candidate => candidate.distance <= 1).sort((a, b) => a.distance - b.distance)[0];
+            if (nearby && onInteract) { event.preventDefault(); onInteract(nearby.poi.id); }
+            return;
+          }
           const directions: Record<string, GridPoint> = { ArrowUp: { x: 0, y: -1 }, ArrowRight: { x: 1, y: 0 }, ArrowDown: { x: 0, y: 1 }, ArrowLeft: { x: -1, y: 0 } };
           const direction = directions[event.key];
           if (direction) {

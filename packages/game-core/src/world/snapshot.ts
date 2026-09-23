@@ -1,6 +1,6 @@
 import type { ExplorationState, GridPoint, MovementState, WorldActor } from '@shards/shared';
 import { canonicalJson } from '../canonical';
-import { generateChunk } from './chunk';
+import { generateChunk, isWorldChunkId } from './chunk';
 import { generateWorld } from './graph';
 import { distance, inBounds, isWalkable, samePoint, tileIndex } from './grid';
 import { validateActorIds } from './movement';
@@ -8,11 +8,13 @@ import { chunkRegions, regionAt } from './regions';
 import { campfireTileIndices } from './campfires';
 import { normalizeCampfireOccupancy } from './campfire-occupancy';
 import { createMovementState, movementStepMs, validateMovementBonus } from './movement-speed';
-import { isBodyAlive, restoreHeroBody } from '../anatomy';
+import { isBodyAlive } from '../anatomy';
+import { restoreSavedHeroBody } from '../snapshot-body';
 
 interface ExplorationSnapshot {
   version: 3; generatorVersion: 3; seed: string; currentChunkId: string; actors: WorldActor[]; visited: string[]; tick: number; transitions: number;
-  structureVersion: 1 | 2;
+  structureVersion: 1 | 2 | 3;
+  bodyVersion: 2;
 }
 
 function record(value: unknown, keys: string[], label: string): Record<string, unknown> {
@@ -46,7 +48,7 @@ function movementState(value: unknown): MovementState {
 /** Geometry is regenerated, never accepted from the save. Saves remain compact and auditable. */
 export function serializeExploration(state: ExplorationState): string {
   const snapshot: ExplorationSnapshot = {
-    version: 3, generatorVersion: state.graph.generatorVersion, structureVersion: state.graph.structureVersion ?? 1,
+    version: 3, generatorVersion: state.graph.generatorVersion, structureVersion: state.graph.structureVersion ?? 1, bodyVersion: 2,
     seed: state.graph.seed, currentChunkId: state.currentChunkId,
     actors: state.actors, visited: state.visited, tick: state.tick, transitions: state.transitions,
   };
@@ -58,11 +60,13 @@ export function deserializeExploration(json: string): ExplorationState {
   const parsed = JSON.parse(json) as unknown;
   if (parsed !== null && typeof parsed === 'object' && 'version' in parsed && parsed.version !== 3) throw new Error('Эта карта создана старым генератором. Начните новый мир.');
   const hasStructureVersion = parsed !== null && typeof parsed === 'object' && Object.prototype.hasOwnProperty.call(parsed, 'structureVersion');
+  const hasBodyVersion = parsed !== null && typeof parsed === 'object' && Object.prototype.hasOwnProperty.call(parsed, 'bodyVersion');
   const fields = ['version', 'generatorVersion', 'seed', 'currentChunkId', 'actors', 'visited', 'tick', 'transitions'];
-  const data = record(parsed, hasStructureVersion ? [...fields, 'structureVersion'] : fields, 'exploration save');
+  const data = record(parsed, [...fields, ...(hasStructureVersion ? ['structureVersion'] : []), ...(hasBodyVersion ? ['bodyVersion'] : [])], 'exploration save');
   if (data.version !== 3 || data.generatorVersion !== 3 || typeof data.seed !== 'string' || typeof data.currentChunkId !== 'string') throw new Error('Unsupported exploration generator version');
+  if (hasBodyVersion && data.bodyVersion !== 2) throw new Error('Unsupported exploration body version');
   const structureVersion = hasStructureVersion ? data.structureVersion : 1;
-  if (structureVersion !== 1 && structureVersion !== 2) throw new Error('Unsupported structure generator version');
+  if (structureVersion !== 1 && structureVersion !== 2 && structureVersion !== 3) throw new Error('Unsupported structure generator version');
   if (!Number.isSafeInteger(data.tick) || (data.tick as number) < 0 || !Number.isSafeInteger(data.transitions) || (data.transitions as number) < 0 || (data.transitions as number) > (data.tick as number)) throw new Error('Invalid exploration counters');
   if (!Array.isArray(data.actors) || data.actors.length < 1 || data.actors.length > 4) throw new Error('Invalid saved party');
   const actors: WorldActor[] = data.actors.map(value => {
@@ -70,23 +74,29 @@ export function deserializeExploration(json: string): ExplorationState {
     const hasBody = value !== null && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'body');
     const actor = record(value, ['id', 'position', 'path', ...(hasMovement ? ['movement'] : []), ...(hasBody ? ['body'] : [])], 'actor');
     if (typeof actor.id !== 'string' || !Array.isArray(actor.path) || actor.path.length > 1225) throw new Error('Invalid saved actor');
-    return { id: actor.id, position: point(actor.position), path: actor.path.map(point), ...(hasMovement ? { movement: movementState(actor.movement) } : {}), ...(hasBody ? { body: restoreHeroBody(actor.body) } : {}) };
+    return { id: actor.id, position: point(actor.position), path: actor.path.map(point), ...(hasMovement ? { movement: movementState(actor.movement) } : {}), ...(hasBody ? { body: restoreSavedHeroBody(actor.body, undefined, !hasBodyVersion) } : {}) };
   });
   validateActorIds(actors.map(actor => actor.id));
   const graph = generateWorld(data.seed, { structureVersion });
   const chunk = generateChunk(graph, data.currentChunkId);
   const nodes = new Map(graph.nodes.map(node => [node.id, node]));
-  if (!Array.isArray(data.visited) || !data.visited.length || data.visited.length > graph.nodes.length || data.visited.some(id => typeof id !== 'string' || !nodes.has(id)) || new Set(data.visited).size !== data.visited.length || data.visited[0] !== graph.startId || !data.visited.includes(chunk.id) || data.visited.length > (data.transitions as number) + 1) throw new Error('Invalid visited maps');
+  const maxVisited = graph.nodes.length * (structureVersion === 3 ? 4 : 1);
+  if (!Array.isArray(data.visited) || !data.visited.length || data.visited.length > maxVisited
+    || data.visited.some(id => typeof id !== 'string' || !(nodes.has(id) || structureVersion === 3 && isWorldChunkId(graph, id)))
+    || new Set(data.visited).size !== data.visited.length || data.visited[0] !== graph.startId
+    || !data.visited.includes(chunk.id) || data.visited.length > (data.transitions as number) + 1) throw new Error('Invalid visited maps');
   const visited = data.visited as string[];
   const discovered = new Set([graph.startId]);
-  for (const id of visited.slice(1)) {
+  // Explicit portal/stair interactions can discover a non-adjacent node or a cellar.
+  // Legacy worlds keep their original, stricter edge-only traversal contract.
+  for (const id of structureVersion === 3 ? [] : visited.slice(1)) {
     const node = nodes.get(id)!;
     if (!Object.values(node.exits).some(neighbor => discovered.has(neighbor))) throw new Error('Disconnected visited maps');
     discovered.add(id);
   }
-  // Version-three saves predate solid campfires. Validate their original paths
-  // strictly, relaxing only those fire cells; then migrate to the current geometry.
-  const fires = campfireTileIndices(chunk);
+  // Legacy structure versions predate solid campfires. Relax only their fire
+  // cells during restore; newly generated version-three layouts are already solid.
+  const fires = structureVersion < 3 ? campfireTileIndices(chunk) : new Set<number>();
   const validationChunk = fires.size ? { ...chunk, tiles: chunk.tiles.map((tile, index) => fires.has(index) ? { ...tile, walkable: true } : tile) } : chunk;
   const regions = chunkRegions(validationChunk);
   const partyRegion = regionAt(validationChunk, regions, actors[0].position);

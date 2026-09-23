@@ -15,13 +15,16 @@ export interface WorldGraph {
   version: 1;
   generatorVersion: 3;
   /** Missing in older worlds, whose original two-house layouts must stay stable. */
-  structureVersion?: 1 | 2;
+  structureVersion?: 1 | 2 | 3;
   /** Each season occupies 10–15 complete radial rings of chunks. */
   seasonRings: Record<Season, number>;
   radius: number;
   seed: string;
   startId: string;
+  /** Legacy winter landmark; retained so older seeds keep their original geometry. */
   altarNodeId: string;
+  /** One early-summoning altar per season; derived independently of terrain streams. */
+  seasonalAltarNodeIds?: Record<Season, string>;
   nodes: WorldNode[];
 }
 export interface ChunkExit {
@@ -34,9 +37,14 @@ export interface ChunkExit {
 }
 export interface WorldPoi {
   id: string;
-  kind: 'campfire' | 'encounter' | 'altar';
+  kind: 'campfire' | 'encounter' | 'altar' | 'portal' | 'chest' | 'well' | 'stairs-down' | 'stairs-up';
   position: GridPoint;
   encounterId?: string;
+  /** Only seasonal summoning altars carry a boss season. */
+  bossSeason?: Season;
+  /** Explicit interaction only; walking over a portal or staircase never changes chunks. */
+  destination?: { chunkId: string; poiId: string };
+  structureId?: string;
 }
 export interface WorldStructure {
   id: string;
@@ -51,6 +59,9 @@ export interface WorldStructure {
 }
 export interface WorldChunk {
   id: string;
+  /** Older surface chunks omit these fields. Underground chunks never become graph nodes. */
+  layer?: 'surface' | 'basement';
+  surfaceNodeId?: string;
   size: number;
   season: Season;
   tiles: WorldTile[];

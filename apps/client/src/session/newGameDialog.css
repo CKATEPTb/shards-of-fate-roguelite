@@ -1,0 +1,16 @@
+.new-game-dialog { position: fixed; inset: 0; margin: auto; padding: 0; width: min(460px,calc(100% - 24px)); max-height: calc(100dvh - 24px); overflow: hidden; border: 1px solid #929d6966; border-radius: 9px; background: linear-gradient(140deg,#1c2a21,#101f18); color: #d6ddbd; box-shadow: 0 24px 100px #0009,inset 0 1px #d4c89c15; }
+.new-game-dialog[open] { display: flex; flex-direction: column; }
+.new-game-dialog::backdrop { background: #030a07bd; backdrop-filter: blur(5px); }
+.new-game-dialog-heading { flex-shrink: 0; padding: 21px 22px 17px; border-bottom: 1px solid #a4b58324; }
+.new-game-dialog-heading h2 { margin: 0; color: #e2d7b1; font: 500 30px/1.12 var(--serif); }
+.new-game-dialog-content { min-height: 0; overflow: auto; padding: 20px 22px 22px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #65764e #152319; }
+.new-game-dialog-content > p { margin: 0; color: #bfc9ae; font-size: 12px; line-height: 1.75; }
+.new-game-dialog-actions { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.65fr); gap: 10px; margin-top: 22px; }
+.new-game-dialog-actions > button { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border-radius: 4px; line-height: 1.4; }
+.new-game-dialog button:focus-visible { outline: 2px solid #d9bf82; outline-offset: 2px; }
+@media (max-width:380px), (max-height:450px) {
+  .new-game-dialog-heading { padding: 16px; }
+  .new-game-dialog-heading h2 { font-size: 27px; }
+  .new-game-dialog-content { padding: 16px; }
+  .new-game-dialog-actions { margin-top: 18px; gap: 8px; }
+}

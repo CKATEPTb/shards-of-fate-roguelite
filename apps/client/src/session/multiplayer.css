@@ -1,0 +1,7 @@
+.camp-invite-button { position: relative; display: flex; align-items: center; justify-content: center; gap: 5px; width: 104px; min-height: 32px; padding: 0 6px; border: 1px solid #b2ad7040; border-radius: 4px; background: #14251c73; color: #d9d7ad; box-shadow: 0 2px 8px #020b0833; font-size: 10px; }
+.camp-invite-button::before { content: ''; position: absolute; inset: -6px 0; }
+.camp-invite-button:hover:not(:disabled) { color: #ebd499; border-color: #bfad7970; background: #26362299; }
+.camp-invite-button > svg { width: 16px; height: 16px; flex-shrink: 0; }
+.camp-party-count { position: absolute; right: -5px; top: -6px; padding: 1px 3px; border: 1px solid #97a16b55; border-radius: 3px; background: #15281ca6; color: #cbd5b1; font-size: 8px; line-height: 1.2; white-space: nowrap; }
+.camp-lobby .camp-host-note { flex: 1; min-width: 0; margin: 0; align-self: center; color: #9dad8d; font-size: 10px; text-align: left; line-height: 1.5; }
+.camp-lobby .lobby-footer .online-error { color: #f2b69f; font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }

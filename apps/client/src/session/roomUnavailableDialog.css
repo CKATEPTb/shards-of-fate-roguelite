@@ -1,0 +1,11 @@
+.room-unavailable-dialog { position: fixed; inset: 0; margin: auto; padding: 24px; width: min(400px,calc(100% - 24px)); max-height: calc(100dvh - 24px); overflow: auto; overscroll-behavior: contain; border: 1px solid #929d6966; border-radius: 9px; background: linear-gradient(140deg,#1c2a21,#101f18); color: #d6ddbd; box-shadow: 0 24px 100px #0009,inset 0 1px #d4c89c15; scrollbar-width: thin; }
+.room-unavailable-dialog[open] { display: flex; flex-direction: column; gap: 24px; }
+.room-unavailable-dialog::backdrop { background: #030a07bd; backdrop-filter: blur(5px); }
+.room-unavailable-dialog > h2 { margin: 0; color: #e2d7b1; text-align: center; font: 500 30px/1.15 var(--serif); }
+.room-unavailable-dialog > button { width: 100%; min-width: 0; min-height: 44px; flex-shrink: 0; border-radius: 4px; }
+.room-unavailable-dialog > button:focus-visible { outline: 2px solid #d9bf82; outline-offset: 2px; }
+@media (max-width:380px), (max-height:450px) {
+  .room-unavailable-dialog { padding: 20px 16px; }
+  .room-unavailable-dialog[open] { gap: 20px; }
+  .room-unavailable-dialog > h2 { font-size: 27px; }
+}

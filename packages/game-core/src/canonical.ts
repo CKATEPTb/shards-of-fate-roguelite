@@ -10,4 +10,11 @@ export function canonicalJson(value: unknown): string {
 }
 
 /** Deterministic diagnostic checksum; deliberately not an authenticity guarantee. */
-export function hashValue(value: unknown): string { return hashString(canonicalJson(value)).toString(16).padStart(8, '0'); }
+const frozenChecksums = new WeakMap<object, string>();
+export function hashValue(value: unknown): string {
+  const cacheable = value !== null && typeof value === 'object' && Object.isFrozen(value);
+  if (cacheable) { const found = frozenChecksums.get(value); if (found) return found; }
+  const hash = hashString(canonicalJson(value)).toString(16).padStart(8, '0');
+  if (cacheable) frozenChecksums.set(value, hash);
+  return hash;
+}

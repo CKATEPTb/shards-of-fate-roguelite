@@ -1,54 +1,42 @@
-# Deterministic combat core
+# Deterministic manual combat
 
-The public entry point is `src/index.ts`. Content is injected; this package imports only shared contracts. It has no UI, network, wall-clock or global random dependencies.
+Content is injected into `src/index.ts`; the core has no UI, network, wall-clock or global random dependencies.
 
 ```ts
-const ready = createCombat({ seed: 'spring-42', characterIds: ['guardian', 'priest', 'mage'], encounterId: 'mossy_path' }, gameContent);
-const afterOneTurn = stepCombat(ready, gameContent);
-const finished = runCombat(afterOneTurn, gameContent);
-const restored = deserializeSnapshot(serializeSnapshot(afterOneTurn), gameContent);
+const ready = createCombat({ seed: 'spring-42', characterIds: ['guardian'], encounterId: 'mossy_path' }, gameContent);
+const prepared = stepCombat(ready, gameContent);
+// Enemy turns resolve individually. A hero turn waits in pendingActorId.
+if (prepared.pendingActorId) {
+  const choice = { type: 'attack' as const, actorId: prepared.pendingActorId };
+  const target = combatTargets(prepared, gameContent, choice)[0];
+  const resolved = submitCombatAction(prepared, gameContent, { ...choice, targetId: target.id });
+}
 ```
 
-## Transition rules
+## Turns and choices
 
-- `createCombat` validates selection and creates `ready` state. Party scaling changes enemy maximum HP and power; heroes keep their authored stats.
-- The first `stepCombat` starts combat and resolves one entire living actor turn. Every round rerolls initiative as a visible `d20 + initiative`, descending, with ascending actor ID for ties. Dead actors are skipped. Terminal input is returned as an unchanged copy.
-- Each actor turn decreases that actor's skill and passive cooldowns, dispatches turn-start effects and periodic statuses, chooses a skill or basic attack, processes end-turn periodic statuses and effects, then expires statuses. Terminal outcome is determined after the complete turn, allowing simultaneous elimination from periodic damage to produce a draw.
-- Skills choose descending priority, then ascending skill ID. `allyWounded` and `selfWounded` use the configured HP ratio threshold. A cooldown of 3 used on owner turn 1 becomes available on owner turn 4.
-- Default single-enemy targeting prefers greatest maximum HP. Taunt overrides single-enemy targeting and prefers greatest **current** HP. Equal candidates use ascending actor ID. Low-health selection compares current / maximum HP. Area attacks ignore taunt.
-- An action batch locks targets per selector. If damage kills the selected enemy, a following burn/poison action skips that corpse; it does not jump to a fresh enemy. An explicit different selector has its own selection.
+- Initiative is `1d20 + initiative bonus`, once on joining the encounter. Equal totals trigger new unmodified d20 rolls for that tied subgroup until ordered. No actor ID resolves a tie. Late reinforcements enter at the next round boundary.
+- `stepCombat` prepares one living participant's turn, decreases that participant's cooldowns and applies turn-start auras. Heroes then wait indefinitely for an explicit command. Enemies select an action only on their own turn.
+- `submitCombatAction` validates the pending actor, learned skill, cooldown and target before cloning or consuming dice. An attack, a skill or a flee attempt consumes exactly one turn. End auras, duration expiry and terminal outcome then resolve. Two equipped one-handed weapons produce two sequential strikes within one Attack action, against the same selected target.
+- `combatTargets` is a pure target enumerator shared by UI and validation. Harmful actions select enemies, beneficial actions allies. Self actions target their owner. Area skills accept a team member as an anchor and affect the whole eligible team. Taunt restricts single-enemy targets.
+- Player skill selection ignores enemy AI health thresholds and priorities. A skill with cooldown 3 used on owner turn 1 becomes available on owner turn 4.
+- A flee attempt rolls `1d20 + agility + aura bonuses - strongest living enemy level` against 15. Failure spends the action. Success releases only that hero. If nobody remains fighting, the battle ends as `escaped`; surviving enemies remain in the world. Adapters retreat the escaping hero to prevent immediate re-entry.
+- `COMBAT_RULES` contains initiative frequency and escape threshold/scope. Network peers must use matching rules/content.
 
-## Rolls and action primitives
+## Dice and auras
 
-All combat randomness consumes only the `COMBAT` stream and emits `DICE_ROLLED`. `WORLD`, `LOOT`, `ENCOUNTER` and `EVENT` have independent persisted xorshift32 states/counters, initialized from the seed and stream name. Extra draws in one stream cannot advance another. A public RNG or dice operation returns a new RNG value, never mutating its argument.
+Every mechanical die emits `DICE_ROLLED` with actor, individual faces, sides, reason, stat modifier and total. Each entity has an independent seeded sequence. `2d4` consumes two indices. Hero counters persist between encounters; generated enemy IDs are stable and their counters begin at zero each new encounter. Presentation never draws from these streams.
 
-Dice accept `d4`, `d6`, `d8`, `d10`, `d12`, `d20`, `NdX` and signed integer modifiers, including uppercase notation and whitespace around modifiers. Inputs are bounded at 1000 dice, a modifier magnitude of 1,000,000 and 64 expression characters. `rollD20` additionally supports advantage/disadvantage with two draws and retained individual rolls.
+Chance effects are explicit `DiceCheck { dice, atLeast }`, for example `1d4 >= 4`. Crit/evasion are integer d20 ratings. Damage, healing, shielding and periodic damage use authored dice; attribute bonuses are included in the visible roll. Armor and difficulty scaling are deterministic adjustments, not random checks.
 
-Attacks roll a visible d20. A roll at or below `max(1, floor(evasion × 20))` misses. Natural 20 always crits; other critical results satisfy `roll > 20 − floor(crit × 20)`. Thus crit 0.10 crits on 19–20, and fractional chance stats are quantized into d20 bands. There is no hidden percentage roll. Periodic and passive damage automatically lands and cannot crit.
+Aura definitions declare positive/negative polarity and `TURN_STARTED`, `TURN_ENDED`, or passive modifiers. Active instances have their own `instanceId`, source, remaining duration and application turn. Null duration is indefinite. Reapplications stack independently unless the definition explicitly declares refresh semantics. Numeric modifiers add across independent instances. Durations count the bearer's subsequent turns, not rounds or other actors' turns. Already-applied auras retain their source's stats when the source dies or escapes; preservation passives require that source to remain in combat.
 
-Actions share one pipeline for damage, healing, shielding and statuses:
+## Network, presentation and persistence
 
-1. Base amount is `floor((dice + selected stat × factor) × remainingDuration)`; the duration multiplier applies only when explicitly authored.
-2. Damage applies source damage multipliers, critical multiplier, `100 / (100 + armor × armorFactor)`, then flat/party reduction. Positive damage has a minimum of 1. Party reductions sum from living allies, exclude the aura owner's own received damage, and use the data-defined reduction cap.
-3. Shields absorb damage first. `DAMAGE.amount` is actual HP loss; absorbed damage is stated in the log. Healing cannot revive, and `HEALED` fires only for actual HP restored. Excess healing is a separate `OVERHEALED` event.
-4. Statuses have one instance per definition/target. Reapplication never shortens duration. An equal or longer application refreshes duration and source. Duration counts the bearer's subsequent complete turns; a status applied during the current turn is not decremented at that turn's end. Periodic damage uses the original applier's current stats and the status's remaining duration, even if the applier has died.
+Local and network actions use the same pure transition. A compact room event carries the action/target plus entity dice advances. A guest predicts its own action immediately, then reconciles acknowledged events. Waiting for a player's choice emits no repeated combat steps. Host controls only heroes without a connected owner.
 
-Guardian party reduction, Priest's `HEALED → eventTarget` buff, Mage's crit-triggered burn and enemy effects all use these same primitives. No character IDs are hardcoded in mechanics.
+The presentation queue shows every die, reveals its face and adds the stat modifier before displaying the effect. Controls stay locked until all events of the previous transition have been presented. The queue and its shared duration calculation do not affect combat results.
 
-## Effects and safeguards
+Snapshots preserve pending choice, initiative order, wounds, cooldowns, aura instances, entity dice counters and contiguous event history. Content and shape validation reject incompatible or malformed snapshots. A guarded migration from the preceding shipped content retains world progress, injuries and counters while converting the old percentage ratings into the new attributes.
 
-Effects run synchronously in descending priority, then effect ID and owner ID. Conditions use the event's source and target. An internal cooldown is set **before** child events dispatch. Trigger depth and events per step are bounded by content values; a breach raises `CombatLimitError` while leaving the caller's state untouched. `maxRounds` resolves a stalemate as a draw. The full-run API adds an independent step bound and uses the exact same transition as the one-turn API.
-
-`COMBAT_ENDED` can have child effect events after its marker. The outcome is recomputed after those effects, so a final sacrifice that kills the surviving side resolves as a draw. Snapshots preserve these children and forbid subsequent action/turn lifecycle events.
-
-Every public combat transition clones its input. Internal mutation occurs only within that private clone. `runCombat` clones once and avoids copying the growing event log on every turn.
-
-## Snapshots and compatibility
-
-Snapshots contain schema version, deterministic content checksum, complete roster/stats, initiative cursor, statuses, cooldowns, all RNG streams and event sequence. Restore validates structure, finite/ranged values, all references, exact roster and authored stats, event order, turn counts, survivors and terminal status. Unknown fields, incompatible content and unsupported schema versions are rejected. Saved content includes a checksum of the entire authored data, so content edits intentionally invalidate old saves rather than silently diverging on replay.
-
-`hashState` sorts object keys before calculating its deterministic checksum. Checksums detect accidental divergence; they are not a cryptographic proof of authenticity or anti-cheat protection. Incompatible future mechanics require a schema version bump or an explicit migration. Content must first pass the repository content validator; snapshot validation does not substitute for validating new authored content.
-
-## Verification
-
-The core tests cover immutable replay, independent streams and a fixed PRNG vector; dice grammar/advantage; cooldowns; periodic duration; shared shields/heals/auras; taunt tie rules; multi-action target locking; recursion/event/round guards; strict corrupted-snapshot rejection; changed-content rejection; and identical continuation after restore. Repository integration tests exercise the actual character/enemy content across every party composition and encounter.
+`runCombat` stops at the next hero choice unless a caller explicitly provides a decision policy. The offline balance tool supplies its own policy; it is not available as a game mode, and its outcomes are not shown as victory probabilities in the world.

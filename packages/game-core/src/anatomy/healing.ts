@@ -1,5 +1,5 @@
 import { BODY_PARTS, type HeroBody } from '@shards/shared';
-import { cloneHeroBody, isBodyAlive } from './body';
+import { cloneHeroBody, isBodyAlive, isBodyPartPresent } from './body';
 
 /** Allocate one healing budget by maximum part health, redistributing capped shares. */
 export function healBody(body: HeroBody, amount: number): { body: HeroBody; healed: number } {
@@ -8,7 +8,7 @@ export function healBody(body: HeroBody, amount: number): { body: HeroBody; heal
   let remaining = Math.floor(amount);
   let healed = 0;
   while (remaining > 0) {
-    const damaged = BODY_PARTS.filter(part => updated[part].current > 0 && updated[part].current < updated[part].max);
+    const damaged = BODY_PARTS.filter(part => isBodyPartPresent(updated, part) && updated[part].current < updated[part].max);
     if (!damaged.length) break;
     const weight = damaged.reduce((sum, part) => sum + updated[part].max, 0);
     const budget = remaining;
@@ -33,6 +33,6 @@ export function healBody(body: HeroBody, amount: number): { body: HeroBody; heal
 
 export function restBody(body: HeroBody): HeroBody {
   const updated = cloneHeroBody(body);
-  if (isBodyAlive(body)) for (const part of BODY_PARTS) if (updated[part].current > 0) updated[part].current = updated[part].max;
+  if (isBodyAlive(body)) for (const part of BODY_PARTS) if (isBodyPartPresent(updated, part)) updated[part].current = updated[part].max;
   return updated;
 }

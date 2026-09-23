@@ -1,65 +1,69 @@
 import type { SkillDefinition } from '@shards/shared';
+import { additionalSkills } from './skill-catalog';
+import { bossSkills } from './boss-catalog';
 
-export const skills: SkillDefinition[] = [
+export { additionalSkills } from './skill-catalog';
+
+const existingSkills: SkillDefinition[] = [
   {
-    schemaVersion: 1, id: 'tank_taunt', name: 'Вызов', description: 'Привлекает атаки врагов на 3 хода.',
+    schemaVersion: 1, id: 'tank_taunt', name: 'Вызов', description: 'На 3 собственных хода увеличивается в размере и вынуждает всех врагов атаковать только себя, включая атаки по отряду.',
     cooldown: 6, priority: 100, target: 'self', condition: 'hasOtherAlly',
     actions: [{ type: 'status', statusId: 'taunted', duration: 3 }], tags: ['ROLE', 'TAUNT'],
   },
   {
-    schemaVersion: 1, id: 'guardian_bastion', name: 'Несокрушимый бастион', description: 'Усиливает защиту всего отряда, включая себя, до 75% на 4 хода.',
-    cooldown: 10, priority: 90, target: 'self', condition: 'always',
-    actions: [{ type: 'status', statusId: 'bastion', duration: 4 }], tags: ['CHARACTER', 'ARMOR', 'ALLY_PROTECTION'],
+    schemaVersion: 1, id: 'guardian_bastion', name: 'Несокрушимый бастион', description: 'Полностью блокирует любой входящий урон до начала следующего собственного хода. Перезарядка: 3 хода.',
+    cooldown: 3, priority: 90, target: 'self', condition: 'always',
+    actions: [{ type: 'status', statusId: 'bastion', duration: 1 }], tags: ['CHARACTER', 'ARMOR', 'BLOCK'],
   },
   {
-    schemaVersion: 1, id: 'healer_mend', name: 'Исцеляющий свет', description: 'Восстанавливает 2d8 + силу исцеления самому раненому союзнику.',
-    cooldown: 6, priority: 100, target: 'lowestHealthAlly', condition: 'allyWounded',
-    actions: [{ type: 'heal', dice: '2d8', scaling: 'healing', factor: 1 }], tags: ['ROLE', 'HEAL'],
+    schemaVersion: 1, id: 'healer_mend', name: 'Исцеляющий свет', description: 'Восстанавливает выбранному союзнику 3d8 + Силу.',
+    cooldown: 6, priority: 100, target: 'ally', condition: 'allyWounded',
+    actions: [{ type: 'heal', dice: '3d8', scaling: 'power', factor: 1 }], tags: ['ROLE', 'HEAL'],
   },
   {
-    schemaVersion: 1, id: 'priest_prayer', name: 'Общая молитва', description: 'Исцеляет весь отряд на 2d6 + силу исцеления.',
-    cooldown: 10, priority: 110, target: 'allAllies', condition: 'allyWounded',
-    actions: [{ type: 'heal', dice: '2d6', scaling: 'healing', factor: 1 }], tags: ['CHARACTER', 'HEAL', 'HOLY'],
+    schemaVersion: 1, id: 'priest_prayer', name: 'Общая молитва', description: 'Исцеляет каждого живого участника отряда на 3d8 + Силу. Получившие лечение обретают Благословение на 2 хода.',
+    cooldown: 6, priority: 110, target: 'allAllies', condition: 'allyWounded',
+    actions: [{ type: 'heal', dice: '3d8', scaling: 'power', factor: 1 }], tags: ['CHARACTER', 'HEAL', 'HOLY'],
   },
   {
-    schemaVersion: 1, id: 'damage_burst', name: 'Решающий удар', description: 'Наносит одной цели 2d10 + силу урона.',
+    schemaVersion: 1, id: 'damage_burst', name: 'Решающий удар', description: 'Наносит одной цели 3d8 + Силу.',
     cooldown: 6, priority: 100, target: 'enemy', condition: 'always',
-    actions: [{ type: 'damage', dice: '2d10', scaling: 'power', factor: 1 }], tags: ['ROLE', 'BURST'],
+    actions: [{ type: 'damage', dice: '3d8', scaling: 'power', factor: 1 }], tags: ['ROLE', 'BURST'],
   },
   {
-    schemaVersion: 1, id: 'mage_ignite', name: 'Печать пламени', description: 'Наносит 1d6 урона и поджигает врага на 4 хода.',
-    cooldown: 10, priority: 110, target: 'enemy', condition: 'always',
-    actions: [{ type: 'damage', dice: '1d6' }, { type: 'status', statusId: 'burning', duration: 4 }], tags: ['CHARACTER', 'FIRE', 'BURN'],
+    schemaVersion: 1, id: 'mage_ignite', name: 'Печать пламени', description: 'Четыре огненных заряда: каждый отдельно проверяет попадание броском 1d20 и при успехе наносит 1d6 урона. Каждое попадание добавляет 1 заряд Горения, а критическое — ещё 1 от Тлеющей искры.',
+    cooldown: 6, priority: 110, target: 'enemy', condition: 'always',
+    actions: [{ type: 'damage', dice: '1d6', hits: 4, onHitStatusId: 'burning', onHitDuration: null }], tags: ['CHARACTER', 'FIRE', 'BURN', 'MULTIHIT'],
   },
   {
-    schemaVersion: 1, id: 'vampire_bloodlust', name: 'Жажда крови', description: 'Увеличивает наносимый урон на 50% на 4 хода.',
-    cooldown: 10, priority: 90, target: 'self', condition: 'always',
-    actions: [{ type: 'status', statusId: 'bloodlust', duration: 4 }], tags: ['CHARACTER', 'VAMPIRISM', 'PHYSICAL'],
+    schemaVersion: 1, id: 'vampire_bloodlust', name: 'Жажда крови', description: 'На 3 собственных хода добавляет отдельный бросок 1d6 к урону каждого удара.',
+    cooldown: 6, priority: 90, target: 'self', condition: 'always',
+    actions: [{ type: 'status', statusId: 'bloodlust', duration: 3 }], tags: ['CHARACTER', 'VAMPIRISM', 'PHYSICAL'],
   },
   {
-    schemaVersion: 1, id: 'paladin_radiance', name: 'Свет клятвы', description: 'Восстанавливает себе 3d8 + силу исцеления. Полученное лечение запускает «Общий свет».',
-    cooldown: 10, priority: 110, target: 'self', condition: 'selfWounded',
-    actions: [{ type: 'heal', dice: '3d8', scaling: 'healing' }], tags: ['CHARACTER', 'HEAL', 'HOLY'],
+    schemaVersion: 1, id: 'paladin_radiance', name: 'Свет клятвы', description: 'Восстанавливает себе 3d8 здоровья. Полученное лечение запускает «Общий свет»: 1d4 исцеления каждому живому участнику отряда.',
+    cooldown: 6, priority: 110, target: 'self', condition: 'selfWounded',
+    actions: [{ type: 'heal', dice: '3d8' }], tags: ['CHARACTER', 'HEAL', 'HOLY'],
   },
   {
-    schemaVersion: 1, id: 'druid_regrowth', name: 'Живая роща', description: 'Дарует каждому живому герою, включая себя, 4 тика регенерации. В конце его хода восстанавливает 1d4 + 50% силы исцеления Друида.',
-    cooldown: 10, priority: 90, target: 'allAllies', condition: 'allyWounded',
-    actions: [{ type: 'status', statusId: 'regrowth', duration: 4 }], tags: ['CHARACTER', 'HOT', 'NATURE', 'REGENERATION'],
+    schemaVersion: 1, id: 'druid_regrowth', name: 'Живая роща', description: 'Накладывает на выбранного союзника регенерацию на 3 его хода: в начале каждого хода восстанавливает 1d8 + Силу Друида. Перезарядка: 3 хода.',
+    cooldown: 3, priority: 90, target: 'ally', condition: 'always',
+    actions: [{ type: 'status', statusId: 'regrowth', duration: 3 }], tags: ['CHARACTER', 'HOT', 'NATURE', 'REGENERATION'],
   },
   {
-    schemaVersion: 1, id: 'necromancer_ward', name: 'Покров праха', description: 'Создаёт каждому живому герою, включая себя, щит на 2d8 + силу исцеления. Щит действует 4 хода получателя.',
-    cooldown: 10, priority: 110, target: 'allAllies', condition: 'always',
-    actions: [{ type: 'shield', dice: '2d8', scaling: 'healing', duration: 4 }], tags: ['CHARACTER', 'SHIELD', 'ABSORB', 'DARK'],
+    schemaVersion: 1, id: 'necromancer_ward', name: 'Костяной щит', description: 'Окружает выбранного союзника костяным вихрем: щит поглощает 3d8 + Силу урона и действует 3 хода получателя.',
+    cooldown: 6, priority: 110, target: 'ally', condition: 'always',
+    actions: [{ type: 'shield', dice: '3d8', scaling: 'power', duration: 3 }], tags: ['CHARACTER', 'SHIELD', 'ABSORB', 'DARK'],
   },
   {
-    schemaVersion: 1, id: 'rogue_precision', name: 'Смертельная точность', description: 'На 4 хода каждое попавшее прямое попадание становится критическим. Враг всё ещё может уклониться.',
-    cooldown: 10, priority: 110, target: 'self', condition: 'always',
-    actions: [{ type: 'status', statusId: 'sure_strike', duration: 4 }], tags: ['CHARACTER', 'CRITICAL', 'EXECUTE'],
+    schemaVersion: 1, id: 'rogue_precision', name: 'Смертельная точность', description: 'На 3 собственных хода каждое прямое попадание становится критическим. Враг всё ещё может уклониться.',
+    cooldown: 6, priority: 110, target: 'self', condition: 'always',
+    actions: [{ type: 'status', statusId: 'sure_strike', duration: 3 }], tags: ['CHARACTER', 'CRITICAL', 'EXECUTE'],
   },
   {
-    schemaVersion: 1, id: 'ranger_volley', name: 'Шквал стрел', description: 'На 4 хода добавляет 95 процентных пунктов повторной атаки. С базовыми 25% даёт один дополнительный выстрел и 20% дополнительного прямого урона.',
-    cooldown: 10, priority: 110, target: 'self', condition: 'always',
-    actions: [{ type: 'status', statusId: 'rapid_fire', duration: 4 }], tags: ['CHARACTER', 'REPEAT', 'PROJECTILE'],
+    schemaVersion: 1, id: 'ranger_volley', name: 'Шквал стрел', description: 'На 3 собственных хода усиливает Вторую стрелу: вместо 1d4 бросает 1d6, и на 4–6 выполняет дополнительную атаку по той же цели.',
+    cooldown: 6, priority: 110, target: 'self', condition: 'always',
+    actions: [{ type: 'status', statusId: 'rapid_fire', duration: 3 }], tags: ['CHARACTER', 'REPEAT', 'PROJECTILE'],
   },
   {
     schemaVersion: 1, id: 'rat_gnaw', name: 'Грызущий укус', description: 'Быстрый укус самой раненой цели.',
@@ -94,7 +98,7 @@ export const skills: SkillDefinition[] = [
   {
     schemaVersion: 1, id: 'shaman_mend', name: 'Лесное заклятие', description: 'Восстанавливает здоровье раненому союзнику.',
     cooldown: 5, priority: 20, target: 'lowestHealthAlly', condition: 'allyWounded',
-    actions: [{ type: 'heal', dice: '2d6', scaling: 'healing', factor: 0.7 }], tags: ['HEAL', 'NATURE'],
+    actions: [{ type: 'heal', dice: '2d6', scaling: 'power', factor: 0.7 }], tags: ['HEAL', 'NATURE'],
   },
   {
     schemaVersion: 1, id: 'shaman_fervor', name: 'Барабан войны', description: 'Усиливает урон союзников на 3 хода.',
@@ -119,6 +123,8 @@ export const skills: SkillDefinition[] = [
   {
     schemaVersion: 1, id: 'warden_renewal', name: 'Сила рощи', description: 'Восстанавливает собственное здоровье.',
     cooldown: 8, priority: 30, target: 'self', condition: 'selfWounded',
-    actions: [{ type: 'heal', dice: '2d8', scaling: 'healing', factor: 1 }], tags: ['HEAL', 'NATURE'],
+    actions: [{ type: 'heal', dice: '2d8', scaling: 'power', factor: 1 }], tags: ['HEAL', 'NATURE'],
   },
 ];
+
+export const skills: SkillDefinition[] = [...existingSkills, ...additionalSkills, ...bossSkills];

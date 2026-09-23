@@ -7,6 +7,7 @@ import { drawWaterSurface } from './water';
 import { drawPaths } from './terrain-paths';
 import { drawStructureFloors } from './terrain-floors';
 import { drawRockShadows } from './rocks';
+import { drawBasementTerrain } from './basementArt';
 
 function drawGroundCover(art: Phaser.GameObjects.Graphics, px: number, py: number, x: number, y: number, palette: WorldPalette) {
   for (let dot = 0; dot < 7; dot++) {
@@ -23,6 +24,12 @@ function drawGroundCover(art: Phaser.GameObjects.Graphics, px: number, py: numbe
 /** Ground and low clutter are baked once. Tall objects belong to the depth-sorted environment. */
 export function createTerrainTexture(scene: Phaser.Scene, chunk: WorldChunk, key: string) {
   const art = scene.make.graphics({ x: 0, y: 0 });
+  if (chunk.layer === 'basement') {
+    drawBasementTerrain(art, chunk);
+    art.generateTexture(key, chunk.size * TILE_SIZE, chunk.size * TILE_SIZE);
+    art.destroy();
+    return;
+  }
   const p = palettes[chunk.season];
   for (let y = 0; y < chunk.size; y++) {
     for (let x = 0; x < chunk.size; x++) {

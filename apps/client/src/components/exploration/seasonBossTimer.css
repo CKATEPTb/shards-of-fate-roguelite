@@ -1,0 +1,26 @@
+.season-boss-timer { position: absolute; z-index: 90; top: max(3px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); width: min(320px, calc(100% - 32px)); pointer-events: none; user-select: none; color: var(--season-boss-color); opacity: .76; filter: drop-shadow(0 1px 3px #020b08); }
+.season-boss-countdown { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 22px; padding: 0 9px; background: radial-gradient(ellipse, #09161288, transparent 75%); color: #dadbc5; font-size: 9px; letter-spacing: .3px; }
+.season-boss-countdown > svg { width: 19px; height: 19px; flex: 0 0 auto; color: var(--season-boss-color); }
+.season-boss-countdown > time { color: var(--season-boss-color); font-size: 11px; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+.season-boss-stages { display: flex; gap: 4px; margin-left: 5px; }
+.season-boss-stages > i { width: 3px; height: 3px; border: 1px solid #c6c9ac80; transform: rotate(45deg); }
+.season-boss-stages > i[data-spawned="true"] { background: var(--season-boss-color); border-color: var(--season-boss-color); }
+.season-boss-track { height: 2px; background: #c5d3b11a; box-shadow: 0 1px 1px #03100b66; overflow: hidden; }
+.season-boss-track > span { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, var(--season-boss-color)); opacity: .68; transform: scaleX(var(--season-boss-remaining)); transform-origin: left; transition: transform 80ms linear; }
+.season-boss-timer[data-urgent="true"] { opacity: .95; }
+.season-boss-timer[data-completed="true"] { --season-boss-color: #d9c994 !important; }
+/* Float the timer over the scenery; only HUD anchors reserve its slim top row. */
+.game[data-season-bosses="true"] .battle-turn-queue { top: calc(max(8px, env(safe-area-inset-top)) + 28px); }
+.game[data-season-bosses="true"] .battle-canvas { --battle-season-offset: 28px; }
+.game[data-season-bosses="true"] .party-hud,
+.game[data-season-bosses="true"] .minimap-hud { top: calc(max(var(--hud-edge), env(safe-area-inset-top)) + 28px); }
+.game[data-season-bosses="true"] .hero-hover-details { margin-top: 28px; }
+.game[data-season-bosses="true"] > .adventure-rewards-overlay { top: calc(28px + env(safe-area-inset-top, 0px)); }
+@media (max-width: 600px) {
+  .season-boss-timer { width: min(290px, calc(100% - 24px)); }
+  .game[data-season-bosses="true"] .battle-turn-queue { top: calc(max(5px, env(safe-area-inset-top)) + 28px); }
+}
+@media (max-height: 540px) {
+  .game[data-season-bosses="true"] .battle-turn-queue { top: calc(max(4px, env(safe-area-inset-top)) + 28px); }
+}
+@media (prefers-reduced-motion: reduce) { .season-boss-track > span { transition: none; } }

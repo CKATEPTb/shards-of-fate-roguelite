@@ -4,7 +4,7 @@ import { tileToScreen } from '../../apps/client/src/world/projection';
 import { cameraView, clickTile, expectActorPosition, expectFullViewport, loadBattleFixture, loadPartyAt, ready } from './world-helpers';
 
 const armor = ['helmet', 'chest', 'gloves', 'pants', 'boots'];
-const accessories = ['amulet', 'ring1', 'ring2', 'mainHand', 'offHand'];
+const accessories = ['amulet', 'ring1', 'ring2', 'rightHand', 'leftHand'];
 const skills = ['class', 'characterActive', 'passive', 'extra1', 'extra2'];
 
 async function activate(locator: Locator, touch = false) {
@@ -58,7 +58,7 @@ test('equipment starts collapsed and preserves ordered slots and actual hero abi
     await expect(list.getByRole('button')).toHaveCount(ids.length);
     expect(await list.locator('[data-loadout-slot]').evaluateAll(elements => elements.map(element => element.getAttribute('data-loadout-slot')))).toEqual(ids);
   }
-  for (const id of [...armor, 'mainHand', 'offHand']) {
+  for (const id of [...armor, 'rightHand', 'leftHand']) {
     await expect(page.getByTestId(`loadout-slot-${id}`)).toHaveAttribute('data-empty', 'false');
     await expect(page.getByTestId(`loadout-slot-${id}`)).toHaveAttribute('data-equipment-condition', 'active');
   }
@@ -87,7 +87,7 @@ test('equipment starts collapsed and preserves ordered slots and actual hero abi
   await expect(passive).toContainText('Стойкая защита');
   await expect(passive).toContainText('включая самого Стража, на 25%');
   await expect(passive).toContainText('Постоянный эффект');
-  const shield = await hoverSlot(page, 'offHand');
+  const shield = await hoverSlot(page, 'leftHand');
   await expect(shield).toContainText('Экипировано');
   await expect(shield).toContainText('Левая рука');
   const empty = await hoverSlot(page, 'amulet');
@@ -130,7 +130,7 @@ test('three columns and descriptions fit desktop, mobile and short landscape scr
       expect(bounds.height).toBeGreaterThanOrEqual(44);
       await expect(slot).toBeInViewport();
     }
-    for (const id of ['helmet', 'characterActive', 'offHand']) {
+    for (const id of ['helmet', 'characterActive', 'leftHand']) {
       const slot = page.getByTestId(`loadout-slot-${id}`);
       await hoverSlot(page, id);
       await expectStableHover(slot);
@@ -182,7 +182,7 @@ for (const touch of [false, true]) {
       await expect(tooltip).toHaveAttribute('role', 'region');
       await activate(page.getByTestId('loadout-slot-class'), touch);
       await expect(tooltip).toContainText('Вызов');
-      await activate(page.getByTestId('loadout-slot-offHand'), touch);
+      await activate(page.getByTestId('loadout-slot-leftHand'), touch);
       await expect(tooltip).toContainText('Экипировано');
       await expect(tooltip).toContainText('Левая рука');
       if (!touch) await page.mouse.move(380, 500);

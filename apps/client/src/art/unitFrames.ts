@@ -1,8 +1,9 @@
 import { drawNature, drawQuadruped, drawSlime, drawSpider } from './creatureSprites';
 import { drawHumanoid } from './humanoidSprites';
-import { drawHero } from './heroSprites';
+import { drawHeroParts } from './heroParts';
+import { getHeroRig, HERO_FRAME_SIZE, HERO_FOOT_Y } from './heroRig';
+import { resolveHeroVisualLoadout, type HeroVisualLoadout } from './heroLoadout';
 import { HERO_ART_IDS } from './heroOutfit';
-import { heroAppearance, mirroredAppearance } from './heroAppearance';
 import type { HeroBody } from '@shards/shared';
 import { PixelCanvas, type Pixel } from './pixelCanvas';
 import { unitPalette } from './unitPalette';
@@ -10,6 +11,13 @@ import { UNIT_CLIPS, UNIT_FOOT_Y, UNIT_FRAME_SIZE, unitPose, type UnitFacing, ty
 
 const heroIds = new Set<string>(HERO_ART_IDS);
 const enemyIds = new Set(['rat', 'wolf', 'slime', 'spider', 'goblin_scout', 'goblin_archer', 'goblin_shaman', 'boar', 'thornling', 'elite_warden']);
+
+/** Higher hero detail keeps the same ground anchor and logical on-screen footprint. */
+export function unitFrameMetrics(enemy = false) {
+  return enemy
+    ? { size: UNIT_FRAME_SIZE, footY: UNIT_FOOT_Y, displayScale: 1 }
+    : { size: HERO_FRAME_SIZE, footY: HERO_FOOT_Y, displayScale: UNIT_FRAME_SIZE / HERO_FRAME_SIZE };
+}
 
 export function resolveUnitArt(sprite: string, role: string, enemy: boolean): string {
   if ((enemy ? enemyIds : heroIds).has(sprite)) return sprite;
@@ -48,21 +56,24 @@ export function unitFramePixels(
   motion: UnitMotion = 'idle',
   frame = 0,
   body?: HeroBody,
+  equipment?: HeroVisualLoadout,
 ): Pixel[] {
   const id = resolveUnitArt(sprite, role, enemy);
+  if (!enemy) {
+    const art = new PixelCanvas(HERO_FRAME_SIZE);
+    const loadout = resolveHeroVisualLoadout({ id, sprite: id, role: role === 'tank' || role === 'healer' ? role : 'damage' }, equipment);
+    drawHeroParts(art, getHeroRig(id, facing, motion, frame, body, loadout), loadout);
+    return art.result();
+  }
   const drawingFacing = facing === 'west' ? 'east' : facing;
-  const pose = unitPose(enemy && motion === 'cast' ? 'attack' : motion, frame);
+  const pose = unitPose(motion === 'cast' || motion === 'attackLeft' ? 'attack' : motion, frame);
   const p = unitPalette(id);
   const art = new PixelCanvas(UNIT_FRAME_SIZE);
   if (['rat', 'wolf', 'boar'].includes(id)) drawQuadruped(art, id, drawingFacing, pose, p);
   else if (id === 'slime') drawSlime(art, drawingFacing, pose, p);
   else if (id === 'spider') drawSpider(art, drawingFacing, pose, p);
   else if (id === 'thornling' || id === 'elite_warden') drawNature(art, id, drawingFacing, pose, p);
-  else if (enemy) drawHumanoid(art, id, drawingFacing, pose, p);
-  else {
-    const appearance = heroAppearance(body);
-    drawHero(art, id, drawingFacing, pose, p, facing === 'west' ? mirroredAppearance(appearance) : appearance, facing === 'west');
-  }
+  else drawHumanoid(art, id, drawingFacing, pose, p);
   let result = art.result();
   if (motion === 'death') result = collapse(result, pose.frame, id);
   if (facing === 'west') result = result.map((pixel) => ({ ...pixel, x: UNIT_FRAME_SIZE - 1 - pixel.x }));

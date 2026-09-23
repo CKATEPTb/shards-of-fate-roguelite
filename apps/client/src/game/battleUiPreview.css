@@ -1,0 +1,6 @@
+.battle-workshop .game { top: 46px; height: calc(100dvh - 46px); }
+.battle-workshop-tools { height: 46px; display: flex; align-items: center; justify-content: center; gap: 9px; padding: 5px 12px; background: #101a18; border-bottom: 1px solid #716c424d; }
+.battle-workshop-tools > span { font-size: 10px; color: #b9b297; margin-right: 12px; }
+.battle-workshop-tools select { max-width: 145px; background: #202d24; color: #d2ccb3; font-size: 11px; border: 1px solid #716c4266; border-radius: 4px; padding: 5px; }
+.battle-workshop-tools > button { width: 30px; height: 30px; font-size: 21px; color: #e1cf94; }
+@media(max-width: 600px) { .battle-workshop-tools { gap: 5px; padding-inline: 5px; } .battle-workshop-tools > span { display: none; } .battle-workshop-tools select { max-width: 110px; font-size: 11px; } }

@@ -1,4 +1,5 @@
 import type { WorldChunk } from '@shards/shared';
+import { surfaceNodeIdForChunk } from '@shards/game-core';
 import { grain } from './palette';
 import { TILE_SIZE } from './projection';
 
@@ -26,7 +27,7 @@ function landscapeNoise(x: number, y: number): number {
 
 /** Broad material areas follow world coordinates; a tile never chooses its own random surface. */
 export function pathMaterial(chunk: WorldChunk): (x: number, y: number) => number {
-  const coordinates = chunk.id.split(',').map(Number);
+  const coordinates = (chunk.surfaceNodeId ?? surfaceNodeIdForChunk(chunk.id)).split(',').map(Number);
   const offsetX = Number.isFinite(coordinates[0]) ? coordinates[0] * chunk.size * TILE_SIZE : 0;
   const offsetY = Number.isFinite(coordinates[1]) ? coordinates[1] * chunk.size * TILE_SIZE : 0;
   const settlements = chunk.structures.map(structure => ({

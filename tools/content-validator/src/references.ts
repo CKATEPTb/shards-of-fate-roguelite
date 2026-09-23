@@ -29,6 +29,12 @@ export function validateReferences(content: GameContent): ValidationIssue[] {
       if (action.statusId && !ids.statuses.has(action.statusId)) {
         report(`${path}[${index}].statusId`, `Unknown status: ${action.statusId}`);
       }
+      if (action.onHitStatusId && !ids.statuses.has(action.onHitStatusId)) {
+        report(`${path}[${index}].onHitStatusId`, `Unknown status: ${action.onHitStatusId}`);
+      }
+      if (action.damagePerStack !== undefined && !periodic) {
+        report(`${path}[${index}].damagePerStack`, 'Aura stacks are available only to periodic status actions');
+      }
       if (action.scaleWithRemainingDuration && !periodic) {
         report(`${path}[${index}].scaleWithRemainingDuration`, 'Remaining duration is available only to periodic status actions');
       }

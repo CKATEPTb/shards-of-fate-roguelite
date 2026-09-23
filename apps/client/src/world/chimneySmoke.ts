@@ -21,7 +21,7 @@ function ensurePuffTexture(scene: Phaser.Scene): void {
 
 export interface AmbientSmoke {
   readonly count: number;
-  update(delta: number, reducedMotion: boolean, viewport?: Bounds): void;
+  update(delta: number, reducedMotion: boolean, viewport?: Bounds, enabled?: boolean): void;
   destroy(): void;
 }
 
@@ -50,11 +50,11 @@ function createSmoke(scene: Phaser.Scene, sources: GridPoint[], style: SmokeStyl
   let destroyed = false;
   return {
     count: sources.length * style.count,
-    update(delta, reducedMotion, viewport) {
+    update(delta, reducedMotion, viewport, enabled = true) {
       if (destroyed) return;
       if (!reducedMotion && Number.isFinite(delta)) elapsed = (elapsed + Math.max(0, delta)) % style.cycle;
       for (const plume of plumes) {
-        const visible = intersectsViewport(plume.bounds, viewport);
+        const visible = enabled && intersectsViewport(plume.bounds, viewport);
         for (let index = 0; index < plume.images.length; index++) {
           const image = plume.images[index];
           image.setVisible(visible);

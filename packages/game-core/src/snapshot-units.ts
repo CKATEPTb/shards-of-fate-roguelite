@@ -1,6 +1,7 @@
 import type { Combatant, GameContent } from '@shards/shared';
 import { array, fail, finite, integer, record, same, string } from './snapshot-values';
-import { bodyCombatHealth, bodyCombatStats, legacyHeroBody, restoreHeroBody } from './anatomy';
+import { bodyCombatHealth, bodyCombatStats, legacyHeroBody } from './anatomy';
+import { restoreSavedHeroBody } from './snapshot-body';
 
 /** Upgrade scalar hero health only when the enclosing hash identifies old content. */
 export function migrateCombatBodies(value: unknown, expected: Combatant[], content: GameContent, legacy: boolean): void {
@@ -20,24 +21,31 @@ export function migrateCombatBodies(value: unknown, expected: Combatant[], conte
   });
 }
 
-export function validateUnits(value: unknown, expected: Combatant[], turn: number, content: GameContent): void {
+export function validateUnits(value: unknown, expected: Combatant[], turn: number, content: GameContent, allowLegacyBodies = false): void {
   const units = array(value, 'units', 128);
   if (units.length !== expected.length) fail('units', 'roster does not match encounter and party');
   let turnsTaken = 0;
   units.forEach((entry, index) => {
     const path = `units[${index}]`;
     const baseline = expected[index];
-    const unit = record(entry, path, ['id', 'definitionId', 'name', 'team', 'stats', 'hp', 'body', 'shield', 'shieldLayers', 'cooldowns', 'effectCooldowns', 'statuses', 'turnsTaken']);
+    const unit = record(entry, path, ['id', 'definitionId', 'name', 'team', 'stats', 'hp', 'body', 'shield', 'shieldLayers', 'cooldowns', 'effectCooldowns', 'statuses', 'turnsTaken', 'escaped']);
+    if (unit.escaped !== undefined && typeof unit.escaped !== 'boolean') fail(`${path}.escaped`, 'expected boolean');
+    if (unit.escaped && (unit.team !== 'heroes' || Number(unit.hp) <= 0)) fail(`${path}.escaped`, 'only living heroes can escape');
     for (const key of ['id', 'definitionId', 'name', 'team'] as const) same(unit[key], baseline[key], `${path}.${key}`);
-    const stats = record(unit.stats, `${path}.stats`, ['maxHp', 'power', 'armor', 'initiative', 'crit', 'evasion', 'healing']);
     let expectedStats = baseline.stats;
     if (baseline.body) {
-      const body = restoreHeroBody(unit.body, baseline.body);
+      const body = restoreSavedHeroBody(unit.body, baseline.body, allowLegacyBodies);
       unit.body = body;
       expectedStats = bodyCombatStats(content.characters.find(definition => definition.id === baseline.definitionId)!, body);
       same(unit.hp, bodyCombatHealth(body), `${path}.hp`);
     } else if (unit.body !== undefined) fail(`${path}.body`, 'enemies do not have hero anatomy');
-    for (const key of Object.keys(expectedStats) as (keyof Combatant['stats'])[]) same(stats[key], expectedStats[key], `${path}.stats.${key}`);
+    const optionalRatings = ['agility', 'accuracy', 'resilience', 'luck'] as const;
+    const stats = record(unit.stats, `${path}.stats`, [...Object.keys(expectedStats), ...optionalRatings]);
+    for (const key of Object.keys(expectedStats) as (keyof Combatant['stats'])[]) {
+      if (!optionalRatings.includes(key as typeof optionalRatings[number])) same(stats[key], expectedStats[key], `${path}.stats.${key}`);
+    }
+    for (const key of optionalRatings) same(stats[key] === undefined ? 0 : stats[key], expectedStats[key] ?? 0, `${path}.stats.${key}`);
+    unit.stats = { ...expectedStats };
     finite(unit.hp, `${path}.hp`, 0, baseline.stats.maxHp);
     finite(unit.shield, `${path}.shield`, 0);
     if (unit.shieldLayers !== undefined) {
@@ -62,15 +70,28 @@ export function validateUnits(value: unknown, expected: Combatant[], turn: numbe
         integer(cooldowns[id], `${path}.${key}.${id}`, 0, max);
       }
     }
-    const statusIds = new Set<string>();
-    array(unit.statuses, `${path}.statuses`, content.statuses.length).forEach((entry, i) => {
+    const instanceIds = new Set<string>();
+    const decayingIds = new Set<string>();
+    array(unit.statuses, `${path}.statuses`, 4096).forEach((entry, i) => {
       const statusPath = `${path}.statuses[${i}]`;
-      const status = record(entry, statusPath, ['id', 'sourceId', 'remaining', 'appliedTurn']);
+      const status = record(entry, statusPath, ['id', 'instanceId', 'sourceId', 'remaining', 'appliedTurn', 'stacks']);
       const id = string(status.id, `${statusPath}.id`);
-      if (!content.statuses.some(definition => definition.id === id) || statusIds.has(id)) fail(statusPath, 'unknown or duplicate status');
-      statusIds.add(id);
+      const definition = content.statuses.find(definition => definition.id === id);
+      if (!definition) fail(statusPath, 'unknown status');
+      if (status.stacks !== undefined) integer(status.stacks, `${statusPath}.stacks`, 1, 1_000_000);
+      if (definition!.stacking === 'decay') {
+        integer(status.stacks, `${statusPath}.stacks`, 1, 1_000_000);
+        same(status.remaining, null, `${statusPath}.remaining`);
+        if (decayingIds.has(id)) fail(statusPath, 'decaying stacks must use one pool');
+        decayingIds.add(id);
+      }
+      if (status.instanceId !== undefined) {
+        const instanceId = string(status.instanceId, `${statusPath}.instanceId`);
+        if (instanceIds.has(instanceId)) fail(statusPath, 'duplicate aura instance');
+        instanceIds.add(instanceId);
+      }
       if (!expected.some(source => source.id === status.sourceId)) fail(statusPath, 'unknown status source');
-      integer(status.remaining, `${statusPath}.remaining`, 1, 1_000_000);
+      if (status.remaining !== null) integer(status.remaining, `${statusPath}.remaining`, 1, 1_000_000);
       integer(status.appliedTurn, `${statusPath}.appliedTurn`, 0, turn);
     });
   });

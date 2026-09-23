@@ -27,7 +27,7 @@ describe('shared effect pipeline', () => {
     const content = contentFixture();
     content.characters.push(hero('ally'));
     content.characters[0].effectIds = ['inspire'];
-    content.statuses.push({ schemaVersion: 1, id: 'inspired', name: 'Inspired', description: 'Inspired', color: '#fff', actions: [], modifiers: { damageMultiplier: 1.2 }, tags: [] });
+    content.statuses.push({ schemaVersion: 1, id: 'inspired', name: 'Inspired', description: 'Inspired', color: '#fff', actions: [], modifiers: { damageBonus: 2 }, tags: [] });
     content.effects.push({ schemaVersion: 1, id: 'inspire', name: 'Inspire', description: 'Inspire', trigger: 'HEALED', conditions: ['sourceIsOwner', 'targetIsAlly', 'ownerAlive'], target: 'eventTarget', priority: 1, internalCooldown: 0, actions: [{ type: 'status', statusId: 'inspired', duration: 2 }], tags: [] });
     const state = createCombat({ ...options, characterIds: ['hero', 'ally'] }, content);
     state.units[1].body = legacyHeroBody(content.characters[1], 20, 100);

@@ -9,11 +9,11 @@ export function MainMenu({ saved, onContinue, onNew, onSettings, onExit }: { sav
     <h1 id="main-menu-title">Осколки<br />судьбы</h1>
     <div className="menu-divider" aria-hidden="true"><span />◆<span /></div>
     <nav className="main-menu-actions" aria-label="Главное меню">
-      <button onClick={onContinue} disabled={!saved} className="main-menu-continue"><span>Продолжить</span>{saved && <small>{findDefinition(saved.state.world.actors[0].id).name} · {DIFFICULTY_PROFILES[saved.state.difficultyId ?? 'normal'].name}</small>}</button>
+      <button onClick={onContinue} disabled={!saved} className="main-menu-continue"><span>Продолжить</span>{saved && <small>{saved.cooperative && 'Сетевая игра · '}{findDefinition(saved.hostHeroId ?? saved.state.world.actors[0].id).name} · {DIFFICULTY_PROFILES[saved.state.difficultyId ?? 'normal'].name}</small>}</button>
       <button onClick={onNew}>Новая игра</button>
       <button onClick={onSettings}>Настройки</button>
       <button onClick={onExit}>Выйти</button>
     </nav>
-    <p className="main-menu-note">Один герой. Одна жизнь.<br />Новое путешествие заменяет предыдущее.</p>
+    <p className="main-menu-note">Один герой. Одна жизнь.</p>
   </section>;
 }

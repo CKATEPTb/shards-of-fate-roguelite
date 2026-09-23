@@ -1,5 +1,9 @@
 export { generateWorld } from './graph';
-export { generateChunk } from './chunk';
+export { seasonAltarNodeId, seasonAltarNodeIds } from './season-altars';
+export { generateChunk, isWorldChunkId } from './chunk';
+export { basementChunkId, parseBasementChunkId, surfaceNodeIdForChunk, resolveWorldNode } from './chunk-identity';
+export type { BasementChunkIdentity } from './chunk-identity';
+export { poiApproachCells } from './poi-access';
 export { findPath } from './pathfinding';
 export { createExploration, requestMove, stepExploration } from './movement';
 export { validateWorld, validateChunk } from './validation';
