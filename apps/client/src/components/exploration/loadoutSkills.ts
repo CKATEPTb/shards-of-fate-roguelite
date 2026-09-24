@@ -11,7 +11,7 @@ const skillIcons: Record<string, LoadoutIconKind> = {
 };
 const passiveIcons: Record<string, LoadoutIconKind> = {
   guardian: 'passive', vampire: 'blood', paladin: 'radiance', priest: 'prayer',
-  druid: 'regrowth', necromancer: 'ward', rogue: 'evasion', ranger: 'volley', mage: 'fire',
+  druid: 'regrowth', necromancer: 'boneRenewal', rogue: 'evasion', ranger: 'volley', mage: 'fire',
 };
 
 export function activeLoadoutSlot(id: 'class' | 'characterActive' | 'extra1' | 'extra2', category: string, skill: SkillDefinition | undefined, unit?: Combatant, content: GameContent = gameContent): LoadoutSlot {

@@ -1,0 +1,26 @@
+.character-skills-compact { min-width: 0; }
+.character-skills-compact > h3 { margin: 0 0 6px; color: #c8bc98; font: 500 16px/1.2 var(--serif); }
+.character-skills-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; padding: 0; margin: 0; list-style: none; }
+.character-skills-strip > li { min-width: 0; }
+.character-skills-strip .character-skill-tile { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 100%; min-width: 44px; min-height: 44px; height: 100%; padding: 6px 3px; border: 1px solid color-mix(in srgb, var(--skill-rarity, #b6c7a4) 36%, #1b342b); border-radius: 7px; background: linear-gradient(160deg, #183429, #0b1c17); color: #e2e5d1; font: 500 12px/1.2 Manrope, Arial, sans-serif; text-align: center; cursor: pointer; touch-action: manipulation; }
+.character-skills-strip .character-skill-tile:hover { border-color: #d5c58e; background: #243d2e; }
+.character-skills-strip .character-skill-tile:focus-visible { outline: 2px solid #f0d68a; outline-offset: 2px; }
+.character-skills-strip .character-skill-tile[data-selected="true"] { border-color: #f0d68a; box-shadow: inset 0 0 0 1px #f0d68a; background: #2b402c; }
+.character-skill-tile[data-empty="true"] { border-style: dashed; }
+.character-skill-tile-label { color: #c1c9ae; white-space: nowrap; }
+.character-skill-tile-art { display: grid; place-items: center; width: 36px; height: 36px; color: #ccdba8; }
+.character-skill-tile-art > svg { display: block; width: 36px; height: 36px; }
+.character-skill-tile-name { display: -webkit-box; width: 100%; min-height: 2.4em; overflow: hidden; overflow-wrap: anywhere; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.character-skill-tile-meta { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 1.2em; color: var(--skill-rarity, #aebf9c); white-space: nowrap; }
+.character-skill-tile[data-recharging="true"] .character-skill-tile-meta { color: #edb08b; }
+.character-skill-local-details { margin-top: 8px; padding: 10px; border: 1px solid #75896666; border-radius: 6px; background: #0b1c17; }
+.character-skill-local-details h4 { margin: 0 0 6px; font-size: 14px; }
+.character-skill-local-details p { margin: 0; color: #ccd4bd; font: 12px/1.5 Manrope, Arial, sans-serif; }
+@media (max-width: 700px), (max-height: 540px) and (orientation: landscape) {
+  .character-skills-compact > h3 { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .character-skills-strip { gap: 4px; }
+  .character-skills-strip .character-skill-tile { gap: 2px; padding: 3px 2px; line-height: 1.15; }
+  .character-skill-tile-meta { min-height: 1.15em; }
+  .character-skill-tile-name { display: none; }
+  .character-skill-tile-art, .character-skill-tile-art > svg { width: 30px; height: 30px; }
+}

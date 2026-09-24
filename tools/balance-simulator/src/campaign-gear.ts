@@ -86,7 +86,7 @@ export function campaignGearScore(heroId: string, progress: HeroProgress, conten
 
 export interface CampaignGearChanges { collected: number; equipped: number; learned: number }
 
-/** Collect first, then equip only a strictly improving valid loadout; displaced items stay destroyed. */
+/** Collect first, then equip only a strictly improving valid loadout; displaced items return to the bag. */
 export function optimizeCampaignInventory(state: CoopState, content: GameContent, equip: boolean): { state: CoopState; changes: CampaignGearChanges } {
   const changes: CampaignGearChanges = { collected: 0, equipped: 0, learned: 0 };
   const partySize = state.actors.filter(actor => !actor.body || isBodyAlive(actor.body)).length;

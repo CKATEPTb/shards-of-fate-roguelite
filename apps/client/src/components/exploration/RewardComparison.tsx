@@ -8,7 +8,6 @@ import { skillDiceRules } from './diceRules';
 import { type RewardTarget } from './rewardFitting';
 import { RewardArt, rewardName, rewardSkill, rewardSlotNames, signed } from './rewardPresentation';
 import { RewardEquipmentDetails } from './RewardEquipmentDetails';
-import { RewardSetSummary } from './RewardSetSummary';
 import type { RewardEquipmentComparison } from './rewardComparisonModel';
 import './rewardComparison.css';
 
@@ -21,6 +20,7 @@ export interface RewardComparisonProps {
   onTargetChange(target: RewardTarget): void;
   fitted: boolean;
   fixedTarget?: boolean;
+  hidePartChanges?: boolean;
 }
 
 function itemReward(item: StarterEquipment): AdventureReward {
@@ -37,7 +37,7 @@ function Difference({ before, after, lowerIsBetter = false, inactive = false }: 
 
 function ItemIdentity({ reward, item }: { reward: AdventureReward; item?: StarterEquipment }) {
   return <div className="reward-comparison-item" data-equipment-rarity={reward.rarity}>
-    <span className={`reward-comparison-icon${reward.kind === 'equipment' ? ' reward-comparison-equipment-icon' : ''}`}>{item ? <EquipmentIcon item={item} /> : <RewardArt reward={reward} />}</span>
+    <span className={`reward-comparison-icon${reward.kind === 'equipment' ? ' reward-comparison-equipment-icon' : ''}`}>{item ? <EquipmentIcon item={item} size={32} /> : <RewardArt reward={reward} />}</span>
     <div className="reward-comparison-identity"><strong>{item?.name ?? rewardName(reward)}</strong><EquipmentRarityBadge rarity={reward.rarity} />
       {item && !item.weapon && <small>{rewardSlotNames[item.slot]}</small>}
     </div>
@@ -45,12 +45,17 @@ function ItemIdentity({ reward, item }: { reward: AdventureReward; item?: Starte
 }
 
 /** Preview a replacement against the displayed outfit without changing the fitting. */
-export function RewardComparison({ hero, progress, comparison, reward, target, onTargetChange, fitted, fixedTarget = false }: RewardComparisonProps) {
+export function RewardComparison({ hero, progress, comparison, reward, target, onTargetChange, fitted, fixedTarget = false, hidePartChanges = false }: RewardComparisonProps) {
   const item = reward.kind === 'equipment' ? EQUIPMENT_ITEMS[reward.definitionId] : undefined;
   const addedItem = comparison?.added ?? (item ? equipItem(item.id, item.slot === 'hand' ? 'rightHand' : item.slot) : undefined);
   const skill = reward.kind === 'skill' ? rewardSkill(reward.definitionId) : undefined;
   const skillIndex = target === 'skill1' ? 1 : 0;
   const previousSkill = skill ? rewardSkill(progress.skills[skillIndex]) : undefined;
+  // Restore the displayed outfit from the preview, including a moved fitted item's source slot.
+  const beforeEquipment = comparison ? [
+    ...comparison.preview.equipment.filter(entry => entry !== comparison.added && !comparison.restored.includes(entry)),
+    ...comparison.preview.removed,
+  ] : [];
   const choices: Array<{ target: RewardTarget; name: string }> = skill
     ? [{ target: 'skill0', name: 'Способность 1' }, { target: 'skill1', name: 'Способность 2' }]
     : item?.slot === 'hand' ? [{ target: 'rightHand', name: 'Правая рука' }, { target: 'leftHand', name: 'Левая рука' }]
@@ -63,7 +68,8 @@ export function RewardComparison({ hero, progress, comparison, reward, target, o
     <div className="reward-comparison-pair">
       <div className="reward-comparison-side"><h4>{skill ? 'Текущая способность' : 'Надето сейчас'}</h4>
         {comparison ? comparison.preview.removed.length ? comparison.preview.removed.map(current => <article className="reward-comparison-equipped" key={current.slot}>
-          <ItemIdentity reward={itemReward(current)} item={current} /><RewardEquipmentDetails item={current} body={comparison.beforeBody} />
+          <ItemIdentity reward={itemReward(current)} item={current} /><RewardEquipmentDetails item={current} body={comparison.beforeBody}
+            equipment={beforeEquipment} compareWith={{ equipment: comparison.preview.equipment, body: comparison.afterBody, direction: 'after' }} />
         </article>)
           : <p className="reward-comparison-empty">Слот свободен</p>
           : previousSkill ? <><ItemIdentity reward={{ ...reward, id: `current:skill${skillIndex}`, definitionId: previousSkill.id, rarity: previousSkill.rarity ?? 'common' }} />
@@ -72,14 +78,15 @@ export function RewardComparison({ hero, progress, comparison, reward, target, o
             : <p className="reward-comparison-empty">{skill ? 'Слот свободен' : 'Выберите подходящий слот'}</p>}
       </div>
       <div className="reward-comparison-side"><h4>{skill ? 'Новая способность' : 'Новый предмет'}{fitted && <span>Примерено</span>}</h4><ItemIdentity reward={reward} item={addedItem} />
-        {addedItem && <RewardEquipmentDetails item={addedItem} body={comparison?.afterBody} />}
+        {addedItem && <RewardEquipmentDetails item={addedItem} body={comparison?.afterBody} equipment={comparison?.preview.equipment}
+          compareWith={comparison ? { equipment: beforeEquipment, body: comparison.beforeBody, direction: 'before' } : undefined} />}
         {skill && <><p className="reward-comparison-description"><DiceText text={skill.description} rules={skillDiceRules(skill, hero)} /></p>
           <p className="reward-comparison-cooldown">Перезарядка <b>{skill.cooldown} ходов</b></p></>}
       </div>
     </div>
     {!!comparison?.restored.length && <p className="reward-comparison-restored">{comparison.restored.map(current =>
       `${current.name} вернётся в слот «${rewardSlotNames[current.slot]}»`).join('. ')}.</p>}
-    {!!comparison?.parts.length && <section className="reward-comparison-parts" aria-label="Изменения защиты и прочности"><h4>После замены</h4>
+    {!hidePartChanges && !!comparison?.parts.length && <section className="reward-comparison-parts" aria-label="Изменения защиты и прочности"><h4>После замены</h4>
       {comparison.parts.map(part => <div className="reward-comparison-part" key={part.part} data-lost={part.lost}>
         <strong>{bodyPartNames[part.part]}{part.lost && <small>Утрачена</small>}</strong><dl>
           {part.beforeArmor !== part.afterArmor && <div><dt>Защита</dt><dd><Difference before={part.beforeArmor} after={part.afterArmor} inactive={part.lost} /></dd></div>}
@@ -90,9 +97,5 @@ export function RewardComparison({ hero, progress, comparison, reward, target, o
     {skill && previousSkill && previousSkill.cooldown !== skill.cooldown && <div className="reward-comparison-skill-change">
       <span>Перезарядка, ходов</span><Difference before={previousSkill.cooldown} after={skill.cooldown} lowerIsBetter />
     </div>}
-    {!!comparison?.sets.length && <div className="reward-comparison-sets">{comparison.sets.map(group => <RewardSetSummary key={`${reward.id}:${group.set.id}`}
-      set={group.set} pieces={group.oldPieces} nextPieces={group.nextPieces}
-      activeBonuses={group.bonuses.filter(entry => entry.before).map(entry => entry.bonus.pieces)}
-      nextActiveBonuses={group.bonuses.filter(entry => entry.after).map(entry => entry.bonus.pieces)} />)}</div>}
   </section>;
 }

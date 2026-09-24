@@ -1,14 +1,17 @@
 .reward-equipment-details { min-width: 0; margin-top: 10px; color: #c5d1ba; font: 400 14px/1.55 Manrope, Arial, sans-serif; }
 .reward-equipment-details p { margin: 0; overflow-wrap: anywhere; }
+.reward-equipment-details > :first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.reward-equipment-details p.reward-equipment-description { margin-top: 7px; }
+.reward-equipment-details > .reward-set-summary { margin-top: 10px; }
 .reward-equipment-details p.reward-equipment-condition { margin-top: 8px; color: #e0bd91; font-size: 13px; }
 .reward-equipment-weapon { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-top: 8px; color: #c8d6b5; }
 .reward-equipment-weapon > span { color: #b0bea0; font-size: 13px; }
 .reward-equipment-weapon strong { color: #e3d4a6; font-weight: 650; }
 .reward-equipment-attributes, .reward-equipment-parts { margin-top: 8px; padding-top: 8px; border-top: 1px solid #a2b08030; }
 .reward-equipment-attributes dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 5px 16px; margin: 0; font-size: 13px; }
-.reward-equipment-attributes dl > div { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.reward-equipment-attributes dl > div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 3px 8px; min-width: 0; }
 .reward-equipment-attributes dt { min-width: 0; overflow-wrap: anywhere; }
-.reward-equipment-attributes dd { display: flex; flex: none; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 4px; margin: 0; font-variant-numeric: tabular-nums; font-weight: 650; }
+.reward-equipment-attributes dd { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 4px; margin: 0; font-variant-numeric: tabular-nums; font-weight: 650; }
 .reward-equipment-attributes dd small { color: #b3bda2; font-size: 12px; font-weight: 400; }
 .reward-equipment-details [data-change='gain'] { color: #c0e19b; }
 .reward-equipment-details [data-change='loss'] { color: #e6aea4; }

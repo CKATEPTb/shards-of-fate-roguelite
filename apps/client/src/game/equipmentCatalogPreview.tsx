@@ -134,12 +134,14 @@ function EquipmentWorkshop() {
   const [handSlot, setHandSlot] = useState<EquipmentSlot>('rightHand');
   const [ringSlot, setRingSlot] = useState<'ring1' | 'ring2'>('ring1');
   const [query, setQuery] = useState(''), [rarity, setRarity] = useState('all'), [material, setMaterial] = useState('all'), [weapon, setWeapon] = useState('all');
-  const [page, setPage] = useState(0), [notice, setNotice] = useState(''), [destroyedTotal, setDestroyedTotal] = useState(0);
+  const [page, setPage] = useState(0), [notice, setNotice] = useState(''), [returnedTotal, setReturnedTotal] = useState(0);
+  const returnedSequence = useRef(0);
   const [facing, setFacing] = useState<UnitFacing>('south'), [motion, setMotion] = useState<UnitMotion>('idle');
   const [playing, setPlaying] = useState(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
   const hero = gameContent.characters.find(unit => unit.id === heroId)!;
   const current = outfits[heroId], selectedSet = EQUIPMENT_SETS[setId], selectedItem = EQUIPMENT_ITEMS[itemId];
   const available = useMemo(() => new Set(rewards.map(reward => reward.itemId)), [rewards]);
+  const rewardById = useMemo(() => new Map(rewards.map(reward => [reward.id, reward])), [rewards]);
   const preview = useMemo(() => previewEquipmentChoice(current, rewards, selections, EQUIPMENT_ITEMS), [current, rewards, selections]);
   const currentDefinition = useMemo(() => applyEquipmentToHero(hero, current), [hero, current]);
   const previewDefinition = useMemo(() => applyEquipmentToHero(hero, preview.equipment), [hero, preview.equipment]);
@@ -157,7 +159,11 @@ function EquipmentWorkshop() {
     const item = EQUIPMENT_ITEMS[id]; return item && item.slot !== 'hand' ? [[item.slot, id]] : [];
   })) as Partial<Record<EquipmentSlot, string>>;
   const setMissing = Object.entries(defaultSlots).filter(([slot, id]) => id && !available.has(id) && !current.some(item => item.slot === slot && item.id === id));
-  const setChoices = Object.entries(defaultSlots).filter((entry): entry is [EquipmentSlot, string] => !!entry[1] && available.has(entry[1])).map(([slot, rewardId]) => ({ slot, rewardId }));
+  const setChoices = Object.entries(defaultSlots).reduce<EquipmentChoiceSelection[]>((choices, [slot, itemId]) => {
+    const reward = rewards.find(reward => reward.itemId === itemId && !choices.some(choice => choice.rewardId === reward.id));
+    if (reward) choices.push({ slot: slot as EquipmentSlot, rewardId: reward.id });
+    return choices;
+  }, []);
   const palette = selectedSet?.visual?.palette ?? equipmentMaterial(selectedItem?.appearanceId);
   const selectedSlot = selectedItem?.slot === 'hand' ? handSlot : selectedItem && isRingSlot(selectedItem.slot) ? ringSlot : selectedItem?.slot;
 
@@ -170,22 +176,26 @@ function EquipmentWorkshop() {
   };
   const tryItem = () => {
     if (!selectedItem || !selectedSlot || !available.has(selectedItem.id)) return;
+    const matching = rewards.filter(reward => reward.itemId === selectedItem.id);
+    const reward = matching.find(reward => !selections.some(choice => choice.rewardId === reward.id)) ?? matching[0];
+    if (!reward) return;
     const slot = selectedSlot;
     const selectedIsTwoHanded = selectedItem.weapon?.hands === 2;
-    const choices = selections.filter(choice => choice.rewardId !== selectedItem.id && choice.slot !== slot
-      && !(isHand(slot) && isHand(choice.slot) && (selectedIsTwoHanded || EQUIPMENT_ITEMS[choice.rewardId]?.weapon?.hands === 2)));
-    choices.push({ rewardId: selectedItem.id, slot });
+    const choices = selections.filter(choice => choice.rewardId !== reward.id && choice.slot !== slot
+      && !(isHand(slot) && isHand(choice.slot) && (selectedIsTwoHanded || EQUIPMENT_ITEMS[rewardById.get(choice.rewardId)?.itemId ?? '']?.weapon?.hands === 2)));
+    choices.push({ rewardId: reward.id, slot });
     previewEquipmentChoice(current, rewards, choices, EQUIPMENT_ITEMS);
     setSelections(choices); setNotice('Предмет добавлен в примерку. Надетая экипировка пока не изменилась.');
   };
   const confirm = () => {
     const result = confirmEquipmentChoice(current, rewards, selections, EQUIPMENT_ITEMS);
-    setOutfits(previous => ({ ...previous, [heroId]: result.equipment })); setRewards(result.remainingRewards);
-    setDestroyedTotal(total => total + result.destroyed.length); setSelections([]);
-    setNotice(`Экипировка надета. Заменённых вещей уничтожено: ${result.destroyed.length}. Остальные предложения сохранены.`);
+    const returned = result.removed.map(item => ({ id: `workshop-return:${returnedSequence.current++}`, itemId: item.id! }));
+    setOutfits(previous => ({ ...previous, [heroId]: result.equipment })); setRewards([...result.remainingRewards, ...returned]);
+    setReturnedTotal(total => total + returned.length); setSelections([]);
+    setNotice(`Экипировка надета. В запас мастерской возвращено вещей: ${returned.length}. Их можно выбрать снова.`);
   };
   const itemInUse = selectedItem && current.some(item => item.id === selectedItem.id);
-  const itemInDraft = selectedItem && selections.some(choice => choice.rewardId === selectedItem.id && choice.slot === selectedSlot);
+  const itemInDraft = selectedItem && selections.some(choice => rewardById.get(choice.rewardId)?.itemId === selectedItem.id && choice.slot === selectedSlot);
   const currentItemInSlot = selectedItem && current.find(item => item.slot === selectedSlot);
 
   return <main className="equipment-workshop" style={{ '--set-accent': palette.trim, '--set-cloth': palette.cloth } as CSSProperties}>
@@ -238,7 +248,7 @@ function EquipmentWorkshop() {
           {setMissing.length > 0 && <small className="equipment-help">Часть предметов уже выбрана ранее и больше не доступна в предложениях.</small>}
           {!setChoices.length && !setMissing.length && <small className="equipment-help">Все предметы этого комплекта уже надеты.</small>}
           <div className="equipment-set-pieces" aria-label="Предметы комплекта">{selectedSet?.itemIds.map(id => {
-            const item = EQUIPMENT_ITEMS[id], worn = current.some(entry => entry.id === id), draft = selections.some(entry => entry.rewardId === id);
+            const item = EQUIPMENT_ITEMS[id], worn = current.some(entry => entry.id === id), draft = selections.some(entry => rewardById.get(entry.rewardId)?.itemId === id);
             return <button key={id} data-equipment-rarity={item.rarity ?? 'common'} title={`${item.name} · ${rarityNames[item.rarity ?? 'common']}`} aria-label={`${item.name}. ${rarityNames[item.rarity ?? 'common']} предмет.`} aria-pressed={itemId === id} className={`${draft ? 'is-draft' : ''} ${!available.has(id) && !worn ? 'is-consumed' : ''}`} onClick={() => { setItemId(id); }}><EquipmentGlyph item={item} size={42} /><span>{draft ? '◇' : worn ? '✓' : !available.has(id) ? '—' : ''}</span></button>;
           })}</div>
           <div className="equipment-set-bonuses"><h3>Бонусы комплекта</h3>{selectedSet?.bonuses?.map(bonus => <SetBonus key={bonus.pieces} bonus={bonus} equippedPieces={selectedGroup?.equippedPieces ?? 0} />)}{!selectedSet?.bonuses?.length && <p className="equipment-help">У стартового набора нет бонусов комплекта.</p>}</div>
@@ -263,8 +273,8 @@ function EquipmentWorkshop() {
       </aside>
     </div>
     <footer className="equipment-confirm-bar" data-draft={selections.length > 0}>
-      <div><strong>{selections.length ? `Выбрано ${selections.length} предметов` : 'Примерьте новое снаряжение'}</strong><p role="status" aria-live="polite">{notice || 'Подтверждение заменяет экипировку. Остальные предложения сохраняются.'}</p>{selections.length > 0 && <details><summary>Будут уничтожены заменённые вещи: {preview.removed.length}</summary><ul>{preview.removed.map(item => <li key={item.slot} data-equipment-rarity={item.rarity ?? 'common'}>{item.name}</li>)}</ul></details>}</div>
-      <div className="equipment-confirm-actions"><span>Доступно: {rewards.length.toLocaleString('ru-RU')}<small>Заменено: {destroyedTotal}</small></span><button className="equipment-secondary" disabled={!selections.length} onClick={() => { setSelections([]); setNotice('Примерка отменена. Предметы остались доступными.'); }}>Отмена</button><button className="equipment-primary" disabled={!selections.length} onClick={confirm}>Подтвердить</button></div>
+      <div><strong>{selections.length ? `Выбрано ${selections.length} предметов` : 'Примерьте новое снаряжение'}</strong><p role="status" aria-live="polite">{notice || 'Подтверждение заменяет экипировку и возвращает снятые вещи в запас.'}</p>{selections.length > 0 && <details><summary>Вернутся в запас: {preview.removed.length}</summary><ul>{preview.removed.map(item => <li key={item.slot} data-equipment-rarity={item.rarity ?? 'common'}>{item.name}</li>)}</ul></details>}</div>
+      <div className="equipment-confirm-actions"><span>Доступно: {rewards.length.toLocaleString('ru-RU')}<small>Возвращено: {returnedTotal}</small></span><button className="equipment-secondary" disabled={!selections.length} onClick={() => { setSelections([]); setNotice('Примерка отменена. Предметы остались доступными.'); }}>Отмена</button><button className="equipment-primary" disabled={!selections.length} onClick={confirm}>Подтвердить</button></div>
     </footer>
   </main>;
 }

@@ -40,6 +40,17 @@ function Bones() {
   return <><path d="M10 19v-6h6v-3h18v4H18v3h-4v4ZM34 18h5v14h-5v5H15v-4h17v-3h3V20ZM9 25h4v5H9Z" fill="#507774" /><g fill="#dfd8b9"><path d="M11 11h4v3h10v-3h4v7h-4v-2H15v2h-4Z" /><path d="M20 32h4v2h10v-2h4v7h-4v-3H24v3h-4Z" /><path d="m9 23 3-2 3 4 2 2-3 3-3-4Z" /></g><path d="M19 20h10v3h3v8h-5v3h-6v-3h-5v-8h3Z" fill="#a2aaa0" /><path d="M20 20h8v3h3v4H18v-4h2Z" fill="#eee5c8" /><path d="M20 25h3v3h-3Zm6 0h3v3h-3Zm-3 5h3v3h-3Z" fill="#243c3d" /><path d="M35 9h2v2h-2ZM8 36h2v2H8Z" fill="#a0ceba" /></>;
 }
 
+function BoneRenewal() {
+  return <>
+    <path d="M10 23v-9l6-6h14v4H18l-4 4v7Zm28 2v9l-6 6H18v-4h12l4-4v-7Z" fill="#659f91" />
+    <path d="m29 6 8 4-8 6Zm-10 26-8 6 8 4Z" fill="#b3ddbc" />
+    <path d="M18 13h5v2h2v-2h5v8h-3v7h3v8h-5v-2h-2v2h-5v-8h3v-7h-3Z" fill="#172b2b" />
+    <path d="M19 14h4v2h2v-2h4v6h-3v9h3v6h-4v-2h-2v2h-4v-6h3v-9h-3Z" fill="#b1aaa6" />
+    <path d="M19 14h4v3h3v-3h3v3h-4v14h-3v-13h-3Zm0 16h3v3h-3Zm6 2h3v3h-3Z" fill="#f0e4c8" />
+    <path d="M15 17h2v3h-2Zm16 11h2v3h-2ZM22 8h5v2h-5Zm-1 30h5v2h-5Z" fill="#caead5" />
+  </>;
+}
+
 function Daggers() {
   return <><path d="m11 10 5 2 18 24-4 3-19-24Z" fill="#242533" /><path d="m12 10 5 3 12 16-3 3-13-17Z" fill="#8a9ca4" /><path d="m13 11 4 3 10 14-2 1Z" fill="#e4e9d9" /><path d="m35 9 1 7-18 24-4-3 17-24Z" fill="#273241" /><path d="m34 10-1 7-12 15-4-3 13-17Z" fill="#a9c6c0" /><path d="m34 10-3 8-12 13-2-2Z" fill="#f0ead4" /><path d="m12 31 3-4 8 6-2 3ZM25 29l3-3 8 6-2 3Z" fill="#c79759" /><path d="m14 35 3 2-4 5-3-2ZM30 36l3-2 4 5-3 2Z" fill="#694355" /><path d="M23 8h2v4h-2ZM20 10h8v2h-8Z" fill="#f6d792" /></>;
 }
@@ -66,7 +77,8 @@ function Artwork({ id }: { id: string }): ReactNode {
     case 'poisoned': return <><path d="M19 8h10v6H19Z" fill="#927348" /><path d="M17 14h14v6l5 5v14H12V25l5-5Z" fill="#537275" /><path d="M19 14h4v9l-7 5v8h17v-8l-6-5v-9h2v7l6 5v12H14V26l5-5Z" fill="#abcab6" /><path d="M17 27h14v10H17Z" fill="#6e984a" /><path d="M19 28h10v3H19Z" fill="#c0d879" /><path d="M21 32h3v3h-3Zm5 0h3v3h-3Z" fill="#314b3c" /><path d="M13 16h2v3h-2Zm19-7h3v3h-3Z" fill="#c8e797" /></>;
     case 'fortified': return <><Shield color="#829768" /><path d="m19 15 3 7-4 8 3 4h3l-2-5 3-7-3-7Zm9 0-2 5 3 6-3 7h3l3-7-3-6 1-5Z" fill="#3e5543" /><path d="M12 9h8v4h-8Zm18 24h8v4h-8Z" fill="#799a58" /><path d="M14 9h5v2h-5Zm18 24h5v2h-5Z" fill="#b5cc8d" /></>;
     case 'battle_fervor': return <><path d="M12 8h4v32h-4Z" fill="#806248" /><path d="M13 8h2v31h-2Z" fill="#d2b486" /><path d="M16 10h22l-5 7 5 8H16Z" fill="#8a4344" /><path d="M17 12h16l-4 5 4 6H17Z" fill="#d1784c" /><path d="M21 13h3v7h-3Zm-2 2h7v3h-7Z" fill="#f6cf82" /><path d="M8 40h16v2H8Z" fill="#655f4c" /></>;
-    case 'bone_shield': case 'necromancer': return <Bones />;
+    case 'bone_shield': return <Bones />;
+    case 'necromancer': return <BoneRenewal />;
     case 'guardian': return <><Shield color="#a8c4cc" /><path d="M7 31h7v4H7Zm-2 4h11v6H5Zm28-4h7v4h-7Zm-2 4h11v6H31Z" fill="#8c9d89" /><path d="M8 32h5v3H8Zm26 0h5v3h-5Z" fill="#e1d4ac" /></>;
     case 'evasion': return <><path d="m21 10 8-1 5 5-1 8-5 5-5-3-2-6Z" fill="#d3cfc1" /><path d="M20 10h6v10h-6Zm2 15h7l-5 7-8 9-4-3 9-13Z" fill="#77708e" /><path d="m17 9-5 2 2 10-4 7-5 7 3 3 8-9 3-9Z" fill="#3f4d63" /><path d="M31 30h10v3H31Zm5-4 6 5-6 6Z" fill="#ccb986" /><path d="M7 14h6v2H7ZM5 21h6v2H5Z" fill="#8095a1" /></>;
     case 'prayer': return <><Rays /><path d="M14 30h6l4-8 4 8h6v9H14Z" fill="#ab8b74" /><path d="M20 28h3v11h-5V33Zm5 0h3l2 5v6h-5Z" fill="#f0d4a7" /></>;

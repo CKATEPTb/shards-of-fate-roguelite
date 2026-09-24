@@ -1,7 +1,8 @@
-import { BODY_PARTS, equipmentBodyPartsForSlot, equipmentItemFitsSlot, type AdventureProgress, type CoopCommand, type CoopState, type GameContent, type HeroBody, type HeroLoadout, type HeroProgress, type InventoryTarget, type RewardResolution, type StarterEquipment, type UnitDefinition } from '@shards/shared';
+import { BODY_PARTS, equipmentBodyPartsForSlot, equipmentItemFitsSlot, type AdventureProgress, type AdventureReward, type CoopCommand, type CoopState, type GameContent, type HeroBody, type HeroLoadout, type HeroProgress, type InventoryTarget, type RewardResolution, type StarterEquipment, type UnitDefinition } from '@shards/shared';
 import { coopRewardId } from './rewards';
 import { confirmEquipmentChoice } from '../equipment-choice';
 import { bodyPartLossThreshold, startHeroBody } from '../anatomy/body';
+import { hashValue } from '../canonical';
 
 export function initialProgress(content: GameContent, ids: readonly string[]): AdventureProgress {
   return { heroes: Object.fromEntries(ids.map(id => {
@@ -61,8 +62,32 @@ export function battleLoadouts(state: CoopState, ids: readonly string[]): Record
   return Object.fromEntries(ids.map(id => [id, { equipment: state.progression!.heroes[id].equipment, skills: state.progression!.heroes[id].skills }]));
 }
 
+interface RemovedFind { kind: AdventureReward['kind']; definitionId: string; slot: string }
+const removedEquipment = (items: readonly StarterEquipment[]): RemovedFind[] => items.map(item => ({ kind: 'equipment', definitionId: item.id!, slot: item.slot }));
+
+/** Keep the existing save shape; historical IDs prevent replaying an old equip after a later swap. */
+function storeRemovedFinds(old: HeroProgress, next: HeroProgress, removed: readonly RemovedFind[], content: GameContent, reservedIds: readonly string[] = [], ownerId = 'preview'): HeroProgress {
+  if (!removed.length) return next;
+  const inventory = [...(next.inventory ?? [])];
+  const reserved = new Set([...reservedIds, ...old.rewards.map(entry => entry.id), ...(old.inventory ?? []).map(entry => entry.id),
+    ...next.rewards.map(entry => entry.id), ...inventory.map(entry => entry.id)]);
+  for (const item of removed) {
+    const definition = item.kind === 'equipment' ? content.equipmentCatalog?.items[item.definitionId]
+      : content.skills.find(skill => skill.id === item.definitionId && skill.rarity);
+    if (!definition) throw new Error('Снятая вещь или навык отсутствует в каталоге.');
+    const prefix = `stored:${encodeURIComponent(ownerId)}:${item.kind}:${hashValue(item.definitionId)}`;
+    let sequence = 0;
+    while (reserved.has(`${prefix}:${sequence}`)) sequence++;
+    const id = `${prefix}:${sequence}`;
+    reserved.add(id);
+    inventory.push({ id, kind: item.kind, definitionId: item.definitionId, rarity: definition.rarity ?? 'common',
+      source: `loadout:${item.slot}`, luckRolls: [] });
+  }
+  return { ...next, inventory };
+}
+
 /** Validate the whole fitting before deriving any committed state. */
-function resolveRewardChoice(old: HeroProgress, choice: RewardResolution, content: GameContent): HeroProgress {
+function resolveRewardChoice(old: HeroProgress, choice: RewardResolution, content: GameContent, reservedIds: readonly string[], ownerId: string): HeroProgress {
   const closed = new Set(choice.rewardIds);
   const available = new Map(old.rewards.map(reward => [reward.id, reward]));
   if (closed.size !== choice.rewardIds.length) throw new Error('Награда указана для завершения выбора несколько раз.');
@@ -75,11 +100,14 @@ function resolveRewardChoice(old: HeroProgress, choice: RewardResolution, conten
     selected.add(selection.rewardId);
   }
   const skills: HeroProgress['skills'] = [...old.skills];
+  const removed: RemovedFind[] = [];
   const skillSlots = new Set<0 | 1>();
   for (const selection of choice.skills) {
     if (selection.slot !== 0 && selection.slot !== 1 || skillSlots.has(selection.slot)) throw new Error('Для каждого слота навыка выберите одну награду.');
     const reward = available.get(selection.rewardId)!;
     if (reward.kind !== 'skill' || !content.skills.some(skill => skill.id === reward.definitionId && skill.rarity)) throw new Error('Это не изучаемый навык.');
+    const previous = old.skills[selection.slot];
+    if (previous) removed.push({ kind: 'skill', definitionId: previous, slot: `skill${selection.slot}` });
     skills[selection.slot] = reward.definitionId;
     skillSlots.add(selection.slot);
   }
@@ -90,24 +118,28 @@ function resolveRewardChoice(old: HeroProgress, choice: RewardResolution, conten
   if (choice.equipment.length) {
     if (!content.equipmentCatalog) throw new Error('Каталог экипировки недоступен.');
     for (const selection of choice.equipment) if (available.get(selection.rewardId)!.kind !== 'equipment') throw new Error('Это не предмет экипировки.');
-    // This validates every slot and both hands together, then destroys only displaced gear.
+    // Validate every slot and both hands together before storing all displaced gear.
     const chosen = confirmEquipmentChoice(equipmentFromLoadout(old, content), old.rewards.filter(reward => reward.kind === 'equipment')
       .map(reward => ({ id: reward.id, itemId: reward.definitionId })), choice.equipment, content.equipmentCatalog.items);
     equipment = chosen.equipment.map(item => ({ itemId: item.id!, slot: item.slot }));
+    removed.push(...removedEquipment(chosen.removed));
   }
-  return { ...old, equipment, skills, rewards: old.rewards.filter(reward => !closed.has(reward.id)) };
+  return storeRemovedFinds(old, { ...old, equipment, skills, rewards: old.rewards.filter(reward => !closed.has(reward.id)) }, removed, content, reservedIds, ownerId);
 }
 
-/** The slot picker and committed command use identical validation and replacement rules. */
-export function previewInventoryEquip(old: HeroProgress, inventoryId: string, target: InventoryTarget, content: GameContent, body?: HeroBody): HeroProgress {
+/** Slot comparisons share replacement rules; commits also provide owner/history for durable returned IDs. */
+export function previewInventoryEquip(old: HeroProgress, inventoryId: string, target: InventoryTarget, content: GameContent, body?: HeroBody, reservedIds: readonly string[] = [], ownerId?: string): HeroProgress {
   const inventory = old.inventory ?? [];
   const reward = inventory.find(entry => entry.id === inventoryId);
   if (!reward) throw new Error('Этой находки больше нет в инвентаре.');
   let equipment = old.equipment, skills = old.skills;
+  const removed: RemovedFind[] = [];
   if (target === 'skill0' || target === 'skill1') {
     if (reward.kind !== 'skill' || !content.skills.some(skill => skill.id === reward.definitionId && skill.rarity)) throw new Error('Это не изучаемый навык.');
     if (old.skills.includes(reward.definitionId)) throw new Error('Этот навык уже экипирован.');
     skills = [...old.skills];
+    const previous = old.skills[target === 'skill0' ? 0 : 1];
+    if (previous) removed.push({ kind: 'skill', definitionId: previous, slot: target });
     skills[target === 'skill0' ? 0 : 1] = reward.definitionId;
   } else {
     if (reward.kind !== 'equipment' || !content.equipmentCatalog) throw new Error('Это не предмет экипировки.');
@@ -122,9 +154,9 @@ export function previewInventoryEquip(old: HeroProgress, inventoryId: string, ta
     const chosen = confirmEquipmentChoice(equipmentFromLoadout(old, content), [{ id: inventoryId, itemId: reward.definitionId }],
       [{ rewardId: inventoryId, slot: target }], content.equipmentCatalog.items);
     equipment = chosen.equipment.map(item => ({ itemId: item.id!, slot: item.slot }));
+    removed.push(...removedEquipment(chosen.removed));
   }
-  // Displaced equipment and skills are destroyed; only untouched bag entries remain available.
-  return { ...old, equipment, skills, inventory: inventory.filter(entry => entry.id !== inventoryId) };
+  return storeRemovedFinds(old, { ...old, equipment, skills, inventory: inventory.filter(entry => entry.id !== inventoryId) }, removed, content, reservedIds, ownerId);
 }
 
 export function changeLoadout(state: CoopState, actorId: string, command: Extract<CoopCommand, { type: 'equip' | 'learn' | 'discard-reward' | 'resolve-rewards' | 'collect-reward' | 'equip-inventory' }>, content: GameContent): CoopState {
@@ -132,7 +164,10 @@ export function changeLoadout(state: CoopState, actorId: string, command: Extrac
   const old = progression.heroes[actorId];
   if (!old) throw new Error('Герой не найден.');
   const inventory = old.inventory ?? [];
+  const reservedRewardIds = () => [...state.removedRewardIds, ...Object.values(progression.heroes)
+    .flatMap(hero => [...hero.rewards, ...(hero.inventory ?? [])].map(entry => entry.id))];
   let hero: HeroProgress = { ...old, inventory };
+  const removed: RemovedFind[] = [];
   let taken: string[];
   if (command.type === 'collect-reward') {
     // Replayed collection after acknowledgement/consumption cannot recreate an item.
@@ -143,10 +178,10 @@ export function changeLoadout(state: CoopState, actorId: string, command: Extrac
     taken = [reward.id];
   } else if (command.type === 'equip-inventory') {
     if (!inventory.some(reward => reward.id === command.inventoryId) && state.removedRewardIds.includes(command.inventoryId)) return state;
-    hero = previewInventoryEquip(old, command.inventoryId, command.slot, content, state.actors.find(actor => actor.id === actorId)?.body);
+    hero = previewInventoryEquip(old, command.inventoryId, command.slot, content, state.actors.find(actor => actor.id === actorId)?.body, reservedRewardIds(), actorId);
     taken = [command.inventoryId];
   } else if (command.type === 'resolve-rewards') {
-    hero = resolveRewardChoice({ ...old, inventory }, command, content);
+    hero = resolveRewardChoice({ ...old, inventory }, command, content, reservedRewardIds(), actorId);
     if (!command.rewardIds.length) return state;
     taken = command.rewardIds;
   } else if (command.type === 'equip') {
@@ -154,6 +189,7 @@ export function changeLoadout(state: CoopState, actorId: string, command: Extrac
     const chosen = confirmEquipmentChoice(equipmentFromLoadout(old, content), old.rewards.filter(reward => reward.kind === 'equipment')
       .map(reward => ({ id: reward.id, itemId: reward.definitionId })), command.selections, content.equipmentCatalog.items);
     hero.equipment = chosen.equipment.map(item => ({ itemId: item.id!, slot: item.slot }));
+    removed.push(...removedEquipment(chosen.removed));
     taken = command.selections.map(selection => selection.rewardId);
   } else {
     const reward = old.rewards.find(reward => reward.id === command.rewardId);
@@ -161,12 +197,15 @@ export function changeLoadout(state: CoopState, actorId: string, command: Extrac
     if (command.type === 'learn') {
       if (reward.kind !== 'skill' || !content.skills.some(skill => skill.id === reward.definitionId && skill.rarity)) throw new Error('Это не изучаемый навык.');
       if (old.skills.includes(reward.definitionId)) throw new Error('Этот навык уже экипирован.');
+      const previous = old.skills[command.slot];
+      if (previous) removed.push({ kind: 'skill', definitionId: previous, slot: `skill${command.slot}` });
       hero.skills = [...old.skills]; hero.skills[command.slot] = reward.definitionId;
     }
     taken = [command.rewardId];
   }
   const consumed = new Set(taken);
   hero.rewards = old.rewards.filter(reward => !consumed.has(reward.id));
+  if (removed.length) hero = storeRemovedFinds(old, hero, removed, content, reservedRewardIds(), actorId);
   const nextProgress = { ...progression, heroes: { ...progression.heroes, [actorId]: hero } };
   const equipmentChanged = hero.equipment !== old.equipment;
   const fresh = equipmentChanged ? startHeroBody(equippedHero(content.characters.find(hero => hero.id === actorId)!, hero, content)) : undefined;

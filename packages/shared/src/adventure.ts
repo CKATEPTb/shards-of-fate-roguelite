@@ -31,7 +31,7 @@ export interface RewardResolution {
 export interface HeroProgress extends HeroLoadout {
   coins: number;
   rewards: AdventureReward[];
-  /** Collected, unequipped finds. Missing only in saves made before inventory existed. */
+  /** Collected/returned finds, oldest arrival first. Preserve this order in saves; sort only UI copies. Missing in pre-inventory saves. */
   inventory?: AdventureReward[];
   /** Personal, idempotent sources: a well/chest/battle can pay this hero once. */
   claimedSources: string[];

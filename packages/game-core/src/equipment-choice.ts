@@ -11,6 +11,8 @@ export interface EquipmentChoicePreview {
 export interface EquipmentChoiceConfirmation {
   equipment: StarterEquipment[];
   remainingRewards: EquipmentReward[];
+  removed: StarterEquipment[];
+  /** @deprecated Replaced equipment is returned by the inventory owner; nothing is destroyed. */
   destroyed: StarterEquipment[];
 }
 
@@ -78,7 +80,7 @@ export function previewEquipmentChoice(
   return structuredClone({ equipment, removed, selectedRewardIds });
 }
 
-/** Only chosen rewards are consumed. Replaced gear is destroyed, never returned as a reward. */
+/** Only chosen rewards are consumed. The inventory owner stores every removed item. */
 export function confirmEquipmentChoice(
   equipped: readonly StarterEquipment[],
   rewards: readonly EquipmentReward[],
@@ -89,5 +91,5 @@ export function confirmEquipmentChoice(
   const consumed = new Set(preview.selectedRewardIds);
   return { equipment: preview.equipment,
     remainingRewards: structuredClone(rewards.filter(reward => !consumed.has(reward.id))),
-    destroyed: preview.removed };
+    removed: preview.removed, destroyed: [] };
 }

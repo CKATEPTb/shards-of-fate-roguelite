@@ -23,6 +23,7 @@ export function LoadoutIcon({ kind }: { kind: LoadoutIconKind }) {
     prayer: <><path d="m8 23 6-9 6 9M14 14V5M10 9l4-4 4 4M4 17l4-5m16 5-4-5M3 24h22" /><path d="M11 2h6M6 5l1 2m15-2-1 2" /></>,
     regrowth: <><path d="M14 25V10M14 18C4 19 4 10 4 10s10-1 10 8ZM14 13C24 14 24 4 24 4S14 3 14 13Z" /><path d="m7 13 7 5m6-10-6 5M8 25h12" /></>,
     ward: <><path d="m14 2 11 5-2 12-9 7-9-7L3 7Z" /><path d="M8 13a6 6 0 0 1 12 0v4l-3 1v3h-6v-3l-3-1Z" /><circle cx="11" cy="13" r="1" /><circle cx="17" cy="13" r="1" /></>,
+    boneRenewal: <><path d="M12 10c-3 0-4-3-2-4 1-1 3 0 4 1 1-1 3-2 4-1 2 1 1 4-2 4v8c3 0 4 3 2 4-1 1-3 0-4-1-1 1-3 2-4 1-2-1-1-4 2-4Z" /><path d="M4 12A10 10 0 0 1 21 6m0-4v4h-4M24 16A10 10 0 0 1 7 22m0 4v-4h4" /></>,
     precision: <><circle cx="14" cy="14" r="8" /><circle cx="14" cy="14" r="3" /><path d="M14 2v7m0 10v7M2 14h7m10 0h7M22 3l3 3m-1-3-8 8" /></>,
     volley: <><path d="M5 24 19 4m-7 20L25 5M3 13l7-10M15 5l4-1 1 4m1-2 4-1v5M6 4l4-1v5M3 19l4 3m3-3 4 3M2 10l3 2" /></>,
     fire: <><path d="M16 2c3 9-4 8-1 13 2-1 4-3 5-6 8 12 1 17-6 17S2 20 5 13c1 3 3 4 4 4-2-7 5-9 7-15Z" /><path d="M14 16c-5 5-3 8 1 8 3 0 4-3-1-8Z" /></>,

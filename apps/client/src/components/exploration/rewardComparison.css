@@ -1,4 +1,4 @@
-.reward-comparison { display: grid; gap: 10px; min-width: 0; color: #d2dac8; font: 400 14px/1.55 Manrope, Arial, sans-serif; }
+.reward-comparison { display: grid; gap: 10px; min-width: 0; container-type: inline-size; color: #d2dac8; font: 400 14px/1.55 Manrope, Arial, sans-serif; }
 .reward-comparison *, .reward-comparison *::before, .reward-comparison *::after { box-sizing: border-box; }
 .reward-comparison h4 { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin: 0 0 10px; color: #c2b58f; font: 600 13px/1.4 Manrope, Arial, sans-serif; }
 .reward-comparison h4 > span { padding: 2px 5px; border: 1px solid #9ebd6e42; border-radius: 5px; color: #c4dea4; font-size: 12px; font-weight: 500; }
@@ -11,10 +11,11 @@
 .reward-comparison-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
 .reward-comparison-side { min-width: 0; padding: 12px; border: 1px solid #a6b18430; border-radius: 10px; background: #09161035; }
 .reward-comparison-side:last-child { border-color: #c6b27b48; background: linear-gradient(155deg, #bdad7320, #a6b87d05 55%); }
-.reward-comparison-item { display: flex; align-items: flex-start; min-width: 0; gap: 9px; }
+.reward-comparison-item { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: start; min-width: 0; gap: 9px; }
 .reward-comparison-equipped + .reward-comparison-equipped { margin-top: 12px; padding-top: 12px; border-top: 1px solid #9ca98030; }
-.reward-comparison-icon { display: grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; padding: 6px; border: 1px solid var(--equipment-rarity-border, #a9b08744); border-radius: 7px; background: #101a1633; color: var(--equipment-rarity, #cad0b7); }
+.reward-comparison-icon { display: grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; min-width: 0; overflow: hidden; padding: 6px; border: 1px solid var(--equipment-rarity-border, #a9b08744); border-radius: 7px; background: #101a1633; color: var(--equipment-rarity, #cad0b7); }
 .reward-comparison-icon > svg { display: block; width: 100%; height: 100%; }
+.reward-comparison-icon > .equipment-icon { min-width: 0; max-width: 100%; max-height: 100%; }
 .reward-comparison-icon.reward-comparison-equipment-icon { padding: 0; border: 0; background: transparent; }
 .reward-comparison-identity { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; gap: 4px; }
 .reward-comparison-identity > strong { color: var(--equipment-rarity, #d3dbc6); font-size: 15px; font-weight: 650; line-height: 1.4; overflow-wrap: anywhere; }
@@ -44,10 +45,26 @@
 .reward-comparison [data-change='loss'] { color: #e5ada3; }
 .reward-comparison [data-change='same'] { color: #b1bba3; }
 .reward-comparison-skill-change { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 12px; padding: 10px 12px; border: 1px solid #a6b18430; border-radius: 8px; color: #bec9ae; font-size: 13px; }
-.reward-comparison-sets { display: grid; gap: 8px; }
 .reward-comparison button:focus-visible { outline: 2px solid #d9cc9e; outline-offset: 3px; }
 @media (hover: hover) {
   .reward-comparison-target button:hover { border-color: #d7c48e; background-color: #bca57522; }
+}
+@media (max-width: 450px) {
+  .reward-comparison-pair { grid-template-columns: minmax(0, 1fr); }
+  .reward-comparison .reward-comparison-side > h4 { margin-bottom: 6px; }
+  .reward-comparison-item { grid-template-columns: 32px minmax(0, 1fr); align-items: center; }
+  .reward-comparison-identity { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 3px 7px; }
+  .reward-comparison-identity > strong { flex-basis: 100%; }
+  .reward-comparison-side .reward-equipment-details { margin-top: 7px; }
+}
+@container (max-width: 450px) {
+  .reward-comparison-pair { grid-template-columns: minmax(0, 1fr); }
+  .reward-comparison .reward-comparison-side > h4 { margin-bottom: 6px; }
+  .reward-comparison-item { grid-template-columns: 32px minmax(0, 1fr); align-items: center; }
+  .reward-comparison-icon { width: 32px; height: 32px; }
+  .reward-comparison-identity { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 3px 7px; }
+  .reward-comparison-identity > strong { flex-basis: 100%; }
+  .reward-comparison-side .reward-equipment-details { margin-top: 7px; }
 }
 @media (max-width: 700px) {
   .reward-comparison { gap: 8px; font-size: 12px; }
@@ -58,7 +75,7 @@
   .reward-comparison-target button { padding-inline: 5px; }
   .reward-comparison-pair { gap: 7px; }
   .reward-comparison-side { padding: 9px; }
-  .reward-comparison-item { flex-wrap: wrap; gap: 7px; }
+  .reward-comparison-item { grid-template-columns: 32px minmax(0, 1fr); gap: 7px; }
   .reward-comparison-icon { flex-basis: 32px; width: 32px; height: 32px; }
   .reward-comparison-identity { flex: 1 1 80px; }
   .reward-comparison-identity > strong { font-size: 13px; }

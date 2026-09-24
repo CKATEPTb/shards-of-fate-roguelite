@@ -7,7 +7,7 @@ import type { DiceRule } from '../DiceText';
 export type EquipmentSlotId = 'helmet' | 'chest' | 'gloves' | 'pants' | 'boots' | 'amulet' | 'ring1' | 'ring2' | 'rightHand' | 'leftHand';
 export type SkillSlotId = 'class' | 'characterActive' | 'passive' | 'extra1' | 'extra2';
 export type LoadoutIconKind = EquipmentSlotId | 'class' | 'characterActive' | 'passive' | 'extra'
-  | 'mend' | 'burst' | 'blood' | 'radiance' | 'prayer' | 'regrowth' | 'ward' | 'precision' | 'volley' | 'fire' | 'evasion';
+  | 'mend' | 'burst' | 'blood' | 'radiance' | 'prayer' | 'regrowth' | 'ward' | 'boneRenewal' | 'precision' | 'volley' | 'fire' | 'evasion';
 export interface LoadoutSlot {
   id: EquipmentSlotId | SkillSlotId;
   icon: LoadoutIconKind;
@@ -54,9 +54,10 @@ export function loadoutColumns(model: ReturnType<typeof buildLoadout>): LoadoutC
 }
 
 const equipment: Array<[EquipmentSlotId, string, string]> = [
-  ['helmet', 'Шлем', 'Голова'], ['chest', 'Нагрудник', 'Тело'], ['gloves', 'Перчатки', 'Кисти рук'],
-  ['pants', 'Штаны', 'Ноги'], ['boots', 'Сапоги', 'Ступни'],
-  ['amulet', 'Амулет', 'Шея'], ['ring1', 'Первое кольцо', 'Кольцо I'], ['ring2', 'Второе кольцо', 'Кольцо II'],
+  ['helmet', 'Шлем', 'Голова'], ['amulet', 'Амулет', 'Амулет'],
+  ['chest', 'Нагрудник', 'Тело'], ['gloves', 'Перчатки', 'Кисти рук'],
+  ['pants', 'Штаны', 'Ноги'], ['ring1', 'Первое кольцо', 'Кольцо 1'],
+  ['boots', 'Сапоги', 'Ступни'], ['ring2', 'Второе кольцо', 'Кольцо 2'],
   ['rightHand', 'Правая рука', 'Правая рука'], ['leftHand', 'Левая рука', 'Левая рука'],
 ];
 
