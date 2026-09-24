@@ -1,4 +1,4 @@
-import type { Combatant, Modifiers } from '@shards/shared';
+import { strongerRepeatCheck, type Combatant, type Modifiers } from '@shards/shared';
 import { definitionFor, type CombatContext } from './context';
 import { activeEquipmentSetBonuses } from './equipment-sets';
 
@@ -20,8 +20,12 @@ export function modifierSourcesFor(ctx: CombatContext, unit: Combatant): Modifie
 }
 
 export function modifiersFor(ctx: CombatContext, unit: Combatant): ResolvedModifiers {
+  const definition = definitionFor(ctx, unit.definitionId);
+  const trainedRepeat = definition.id === 'ranger' && definition.passive?.rarity && definition.passive.rarity !== 'common'
+    ? definition.modifiers.repeatAttack : undefined;
   return modifierSourcesFor(ctx, unit).reduce<ResolvedModifiers>((value, source) => ({
     ...value, ...source,
+    repeatAttack: strongerRepeatCheck(trainedRepeat, source.repeatAttack ?? value.repeatAttack),
     damageBonus: value.damageBonus + (source.damageBonus ?? 0),
     damageReduction: value.damageReduction + (source.damageReduction ?? 0),
     partyDamageReduction: value.partyDamageReduction + (source.partyDamageReduction ?? 0),

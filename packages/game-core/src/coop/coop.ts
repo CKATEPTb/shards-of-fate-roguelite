@@ -60,8 +60,18 @@ export function commandCoop(state: CoopState, actorId: string, command: CoopComm
   }
   if (state.failed || actor.body && !isBodyAlive(actor.body)) return rejected(state, 'Этот герой больше не может действовать.');
   if (getCoopBattle(state, actorId)) return rejected(state, 'Герой участвует в бою.');
+  if (command.type === 'revive') {
+    const event: CoopEvent = { ...command, actorId };
+    try { return { state: applyCoopEvent(state, event, content), events: [event], accepted: true }; }
+    catch (error) { return rejected(state, error instanceof Error ? error.message : 'Не удалось поднять союзника.'); }
+  }
+  if (command.type === 'npc-buy' || command.type === 'npc-upgrade-equipment' || command.type === 'npc-upgrade-skill') {
+    const event: CoopEvent = { type: 'npc-service', actorId, command };
+    try { return { state: applyCoopEvent(state, event, content), events: [event], accepted: true }; }
+    catch (error) { return rejected(state, error instanceof Error ? error.message : 'Услуга сейчас недоступна.'); }
+  }
   if (command.type === 'equip' || command.type === 'learn' || command.type === 'discard-reward' || command.type === 'resolve-rewards'
-    || command.type === 'collect-reward' || command.type === 'equip-inventory') {
+    || command.type === 'collect-reward' || command.type === 'collect-rewards' || command.type === 'equip-inventory' || command.type === 'set-auto-equipment') {
     const event: CoopEvent = { type: 'loadout', actorId, command };
     try { return { state: applyCoopEvent(state, event, content), events: [event], accepted: true }; }
     catch (error) { return rejected(state, error instanceof Error ? error.message : 'Не удалось применить награду.'); }

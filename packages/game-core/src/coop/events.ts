@@ -1,17 +1,21 @@
 import type { CoopEvent, CoopFrame, CoopState, GameContent } from '@shards/shared';
 import { changeLoadout } from './progression';
+import { applyNpcService } from './npc-services';
 import { interactAdventure } from './interactions';
 import { CAMPFIRE_LIFETIME_TICKS } from './campfire-runtime';
 import { restBody } from '../anatomy';
 import { advanceCoopTo, enterCoopChunk, rebuildMotion, stopCoopActor } from './movement';
 import { finishCoopBattle, joinCoopBattle, performCoopBattleAction, performCoopBattleStep, performCoopBattleTimeout, startCoopBattle } from './battles';
 import { summonSeasonBoss } from './bosses';
+import { reviveCoopActor } from './revival';
 
 export function applyCoopEvent(state: CoopState, event: CoopEvent, content: GameContent): CoopState {
   switch (event.type) {
+    case 'revive': return reviveCoopActor(state, event.actorId, event.chunkId, event.targetActorId, event.expectedReviveUntilTick);
     case 'boss-summon': return summonSeasonBoss(state, content);
     case 'interact': return interactAdventure(state, event.actorId, event.chunkId, event.poiId, content);
     case 'loadout': return changeLoadout(state, event.actorId, event.command, content);
+    case 'npc-service': return applyNpcService(state, event.actorId, event.command, content);
     case 'campfire-lit': return !state.progression || state.progression.campfires[event.poiId] ? state : { ...state,
       progression: { ...state.progression, campfires: { ...state.progression.campfires, [event.poiId]: { litAtTick: event.tick, expiresAtTick: event.tick + CAMPFIRE_LIFETIME_TICKS } } } };
     case 'motion': {

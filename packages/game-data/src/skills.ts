@@ -1,6 +1,8 @@
 import type { SkillDefinition } from '@shards/shared';
 import { additionalSkills } from './skill-catalog';
 import { bossSkills } from './boss-catalog';
+import { statuses } from './statuses';
+import { createSkillUpgradeVariants } from './skill-upgrades';
 
 export { additionalSkills } from './skill-catalog';
 
@@ -127,4 +129,5 @@ const existingSkills: SkillDefinition[] = [
   },
 ];
 
-export const skills: SkillDefinition[] = [...existingSkills, ...additionalSkills, ...bossSkills];
+const baseSkills: SkillDefinition[] = [...existingSkills, ...additionalSkills, ...bossSkills];
+export const skills: SkillDefinition[] = [...baseSkills, ...createSkillUpgradeVariants(baseSkills, statuses)];

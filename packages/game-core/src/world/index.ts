@@ -1,5 +1,6 @@
 export { generateWorld } from './graph';
 export { seasonAltarNodeId, seasonAltarNodeIds } from './season-altars';
+export { seasonNpcNodeIds } from './season-npcs';
 export { generateChunk, isWorldChunkId } from './chunk';
 export { basementChunkId, parseBasementChunkId, surfaceNodeIdForChunk, resolveWorldNode } from './chunk-identity';
 export type { BasementChunkIdentity } from './chunk-identity';

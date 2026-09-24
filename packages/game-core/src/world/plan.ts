@@ -7,6 +7,7 @@ import { hasCampfire } from './campfires';
 import { portalForNode } from './portals';
 import { structurePois } from './structure-pois';
 import { worldDie } from './generation-dice';
+import { planSeasonNpc } from './season-npcs';
 
 const ENCOUNTERS = {
   spring: ['mossy_path', 'wolf_den'], summer: ['wolf_den', 'goblin_ambush'],
@@ -37,5 +38,11 @@ export function planChunk(graph: WorldGraph, node: WorldNode): ChunkPlan {
   if (portal) pois.push(portal);
   const structures = planStructures(node.id, start, createRng(`structures-v3:${seed}:${node.id}`), pocket, pois, graph.structureVersion ?? 1);
   if (interactive) pois.push(...structurePois(graph.seed, node, structures));
+  const service = interactive ? planSeasonNpc(graph, node, pocket, pois, structures) : undefined;
+  if (service) {
+    structures.push(service);
+    pois.push({ id: `${node.id}:npc:${service.npcKind}`, kind: 'npc', npcKind: service.npcKind,
+      structureId: service.id, position: { ...service.approach } });
+  }
   return { exits, pocket, pois, structures };
 }

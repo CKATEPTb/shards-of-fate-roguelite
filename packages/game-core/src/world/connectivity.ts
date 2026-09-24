@@ -1,4 +1,4 @@
-import type { ChunkExit, MapValidation, WorldChunk, WorldGraph, WorldNode, WorldPoi } from '@shards/shared';
+import { NPC_KINDS, type ChunkExit, type MapValidation, type WorldChunk, type WorldGraph, type WorldNode, type WorldPoi } from '@shards/shared';
 import { buildChunk, generateChunk } from './chunk';
 import { OPPOSITE } from './grid';
 import { chunkRegions, regionAt } from './regions';
@@ -7,6 +7,7 @@ import { validateChunk, validateWorld } from './validation';
 import { poiApproachCells } from './poi-access';
 import { seasonAltarNodeIds } from './season-altars';
 import { SEASONS } from './profile';
+import { seasonNpcNodeIds } from './season-npcs';
 
 export interface WorldConnectivityAnalysis extends MapValidation {
   regions: number;
@@ -21,7 +22,7 @@ interface ChunkSummary {
   main: number;
   count: number;
   exits: GateSummary[];
-  points: Array<{ id: string; kind: string; region: number; destination?: WorldPoi['destination'] }>;
+  points: Array<{ id: string; kind: string; region: number; destination?: WorldPoi['destination']; npcKind?: WorldPoi['npcKind'] }>;
 }
 
 export function matchingGate<T extends ChunkExit>(source: { id: string }, exit: ChunkExit, target: { id: string; exits: T[] }): T | undefined {
@@ -39,7 +40,7 @@ function summarizeChunk(chunk: WorldChunk): ChunkSummary {
     exits: chunk.exits.map(exit => ({ ...exit, region: regionAt(chunk, regions, exit.position) })),
     points: [
       ...chunk.pois.map(poi => ({
-        id: poi.id, kind: poi.kind, destination: poi.destination,
+        id: poi.id, kind: poi.kind, destination: poi.destination, npcKind: poi.npcKind,
         region: poiApproachCells(chunk, poi).map(point => regionAt(chunk, regions, point)).find(region => region >= 0) ?? -1,
       })),
       ...chunk.structures.map(structure => ({ id: structure.id, kind: 'structure', region: regionAt(chunk, regions, structure.approach) })),
@@ -92,6 +93,12 @@ export function analyzeWorldConnectivity(graph: WorldGraph, overrides?: Readonly
   if (altars.length !== SEASONS.length || SEASONS.some(season => altars.filter(id => id === expectedAltars[season]).length !== 1)) {
     errors.push('Missing or misplaced seasonal altar');
   }
+  const services = [...summaries.values()].flatMap(chunk => chunk.points.filter(point => point.kind === 'npc').map(point => ({ ...point, chunkId: chunk.id })));
+  if ((graph.structureVersion ?? 1) >= 3) {
+    const expected = seasonNpcNodeIds(graph);
+    if (services.length !== SEASONS.length * NPC_KINDS.length || SEASONS.some(season => NPC_KINDS.some(kind =>
+      services.filter(service => service.chunkId === expected[season][kind] && service.npcKind === kind).length !== 1))) errors.push('Missing or misplaced seasonal service');
+  } else if (services.length) errors.push('Service buildings in a legacy world');
   if (errors.length) return result;
   const transitNodes: WorldNode[] = graph.nodes.map(node => ({ ...node, exits: {} }));
   for (const node of transitNodes) {

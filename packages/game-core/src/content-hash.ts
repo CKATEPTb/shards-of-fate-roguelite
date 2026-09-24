@@ -15,10 +15,16 @@ const SEASON_BOSSES_CONTENT_HASH = '5211d046';
 const ATTRIBUTE_CATALOGUE_HASHES = [DICE_ATTRIBUTES_CONTENT_HASH, EXPANDED_SKILLS_CONTENT_HASH, LEGENDARY_SKILLS_CONTENT_HASH, PROPORTIONAL_SKILLS_CONTENT_HASH, ADVENTURE_CONTENT_HASH, FLEXIBLE_RINGS_CONTENT_HASH, SEASON_BOSSES_CONTENT_HASH];
 const PRE_ATTRIBUTE_CONTENT_HASHES = ['33ed97ff', '3399186d', '62d7f4af', '6feb4657', '66930e12', '63e56d1e', '67834a12', '7a70f3ee', '2a2aa66a'];
 
+/** NPC training appends variants; every original definition keeps its exact identity. */
+function beforeNpcUpgrades(content: GameContent): GameContent {
+  return { ...content, skills: content.skills.filter(skill => !skill.tags.includes('UPGRADED')),
+    effects: content.effects.filter(effect => !effect.tags.includes('UPGRADED')) };
+}
+
 /** Never accept a known predecessor against arbitrary modified game content. */
 export function isCurrentShippedContent(content: GameContent): boolean {
-  const value = hashValue(content);
-  return ATTRIBUTE_CATALOGUE_HASHES.includes(value);
+  const original = beforeNpcUpgrades(content), value = hashValue(original);
+  return ATTRIBUTE_CATALOGUE_HASHES.includes(value) || isBeforeCatalogAvailability(SEASON_BOSSES_CONTENT_HASH, original);
 }
 
 export function isLegacyAttributesContentHash(value: unknown, content: GameContent): boolean {
@@ -119,6 +125,11 @@ export function isLegacyEquipmentContentHash(value: unknown, content: GameConten
 export function restoreContentHash(value: unknown, content: GameContent, path: string): string {
   const currentHash = hashValue(content);
   if (value === currentHash) return currentHash;
+  const original = beforeNpcUpgrades(content);
+  if (original.skills.length !== content.skills.length || original.effects.length !== content.effects.length) {
+    restoreContentHash(value, original, path);
+    return currentHash;
+  }
   if (isBeforeCatalogAvailability(value, content)) return currentHash;
   // Compare exact previous shapes, including heroes with saved fitted loadouts.
   // This does not accept unrelated changes to old skills, enemies or equipment.

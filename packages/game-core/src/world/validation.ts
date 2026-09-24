@@ -1,4 +1,4 @@
-import type { Direction, MapValidation, WorldChunk, WorldGraph } from '@shards/shared';
+import { NPC_KINDS, type Direction, type MapValidation, type WorldChunk, type WorldGraph } from '@shards/shared';
 import { CHUNK_SIZE, DELTAS, DIRECTIONS, inBounds, nodeId, OPPOSITE, samePoint, seasonAt, tileIndex } from './grid';
 import { independentWinterRoutes } from './routes';
 import { chunkRegions, regionAt } from './regions';
@@ -96,7 +96,8 @@ export function validateChunk(chunk: WorldChunk): MapValidation {
     const reachable = poiApproachCells(chunk, poi).some(point => regionAt(chunk, regions, point) >= 0);
     const position = tileIndex(poi.position, chunk.size);
     if (!poi.id || !inBounds(poi.position, chunk.size) || !reachable || poiIds.has(poi.id) || poiPositions.has(position) || chunk.exits.some(exit => samePoint(exit.position, poi.position))) errors.push('Invalid or unreachable point of interest');
-    if (!['campfire', 'encounter', 'altar', 'portal', 'chest', 'well', 'stairs-down', 'stairs-up'].includes(poi.kind) || (poi.kind === 'encounter' && !poi.encounterId)) errors.push('Invalid point of interest kind');
+    if (!['campfire', 'encounter', 'altar', 'portal', 'chest', 'well', 'stairs-down', 'stairs-up', 'npc'].includes(poi.kind) || (poi.kind === 'encounter' && !poi.encounterId)) errors.push('Invalid point of interest kind');
+    if (poi.kind === 'npc' ? !poi.npcKind || !NPC_KINDS.includes(poi.npcKind) || chunk.layer === 'basement' : poi.npcKind !== undefined) errors.push('Invalid service point');
     if (poi.bossSeason !== undefined && (poi.kind !== 'altar' || poi.bossSeason !== chunk.season)) errors.push('Invalid seasonal altar');
     const transports = poi.kind === 'portal' || poi.kind === 'stairs-down' || poi.kind === 'stairs-up';
     if (transports ? !poi.destination?.chunkId || !poi.destination.poiId || poi.destination.chunkId === chunk.id : poi.destination !== undefined) errors.push('Invalid point of interest destination');
@@ -106,15 +107,17 @@ export function validateChunk(chunk: WorldChunk): MapValidation {
     if (poi.structureId) {
       const structure = chunk.structures.find(candidate => candidate.id === poi.structureId);
       if (!structure || poi.kind === 'well' && (structure.kind !== 'well' || !samePoint(poi.position, structure.approach))
+        || poi.kind === 'npc' && (structure.kind !== 'house' || structure.npcKind !== poi.npcKind || !samePoint(poi.position, structure.approach))
         || (poi.kind === 'chest' || poi.kind === 'stairs-down') && (structure?.kind !== 'house'
           || poi.position.x <= structure.origin.x || poi.position.x >= structure.origin.x + structure.width - 1
           || poi.position.y <= structure.origin.y || poi.position.y >= structure.origin.y + structure.height - 1)) errors.push('Invalid structure point');
-    } else if (poi.kind === 'well' || poi.kind === 'stairs-down') errors.push('Missing structure point owner');
+    } else if (poi.kind === 'well' || poi.kind === 'stairs-down' || poi.kind === 'npc') errors.push('Missing structure point owner');
     poiIds.add(poi.id);
     poiPositions.add(position);
   }
   if (chunk.pois.filter(poi => poi.kind === 'altar').length > 1) errors.push('Duplicate altar');
   if (chunk.pois.filter(poi => poi.kind === 'campfire').length > 1) errors.push('Duplicate campfire');
+  if (chunk.pois.filter(poi => poi.kind === 'npc').length > 1) errors.push('Duplicate service region');
   if (chunk.layer === 'basement' && (chunk.pois.filter(poi => poi.kind === 'stairs-up').length !== 1
     || chunk.pois.some(poi => poi.kind === 'altar' || poi.kind === 'campfire'))) errors.push('Invalid basement landmarks');
   errors.push(...validateStructures(chunk));

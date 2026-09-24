@@ -6,6 +6,8 @@ export interface AuraReachabilityOptions {
   unitIds?: ReadonlySet<string>;
   /** Obtainable learned skills; native skills come from the reachable units. */
   skillIds?: ReadonlySet<string>;
+  /** Per-hero passive variants obtainable through the inscriber. */
+  effectIds?: ReadonlySet<string>;
 }
 export interface AuraApplicationRoute {
   statusId: string;
@@ -41,7 +43,7 @@ export function traceAuraReachability(content: GameContent, options: AuraReachab
   const units = [...content.characters, ...content.enemies].filter(unit => !options.unitIds || options.unitIds.has(unit.id));
   const skillIds = new Set([...units.flatMap(unit => unit.skillIds),
     ...(options.skillIds ?? content.skills.filter(skill => skill.rarity && skill.tags.includes('LEARNABLE')).map(skill => skill.id))]);
-  const effectIds = new Set(units.flatMap(unit => unit.effectIds));
+  const effectIds = new Set([...units.flatMap(unit => unit.effectIds), ...(options.effectIds ?? [])]);
   const routes: AuraApplicationRoute[] = [];
   const reached = new Set<string>();
   const queued = new Set<string>();

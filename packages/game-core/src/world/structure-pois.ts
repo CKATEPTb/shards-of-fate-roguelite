@@ -6,6 +6,7 @@ import { worldDie } from './generation-dice';
 /** Independent streams keep contents stable when another structure gains a decoration. */
 export function structurePois(seed: string, node: WorldNode, structures: readonly WorldStructure[]): WorldPoi[] {
   return structures.flatMap((structure, ordinal): WorldPoi[] => {
+    if (structure.npcKind) return [];
     if (structure.kind === 'well') return [{ id: `${structure.id}:well`, kind: 'well', structureId: structure.id,
       position: { ...structure.approach } }];
     if (structure.kind !== 'house') return [];

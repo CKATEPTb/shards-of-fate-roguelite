@@ -15,7 +15,7 @@ export const statsSchema = z.object({
 const unitFields = {
   ...metadata, title: text, role: z.enum(['tank', 'healer', 'damage']), color, sprite: identifier,
   stats: statsSchema, movementSpeed: z.number().finite().min(10).max(300).optional(), anatomy: anatomySchema.optional(),
-  passive: z.object({ name: text, description: text }).strict().optional(), basicAttack: actionSchema,
+  passive: z.object({ name: text, description: text, rarity: z.enum(SKILL_RARITIES).optional() }).strict().optional(), basicAttack: actionSchema,
   skillIds: z.array(identifier).max(16), effectIds: z.array(identifier).max(32), modifiers, tags,
 };
 export const unitSchema = z.object(unitFields).strict();

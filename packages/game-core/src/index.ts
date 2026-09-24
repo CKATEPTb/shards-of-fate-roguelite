@@ -4,6 +4,8 @@ export { restoreContentHash } from './content-hash';
 export * from './anatomy';
 export * from './equipment-sets';
 export * from './equipment-choice';
+export * from './auto-equipment';
+export { autoEquipmentQuality, createEquipmentScorer, AUTO_EQUIPMENT_WEIGHTS } from './auto-equipment-score';
 export { modifiersFor, modifierSourcesFor } from './modifiers';
 export * from './difficulty';
 export { stepCombat, submitCombatAction, skipCombatTurn, combatTargets, runCombat, isTerminal, type CombatDecisionPolicy } from './combat';

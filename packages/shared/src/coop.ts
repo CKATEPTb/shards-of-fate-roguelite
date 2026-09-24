@@ -5,6 +5,7 @@ import type { GridPoint, WorldActor } from './world';
 import type { EquipmentSlot } from './anatomy';
 import type { AdventureProgress, HeroLoadout, InventoryTarget, RewardResolution } from './adventure';
 import type { SeasonBossProgress } from './bosses';
+import type { NpcSkillSlot } from './npc';
 
 /** Visual light size; combat recruitment uses walkable path length separately. */
 export const HERO_LIGHT_RADIUS_TILES = 10;
@@ -63,12 +64,18 @@ export interface CoopState {
 }
 
 export type CoopCommand =
+  | { type: 'revive'; chunkId: string; targetActorId: string; expectedReviveUntilTick: number }
+  | { type: 'npc-buy'; chunkId: string; poiId: string; offerId: string }
+  | { type: 'npc-upgrade-equipment'; chunkId: string; poiId: string; slot: EquipmentSlot; expectedItemId: string }
+  | { type: 'npc-upgrade-skill'; chunkId: string; poiId: string; slot: NpcSkillSlot; expectedId: string; expectedRarity: import('./rewards').RewardRarity }
   | { type: 'interact'; chunkId: string; poiId: string }
   | { type: 'equip'; selections: { rewardId: string; slot: EquipmentSlot }[] }
   | { type: 'learn'; rewardId: string; slot: 0 | 1 }
   | { type: 'discard-reward'; rewardId: string }
   | { type: 'collect-reward'; rewardId: string }
+  | { type: 'collect-rewards'; rewardIds: string[] }
   | { type: 'equip-inventory'; inventoryId: string; slot: InventoryTarget }
+  | { type: 'set-auto-equipment'; enabled: boolean }
   | ({ type: 'resolve-rewards' } & RewardResolution)
   | { type: 'move'; chunkId: string; x: number; y: number; from?: GridPoint; fromElapsedMs?: number }
   | { type: 'rest'; chunkId: string; poiId: string }
@@ -78,9 +85,11 @@ export type CoopCommand =
 export interface CoopDiceAdvance { ownerId: string; index: number; nextIndex: number }
 
 export type CoopEvent =
+  | { type: 'revive'; actorId: string; chunkId: string; targetActorId: string; expectedReviveUntilTick: number }
+  | { type: 'npc-service'; actorId: string; command: Extract<CoopCommand, { type: 'npc-buy' | 'npc-upgrade-equipment' | 'npc-upgrade-skill' }> }
   | { type: 'boss-summon' }
   | { type: 'interact'; actorId: string; chunkId: string; poiId: string }
-  | { type: 'loadout'; actorId: string; command: Extract<CoopCommand, { type: 'equip' | 'learn' | 'discard-reward' | 'resolve-rewards' | 'collect-reward' | 'equip-inventory' }> }
+  | { type: 'loadout'; actorId: string; command: Extract<CoopCommand, { type: 'equip' | 'learn' | 'discard-reward' | 'resolve-rewards' | 'collect-reward' | 'collect-rewards' | 'equip-inventory' | 'set-auto-equipment' }> }
   | { type: 'campfire-lit'; poiId: string; tick: number }
   | { type: 'motion'; entity: 'actor' | 'mob'; id: string; chunkId: string; groupId?: string; from: GridPoint; to: GridPoint | null; elapsedMs: number }
   | { type: 'group'; chunkId: string; groupId: string; mode: RoamingGroup['mode']; targetActorId: string | null; decision: number; pauseMs: number }

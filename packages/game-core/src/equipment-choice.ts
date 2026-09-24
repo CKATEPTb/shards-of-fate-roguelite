@@ -1,4 +1,4 @@
-import { canEquipInSlot, equipmentBodyPartsForSlot, isHandSlot, occupiedHandSlots,
+import { canEquipInSlot, equipmentBodyPartsForSlot, isHandSlot, occupiedHandSlots, resolveEquipmentItem,
   type EquipmentItemDefinition, type EquipmentSlot, type StarterEquipment } from '@shards/shared';
 
 export interface EquipmentReward { id: string; itemId: string }
@@ -45,7 +45,7 @@ export function previewEquipmentChoice(
   const available = new Map<string, EquipmentReward>();
   for (const reward of rewards) {
     if (!reward.id || available.has(reward.id)) throw new Error(`Duplicate or empty equipment reward ID: ${reward.id}`);
-    if (!Object.hasOwn(items, reward.itemId) || !items[reward.itemId] || items[reward.itemId].id !== reward.itemId) {
+    if (!resolveEquipmentItem(items, reward.itemId)) {
       throw new Error(`Unknown equipment item: ${reward.itemId}`);
     }
     available.set(reward.id, reward);
@@ -60,7 +60,7 @@ export function previewEquipmentChoice(
     if (!reward) throw new Error(`Unknown equipment reward: ${selection.rewardId}`);
     if (selectedIds.has(selection.rewardId)) throw new Error(`Equipment reward selected twice: ${selection.rewardId}`);
     if (!slots.includes(selection.slot) || selectedSlots.has(selection.slot)) throw new Error(`Duplicate or unknown selected slot: ${selection.slot}`);
-    const item = items[reward.itemId];
+    const item = resolveEquipmentItem(items, reward.itemId)!;
     // Validate the entire chosen outfit before removing anything. Conflicting
     // new choices must fail, rather than silently replace another chosen reward.
     if (!canEquipInSlot(additions, item, selection.slot)) throw new Error(`Cannot equip ${item.id} in ${selection.slot}`);

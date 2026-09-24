@@ -1,6 +1,7 @@
 import type { EffectDefinition } from '@shards/shared';
+import { createNativeEffectUpgradeVariants } from './skill-upgrades';
 
-export const effects: EffectDefinition[] = [
+const baseEffects: EffectDefinition[] = [
   {
     schemaVersion: 1, id: 'priest_benediction', name: 'Благословение света',
     description: 'Получивший исцеление Жрицы получает отдельный заряд Благословения: +1d4 к урону каждого удара на 2 его хода.',
@@ -16,3 +17,4 @@ export const effects: EffectDefinition[] = [
     priority: 10, internalCooldown: 0, tags: ['FIRE', 'BURN', 'CRITICAL'],
   },
 ];
+export const effects: EffectDefinition[] = [...baseEffects, ...createNativeEffectUpgradeVariants(baseEffects)];

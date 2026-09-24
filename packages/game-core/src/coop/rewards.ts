@@ -27,7 +27,7 @@ export function adventureRewardEntries(content: GameContent, kind: AdventureRewa
   if (found) return found;
   const entries = (kind === 'equipment'
     ? Object.values(content.equipmentCatalog?.items ?? {})
-    : content.skills.filter(skill => skill.rarity)).filter(entry => entry.rarity === rarity).sort((a, b) => compareCoopIds(a.id, b.id));
+    : content.skills.filter(skill => skill.tags.includes('LEARNABLE') && !skill.tags.includes('UPGRADED'))).filter(entry => entry.rarity === rarity).sort((a, b) => compareCoopIds(a.id, b.id));
   cache?.entries.set(key, entries);
   return entries;
 }

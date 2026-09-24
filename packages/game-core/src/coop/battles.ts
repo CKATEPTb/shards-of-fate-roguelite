@@ -15,10 +15,12 @@ import { advanceCoopDice, coopBattleRng, coopDiceChanges } from './entity-dice';
 import { retreatPosition } from '../expedition/retreat';
 import { MOVEMENT_TICK_MS } from '../world/movement-speed';
 import { seasonBossesDefeated, startNextSeasonBossCountdown } from './bosses';
+import { COOP_REVIVE_WINDOW_TICKS } from './revival';
 
 export const COOP_COMBAT_TURN_MS = COMBAT_TURN_MS;
 
 export function getCoopBattle(state: CoopState, actorId: string): CoopBattle | undefined {
+  // Death keeps the seat reserved for spectating until battle-end. Only escape releases it early.
   return state.battles.find(battle => battle.actorIds.includes(actorId)
     && !battle.combat.units.some(unit => unit.team === 'heroes' && unit.definitionId === actorId && unit.escaped));
 }
@@ -236,11 +238,20 @@ function transitionCoopBattle(state: CoopState, battleId: string, elapsedMs: num
   if (escaped.length) {
     const chunk = coopChunk(state.seed, battle.chunkId, state.worldVersion ?? 2);
     const leaving = new Set(escaped.map(unit => unit.definitionId));
+    const chunkMobs = (state.groups[battle.chunkId] ?? []).flatMap(group => group.members);
+    const nearbyBattles = state.battles.filter(candidate => candidate.chunkId === battle.chunkId);
+    const engagedHeroes = new Set(nearbyBattles.flatMap(candidate => candidate.combat.units
+      .filter(unit => unit.team === 'heroes' && !unit.escaped).map(unit => unit.definitionId)));
+    const engagedMobs = new Set(nearbyBattles.flatMap(candidate => candidate.combat.units
+      .filter(unit => unit.team === 'enemies').flatMap((unit, index) => unit.hp > 0 ? [candidate.mobIds[index]] : [])));
     const participants = [
-      ...state.actors.filter(actor => actor.chunkId === battle.chunkId && !leaving.has(actor.id)).map(actor => actor.position),
-      ...(state.groups[battle.chunkId] ?? []).flatMap(group => group.members.map(mob => mob.position)),
+      ...state.actors.filter(actor => actor.chunkId === battle.chunkId && engagedHeroes.has(actor.id)).map(actor => actor.position),
+      ...chunkMobs.filter(mob => engagedMobs.has(mob.id)).map(mob => mob.position),
     ];
-    const occupied: GridPoint[] = [];
+    const occupied: GridPoint[] = [
+      ...state.actors.filter(actor => actor.chunkId === battle.chunkId && !leaving.has(actor.id)).map(actor => actor.position),
+      ...chunkMobs.map(mob => mob.position),
+    ];
     state = { ...state, actors: state.actors.map(actor => {
       const unit = escaped.find(unit => unit.definitionId === actor.id);
       if (!unit) return actor;
@@ -267,7 +278,9 @@ export function finishCoopBattle(state: CoopState, battleId: string, content: Ga
     const unit = battle.combat.units.find(unit => unit.team === 'heroes' && unit.definitionId === actor.id);
     if (unit?.escaped) return actor;
     const body = unit?.body;
-    return { ...stopCoopActor(actor), ...(body ? { body: structuredClone(body) } : {}) };
+    const fallen = body && !isBodyAlive(body);
+    return { ...stopCoopActor(actor), ...(body ? { body: structuredClone(body) } : {}),
+      ...(fallen && state.characterIds.length > 1 && !coopPartyFailed(state) ? { reviveUntilTick: state.tick + COOP_REVIVE_WINDOW_TICKS } : {}) };
   });
   const groups = state.groups[battle.chunkId].map(group => ({ ...group, members: group.members.filter(mob => !killed.has(mob.id)) }))
     .filter(group => group.members.length);

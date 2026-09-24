@@ -8,17 +8,17 @@ const minimumSeed = 'world-profile-v3:1173';
 const maximumSeed = 'world-profile-v3:1700';
 
 describe('large seasonal world coverage', () => {
-  it('checks 10,000 seeded profiles, each with 10–15 rings per season and 40–60 in total', () => {
+  it('checks 10,000 seeded profiles, each with 7–10 rings per season and 28–40 in total', () => {
     const radii = new Set<number>();
     for (let index = 0; index < 10_000; index++) {
       const profile = worldProfile(`world-profile-v3:${index}`);
-      if (Object.values(profile.seasonRings).some(width => width < 10 || width > 15 || !Number.isInteger(width))
+      if (Object.values(profile.seasonRings).some(width => width < 7 || width > 10 || !Number.isInteger(width))
         || profile.radius !== Object.values(profile.seasonRings).reduce((sum, width) => sum + width, 0)) throw new Error(`Invalid profile at ${index}`);
       radii.add(profile.radius);
     }
-    expect([...radii].sort((a, b) => a - b)).toEqual(Array.from({ length: 21 }, (_, index) => index + 40));
-    expect(worldProfile(minimumSeed).radius).toBe(40);
-    expect(worldProfile(maximumSeed).radius).toBe(60);
+    expect([...radii].sort((a, b) => a - b)).toEqual(Array.from({ length: 13 }, (_, index) => index + 28));
+    expect(worldProfile(minimumSeed).radius).toBe(28);
+    expect(worldProfile(maximumSeed).radius).toBe(40);
   });
 
   it('checks 10,000 real chunks and reciprocal seam descriptions across eight full-sized worlds', () => {
@@ -39,7 +39,7 @@ describe('large seasonal world coverage', () => {
   }, 120_000);
 
   it.each([
-    [minimumSeed, 40, 5025], [maximumSeed, 60, 11289], ['FIRST-CAMPFIRE', 49, 7525],
+    [minimumSeed, 28, 2453], [maximumSeed, 40, 5025], ['FIRST-CAMPFIRE', 33, 3409],
   ] as const)('streams every actual chunk and checks every region/POI in %s', (seed, radius, count) => {
     const graph = generateWorld(seed);
     expect(graph.radius).toBe(radius);
@@ -53,7 +53,7 @@ describe('large seasonal world coverage', () => {
   }, 120_000);
 
   // This intentionally remains available, but is not hidden in every rapid application check:
-  // a v3 sweep allocates about 80 million macro nodes instead of the v2 sweep's half million.
+  // A full sweep still allocates tens of millions of macro nodes.
   it.skipIf(process.env.WORLD_EXHAUSTIVE !== '1')('exhaustively validates 10,000 full large-world graphs and one chunk per world', () => {
     for (let index = 0; index < 10_000; index++) {
       const graph = generateWorld(`world-property-v3:${index}`);

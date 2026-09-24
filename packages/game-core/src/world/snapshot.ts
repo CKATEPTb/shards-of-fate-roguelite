@@ -72,9 +72,13 @@ export function deserializeExploration(json: string): ExplorationState {
   const actors: WorldActor[] = data.actors.map(value => {
     const hasMovement = value !== null && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'movement');
     const hasBody = value !== null && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'body');
-    const actor = record(value, ['id', 'position', 'path', ...(hasMovement ? ['movement'] : []), ...(hasBody ? ['body'] : [])], 'actor');
+    const hasRevive = value !== null && typeof value === 'object' && Object.prototype.hasOwnProperty.call(value, 'reviveUntilTick');
+    const actor = record(value, ['id', 'position', 'path', ...(hasMovement ? ['movement'] : []), ...(hasBody ? ['body'] : []), ...(hasRevive ? ['reviveUntilTick'] : [])], 'actor');
     if (typeof actor.id !== 'string' || !Array.isArray(actor.path) || actor.path.length > 1225) throw new Error('Invalid saved actor');
-    return { id: actor.id, position: point(actor.position), path: actor.path.map(point), ...(hasMovement ? { movement: movementState(actor.movement) } : {}), ...(hasBody ? { body: restoreSavedHeroBody(actor.body, undefined, !hasBodyVersion) } : {}) };
+    if (hasRevive && (!Number.isSafeInteger(actor.reviveUntilTick) || (actor.reviveUntilTick as number) < 0 || (actor.reviveUntilTick as number) > (data.tick as number) + 4500)) throw new Error('Invalid resurrection deadline');
+    const body = hasBody ? restoreSavedHeroBody(actor.body, undefined, !hasBodyVersion) : undefined;
+    if (hasRevive && (!body || isBodyAlive(body))) throw new Error('Only a fallen hero has a resurrection deadline');
+    return { id: actor.id, position: point(actor.position), path: actor.path.map(point), ...(hasMovement ? { movement: movementState(actor.movement) } : {}), ...(body ? { body } : {}), ...(hasRevive ? { reviveUntilTick: actor.reviveUntilTick as number } : {}) };
   });
   validateActorIds(actors.map(actor => actor.id));
   const graph = generateWorld(data.seed, { structureVersion });

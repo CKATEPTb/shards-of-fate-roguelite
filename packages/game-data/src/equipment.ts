@@ -1,4 +1,4 @@
-import { equipmentBodyPartsForSlot, equipmentItemFitsSlot, type BodyResources, type EquipmentItemDefinition, type EquipmentSetDefinition, type EquipmentSlot, type EquipmentWeapon, type StarterEquipment, type WeaponKind } from '@shards/shared';
+import { equipmentBodyPartsForSlot, equipmentItemFitsSlot, resolveEquipmentItem, type BodyResources, type EquipmentItemDefinition, type EquipmentSetDefinition, type EquipmentSlot, type EquipmentWeapon, type StarterEquipment, type WeaponKind } from '@shards/shared';
 import { CATALOG_EQUIPMENT_ITEMS, CATALOG_EQUIPMENT_SETS } from './equipment-catalog';
 
 type ArmorSlot = 'head' | 'chest' | 'gloves' | 'pants' | 'boots';
@@ -86,7 +86,7 @@ export const EQUIPMENT_SETS: Readonly<Record<string, EquipmentSetDefinition>> = 
 
 /** Make a new equipped instance; anatomical requirements follow the selected slot. */
 export function equipItem(itemId: string, slot: EquipmentSlot): StarterEquipment {
-  const item = EQUIPMENT_ITEMS[itemId];
+  const item = resolveEquipmentItem(EQUIPMENT_ITEMS, itemId);
   if (!item) throw new Error(`Unknown equipment item: ${itemId}`);
   if (!equipmentItemFitsSlot(item, slot)) throw new Error(`Cannot equip ${itemId} in ${slot}`);
   return { ...item, slot, resources: { ...item.resources }, bodyParts: equipmentBodyPartsForSlot(item, slot), ...(item.bonuses ? { bonuses: { ...item.bonuses } } : {}), ...(item.weapon ? { weapon: { ...item.weapon } } : {}) };

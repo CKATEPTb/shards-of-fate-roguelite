@@ -1,4 +1,4 @@
-import type { WorldChunk } from '@shards/shared';
+import { NPC_KINDS, type WorldChunk } from '@shards/shared';
 import { inBounds, isWalkable, samePoint, tileIndex } from './grid';
 import { withinStructure } from './structures';
 
@@ -12,6 +12,10 @@ export function validateStructures(chunk: WorldChunk): string[] {
       || !isWalkable(chunk, structure.approach) || withinStructure(structure.approach, structure)
       || !structure.blockedCells.length) { errors.push('Invalid structure'); continue; }
     ids.add(structure.id);
+    if (structure.npcKind !== undefined && (structure.kind !== 'house' || !NPC_KINDS.includes(structure.npcKind)
+      || chunk.layer === 'basement' || chunk.pois.filter(poi => poi.kind === 'npc' && poi.structureId === structure.id
+        && poi.npcKind === structure.npcKind && samePoint(poi.position, structure.approach)).length !== 1
+      || chunk.pois.some(poi => poi.structureId === structure.id && poi.kind !== 'npc'))) errors.push('Invalid service building');
     for (const point of structure.blockedCells) {
       const index = tileIndex(point, chunk.size);
       if (!inBounds(point, chunk.size) || !withinStructure(point, structure) || occupied.has(index)

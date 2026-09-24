@@ -4,6 +4,8 @@ import type { HeroBody } from './anatomy';
 export interface GridPoint { x: number; y: number }
 export type Direction = 'north' | 'east' | 'south' | 'west';
 export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
+export const NPC_KINDS = ['merchant', 'blacksmith', 'scribe'] as const;
+export type NpcKind = typeof NPC_KINDS[number];
 export type Terrain = 'grass' | 'path' | 'water' | 'rock' | 'tree' | 'snow' | 'wall' | 'bush';
 export interface WorldTile { terrain: Terrain; walkable: boolean; movementCost: number }
 export interface WorldNode extends GridPoint {
@@ -16,7 +18,7 @@ export interface WorldGraph {
   generatorVersion: 3;
   /** Missing in older worlds, whose original two-house layouts must stay stable. */
   structureVersion?: 1 | 2 | 3;
-  /** Each season occupies 10–15 complete radial rings of chunks. */
+  /** Each season occupies 7–10 complete radial rings of chunks. */
   seasonRings: Record<Season, number>;
   radius: number;
   seed: string;
@@ -37,7 +39,7 @@ export interface ChunkExit {
 }
 export interface WorldPoi {
   id: string;
-  kind: 'campfire' | 'encounter' | 'altar' | 'portal' | 'chest' | 'well' | 'stairs-down' | 'stairs-up';
+  kind: 'campfire' | 'encounter' | 'altar' | 'portal' | 'chest' | 'well' | 'stairs-down' | 'stairs-up' | 'npc';
   position: GridPoint;
   encounterId?: string;
   /** Only seasonal summoning altars carry a boss season. */
@@ -45,10 +47,14 @@ export interface WorldPoi {
   /** Explicit interaction only; walking over a portal or staircase never changes chunks. */
   destination?: { chunkId: string; poiId: string };
   structureId?: string;
+  /** A repeatable service at the exterior approach of its own building. */
+  npcKind?: NpcKind;
 }
 export interface WorldStructure {
   id: string;
   kind: 'house' | 'ruin' | 'well';
+  /** Dedicated service houses have no random chest or basement. */
+  npcKind?: NpcKind;
   origin: GridPoint;
   width: number;
   height: number;
@@ -80,7 +86,11 @@ export interface MovementState {
   /** Time already spent preparing the next logical tile step. */
   elapsedMs: number;
 }
-export interface WorldActor { id: string; position: GridPoint; path: GridPoint[]; movement?: MovementState; body?: HeroBody }
+export interface WorldActor {
+  id: string; position: GridPoint; path: GridPoint[]; movement?: MovementState; body?: HeroBody;
+  /** A fallen co-op hero can be raised until this room tick. Starts after their battle ends. */
+  reviveUntilTick?: number;
+}
 export interface ExplorationState {
   version: 1;
   graph: WorldGraph;

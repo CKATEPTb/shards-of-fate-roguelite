@@ -1,4 +1,4 @@
-import type { EquipmentSetAuraDefinition, EquipmentSetBonusDefinition, HeroBody, UnitDefinition } from '@shards/shared';
+import { baseEquipmentItemId, type EquipmentSetAuraDefinition, type EquipmentSetBonusDefinition, type HeroBody, type UnitDefinition } from '@shards/shared';
 import { equipmentCondition } from './anatomy/equipment';
 
 export interface ActiveEquipmentSetBonuses {
@@ -27,7 +27,7 @@ export function activeEquipmentSetBonuses(definition: UnitDefinition, body?: Her
   for (const item of anatomy.equipment) {
     if (!item.id || !item.setId || body && !equipmentCondition(item, body).active) continue;
     const ids = pieces.get(item.setId) ?? new Set<string>();
-    ids.add(item.id);
+    ids.add(baseEquipmentItemId(item.id));
     pieces.set(item.setId, ids);
   }
   const seen = new Set<string>();

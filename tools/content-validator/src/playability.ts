@@ -1,5 +1,6 @@
 import { activeEquipmentSetAuras, startHeroBody } from '@shards/game-core';
-import { equipmentItemFitsSlot, REWARD_RARITIES, SEASON_BOSS_ORDER, type EquipmentSlot, type GameContent, type RoamingCategory } from '@shards/shared';
+import { applyNativeSkillRarities, equipmentItemFitsSlot, nextSkillUpgradeId, REWARD_RARITIES, SEASON_BOSS_ORDER,
+  type EquipmentSlot, type GameContent, type RoamingCategory } from '@shards/shared';
 import { adventureRewardEntries } from '../../../packages/game-core/src/coop/rewards';
 import { equipmentLootPool, featuredEquipmentSetIds } from '../../../packages/game-core/src/coop/equipment-loot-pool';
 import { equippedHero } from '../../../packages/game-core/src/coop/progression';
@@ -47,6 +48,8 @@ export function auditContentAvailability(content: GameContent) {
   const catalog = content.equipmentCatalog;
   const itemIds = new Set<string>();
   const skillIds = new Set<string>();
+  const skillRoutes = new Map<string, string>();
+  const effectRoutes = new Map<string, string>();
   const itemCounts: Record<string, number> = {};
   for (const rarity of REWARD_RARITIES) {
     const available = adventureRewardEntries(content, 'equipment', rarity);
@@ -54,7 +57,39 @@ export function auditContentAvailability(content: GameContent) {
     const pool = catalog ? equipmentLootPool(items, featuredEquipmentSetIds(catalog, 'content-availability', content.characters[0].id, rarity), 5) : [];
     pool.forEach(item => itemIds.add(item.id));
     itemCounts[rarity] = pool.length;
-    adventureRewardEntries(content, 'skill', rarity).forEach(skill => skillIds.add(skill.id));
+    adventureRewardEntries(content, 'skill', rarity).forEach(skill => {
+      skillIds.add(skill.id); skillRoutes.set(skill.id, `reward/${rarity}`);
+    });
+  }
+  const learnedSkillCount = skillIds.size;
+  const upgradeIssues: string[] = [];
+  // Follow the same one-rarity-at-a-time links used by the inscriber. Merely
+  // declaring UPGRADED does not prove a variant can actually be purchased.
+  const skillById = new Map(content.skills.map(skill => [skill.id, skill]));
+  const roots = [...skillIds];
+  for (const hero of content.characters) for (const id of hero.skillIds) {
+    skillIds.add(id); skillRoutes.set(id, `native/${hero.id}`); roots.push(id);
+  }
+  for (const rootId of roots) {
+    let current = skillById.get(rootId);
+    while (current) {
+      const nextId = nextSkillUpgradeId(current, content);
+      if (!nextId) break;
+      skillIds.add(nextId);
+      if (!skillRoutes.has(nextId)) skillRoutes.set(nextId, `inscriber/${rootId}/${nextId}`);
+      current = skillById.get(nextId);
+    }
+  }
+  for (const hero of content.characters) {
+    for (const id of hero.effectIds) effectRoutes.set(id, `native/${hero.id}`);
+    for (const rarity of REWARD_RARITIES) {
+      try {
+        const derived = applyNativeSkillRarities(hero, { nativeSkillRarities: { class: rarity, active: rarity, passive: rarity } }, content);
+        for (const id of derived.effectIds) {
+          if (!effectRoutes.has(id)) effectRoutes.set(id, `inscriber/${hero.id}/passive/${rarity}`);
+        }
+      } catch { upgradeIssues.push(`${hero.id}/${rarity}`); }
+    }
   }
   const allItems = Object.values(catalog?.items ?? {});
   const invalidSlots = allItems.filter(item => !equipmentItemFitsSlot(item, item.slot === 'hand' ? 'rightHand' : item.slot)).map(item => item.id);
@@ -72,20 +107,26 @@ export function auditContentAvailability(content: GameContent) {
       if (set.bonuses!.some(bonus => bonus.aura && !actual.some(entry => entry.aura.id === bonus.aura!.id))) setIssues.push(set.id);
     } catch { setIssues.push(set.id); }
   }
-  const aura = traceAuraReachability(content, { unitIds: new Set([...content.characters.map(hero => hero.id), ...enemyRoutes.keys()]), skillIds });
+  const aura = traceAuraReachability(content, { unitIds: new Set([...content.characters.map(hero => hero.id), ...enemyRoutes.keys()]),
+    skillIds, effectIds: new Set(effectRoutes.keys()) });
   const missing = {
     enemies: content.enemies.filter(enemy => !enemyRoutes.has(enemy.id)).map(enemy => enemy.id),
     items: allItems.filter(item => !itemIds.has(item.id)).map(item => item.id),
     skills: content.skills.filter(skill => skill.rarity && !skillIds.has(skill.id)).map(skill => skill.id),
+    upgradedEffects: content.effects.filter(effect => effect.tags.includes('UPGRADED') && !effectRoutes.has(effect.id)).map(effect => effect.id),
+    nativeUpgrades: upgradeIssues,
     auras: aura.unreachableStatusIds,
     setAuras: [...allSetAuraIds].filter(id => !activeSetAuraIds.has(id)),
     sets: setIssues, invalidSlots,
   };
   return { valid: Object.values(missing).every(ids => ids.length === 0),
     counts: { enemies: content.enemies.length, bosses: content.enemies.filter(enemy => enemy.tags.includes('BOSS')).length,
-      items: allItems.length, itemsByRarity: itemCounts, sets: sets.length, learnedSkills: skillIds.size,
+      items: allItems.length, itemsByRarity: itemCounts, sets: sets.length, learnedSkills: learnedSkillCount,
+      upgradedSkills: content.skills.filter(skill => skill.tags.includes('UPGRADED') && skillIds.has(skill.id)).length,
+      upgradedEffects: content.effects.filter(effect => effect.tags.includes('UPGRADED') && effectRoutes.has(effect.id)).length,
       auras: content.statuses.length, setAuras: allSetAuraIds.size },
-    missing, enemyRoutes: Object.fromEntries(enemyRoutes), auraRoutes: aura.routes };
+    missing, enemyRoutes: Object.fromEntries(enemyRoutes), skillRoutes: Object.fromEntries(skillRoutes),
+    effectRoutes: Object.fromEntries(effectRoutes), auraRoutes: aura.routes };
 }
 
 export function assertContentAvailability(content: GameContent) {

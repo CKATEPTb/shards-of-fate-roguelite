@@ -11,7 +11,10 @@ export interface AdventureCatalog {
 export interface HeroLoadout {
   equipment: { itemId: string; slot: EquipmentSlot }[];
   skills: [string | null, string | null];
+  /** Missing in older saves: all three innate abilities start at common rarity. */
+  nativeSkillRarities?: NativeSkillRarities;
 }
+export interface NativeSkillRarities { class: RewardRarity; active: RewardRarity; passive: RewardRarity }
 export interface AdventureReward {
   id: string;
   kind: 'equipment' | 'skill';
@@ -29,12 +32,16 @@ export interface RewardResolution {
   rewardIds: string[];
 }
 export interface HeroProgress extends HeroLoadout {
+  /** Personal preference; missing in older saves means manual equipment selection. */
+  autoEquipment?: boolean;
   coins: number;
   rewards: AdventureReward[];
   /** Collected/returned finds, oldest arrival first. Preserve this order in saves; sort only UI copies. Missing in pre-inventory saves. */
   inventory?: AdventureReward[];
   /** Personal, idempotent sources: a well/chest/battle can pay this hero once. */
   claimedSources: string[];
+  /** Fixed merchant offers are purchased once per hero, independently of other players. */
+  npcPurchases?: string[];
 }
 export interface CampfireLifetime { litAtTick: number; expiresAtTick: number }
 export interface AdventureProgress {

@@ -1,4 +1,4 @@
-import { BODY_PARTS, occupiedHandSlots, type EquipmentSlot, type StarterEquipment, type UnitDefinition } from '@shards/shared';
+import { BODY_PARTS, occupiedHandSlots, resolveEquipmentItem, type EquipmentSlot, type StarterEquipment, type UnitDefinition } from '@shards/shared';
 import { EQUIPMENT_ITEMS, EQUIPMENT_SETS, equipItem } from './equipment';
 
 const attributes = ['power', 'initiative', 'evasion', 'crit', 'agility', 'accuracy', 'resilience', 'luck'] as const;
@@ -10,7 +10,7 @@ export function applyEquipmentToHero(definition: UnitDefinition, equipment: read
   if (new Set(equipment.map(item => item.slot)).size !== equipment.length) throw new Error('В каждом слоте может быть только один предмет');
   const current = definition.anatomy.equipment;
   const equipped = equipment.map(item => {
-    if (!item.id || !EQUIPMENT_ITEMS[item.id]) throw new Error(`Неизвестный предмет: ${item.id ?? item.name}`);
+    if (!item.id || !resolveEquipmentItem(EQUIPMENT_ITEMS, item.id)) throw new Error(`Неизвестный предмет: ${item.id ?? item.name}`);
     return equipItem(item.id, item.slot);
   });
   const occupied = equipped.flatMap(occupiedHandSlots);
@@ -36,7 +36,7 @@ export function equipmentForSet(setId: string): StarterEquipment[] {
   if (!set) throw new Error(`Неизвестный комплект: ${setId}`);
   if (set.loadout) return Object.entries(set.loadout).flatMap(([slot, id]) => id ? [equipItem(id, slot as EquipmentSlot)] : []);
   return set.itemIds.map(id => {
-    const item = EQUIPMENT_ITEMS[id];
+    const item = resolveEquipmentItem(EQUIPMENT_ITEMS, id);
     if (!item || item.slot === 'hand') throw new Error('Для оружия комплекта требуется указать руку');
     return equipItem(id, item.slot);
   });

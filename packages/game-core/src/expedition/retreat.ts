@@ -1,10 +1,20 @@
 import type { GridPoint, WorldActor, WorldChunk } from '@shards/shared';
 import { isWalkable, neighbors, pointAt, tileIndex } from '../world/grid';
+import { COOP_BATTLE_JOIN_STEPS, withinCoopBattleReach } from '../coop/battle-reach';
 
-/** The safest reachable interior tile, with stable tie-breaking and no random draws. */
+/**
+ * Retreat onto open ground connected to a real chunk exit. Unlike ordinary
+ * movement, retreat may cross to another component: the destination must let
+ * the hero leave the chunk, even if combat started in a disconnected pocket.
+ * Gates are endpoints only, exactly as in findPath; a basement's stairs are
+ * its exit. This selection never consumes gameplay dice.
+ */
 export function retreatPosition(chunk: WorldChunk, actor: WorldActor, participants: readonly GridPoint[], occupied: readonly GridPoint[] = []): GridPoint {
   const gates = new Set(chunk.exits.map(exit => tileIndex(exit.position, chunk.size)));
   const blocked = new Set(occupied.map(point => tileIndex(point, chunk.size)));
+  const departures = chunk.layer === 'basement'
+    ? chunk.pois.filter(poi => poi.kind === 'stairs-up' && poi.destination).map(poi => poi.position)
+    : chunk.exits.map(exit => exit.position);
   function distances(starts: readonly GridPoint[]): Int32Array {
     const result = new Int32Array(chunk.tiles.length).fill(-1);
     const queue: number[] = [];
@@ -23,15 +33,25 @@ export function retreatPosition(chunk: WorldChunk, actor: WorldActor, participan
     }
     return result;
   }
-  const accessible = distances([actor.position]);
+  const exitDistance = distances(departures);
   const threat = distances(participants);
-  let best = tileIndex(actor.position, chunk.size);
-  let safety = threat[best];
-  for (let index = 0; index < accessible.length; index++) {
-    if (accessible[index] < 0 || gates.has(index) || blocked.has(index)) continue;
-    const score = threat[index] < 0 ? chunk.tiles.length : threat[index];
-    const previous = safety < 0 ? chunk.tiles.length : safety;
-    if (score > previous || score === previous && accessible[index] < accessible[best]) { best = index; safety = threat[index]; }
+  const candidates: number[] = [];
+  for (let index = 0; index < exitDistance.length; index++) {
+    const tile = chunk.tiles[index];
+    if (exitDistance[index] < 0 || gates.has(index) || blocked.has(index)
+      || !tile.walkable || tile.terrain === 'bush' || tile.terrain === 'tree' || tile.terrain === 'water') continue;
+    candidates.push(index);
   }
-  return pointAt(best, chunk.size);
+  // The shortest unweighted route is a lower bound for the terrain-aware
+  // pathfinder. Rank it first; stable exit distance / tile index break ties.
+  const safety = (index: number) => threat[index] < 0 ? chunk.tiles.length : threat[index];
+  candidates.sort((a, b) => safety(b) - safety(a) || exitDistance[a] - exitDistance[b] || a - b);
+  const safe = candidates.find(index => threat[index] < 0 || threat[index] > COOP_BATTLE_JOIN_STEPS
+    || participants.every(point => !withinCoopBattleReach(chunk, pointAt(index, chunk.size), point, actor)));
+  // Exceptionally small rooms can have no point beyond the recruitment radius.
+  // Co-op recruitment excludes heroes who escaped that same running battle;
+  // still choose an exit-connected tile rather than strand them or use a gate.
+  const chosen = safe ?? candidates[0];
+  if (chosen === undefined) throw new Error(`No exit-connected retreat position in ${chunk.id}`);
+  return pointAt(chosen, chunk.size);
 }

@@ -1,8 +1,10 @@
 export * from './model';
 export * from './auras';
 export * from './skills';
+export * from './skill-upgrades';
 export * from './anatomy';
 export * from './weapons';
+export * from './equipment-upgrades';
 export * from './combat-timing';
 export * from './difficulty';
 export * from './world';
@@ -12,3 +14,4 @@ export * from './coop';
 export * from './rewards';
 export * from './adventure';
 export * from './bosses';
+export * from './npc';

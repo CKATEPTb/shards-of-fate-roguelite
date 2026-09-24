@@ -96,7 +96,7 @@ export interface UnitDefinition {
   /** Exploration speed as a percentage of the standard walking pace; defaults to 100. */
   movementSpeed?: number;
   anatomy?: HeroAnatomy;
-  passive?: { name: string; description: string };
+  passive?: { name: string; description: string; rarity?: SkillRarity };
   basicAttack: ActionDefinition; skillIds: string[]; effectIds: string[];
   modifiers: Modifiers; tags: string[];
 }

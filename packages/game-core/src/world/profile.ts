@@ -3,8 +3,8 @@ import { createRng, drawRandom, hashString } from '../random';
 
 export const GENERATOR_VERSION = 3;
 export const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
-export const MIN_SEASON_RINGS = 10;
-export const MAX_SEASON_RINGS = 15;
+export const MIN_SEASON_RINGS = 7;
+export const MAX_SEASON_RINGS = 10;
 export const MAX_WORLD_RADIUS = MAX_SEASON_RINGS * SEASONS.length;
 export const MAX_WORLD_NODES = (MAX_WORLD_RADIUS * 2 + 1) ** 2;
 

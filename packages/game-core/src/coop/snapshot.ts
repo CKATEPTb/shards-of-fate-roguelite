@@ -1,7 +1,7 @@
 import { adventureContent, contentWithLoadouts, restoreProgress } from './progression';
 import type { CoopActor, CoopBattle, CoopState, GameContent, GridPoint, MovementState, RoamingGroup, RoamingMob, WorldActor } from '@shards/shared';
 import { COMBAT_CHOICE_TIMEOUT_MS } from '@shards/shared';
-import { startHeroBody } from '../anatomy';
+import { startHeroBody, isBodyAlive } from '../anatomy';
 import { hashValue } from '../canonical';
 import { isCurrentShippedContent, restoreContentHash } from '../content-hash';
 import { restoreSavedHeroBody } from '../snapshot-body';
@@ -14,6 +14,7 @@ import { createMovementState, MOVEMENT_TICK_MS, validateMovementBonus } from '..
 import { coopPartyFailed } from './battles';
 import { coopBattleDiceOwners, coopBattleRng } from './entity-dice';
 import { restoreSeasonBosses } from './boss-snapshot';
+import { COOP_REVIVE_WINDOW_TICKS } from './revival';
 
 const fields = ['version', 'contentHash', 'seed', 'difficultyId', 'characterIds', 'tick', 'diceIndex', 'diceCounters', 'actors', 'groups', 'battles',
   'killedEnemyIds', 'interactedStructureIds', 'removedRewardIds', 'completed', 'failed', 'progression', 'worldVersion', 'bosses'] as const;
@@ -123,14 +124,17 @@ export function deserializeCoop(json: string, content: GameContent): CoopState {
   const progression = restoreProgress(data.progression, content, characterIds, tick);
   const equippedContent = adventureContent({ progression }, content);
   const actors: CoopActor[] = array(data.actors, 'coop.actors', 4).map(value => {
-    const saved = record(value, 'actor', ['id', 'position', 'path', 'movement', 'body', 'chunkId', 'visited', 'transitions']);
+    const saved = record(value, 'actor', ['id', 'position', 'path', 'movement', 'body', 'chunkId', 'visited', 'transitions', 'reviveUntilTick']);
     const restored = actor(saved);
     const definition = equippedContent.characters.find(hero => hero.id === restored.id);
     if (!definition || !characterIds.includes(restored.id)) throw new Error('Hero is outside the original co-op pool');
     const chunkId = string(saved.chunkId, 'actor.chunkId');
     const visited = ids(saved.visited, 'actor.visited');
     if (!visited.includes(chunkId)) throw new Error('Current co-op chunk has not been visited');
-    return { ...restored, body: restoreSavedHeroBody(saved.body, startHeroBody(definition), legacyBodies), chunkId, visited,
+    const body = restoreSavedHeroBody(saved.body, startHeroBody(definition), legacyBodies);
+    const reviveUntilTick = saved.reviveUntilTick === undefined ? undefined : integer(saved.reviveUntilTick, 'actor.reviveUntilTick', 0, tick + COOP_REVIVE_WINDOW_TICKS);
+    if (reviveUntilTick !== undefined && (characterIds.length < 2 || isBodyAlive(body) || restored.path.length)) throw new Error('Invalid fallen hero');
+    return { ...restored, body, chunkId, visited, ...(reviveUntilTick === undefined ? {} : { reviveUntilTick }),
       // Trusted late inputs can deliver a chunk crossing between host ticks.
       transitions: integer(saved.transitions, 'actor.transitions') };
   });

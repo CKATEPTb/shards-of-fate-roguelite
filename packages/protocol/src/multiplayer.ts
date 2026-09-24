@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { DIFFICULTY_IDS } from '@shards/shared';
 
 /** Version of the browser-hosted multiplayer session contract. */
-export const MULTIPLAYER_VERSION = 18 as const;
+export const MULTIPLAYER_VERSION = 22 as const;
 export const ROOM_REQUEST_ROUTE = 'room.request';
 export const ROOM_EVENTS_ROUTE = 'room.events';
 export const MAX_ROOM_MEMBERS = 4;
@@ -48,6 +48,13 @@ export type MultiplayerInput = z.infer<typeof multiplayerInputSchema>;
 /** Guests send intentions; the host applies them to their own authoritative simulation. */
 export const combatChoiceSchema = z.object({ type: z.enum(['attack', 'skill', 'flee']), actorId: id, targetId: id.optional(), skillId: id.optional() }).strict();
 export const multiplayerCommandSchema = z.union([
+  z.object({ type: z.literal('revive'), chunkId: id, targetActorId: id,
+    expectedReviveUntilTick: z.number().int().nonnegative().safe() }).strict(),
+  z.object({ type: z.literal('npc-buy'), chunkId: id, poiId: id, offerId: id }).strict(),
+  z.object({ type: z.literal('npc-upgrade-equipment'), chunkId: id, poiId: id, slot: equipmentSlot, expectedItemId: id }).strict(),
+  z.object({ type: z.literal('npc-upgrade-skill'), chunkId: id, poiId: id,
+    slot: z.enum(['class', 'active', 'passive', 'skill0', 'skill1']), expectedId: id,
+    expectedRarity: z.enum(['common', 'rare', 'epic', 'legendary']) }).strict(),
   z.object({ type: z.literal('move'), chunkId: id, x: z.number().int().min(0).max(34), y: z.number().int().min(0).max(34), from: point.optional(), fromElapsedMs: z.number().finite().min(0).max(10_000).optional() }).strict(),
   z.object({ type: z.literal('rest'), chunkId: id, poiId: id }).strict(),
   z.object({ type: z.literal('interact'), chunkId: id, poiId: id }).strict(),
@@ -55,7 +62,10 @@ export const multiplayerCommandSchema = z.union([
   z.object({ type: z.literal('learn'), rewardId, slot: skillSlot }).strict(),
   z.object({ type: z.literal('discard-reward'), rewardId }).strict(),
   z.object({ type: z.literal('collect-reward'), rewardId }).strict(),
+  z.object({ type: z.literal('collect-rewards'), rewardIds: z.array(rewardId).min(1)
+    .refine(ids => new Set(ids).size === ids.length) }).strict(),
   z.object({ type: z.literal('equip-inventory'), inventoryId: rewardId, slot: inventorySlot }).strict(),
+  z.object({ type: z.literal('set-auto-equipment'), enabled: z.boolean() }).strict(),
   z.object({ type: z.literal('resolve-rewards'),
     equipment: z.array(z.object({ rewardId, slot: equipmentSlot }).strict()).max(10),
     skills: z.array(z.object({ rewardId, slot: skillSlot }).strict()).max(2),
