@@ -1,0 +1,3660 @@
+{
+  "scope": "Production generateRoamingGroups + real generated seasonal surface/basement layouts; independent encounter seeds, not full campaigns",
+  "layoutSeed": "enemy-runtime-census-layout",
+  "difficulty": "normal",
+  "generatedLayouts": [
+    {
+      "chunkId": "0,-11",
+      "season": "spring",
+      "layer": "surface"
+    },
+    {
+      "chunkId": "basement:-3,-10:0",
+      "season": "spring",
+      "layer": "basement"
+    },
+    {
+      "chunkId": "0,-23",
+      "season": "summer",
+      "layer": "surface"
+    },
+    {
+      "chunkId": "basement:-3,-22:0",
+      "season": "summer",
+      "layer": "basement"
+    },
+    {
+      "chunkId": "0,-37",
+      "season": "autumn",
+      "layer": "surface"
+    },
+    {
+      "chunkId": "basement:3,-36:0",
+      "season": "autumn",
+      "layer": "basement"
+    },
+    {
+      "chunkId": "0,-50",
+      "season": "winter",
+      "layer": "surface"
+    },
+    {
+      "chunkId": "basement:-8,-49:1",
+      "season": "winter",
+      "layer": "basement"
+    }
+  ],
+  "seedIndices": 2225,
+  "rosterCalls": 2364,
+  "patrols": 7047,
+  "members": 18318,
+  "expected": 400,
+  "witnessed": 400,
+  "byHabitat": {
+    "surface": 300,
+    "basement": 100
+  },
+  "missing": [],
+  "witnesses": {
+    "act1_reed_clan_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:0",
+      "x": 9,
+      "y": 30
+    },
+    "act1_reed_clan_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 9,
+      "y": 29
+    },
+    "act1_reed_clan_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 10,
+      "y": 30
+    },
+    "elite_warden": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:0",
+      "x": 7,
+      "y": 20
+    },
+    "act1_briar_court_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 7,
+      "y": 19
+    },
+    "act1_briar_court_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 8,
+      "y": 20
+    },
+    "act1_briar_court_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:3",
+      "x": 6,
+      "y": 20
+    },
+    "act1_briar_court_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:0",
+      "x": 11,
+      "y": 10
+    },
+    "act1_briar_court_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 11,
+      "y": 9
+    },
+    "act1_briar_court_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:2",
+      "x": 12,
+      "y": 10
+    },
+    "act1_cellar_nest_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:0",
+      "x": 8,
+      "y": 15
+    },
+    "act1_cellar_nest_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:1",
+      "x": 8,
+      "y": 14
+    },
+    "act1_cellar_nest_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:0",
+      "x": 4,
+      "y": 25
+    },
+    "act1_cellar_nest_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:1",
+      "x": 4,
+      "y": 24
+    },
+    "act1_cellar_nest_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:2",
+      "x": 5,
+      "y": 25
+    },
+    "act1_cellar_nest_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:2",
+      "mobId": "basement:-3,-10:0:roaming:2:1",
+      "x": 21,
+      "y": 13
+    },
+    "act1_sun_scour_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:0",
+      "x": 23,
+      "y": 31
+    },
+    "act1_sun_scour_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 24,
+      "y": 31
+    },
+    "act1_sun_scour_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 23,
+      "y": 32
+    },
+    "act1_ember_hive_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:0",
+      "x": 4,
+      "y": 8
+    },
+    "act1_ember_hive_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 4,
+      "y": 7
+    },
+    "act1_ember_hive_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 5,
+      "y": 8
+    },
+    "act1_charred_crypt_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:0",
+      "x": 18,
+      "y": 14
+    },
+    "act1_charred_crypt_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:1",
+      "x": 18,
+      "y": 13
+    },
+    "act1_charred_crypt_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 25,
+      "y": 27
+    },
+    "act1_charred_crypt_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:2",
+      "mobId": "basement:-3,-22:0:roaming:2:1",
+      "x": 18,
+      "y": 3
+    },
+    "act1_charred_crypt_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:3",
+      "mobId": "basement:-3,-22:0:roaming:3:1",
+      "x": 9,
+      "y": 21
+    },
+    "act1_carrion_pack_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:0",
+      "x": 15,
+      "y": 31
+    },
+    "act1_carrion_pack_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 15,
+      "y": 30
+    },
+    "act1_carrion_pack_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 16,
+      "y": 31
+    },
+    "act1_rot_court_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:0",
+      "x": 24,
+      "y": 10
+    },
+    "act1_rot_court_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 24,
+      "y": 9
+    },
+    "act1_rot_court_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 24,
+      "y": 11
+    },
+    "act1_rot_court_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 6,
+      "y": 17
+    },
+    "act1_harvest_clan_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:3",
+      "mobId": "0,-37:roaming:3:0",
+      "x": 27,
+      "y": 30
+    },
+    "act1_harvest_clan_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:3",
+      "mobId": "0,-37:roaming:3:1",
+      "x": 27,
+      "y": 29
+    },
+    "act1_ossuary_order_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:0",
+      "x": 8,
+      "y": 23
+    },
+    "act1_ossuary_order_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:1",
+      "x": 8,
+      "y": 22
+    },
+    "act1_ossuary_order_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:1",
+      "mobId": "basement:3,-36:0:roaming:1:1",
+      "x": 30,
+      "y": 15
+    },
+    "act1_ossuary_order_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:1",
+      "x": 25,
+      "y": 25
+    },
+    "act1_ossuary_order_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:3",
+      "mobId": "basement:3,-36:0:roaming:3:2",
+      "x": 19,
+      "y": 7
+    },
+    "act1_rime_clan_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:0",
+      "x": 25,
+      "y": 3
+    },
+    "act1_rime_clan_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 26,
+      "y": 3
+    },
+    "act1_rime_clan_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 25,
+      "y": 4
+    },
+    "act1_rime_clan_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 31,
+      "y": 23
+    },
+    "act1_rime_clan_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 32,
+      "y": 24
+    },
+    "act1_frozen_vault_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:0",
+      "x": 25,
+      "y": 26
+    },
+    "act1_frozen_vault_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:1",
+      "x": 25,
+      "y": 25
+    },
+    "act1_frozen_vault_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-0",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:2",
+      "x": 20,
+      "y": 4
+    },
+    "act1_briar_court_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:0",
+      "x": 4,
+      "y": 24
+    },
+    "act1_briar_court_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 4,
+      "y": 23
+    },
+    "act1_briar_court_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 3,
+      "y": 24
+    },
+    "act1_reed_clan_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 24,
+      "y": 8
+    },
+    "act1_cellar_nest_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:2",
+      "x": 12,
+      "y": 15
+    },
+    "act1_cellar_nest_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:2",
+      "x": 22,
+      "y": 7
+    },
+    "act1_cellar_nest_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:2",
+      "mobId": "basement:-3,-10:0:roaming:2:2",
+      "x": 10,
+      "y": 25
+    },
+    "act1_dry_fang_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:0",
+      "x": 26,
+      "y": 15
+    },
+    "act1_dry_fang_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 26,
+      "y": 14
+    },
+    "act1_dry_fang_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 27,
+      "y": 15
+    },
+    "act1_sun_scour_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 25,
+      "y": 28
+    },
+    "act1_sun_scour_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:1",
+      "x": 7,
+      "y": 28
+    },
+    "act1_charred_crypt_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 30,
+      "y": 23
+    },
+    "act1_harvest_clan_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 28,
+      "y": 7
+    },
+    "act1_harvest_clan_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 7,
+      "y": 9
+    },
+    "act1_rot_court_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 26,
+      "y": 19
+    },
+    "act1_rime_clan_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 8,
+      "y": 12
+    },
+    "act1_white_fang_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:0",
+      "x": 12,
+      "y": 32
+    },
+    "act1_white_fang_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 12,
+      "y": 31
+    },
+    "act1_white_fang_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 22,
+      "y": 27
+    },
+    "act1_frozen_vault_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:1",
+      "x": 5,
+      "y": 27
+    },
+    "act1_briar_court_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 32,
+      "y": 24
+    },
+    "act1_thicket_pack_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:0",
+      "x": 32,
+      "y": 12
+    },
+    "act1_thicket_pack_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 32,
+      "y": 11
+    },
+    "act1_thicket_pack_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 33,
+      "y": 12
+    },
+    "act1_cellar_nest_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:2",
+      "mobId": "basement:-3,-10:0:roaming:2:1",
+      "x": 18,
+      "y": 7
+    },
+    "act1_ember_hive_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:0",
+      "x": 26,
+      "y": 8
+    },
+    "act1_ember_hive_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 26,
+      "y": 7
+    },
+    "act1_ember_hive_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 27,
+      "y": 8
+    },
+    "act1_ember_hive_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:3",
+      "x": 25,
+      "y": 8
+    },
+    "act1_sun_scour_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:1",
+      "x": 9,
+      "y": 13
+    },
+    "act1_dry_fang_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:1",
+      "x": 27,
+      "y": 23
+    },
+    "act1_charred_crypt_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:1",
+      "x": 26,
+      "y": 22
+    },
+    "act1_charred_crypt_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:2",
+      "x": 27,
+      "y": 23
+    },
+    "act1_carrion_pack_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 7,
+      "y": 14
+    },
+    "act1_carrion_pack_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 10,
+      "y": 28
+    },
+    "act1_white_fang_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 15,
+      "y": 6
+    },
+    "act1_white_fang_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 5,
+      "y": 13
+    },
+    "act1_white_fang_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 6,
+      "y": 14
+    },
+    "act1_frozen_vault_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:1",
+      "x": 7,
+      "y": 23
+    },
+    "act1_briar_court_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 25,
+      "y": 3
+    },
+    "act1_thicket_pack_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 9,
+      "y": 8
+    },
+    "act1_cellar_nest_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:1",
+      "x": 20,
+      "y": 6
+    },
+    "act1_cellar_nest_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:3",
+      "mobId": "basement:-3,-10:0:roaming:3:1",
+      "x": 29,
+      "y": 10
+    },
+    "act1_ember_hive_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 11,
+      "y": 3
+    },
+    "act1_dry_fang_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:0",
+      "x": 31,
+      "y": 30
+    },
+    "act1_dry_fang_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 31,
+      "y": 29
+    },
+    "act1_dry_fang_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 32,
+      "y": 30
+    },
+    "act1_dry_fang_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:3",
+      "x": 31,
+      "y": 31
+    },
+    "act1_dry_fang_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:2",
+      "x": 17,
+      "y": 32
+    },
+    "act1_charred_crypt_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:0",
+      "x": 27,
+      "y": 27
+    },
+    "act1_charred_crypt_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:1",
+      "x": 27,
+      "y": 26
+    },
+    "act1_charred_crypt_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:2",
+      "x": 28,
+      "y": 27
+    },
+    "act1_charred_crypt_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 18,
+      "y": 11
+    },
+    "act1_charred_crypt_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:3",
+      "mobId": "basement:-3,-22:0:roaming:3:1",
+      "x": 14,
+      "y": 3
+    },
+    "act1_carrion_pack_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 15,
+      "y": 4
+    },
+    "act1_carrion_pack_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 16,
+      "y": 5
+    },
+    "act1_rot_court_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:3",
+      "mobId": "0,-37:roaming:3:1",
+      "x": 4,
+      "y": 29
+    },
+    "act1_ossuary_order_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:1",
+      "x": 27,
+      "y": 10
+    },
+    "act1_rime_clan_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 15,
+      "y": 27
+    },
+    "act1_frozen_vault_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-3",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:2",
+      "x": 4,
+      "y": 25
+    },
+    "slime": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-4",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 32,
+      "y": 17
+    },
+    "act1_cellar_nest_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-4",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:2",
+      "mobId": "basement:-3,-10:0:roaming:2:3",
+      "x": 4,
+      "y": 23
+    },
+    "act1_dry_fang_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-4",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 4,
+      "y": 5
+    },
+    "act1_dry_fang_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-4",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 18,
+      "y": 31
+    },
+    "act1_harvest_clan_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-4",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 32,
+      "y": 18
+    },
+    "act1_reed_clan_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 14,
+      "y": 25
+    },
+    "act1_reed_clan_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:3",
+      "x": 15,
+      "y": 25
+    },
+    "act1_dry_fang_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 27,
+      "y": 18
+    },
+    "act1_ember_hive_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:3",
+      "x": 20,
+      "y": 4
+    },
+    "act1_rot_court_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 5,
+      "y": 16
+    },
+    "act1_harvest_clan_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 31,
+      "y": 21
+    },
+    "act1_ossuary_order_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:1",
+      "mobId": "basement:3,-36:0:roaming:1:2",
+      "x": 8,
+      "y": 12
+    },
+    "act1_rime_clan_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-5",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 11,
+      "y": 6
+    },
+    "act1_reed_clan_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:0",
+      "x": 3,
+      "y": 21
+    },
+    "act1_reed_clan_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 3,
+      "y": 20
+    },
+    "act1_cellar_nest_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:1",
+      "x": 6,
+      "y": 24
+    },
+    "act1_cellar_nest_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:2",
+      "x": 4,
+      "y": 14
+    },
+    "act1_ember_hive_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:1",
+      "x": 28,
+      "y": 15
+    },
+    "act1_carrion_pack_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 5,
+      "y": 4
+    },
+    "act1_snow_grove_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:0",
+      "x": 25,
+      "y": 21
+    },
+    "act1_snow_grove_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 25,
+      "y": 20
+    },
+    "act1_snow_grove_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 25,
+      "y": 22
+    },
+    "act1_white_fang_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 20,
+      "y": 9
+    },
+    "act1_snow_grove_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:1",
+      "x": 3,
+      "y": 2
+    },
+    "act1_frozen_vault_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-6",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:2",
+      "x": 13,
+      "y": 8
+    },
+    "act1_thicket_pack_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 7,
+      "y": 12
+    },
+    "act1_reed_clan_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 30,
+      "y": 23
+    },
+    "act1_reed_clan_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 31,
+      "y": 24
+    },
+    "act1_sun_scour_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:0",
+      "x": 30,
+      "y": 6
+    },
+    "act1_sun_scour_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 30,
+      "y": 5
+    },
+    "act1_sun_scour_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 31,
+      "y": 6
+    },
+    "act1_sun_scour_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:3",
+      "x": 30,
+      "y": 7
+    },
+    "act1_rot_court_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:3",
+      "x": 11,
+      "y": 5
+    },
+    "act1_ossuary_order_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:3",
+      "x": 18,
+      "y": 8
+    },
+    "act1_snow_grove_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 19,
+      "y": 31
+    },
+    "act1_rime_clan_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 8,
+      "y": 14
+    },
+    "act1_frozen_vault_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:2",
+      "x": 29,
+      "y": 29
+    },
+    "act1_frozen_vault_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-7",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:2",
+      "x": 18,
+      "y": 18
+    },
+    "act1_thicket_pack_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-8",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 14,
+      "y": 27
+    },
+    "act1_cellar_nest_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-8",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:1",
+      "x": 16,
+      "y": 18
+    },
+    "act1_harvest_clan_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-8",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 33,
+      "y": 25
+    },
+    "act1_ossuary_order_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-8",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:2",
+      "x": 22,
+      "y": 6
+    },
+    "act1_rime_clan_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-8",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 14,
+      "y": 32
+    },
+    "act1_frozen_vault_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-8",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:1",
+      "x": 32,
+      "y": 23
+    },
+    "act1_briar_court_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-9",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 8,
+      "y": 8
+    },
+    "act1_briar_court_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-9",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:3",
+      "mobId": "0,-11:roaming:3:1",
+      "x": 10,
+      "y": 28
+    },
+    "act1_cellar_nest_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-9",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:3",
+      "mobId": "basement:-3,-10:0:roaming:3:1",
+      "x": 18,
+      "y": 20
+    },
+    "act1_ossuary_order_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-9",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:1",
+      "x": 16,
+      "y": 6
+    },
+    "spider": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-10",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 6,
+      "y": 19
+    },
+    "act1_sun_scour_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-10",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:2",
+      "x": 28,
+      "y": 11
+    },
+    "act1_charred_crypt_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-10",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 24,
+      "y": 22
+    },
+    "act1_rot_court_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-10",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 32,
+      "y": 2
+    },
+    "act1_snow_grove_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-10",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:1",
+      "x": 3,
+      "y": 31
+    },
+    "act1_sun_scour_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-11",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 32,
+      "y": 30
+    },
+    "act1_sun_scour_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-11",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:2",
+      "x": 4,
+      "y": 24
+    },
+    "act1_rot_court_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-11",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 31,
+      "y": 8
+    },
+    "act1_carrion_pack_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-11",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 7,
+      "y": 8
+    },
+    "act1_rime_clan_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-11",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 32,
+      "y": 11
+    },
+    "act1_ember_hive_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-12",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 27,
+      "y": 31
+    },
+    "act1_ember_hive_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-12",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 28,
+      "y": 32
+    },
+    "act1_charred_crypt_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-12",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:1",
+      "x": 18,
+      "y": 14
+    },
+    "act1_frozen_vault_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-12",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:2",
+      "x": 9,
+      "y": 22
+    },
+    "act1_reed_clan_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-13",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:2",
+      "x": 7,
+      "y": 15
+    },
+    "act1_ember_hive_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-13",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 31,
+      "y": 25
+    },
+    "act1_charred_crypt_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-13",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:1",
+      "x": 10,
+      "y": 21
+    },
+    "act1_carrion_pack_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-13",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 13,
+      "y": 6
+    },
+    "act1_rime_clan_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-13",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:3",
+      "x": 23,
+      "y": 8
+    },
+    "act1_sun_scour_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-14",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 13,
+      "y": 30
+    },
+    "act1_charred_crypt_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-14",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:2",
+      "x": 22,
+      "y": 5
+    },
+    "act1_rot_court_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-14",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 3,
+      "y": 31
+    },
+    "act1_rime_clan_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-14",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 31,
+      "y": 11
+    },
+    "act1_frozen_vault_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-14",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:2",
+      "mobId": "basement:-8,-49:1:roaming:2:1",
+      "x": 30,
+      "y": 22
+    },
+    "act1_reed_clan_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-15",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:3",
+      "mobId": "0,-11:roaming:3:1",
+      "x": 3,
+      "y": 22
+    },
+    "act1_ember_hive_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-15",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 8,
+      "y": 30
+    },
+    "act1_charred_crypt_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-15",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 27,
+      "y": 25
+    },
+    "act1_harvest_clan_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-15",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 31,
+      "y": 12
+    },
+    "act1_briar_court_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-16",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 32,
+      "y": 17
+    },
+    "act1_rime_clan_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-16",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 9,
+      "y": 12
+    },
+    "act1_sun_scour_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-17",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:1",
+      "x": 28,
+      "y": 26
+    },
+    "act1_harvest_clan_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-17",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:3",
+      "x": 5,
+      "y": 16
+    },
+    "act1_ossuary_order_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-17",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:1",
+      "x": 6,
+      "y": 22
+    },
+    "act1_ember_hive_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-18",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 3,
+      "y": 10
+    },
+    "act1_ossuary_order_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-18",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:1",
+      "x": 18,
+      "y": 7
+    },
+    "act1_frozen_vault_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-18",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:2",
+      "x": 4,
+      "y": 13
+    },
+    "act1_thicket_pack_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-19",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 16,
+      "y": 7
+    },
+    "act1_snow_grove_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-19",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 12,
+      "y": 4
+    },
+    "act1_white_fang_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-19",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 32,
+      "y": 21
+    },
+    "act1_frozen_vault_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-19",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:2",
+      "x": 24,
+      "y": 23
+    },
+    "act1_cellar_nest_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:1",
+      "x": 5,
+      "y": 16
+    },
+    "act1_sun_scour_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 29,
+      "y": 11
+    },
+    "act1_ember_hive_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:2",
+      "x": 19,
+      "y": 32
+    },
+    "act1_ossuary_order_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:1",
+      "x": 4,
+      "y": 11
+    },
+    "act1_ossuary_order_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:3",
+      "mobId": "basement:3,-36:0:roaming:3:2",
+      "x": 22,
+      "y": 4
+    },
+    "act1_white_fang_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 25,
+      "y": 27
+    },
+    "act1_snow_grove_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:1",
+      "x": 33,
+      "y": 14
+    },
+    "act1_frozen_vault_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:1",
+      "mobId": "basement:-8,-49:1:roaming:1:2",
+      "x": 15,
+      "y": 7
+    },
+    "act1_frozen_vault_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-20",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:3",
+      "mobId": "basement:-8,-49:1:roaming:3:1",
+      "x": 32,
+      "y": 23
+    },
+    "goblin_shaman": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-21",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 28,
+      "y": 31
+    },
+    "act1_ember_hive_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-21",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 31,
+      "y": 7
+    },
+    "act1_charred_crypt_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-21",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:2",
+      "mobId": "basement:-3,-22:0:roaming:2:3",
+      "x": 14,
+      "y": 3
+    },
+    "act1_rime_clan_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-21",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 4,
+      "y": 24
+    },
+    "act1_reed_clan_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-22",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 7,
+      "y": 18
+    },
+    "act1_rot_court_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-22",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 12,
+      "y": 5
+    },
+    "act1_ossuary_order_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-22",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:1",
+      "mobId": "basement:3,-36:0:roaming:1:1",
+      "x": 28,
+      "y": 25
+    },
+    "act1_ember_hive_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-23",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:2",
+      "x": 28,
+      "y": 9
+    },
+    "act1_sun_scour_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-23",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:2",
+      "x": 13,
+      "y": 30
+    },
+    "act1_carrion_pack_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-23",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 31,
+      "y": 30
+    },
+    "act1_ossuary_order_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-23",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:1",
+      "x": 22,
+      "y": 4
+    },
+    "act1_sun_scour_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-24",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 31,
+      "y": 19
+    },
+    "act1_frozen_vault_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-24",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:3",
+      "x": 6,
+      "y": 24
+    },
+    "act1_white_fang_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-25",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 19,
+      "y": 27
+    },
+    "rat": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-26",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 32,
+      "y": 3
+    },
+    "act1_carrion_pack_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-26",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 18,
+      "y": 6
+    },
+    "act1_reed_clan_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-27",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:2",
+      "x": 33,
+      "y": 14
+    },
+    "act1_ember_hive_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-27",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:2",
+      "x": 28,
+      "y": 16
+    },
+    "act1_carrion_pack_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-27",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 24,
+      "y": 23
+    },
+    "act1_white_fang_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-27",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 11,
+      "y": 32
+    },
+    "act1_snow_grove_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-27",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 4,
+      "y": 6
+    },
+    "act1_rime_clan_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-27",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:2",
+      "x": 15,
+      "y": 7
+    },
+    "act1_charred_crypt_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-28",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 19,
+      "y": 7
+    },
+    "act1_ossuary_order_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-28",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:1",
+      "x": 9,
+      "y": 12
+    },
+    "act1_snow_grove_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-28",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 6,
+      "y": 6
+    },
+    "goblin_scout": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-29",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 10,
+      "y": 26
+    },
+    "act1_thicket_pack_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-29",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 5,
+      "y": 6
+    },
+    "act1_sun_scour_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-29",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 31,
+      "y": 19
+    },
+    "act1_ossuary_order_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-29",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:2",
+      "x": 28,
+      "y": 26
+    },
+    "act1_ossuary_order_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-29",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:1",
+      "x": 31,
+      "y": 12
+    },
+    "act1_frozen_vault_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-29",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:2",
+      "mobId": "basement:-8,-49:1:roaming:2:3",
+      "x": 5,
+      "y": 13
+    },
+    "goblin_archer": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-30",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:3",
+      "x": 26,
+      "y": 21
+    },
+    "act1_carrion_pack_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-30",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:3",
+      "mobId": "0,-37:roaming:3:1",
+      "x": 23,
+      "y": 28
+    },
+    "act1_reed_clan_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-31",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 31,
+      "y": 18
+    },
+    "act1_briar_court_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-31",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 17,
+      "y": 29
+    },
+    "act1_sun_scour_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-32",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:2",
+      "x": 29,
+      "y": 33
+    },
+    "act1_rot_court_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-32",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 25,
+      "y": 30
+    },
+    "wolf": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-34",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 28,
+      "y": 9
+    },
+    "act1_thicket_pack_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-34",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 7,
+      "y": 8
+    },
+    "act1_dry_fang_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-34",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 23,
+      "y": 7
+    },
+    "act1_rot_court_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-34",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 19,
+      "y": 8
+    },
+    "act1_rot_court_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-34",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 24,
+      "y": 22
+    },
+    "act1_cellar_nest_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-35",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:1",
+      "x": 6,
+      "y": 12
+    },
+    "act1_snow_grove_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-35",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 30,
+      "y": 31
+    },
+    "act1_ember_hive_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-36",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 28,
+      "y": 32
+    },
+    "act1_thicket_pack_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-37",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 10,
+      "y": 28
+    },
+    "act1_snow_grove_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-37",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 6,
+      "y": 8
+    },
+    "act1_frozen_vault_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-37",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:3",
+      "x": 4,
+      "y": 26
+    },
+    "act1_rime_clan_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-38",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:3",
+      "x": 11,
+      "y": 4
+    },
+    "act1_dry_fang_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-39",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:2",
+      "x": 21,
+      "y": 7
+    },
+    "act1_charred_crypt_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-39",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:3",
+      "x": 29,
+      "y": 23
+    },
+    "act1_harvest_clan_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-39",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 9,
+      "y": 7
+    },
+    "act1_ossuary_order_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-39",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:3",
+      "mobId": "basement:3,-36:0:roaming:3:3",
+      "x": 16,
+      "y": 8
+    },
+    "act1_white_fang_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-39",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 21,
+      "y": 4
+    },
+    "act1_frozen_vault_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-39",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:2",
+      "x": 29,
+      "y": 26
+    },
+    "act1_ember_hive_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-40",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 24,
+      "y": 21
+    },
+    "act1_carrion_pack_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-40",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 12,
+      "y": 28
+    },
+    "act1_ember_hive_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-41",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:1",
+      "x": 31,
+      "y": 20
+    },
+    "act1_ember_hive_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-41",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:1",
+      "x": 28,
+      "y": 2
+    },
+    "act1_cellar_nest_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-42",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:1",
+      "x": 9,
+      "y": 24
+    },
+    "act1_dry_fang_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-42",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 4,
+      "y": 6
+    },
+    "act1_white_fang_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-42",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 7,
+      "y": 13
+    },
+    "act1_snow_grove_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-42",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 18,
+      "y": 3
+    },
+    "act1_frozen_vault_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-42",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:1",
+      "x": 25,
+      "y": 22
+    },
+    "act1_thicket_pack_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-43",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 6,
+      "y": 6
+    },
+    "act1_dry_fang_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-43",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:2",
+      "x": 17,
+      "y": 27
+    },
+    "act1_rime_clan_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-44",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 32,
+      "y": 4
+    },
+    "act1_reed_clan_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-45",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 31,
+      "y": 27
+    },
+    "act1_ember_hive_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-45",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:2",
+      "x": 7,
+      "y": 20
+    },
+    "act1_harvest_clan_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-45",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 26,
+      "y": 2
+    },
+    "act1_frozen_vault_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-45",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:1",
+      "x": 16,
+      "y": 7
+    },
+    "act1_frozen_vault_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-45",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:2",
+      "mobId": "basement:-8,-49:1:roaming:2:2",
+      "x": 32,
+      "y": 27
+    },
+    "act1_reed_clan_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-46",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 12,
+      "y": 9
+    },
+    "act1_briar_court_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-46",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 32,
+      "y": 16
+    },
+    "act1_thicket_pack_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-49",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 4,
+      "y": 28
+    },
+    "act1_reed_clan_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-49",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:3",
+      "mobId": "0,-11:roaming:3:2",
+      "x": 4,
+      "y": 19
+    },
+    "act1_dry_fang_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-51",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 8,
+      "y": 12
+    },
+    "act1_ossuary_order_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-51",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:1",
+      "mobId": "basement:3,-36:0:roaming:1:2",
+      "x": 22,
+      "y": 7
+    },
+    "act1_white_fang_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-51",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 32,
+      "y": 24
+    },
+    "act1_frozen_vault_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-51",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:2",
+      "x": 10,
+      "y": 24
+    },
+    "act1_cellar_nest_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-52",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:0",
+      "x": 14,
+      "y": 4
+    },
+    "act1_cellar_nest_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-52",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:1",
+      "x": 14,
+      "y": 3
+    },
+    "act1_cellar_nest_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-52",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:0",
+      "mobId": "basement:-3,-10:0:roaming:0:2",
+      "x": 15,
+      "y": 4
+    },
+    "act1_dry_fang_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-53",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 32,
+      "y": 27
+    },
+    "act1_white_fang_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-54",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:3",
+      "x": 16,
+      "y": 9
+    },
+    "act1_carrion_pack_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-55",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 3,
+      "y": 10
+    },
+    "act1_snow_grove_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-55",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:2",
+      "x": 22,
+      "y": 31
+    },
+    "act1_briar_court_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-56",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 19,
+      "y": 6
+    },
+    "act1_reed_clan_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-56",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 32,
+      "y": 15
+    },
+    "act1_charred_crypt_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-56",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 18,
+      "y": 3
+    },
+    "act1_white_fang_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-56",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 9,
+      "y": 9
+    },
+    "act1_snow_grove_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-57",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 10,
+      "y": 13
+    },
+    "act1_carrion_pack_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-58",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 8,
+      "y": 24
+    },
+    "act1_charred_crypt_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-59",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:0",
+      "mobId": "basement:-3,-22:0:roaming:0:2",
+      "x": 18,
+      "y": 19
+    },
+    "act1_rot_court_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-60",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 9,
+      "y": 13
+    },
+    "act1_ossuary_order_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-60",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:2",
+      "x": 30,
+      "y": 15
+    },
+    "act1_rime_clan_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-61",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 31,
+      "y": 24
+    },
+    "act1_thicket_pack_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-63",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 23,
+      "y": 31
+    },
+    "act1_white_fang_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-63",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:3",
+      "x": 3,
+      "y": 28
+    },
+    "act1_briar_court_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-64",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:3",
+      "x": 7,
+      "y": 5
+    },
+    "act1_dry_fang_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-64",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:2",
+      "mobId": "0,-23:roaming:2:1",
+      "x": 8,
+      "y": 15
+    },
+    "act1_rime_clan_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-64",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:2",
+      "x": 12,
+      "y": 10
+    },
+    "act1_white_fang_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-65",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 14,
+      "y": 8
+    },
+    "act1_carrion_pack_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-66",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 28,
+      "y": 5
+    },
+    "act1_harvest_clan_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-67",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:3",
+      "x": 18,
+      "y": 3
+    },
+    "act1_rime_clan_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-67",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 32,
+      "y": 6
+    },
+    "act1_thicket_pack_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-68",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 9,
+      "y": 7
+    },
+    "act1_white_fang_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-68",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:3",
+      "x": 22,
+      "y": 32
+    },
+    "act1_dry_fang_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-69",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 26,
+      "y": 8
+    },
+    "act1_charred_crypt_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-69",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:1",
+      "x": 18,
+      "y": 10
+    },
+    "act1_snow_grove_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-69",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 6,
+      "y": 6
+    },
+    "act1_briar_court_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-70",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 21,
+      "y": 8
+    },
+    "act1_white_fang_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-71",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 5,
+      "y": 6
+    },
+    "act1_thicket_pack_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-72",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 5,
+      "y": 27
+    },
+    "act1_ember_hive_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-72",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 10,
+      "y": 11
+    },
+    "act1_ossuary_order_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-72",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:1",
+      "mobId": "basement:3,-36:0:roaming:1:1",
+      "x": 3,
+      "y": 24
+    },
+    "act1_harvest_clan_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-75",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 6,
+      "y": 10
+    },
+    "act1_ossuary_order_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-75",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:0",
+      "mobId": "basement:3,-36:0:roaming:0:1",
+      "x": 21,
+      "y": 13
+    },
+    "act1_harvest_clan_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-77",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:3",
+      "mobId": "0,-37:roaming:3:1",
+      "x": 3,
+      "y": 3
+    },
+    "act1_snow_grove_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-77",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:1",
+      "x": 32,
+      "y": 2
+    },
+    "boar": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-79",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:2",
+      "x": 4,
+      "y": 23
+    },
+    "act1_dry_fang_14": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-84",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:1",
+      "mobId": "0,-23:roaming:1:3",
+      "x": 8,
+      "y": 29
+    },
+    "act1_harvest_clan_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-84",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 18,
+      "y": 28
+    },
+    "act1_harvest_clan_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-85",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 12,
+      "y": 6
+    },
+    "act1_carrion_pack_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-85",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 32,
+      "y": 28
+    },
+    "act1_rot_court_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-85",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:3",
+      "mobId": "0,-37:roaming:3:1",
+      "x": 14,
+      "y": 31
+    },
+    "act1_reed_clan_10": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-86",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 6,
+      "y": 32
+    },
+    "act1_carrion_pack_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-86",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 20,
+      "y": 28
+    },
+    "act1_white_fang_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-86",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 5,
+      "y": 4
+    },
+    "act1_sun_scour_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-88",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 28,
+      "y": 27
+    },
+    "act1_carrion_pack_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-89",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 28,
+      "y": 4
+    },
+    "act1_snow_grove_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-89",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 8,
+      "y": 13
+    },
+    "act1_carrion_pack_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-92",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 30,
+      "y": 30
+    },
+    "act1_harvest_clan_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-96",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 27,
+      "y": 24
+    },
+    "act1_sun_scour_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-98",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 12,
+      "y": 28
+    },
+    "act1_rot_court_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-98",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 32,
+      "y": 31
+    },
+    "act1_rot_court_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-102",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 26,
+      "y": 1
+    },
+    "act1_dry_fang_6": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-104",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 15,
+      "y": 6
+    },
+    "act1_carrion_pack_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-107",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 20,
+      "y": 3
+    },
+    "act1_charred_crypt_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-111",
+      "chunkId": "basement:-3,-22:0",
+      "groupId": "basement:-3,-22:0:roaming:1",
+      "mobId": "basement:-3,-22:0:roaming:1:2",
+      "x": 25,
+      "y": 26
+    },
+    "act1_briar_court_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-117",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:0",
+      "x": 30,
+      "y": 31
+    },
+    "act1_briar_court_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-117",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 31,
+      "y": 31
+    },
+    "act1_snow_grove_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-117",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:2",
+      "x": 10,
+      "y": 13
+    },
+    "act1_ossuary_order_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-119",
+      "chunkId": "basement:3,-36:0",
+      "groupId": "basement:3,-36:0:roaming:2",
+      "mobId": "basement:3,-36:0:roaming:2:2",
+      "x": 3,
+      "y": 23
+    },
+    "act1_dry_fang_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-120",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:2",
+      "x": 29,
+      "y": 33
+    },
+    "act1_white_fang_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-121",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 26,
+      "y": 28
+    },
+    "act1_carrion_pack_11": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-127",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 27,
+      "y": 10
+    },
+    "act1_harvest_clan_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-131",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 29,
+      "y": 2
+    },
+    "act1_harvest_clan_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-131",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 19,
+      "y": 28
+    },
+    "act1_rot_court_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-135",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 11,
+      "y": 3
+    },
+    "act1_white_fang_5": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-137",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 3,
+      "y": 25
+    },
+    "thornling": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-142",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 26,
+      "y": 31
+    },
+    "act1_snow_grove_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-143",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:1",
+      "x": 18,
+      "y": 31
+    },
+    "act1_harvest_clan_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-148",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:1",
+      "x": 18,
+      "y": 6
+    },
+    "act1_carrion_pack_16": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-149",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 8,
+      "y": 17
+    },
+    "act1_white_fang_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-154",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:3",
+      "x": 32,
+      "y": 15
+    },
+    "act1_rot_court_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-156",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:3",
+      "x": 2,
+      "y": 13
+    },
+    "act1_snow_grove_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-160",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 19,
+      "y": 32
+    },
+    "act1_sun_scour_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-167",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:1",
+      "x": 29,
+      "y": 4
+    },
+    "act1_briar_court_4": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-172",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:2",
+      "x": 30,
+      "y": 16
+    },
+    "act1_harvest_clan_19": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-173",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 32,
+      "y": 30
+    },
+    "act1_harvest_clan_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-180",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 29,
+      "y": 26
+    },
+    "act1_rime_clan_18": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-184",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:2",
+      "x": 27,
+      "y": 12
+    },
+    "act1_rot_court_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-188",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:2",
+      "x": 7,
+      "y": 20
+    },
+    "act1_sun_scour_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-200",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:3",
+      "mobId": "0,-23:roaming:3:1",
+      "x": 24,
+      "y": 24
+    },
+    "act1_rime_clan_2": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-200",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:3",
+      "mobId": "0,-50:roaming:3:1",
+      "x": 3,
+      "y": 2
+    },
+    "act1_rot_court_17": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-206",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 9,
+      "y": 6
+    },
+    "act1_rime_clan_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-215",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 7,
+      "y": 7
+    },
+    "act1_dry_fang_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-225",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 32,
+      "y": 2
+    },
+    "act1_snow_grove_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-237",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 28,
+      "y": 9
+    },
+    "act1_dry_fang_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-240",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 3,
+      "y": 23
+    },
+    "act1_sun_scour_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-243",
+      "chunkId": "0,-23",
+      "groupId": "0,-23:roaming:0",
+      "mobId": "0,-23:roaming:0:1",
+      "x": 8,
+      "y": 26
+    },
+    "act1_rot_court_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-247",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 4,
+      "y": 27
+    },
+    "act1_rime_clan_20": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-271",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:0",
+      "mobId": "0,-50:roaming:0:1",
+      "x": 31,
+      "y": 12
+    },
+    "act1_harvest_clan_12": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-272",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:2",
+      "mobId": "0,-37:roaming:2:1",
+      "x": 28,
+      "y": 13
+    },
+    "act1_harvest_clan_3": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-281",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:0",
+      "mobId": "0,-37:roaming:0:2",
+      "x": 15,
+      "y": 30
+    },
+    "act1_frozen_vault_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-285",
+      "chunkId": "basement:-8,-49:1",
+      "groupId": "basement:-8,-49:1:roaming:0",
+      "mobId": "basement:-8,-49:1:roaming:0:1",
+      "x": 23,
+      "y": 22
+    },
+    "act1_harvest_clan_9": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-327",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:2",
+      "x": 8,
+      "y": 30
+    },
+    "act1_white_fang_1": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-352",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 16,
+      "y": 27
+    },
+    "act1_rot_court_8": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-379",
+      "chunkId": "0,-37",
+      "groupId": "0,-37:roaming:1",
+      "mobId": "0,-37:roaming:1:1",
+      "x": 4,
+      "y": 23
+    },
+    "act1_snow_grove_7": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-417",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:1",
+      "x": 3,
+      "y": 16
+    },
+    "act1_cellar_nest_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-431",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:1",
+      "x": 27,
+      "y": 11
+    },
+    "act1_snow_grove_13": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-455",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:1",
+      "mobId": "0,-50:roaming:1:2",
+      "x": 7,
+      "y": 9
+    },
+    "act1_snow_grove_15": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-505",
+      "chunkId": "0,-50",
+      "groupId": "0,-50:roaming:2",
+      "mobId": "0,-50:roaming:2:2",
+      "x": 9,
+      "y": 22
+    },
+    "act1_cellar_nest_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-566",
+      "chunkId": "basement:-3,-10:0",
+      "groupId": "basement:-3,-10:0:roaming:1",
+      "mobId": "basement:-3,-10:0:roaming:1:1",
+      "x": 4,
+      "y": 21
+    },
+    "act1_briar_court_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-699",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 4,
+      "y": 31
+    },
+    "act1_briar_court_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-699",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 5,
+      "y": 32
+    },
+    "act1_briar_court_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-740",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:2",
+      "mobId": "0,-11:roaming:2:1",
+      "x": 24,
+      "y": 9
+    },
+    "act1_reed_clan_23": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-993",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:0",
+      "x": 23,
+      "y": 25
+    },
+    "act1_reed_clan_21": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-993",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 23,
+      "y": 24
+    },
+    "act1_reed_clan_24": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-993",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:2",
+      "x": 24,
+      "y": 25
+    },
+    "act1_reed_clan_25": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-1223",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:0",
+      "mobId": "0,-11:roaming:0:1",
+      "x": 33,
+      "y": 14
+    },
+    "act1_reed_clan_22": {
+      "layoutSeed": "enemy-runtime-census-layout",
+      "encounterSeed": "enemy-runtime-census-2224",
+      "chunkId": "0,-11",
+      "groupId": "0,-11:roaming:1",
+      "mobId": "0,-11:roaming:1:1",
+      "x": 3,
+      "y": 18
+    }
+  }
+}

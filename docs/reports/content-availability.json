@@ -1,0 +1,5775 @@
+{
+  "contentHash": "ad6299a7",
+  "evidence": "Production-pool reachability; runtime application and seeded encounter coverage are verified by the reachability tests.",
+  "valid": true,
+  "counts": {
+    "enemies": 550,
+    "bosses": 50,
+    "items": 4861,
+    "itemsByRarity": {
+      "common": 1981,
+      "rare": 1442,
+      "epic": 959,
+      "legendary": 479
+    },
+    "sets": 500,
+    "learnedSkills": 400,
+    "auras": 150,
+    "setAuras": 28
+  },
+  "missing": {
+    "enemies": [],
+    "items": [],
+    "skills": [],
+    "auras": [],
+    "setAuras": [],
+    "sets": [],
+    "invalidSlots": []
+  },
+  "enemyRoutes": {
+    "rat": "content-availability-0/0,0/surface/normal/leader",
+    "wolf": "content-availability-0/0,0/surface/normal/leader",
+    "slime": "content-availability-0/0,0/surface/normal/leader",
+    "spider": "content-availability-0/0,0/surface/normal/leader",
+    "goblin_scout": "content-availability-0/0,0/surface/normal/leader",
+    "act1_reed_clan_1": "content-availability-0/0,0/surface/normal/leader",
+    "act1_reed_clan_2": "content-availability-0/0,0/surface/normal/leader",
+    "act1_reed_clan_3": "content-availability-0/0,0/surface/normal/leader",
+    "act1_reed_clan_5": "content-availability-0/0,0/surface/normal/leader",
+    "act1_briar_court_1": "content-availability-0/0,0/surface/normal/leader",
+    "act1_briar_court_2": "content-availability-0/0,0/surface/normal/leader",
+    "act1_briar_court_3": "content-availability-0/0,0/surface/normal/leader",
+    "act1_briar_court_5": "content-availability-0/0,0/surface/normal/leader",
+    "act1_thicket_pack_1": "content-availability-0/0,0/surface/normal/leader",
+    "act1_thicket_pack_2": "content-availability-0/0,0/surface/normal/leader",
+    "act1_thicket_pack_3": "content-availability-0/0,0/surface/normal/leader",
+    "act1_thicket_pack_4": "content-availability-0/0,0/surface/normal/leader",
+    "act1_thicket_pack_5": "content-availability-0/0,0/surface/normal/leader",
+    "act1_cellar_nest_1": "content-availability-0/0,0/basement/normal/leader",
+    "act1_cellar_nest_2": "content-availability-0/0,0/basement/normal/leader",
+    "act1_cellar_nest_3": "content-availability-0/0,0/basement/normal/leader",
+    "act1_cellar_nest_5": "content-availability-0/0,0/basement/normal/leader",
+    "act1_flood_brood_1": "content-availability-0/0,0/well/d20=1",
+    "act1_flood_brood_2": "content-availability-0/0,0/well/d20=1",
+    "act1_flood_brood_3": "content-availability-0/0,0/well/d20=1",
+    "act1_flood_brood_4": "content-availability-0/0,0/well/d20=1",
+    "act1_flood_brood_5": "content-availability-0/0,0/well/d20=1",
+    "goblin_archer": "content-availability-0/4,0/surface/normal/leader",
+    "goblin_shaman": "content-availability-0/4,0/surface/normal/leader",
+    "boar": "content-availability-0/4,0/surface/normal/leader",
+    "thornling": "content-availability-0/4,0/surface/normal/leader",
+    "act1_reed_clan_6": "content-availability-0/4,0/surface/normal/leader",
+    "act1_reed_clan_7": "content-availability-0/4,0/surface/normal/leader",
+    "act1_reed_clan_8": "content-availability-0/4,0/surface/normal/leader",
+    "act1_reed_clan_9": "content-availability-0/4,0/surface/normal/leader",
+    "act1_reed_clan_10": "content-availability-0/4,0/surface/normal/leader",
+    "act1_briar_court_6": "content-availability-0/4,0/surface/normal/leader",
+    "act1_briar_court_7": "content-availability-0/4,0/surface/normal/leader",
+    "act1_briar_court_8": "content-availability-0/4,0/surface/normal/leader",
+    "act1_briar_court_9": "content-availability-0/4,0/surface/normal/leader",
+    "act1_briar_court_10": "content-availability-0/4,0/surface/normal/leader",
+    "act1_thicket_pack_6": "content-availability-0/4,0/surface/normal/leader",
+    "act1_thicket_pack_7": "content-availability-0/4,0/surface/normal/leader",
+    "act1_thicket_pack_8": "content-availability-0/4,0/surface/normal/leader",
+    "act1_thicket_pack_9": "content-availability-0/4,0/surface/normal/leader",
+    "act1_thicket_pack_10": "content-availability-0/4,0/surface/normal/leader",
+    "act1_reed_clan_4": "content-availability-0/4,0/surface/normal/escort",
+    "act1_briar_court_4": "content-availability-0/4,0/surface/normal/escort",
+    "act1_reed_clan_11": "content-availability-0/4,0/surface/epic/leader",
+    "act1_reed_clan_12": "content-availability-0/4,0/surface/epic/leader",
+    "act1_reed_clan_13": "content-availability-0/4,0/surface/epic/leader",
+    "act1_reed_clan_14": "content-availability-0/4,0/surface/epic/leader",
+    "act1_reed_clan_15": "content-availability-0/4,0/surface/epic/leader",
+    "act1_briar_court_11": "content-availability-0/4,0/surface/epic/leader",
+    "act1_briar_court_12": "content-availability-0/4,0/surface/epic/leader",
+    "act1_briar_court_13": "content-availability-0/4,0/surface/epic/leader",
+    "act1_briar_court_14": "content-availability-0/4,0/surface/epic/leader",
+    "act1_briar_court_15": "content-availability-0/4,0/surface/epic/leader",
+    "act1_thicket_pack_11": "content-availability-0/4,0/surface/epic/leader",
+    "act1_thicket_pack_12": "content-availability-0/4,0/surface/epic/leader",
+    "act1_thicket_pack_13": "content-availability-0/4,0/surface/epic/leader",
+    "act1_thicket_pack_14": "content-availability-0/4,0/surface/epic/leader",
+    "act1_thicket_pack_15": "content-availability-0/4,0/surface/epic/leader",
+    "elite_warden": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_reed_clan_16": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_reed_clan_17": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_reed_clan_18": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_reed_clan_19": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_reed_clan_20": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_briar_court_16": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_briar_court_17": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_briar_court_18": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_briar_court_19": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_briar_court_20": "content-availability-0/4,0/surface/miniboss/leader",
+    "act1_cellar_nest_6": "content-availability-0/4,0/basement/normal/leader",
+    "act1_cellar_nest_7": "content-availability-0/4,0/basement/normal/leader",
+    "act1_cellar_nest_8": "content-availability-0/4,0/basement/normal/leader",
+    "act1_cellar_nest_9": "content-availability-0/4,0/basement/normal/leader",
+    "act1_cellar_nest_10": "content-availability-0/4,0/basement/normal/leader",
+    "act1_cellar_nest_4": "content-availability-0/4,0/basement/normal/escort",
+    "act1_cellar_nest_11": "content-availability-0/4,0/basement/epic/leader",
+    "act1_cellar_nest_12": "content-availability-0/4,0/basement/epic/leader",
+    "act1_cellar_nest_13": "content-availability-0/4,0/basement/epic/leader",
+    "act1_cellar_nest_14": "content-availability-0/4,0/basement/epic/leader",
+    "act1_cellar_nest_15": "content-availability-0/4,0/basement/epic/leader",
+    "act1_cellar_nest_16": "content-availability-0/4,0/basement/miniboss/leader",
+    "act1_cellar_nest_17": "content-availability-0/4,0/basement/miniboss/leader",
+    "act1_cellar_nest_18": "content-availability-0/4,0/basement/miniboss/leader",
+    "act1_cellar_nest_19": "content-availability-0/4,0/basement/miniboss/leader",
+    "act1_cellar_nest_20": "content-availability-0/4,0/basement/miniboss/leader",
+    "act1_flood_brood_6": "content-availability-0/4,0/well/d20=2",
+    "act1_flood_brood_7": "content-availability-0/4,0/well/d20=2",
+    "act1_flood_brood_8": "content-availability-0/4,0/well/d20=2",
+    "act1_flood_brood_9": "content-availability-0/4,0/well/d20=2",
+    "act1_flood_brood_10": "content-availability-0/4,0/well/d20=2",
+    "act1_flood_brood_11": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_12": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_13": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_14": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_15": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_16": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_17": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_18": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_19": "content-availability-0/4,0/well/d20=20",
+    "act1_flood_brood_20": "content-availability-0/4,0/well/d20=20",
+    "act1_reed_clan_21": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_reed_clan_22": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_reed_clan_23": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_reed_clan_24": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_reed_clan_25": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_briar_court_21": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_briar_court_22": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_briar_court_23": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_briar_court_24": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_briar_court_25": "content-availability-0/10,0/surface/miniboss/leader",
+    "act1_cellar_nest_21": "content-availability-0/10,0/basement/miniboss/leader",
+    "act1_cellar_nest_22": "content-availability-0/10,0/basement/miniboss/leader",
+    "act1_cellar_nest_23": "content-availability-0/10,0/basement/miniboss/leader",
+    "act1_cellar_nest_24": "content-availability-0/10,0/basement/miniboss/leader",
+    "act1_cellar_nest_25": "content-availability-0/10,0/basement/miniboss/leader",
+    "act1_flood_brood_21": "content-availability-0/10,0/well/d20=20",
+    "act1_flood_brood_22": "content-availability-0/10,0/well/d20=20",
+    "act1_flood_brood_23": "content-availability-0/10,0/well/d20=20",
+    "act1_flood_brood_24": "content-availability-0/10,0/well/d20=20",
+    "act1_flood_brood_25": "content-availability-0/10,0/well/d20=20",
+    "act1_sun_scour_11": "content-availability-0/12,0/surface/normal/leader",
+    "act1_sun_scour_12": "content-availability-0/12,0/surface/normal/leader",
+    "act1_sun_scour_13": "content-availability-0/12,0/surface/normal/leader",
+    "act1_sun_scour_14": "content-availability-0/12,0/surface/normal/leader",
+    "act1_sun_scour_15": "content-availability-0/12,0/surface/normal/leader",
+    "act1_ember_hive_11": "content-availability-0/12,0/surface/normal/leader",
+    "act1_ember_hive_12": "content-availability-0/12,0/surface/normal/leader",
+    "act1_ember_hive_13": "content-availability-0/12,0/surface/normal/leader",
+    "act1_ember_hive_14": "content-availability-0/12,0/surface/normal/leader",
+    "act1_ember_hive_15": "content-availability-0/12,0/surface/normal/leader",
+    "act1_dry_fang_11": "content-availability-0/12,0/surface/normal/leader",
+    "act1_dry_fang_12": "content-availability-0/12,0/surface/normal/leader",
+    "act1_dry_fang_13": "content-availability-0/12,0/surface/normal/leader",
+    "act1_dry_fang_14": "content-availability-0/12,0/surface/normal/leader",
+    "act1_dry_fang_15": "content-availability-0/12,0/surface/normal/leader",
+    "act1_sun_scour_1": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_2": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_3": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_4": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_5": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_6": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_7": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_8": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_9": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_10": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_1": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_2": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_3": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_4": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_5": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_6": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_7": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_8": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_9": "content-availability-0/12,0/surface/normal/escort",
+    "act1_ember_hive_10": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_1": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_2": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_3": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_4": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_5": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_6": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_7": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_8": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_9": "content-availability-0/12,0/surface/normal/escort",
+    "act1_dry_fang_10": "content-availability-0/12,0/surface/normal/escort",
+    "act1_sun_scour_16": "content-availability-0/12,0/surface/epic/leader",
+    "act1_sun_scour_17": "content-availability-0/12,0/surface/epic/leader",
+    "act1_sun_scour_18": "content-availability-0/12,0/surface/epic/leader",
+    "act1_sun_scour_19": "content-availability-0/12,0/surface/epic/leader",
+    "act1_sun_scour_20": "content-availability-0/12,0/surface/epic/leader",
+    "act1_ember_hive_16": "content-availability-0/12,0/surface/epic/leader",
+    "act1_ember_hive_17": "content-availability-0/12,0/surface/epic/leader",
+    "act1_ember_hive_18": "content-availability-0/12,0/surface/epic/leader",
+    "act1_ember_hive_19": "content-availability-0/12,0/surface/epic/leader",
+    "act1_ember_hive_20": "content-availability-0/12,0/surface/epic/leader",
+    "act1_dry_fang_16": "content-availability-0/12,0/surface/epic/leader",
+    "act1_dry_fang_17": "content-availability-0/12,0/surface/epic/leader",
+    "act1_dry_fang_18": "content-availability-0/12,0/surface/epic/leader",
+    "act1_dry_fang_19": "content-availability-0/12,0/surface/epic/leader",
+    "act1_dry_fang_20": "content-availability-0/12,0/surface/epic/leader",
+    "act1_sun_scour_21": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_sun_scour_22": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_sun_scour_23": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_sun_scour_24": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_sun_scour_25": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_ember_hive_21": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_ember_hive_22": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_ember_hive_23": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_ember_hive_24": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_ember_hive_25": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_dry_fang_21": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_dry_fang_22": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_dry_fang_23": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_dry_fang_24": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_dry_fang_25": "content-availability-0/12,0/surface/miniboss/leader",
+    "act1_charred_crypt_11": "content-availability-0/12,0/basement/normal/leader",
+    "act1_charred_crypt_12": "content-availability-0/12,0/basement/normal/leader",
+    "act1_charred_crypt_13": "content-availability-0/12,0/basement/normal/leader",
+    "act1_charred_crypt_14": "content-availability-0/12,0/basement/normal/leader",
+    "act1_charred_crypt_15": "content-availability-0/12,0/basement/normal/leader",
+    "act1_charred_crypt_1": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_2": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_3": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_4": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_5": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_6": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_7": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_8": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_9": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_10": "content-availability-0/12,0/basement/normal/escort",
+    "act1_charred_crypt_16": "content-availability-0/12,0/basement/epic/leader",
+    "act1_charred_crypt_17": "content-availability-0/12,0/basement/epic/leader",
+    "act1_charred_crypt_18": "content-availability-0/12,0/basement/epic/leader",
+    "act1_charred_crypt_19": "content-availability-0/12,0/basement/epic/leader",
+    "act1_charred_crypt_20": "content-availability-0/12,0/basement/epic/leader",
+    "act1_charred_crypt_21": "content-availability-0/12,0/basement/miniboss/leader",
+    "act1_charred_crypt_22": "content-availability-0/12,0/basement/miniboss/leader",
+    "act1_charred_crypt_23": "content-availability-0/12,0/basement/miniboss/leader",
+    "act1_charred_crypt_24": "content-availability-0/12,0/basement/miniboss/leader",
+    "act1_charred_crypt_25": "content-availability-0/12,0/basement/miniboss/leader",
+    "act1_saltwater_spawn_1": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_2": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_3": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_4": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_5": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_6": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_7": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_8": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_9": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_10": "content-availability-0/12,0/well/d20=1",
+    "act1_saltwater_spawn_11": "content-availability-0/12,0/well/d20=2",
+    "act1_saltwater_spawn_12": "content-availability-0/12,0/well/d20=2",
+    "act1_saltwater_spawn_13": "content-availability-0/12,0/well/d20=2",
+    "act1_saltwater_spawn_14": "content-availability-0/12,0/well/d20=2",
+    "act1_saltwater_spawn_15": "content-availability-0/12,0/well/d20=2",
+    "act1_saltwater_spawn_16": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_17": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_18": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_19": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_20": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_21": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_22": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_23": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_24": "content-availability-0/12,0/well/d20=20",
+    "act1_saltwater_spawn_25": "content-availability-0/12,0/well/d20=20",
+    "act1_harvest_clan_16": "content-availability-0/25,0/surface/normal/leader",
+    "act1_harvest_clan_17": "content-availability-0/25,0/surface/normal/leader",
+    "act1_harvest_clan_18": "content-availability-0/25,0/surface/normal/leader",
+    "act1_harvest_clan_19": "content-availability-0/25,0/surface/normal/leader",
+    "act1_harvest_clan_20": "content-availability-0/25,0/surface/normal/leader",
+    "act1_rot_court_16": "content-availability-0/25,0/surface/normal/leader",
+    "act1_rot_court_17": "content-availability-0/25,0/surface/normal/leader",
+    "act1_rot_court_18": "content-availability-0/25,0/surface/normal/leader",
+    "act1_rot_court_19": "content-availability-0/25,0/surface/normal/leader",
+    "act1_rot_court_20": "content-availability-0/25,0/surface/normal/leader",
+    "act1_carrion_pack_16": "content-availability-0/25,0/surface/normal/leader",
+    "act1_carrion_pack_17": "content-availability-0/25,0/surface/normal/leader",
+    "act1_carrion_pack_18": "content-availability-0/25,0/surface/normal/leader",
+    "act1_carrion_pack_19": "content-availability-0/25,0/surface/normal/leader",
+    "act1_carrion_pack_20": "content-availability-0/25,0/surface/normal/leader",
+    "act1_harvest_clan_1": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_2": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_3": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_4": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_5": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_6": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_7": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_8": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_9": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_10": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_11": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_12": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_13": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_14": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_15": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_1": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_2": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_3": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_4": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_5": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_6": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_7": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_8": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_9": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_10": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_11": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_12": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_13": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_14": "content-availability-0/25,0/surface/normal/escort",
+    "act1_rot_court_15": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_1": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_2": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_3": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_4": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_5": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_6": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_7": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_8": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_9": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_10": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_11": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_12": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_13": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_14": "content-availability-0/25,0/surface/normal/escort",
+    "act1_carrion_pack_15": "content-availability-0/25,0/surface/normal/escort",
+    "act1_harvest_clan_21": "content-availability-0/25,0/surface/epic/leader",
+    "act1_harvest_clan_22": "content-availability-0/25,0/surface/epic/leader",
+    "act1_harvest_clan_23": "content-availability-0/25,0/surface/epic/leader",
+    "act1_harvest_clan_24": "content-availability-0/25,0/surface/epic/leader",
+    "act1_harvest_clan_25": "content-availability-0/25,0/surface/epic/leader",
+    "act1_rot_court_21": "content-availability-0/25,0/surface/epic/leader",
+    "act1_rot_court_22": "content-availability-0/25,0/surface/epic/leader",
+    "act1_rot_court_23": "content-availability-0/25,0/surface/epic/leader",
+    "act1_rot_court_24": "content-availability-0/25,0/surface/epic/leader",
+    "act1_rot_court_25": "content-availability-0/25,0/surface/epic/leader",
+    "act1_carrion_pack_21": "content-availability-0/25,0/surface/epic/leader",
+    "act1_carrion_pack_22": "content-availability-0/25,0/surface/epic/leader",
+    "act1_carrion_pack_23": "content-availability-0/25,0/surface/epic/leader",
+    "act1_carrion_pack_24": "content-availability-0/25,0/surface/epic/leader",
+    "act1_carrion_pack_25": "content-availability-0/25,0/surface/epic/leader",
+    "act1_ossuary_order_16": "content-availability-0/25,0/basement/normal/leader",
+    "act1_ossuary_order_17": "content-availability-0/25,0/basement/normal/leader",
+    "act1_ossuary_order_18": "content-availability-0/25,0/basement/normal/leader",
+    "act1_ossuary_order_19": "content-availability-0/25,0/basement/normal/leader",
+    "act1_ossuary_order_20": "content-availability-0/25,0/basement/normal/leader",
+    "act1_ossuary_order_1": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_2": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_3": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_4": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_5": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_6": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_7": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_8": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_9": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_10": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_11": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_12": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_13": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_14": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_15": "content-availability-0/25,0/basement/normal/escort",
+    "act1_ossuary_order_21": "content-availability-0/25,0/basement/epic/leader",
+    "act1_ossuary_order_22": "content-availability-0/25,0/basement/epic/leader",
+    "act1_ossuary_order_23": "content-availability-0/25,0/basement/epic/leader",
+    "act1_ossuary_order_24": "content-availability-0/25,0/basement/epic/leader",
+    "act1_ossuary_order_25": "content-availability-0/25,0/basement/epic/leader",
+    "act1_blackwater_spawn_1": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_2": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_3": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_4": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_5": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_6": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_7": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_8": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_9": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_10": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_11": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_12": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_13": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_14": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_15": "content-availability-0/25,0/well/d20=1",
+    "act1_blackwater_spawn_16": "content-availability-0/25,0/well/d20=2",
+    "act1_blackwater_spawn_17": "content-availability-0/25,0/well/d20=2",
+    "act1_blackwater_spawn_18": "content-availability-0/25,0/well/d20=2",
+    "act1_blackwater_spawn_19": "content-availability-0/25,0/well/d20=2",
+    "act1_blackwater_spawn_20": "content-availability-0/25,0/well/d20=2",
+    "act1_blackwater_spawn_21": "content-availability-0/25,0/well/d20=20",
+    "act1_blackwater_spawn_22": "content-availability-0/25,0/well/d20=20",
+    "act1_blackwater_spawn_23": "content-availability-0/25,0/well/d20=20",
+    "act1_blackwater_spawn_24": "content-availability-0/25,0/well/d20=20",
+    "act1_blackwater_spawn_25": "content-availability-0/25,0/well/d20=20",
+    "act1_rime_clan_21": "content-availability-0/38,0/surface/normal/leader",
+    "act1_rime_clan_22": "content-availability-0/38,0/surface/normal/leader",
+    "act1_rime_clan_23": "content-availability-0/38,0/surface/normal/leader",
+    "act1_rime_clan_24": "content-availability-0/38,0/surface/normal/leader",
+    "act1_rime_clan_25": "content-availability-0/38,0/surface/normal/leader",
+    "act1_snow_grove_21": "content-availability-0/38,0/surface/normal/leader",
+    "act1_snow_grove_22": "content-availability-0/38,0/surface/normal/leader",
+    "act1_snow_grove_23": "content-availability-0/38,0/surface/normal/leader",
+    "act1_snow_grove_24": "content-availability-0/38,0/surface/normal/leader",
+    "act1_snow_grove_25": "content-availability-0/38,0/surface/normal/leader",
+    "act1_white_fang_21": "content-availability-0/38,0/surface/normal/leader",
+    "act1_white_fang_22": "content-availability-0/38,0/surface/normal/leader",
+    "act1_white_fang_23": "content-availability-0/38,0/surface/normal/leader",
+    "act1_white_fang_24": "content-availability-0/38,0/surface/normal/leader",
+    "act1_white_fang_25": "content-availability-0/38,0/surface/normal/leader",
+    "act1_rime_clan_1": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_2": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_3": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_4": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_5": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_6": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_7": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_8": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_9": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_10": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_11": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_12": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_13": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_14": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_15": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_16": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_17": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_18": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_19": "content-availability-0/38,0/surface/normal/escort",
+    "act1_rime_clan_20": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_1": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_2": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_3": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_4": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_5": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_6": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_7": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_8": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_9": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_10": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_11": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_12": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_13": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_14": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_15": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_16": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_17": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_18": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_19": "content-availability-0/38,0/surface/normal/escort",
+    "act1_snow_grove_20": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_1": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_2": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_3": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_4": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_5": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_6": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_7": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_8": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_9": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_10": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_11": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_12": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_13": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_14": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_15": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_16": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_17": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_18": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_19": "content-availability-0/38,0/surface/normal/escort",
+    "act1_white_fang_20": "content-availability-0/38,0/surface/normal/escort",
+    "act1_frozen_vault_21": "content-availability-0/38,0/basement/normal/leader",
+    "act1_frozen_vault_22": "content-availability-0/38,0/basement/normal/leader",
+    "act1_frozen_vault_23": "content-availability-0/38,0/basement/normal/leader",
+    "act1_frozen_vault_24": "content-availability-0/38,0/basement/normal/leader",
+    "act1_frozen_vault_25": "content-availability-0/38,0/basement/normal/leader",
+    "act1_frozen_vault_1": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_2": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_3": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_4": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_5": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_6": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_7": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_8": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_9": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_10": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_11": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_12": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_13": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_14": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_15": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_16": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_17": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_18": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_19": "content-availability-0/38,0/basement/normal/escort",
+    "act1_frozen_vault_20": "content-availability-0/38,0/basement/normal/escort",
+    "act1_underice_brood_1": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_2": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_3": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_4": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_5": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_6": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_7": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_8": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_9": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_10": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_11": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_12": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_13": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_14": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_15": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_16": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_17": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_18": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_19": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_20": "content-availability-0/38,0/well/d20=1",
+    "act1_underice_brood_21": "content-availability-0/38,0/well/d20=2",
+    "act1_underice_brood_22": "content-availability-0/38,0/well/d20=2",
+    "act1_underice_brood_23": "content-availability-0/38,0/well/d20=2",
+    "act1_underice_brood_24": "content-availability-0/38,0/well/d20=2",
+    "act1_underice_brood_25": "content-availability-0/38,0/well/d20=2",
+    "boss_blind_florist": "season-boss/spring",
+    "boss_briar_king": "season-boss/spring",
+    "boss_buried_bell": "season-boss/spring",
+    "boss_first_thunder": "season-boss/spring",
+    "boss_glass_seed": "season-boss/spring",
+    "boss_meltwater_lady": "season-boss/spring",
+    "boss_moss_colossus": "season-boss/spring",
+    "boss_plague_beekeeper": "season-boss/spring",
+    "boss_red_antler": "season-boss/spring",
+    "boss_reed_tyrant": "season-boss/spring",
+    "boss_silver_huntress": "season-boss/spring",
+    "boss_thousand_fangs": "season-boss/spring",
+    "boss_torn_leaves": "season-boss/spring",
+    "boss_brass_sun": "season-boss/summer",
+    "boss_cinder_butcher": "season-boss/summer",
+    "boss_copper_huntsman": "season-boss/summer",
+    "boss_dune_queen": "season-boss/summer",
+    "boss_ember_phoenix": "season-boss/summer",
+    "boss_golden_hydra": "season-boss/summer",
+    "boss_locust_emperor": "season-boss/summer",
+    "boss_mirage_sultan": "season-boss/summer",
+    "boss_noon_executioner": "season-boss/summer",
+    "boss_obsidian_ram": "season-boss/summer",
+    "boss_salt_prophet": "season-boss/summer",
+    "boss_scarlet_admiral": "season-boss/summer",
+    "boss_storm_matriarch": "season-boss/summer",
+    "boss_amber_widow": "season-boss/autumn",
+    "boss_ashen_pilgrim": "season-boss/autumn",
+    "boss_blood_granary": "season-boss/autumn",
+    "boss_carrion_king": "season-boss/autumn",
+    "boss_grave_boar": "season-boss/autumn",
+    "boss_harvest_reaper": "season-boss/autumn",
+    "boss_hollow_duchess": "season-boss/autumn",
+    "boss_last_lantern": "season-boss/autumn",
+    "boss_ossuary_archon": "season-boss/autumn",
+    "boss_rot_gardener": "season-boss/autumn",
+    "boss_rust_marshal": "season-boss/autumn",
+    "boss_witch_of_falling_hours": "season-boss/autumn",
+    "boss_black_snow_abbess": "season-boss/winter",
+    "boss_comet_wolf": "season-boss/winter",
+    "boss_frozen_executioner": "season-boss/winter",
+    "boss_glass_empress": "season-boss/winter",
+    "boss_grave_frost": "season-boss/winter",
+    "boss_heart_of_last_glacier": "season-boss/winter",
+    "boss_iron_icebreaker": "season-boss/winter",
+    "boss_last_hour_keeper": "season-boss/winter",
+    "boss_mother_white_web": "season-boss/winter",
+    "boss_polar_devourer": "season-boss/winter",
+    "boss_starved_aurora": "season-boss/winter",
+    "boss_white_sovereign": "season-boss/winter"
+  },
+  "auraRoutes": [
+    {
+      "statusId": "taunted",
+      "sourceType": "skill",
+      "sourceId": "tank_taunt",
+      "rootId": "tank_taunt",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "bastion",
+      "sourceType": "skill",
+      "sourceId": "guardian_bastion",
+      "rootId": "guardian_bastion",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "mage_ignite",
+      "rootId": "mage_ignite",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bloodlust",
+      "sourceType": "skill",
+      "sourceId": "vampire_bloodlust",
+      "rootId": "vampire_bloodlust",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "regrowth",
+      "sourceType": "skill",
+      "sourceId": "druid_regrowth",
+      "rootId": "druid_regrowth",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "sure_strike",
+      "sourceType": "skill",
+      "sourceId": "rogue_precision",
+      "rootId": "rogue_precision",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rapid_fire",
+      "sourceType": "skill",
+      "sourceId": "ranger_volley",
+      "rootId": "ranger_volley",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "poisoned",
+      "sourceType": "skill",
+      "sourceId": "spider_venom",
+      "rootId": "spider_venom",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fervor",
+      "sourceType": "skill",
+      "sourceId": "shaman_fervor",
+      "rootId": "shaman_fervor",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "fortified",
+      "sourceType": "skill",
+      "sourceId": "thornling_guard",
+      "rootId": "thornling_guard",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "crimson_incision",
+      "rootId": "crimson_incision",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "blood_offering",
+      "rootId": "blood_offering",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blood_price",
+      "sourceType": "skill",
+      "sourceId": "blood_offering",
+      "rootId": "blood_offering",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "crimson_tide",
+      "rootId": "crimson_tide",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "sanguine_gift",
+      "rootId": "sanguine_gift",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "crimson_lottery",
+      "rootId": "crimson_lottery",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "verdict_of_dawn",
+      "rootId": "verdict_of_dawn",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "divine_protection",
+      "sourceType": "skill",
+      "sourceId": "sheltering_prayer",
+      "rootId": "sheltering_prayer",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "dawn_mending",
+      "sourceType": "skill",
+      "sourceId": "lantern_procession",
+      "rootId": "lantern_procession",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "consecrated_edge",
+      "sourceType": "skill",
+      "sourceId": "sanctified_edge",
+      "rootId": "sanctified_edge",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pilgrims_grace",
+      "sourceType": "skill",
+      "sourceId": "mercy_lottery",
+      "rootId": "mercy_lottery",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "thorn_volley",
+      "rootId": "thorn_volley",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "binding_roots",
+      "rootId": "binding_roots",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_renewal",
+      "sourceType": "skill",
+      "sourceId": "grove_sanctuary",
+      "rootId": "grove_sanctuary",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "oak_heart",
+      "sourceType": "skill",
+      "sourceId": "barkskin_ritual",
+      "rootId": "barkskin_ritual",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spring_breath",
+      "sourceType": "skill",
+      "sourceId": "barkskin_ritual",
+      "rootId": "barkskin_ritual",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "seed_of_return",
+      "sourceType": "skill",
+      "sourceId": "wandering_seed",
+      "rootId": "wandering_seed",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_instinct",
+      "sourceType": "skill",
+      "sourceId": "wandering_seed",
+      "rootId": "wandering_seed",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "nightfang",
+      "rootId": "nightfang",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "veil_of_retreat",
+      "rootId": "veil_of_retreat",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "silent_step",
+      "sourceType": "skill",
+      "sourceId": "veil_of_retreat",
+      "rootId": "veil_of_retreat",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "blinding_hex",
+      "rootId": "blinding_hex",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "lethality",
+      "sourceType": "skill",
+      "sourceId": "blinding_hex",
+      "rootId": "blinding_hex",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "shadow_gamble",
+      "rootId": "shadow_gamble",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "forbidden_cut",
+      "rootId": "forbidden_cut",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "overcharge",
+      "sourceType": "skill",
+      "sourceId": "runic_overcharge",
+      "rootId": "runic_overcharge",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_sight",
+      "sourceType": "skill",
+      "sourceId": "runic_overcharge",
+      "rootId": "runic_overcharge",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "mirror_ward",
+      "sourceType": "skill",
+      "sourceId": "mirror_shelter",
+      "rootId": "mirror_shelter",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "aether_barrier",
+      "sourceType": "skill",
+      "sourceId": "runic_transmutation",
+      "rootId": "runic_transmutation",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "runic_transmutation",
+      "rootId": "runic_transmutation",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "binding_glyph",
+      "sourceType": "skill",
+      "sourceId": "unstable_spark",
+      "rootId": "unstable_spark",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "smoldering",
+      "sourceType": "skill",
+      "sourceId": "ember_lance",
+      "rootId": "ember_lance",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "fire_rain",
+      "rootId": "fire_rain",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "cinder_skin",
+      "sourceType": "skill",
+      "sourceId": "cinder_pact",
+      "rootId": "cinder_pact",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "volatile_sparks",
+      "sourceType": "skill",
+      "sourceId": "cinder_pact",
+      "rootId": "cinder_pact",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "charred_armor",
+      "sourceType": "skill",
+      "sourceId": "brand_of_furnace",
+      "rootId": "brand_of_furnace",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "glacial_spear",
+      "rootId": "glacial_spear",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "rime_armor",
+      "sourceType": "skill",
+      "sourceId": "winter_sanctum",
+      "rootId": "winter_sanctum",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "winter_sanctum",
+      "rootId": "winter_sanctum",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "crystal_shell",
+      "sourceType": "skill",
+      "sourceId": "crystal_reliquary",
+      "rootId": "crystal_reliquary",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "numbing_cold",
+      "sourceType": "skill",
+      "sourceId": "whiteout",
+      "rootId": "whiteout",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "whiteout",
+      "rootId": "whiteout",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "glacial_fracture",
+      "sourceType": "skill",
+      "sourceId": "wandering_ice",
+      "rootId": "wandering_ice",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "forked_thunder",
+      "rootId": "forked_thunder",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "charged_edge",
+      "sourceType": "skill",
+      "sourceId": "storm_oath",
+      "rootId": "storm_oath",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_stride",
+      "sourceType": "skill",
+      "sourceId": "storm_oath",
+      "rootId": "storm_oath",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "eye_of_storm",
+      "sourceType": "skill",
+      "sourceId": "eye_sanctuary",
+      "rootId": "eye_sanctuary",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "conductive_brand",
+      "sourceType": "skill",
+      "sourceId": "random_thunder",
+      "rootId": "random_thunder",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "deafening_roar",
+      "sourceType": "skill",
+      "sourceId": "thunderous_roar",
+      "rootId": "thunderous_roar",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_clarity",
+      "sourceType": "skill",
+      "sourceId": "thunderous_roar",
+      "rootId": "thunderous_roar",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "fault_strike",
+      "rootId": "fault_strike",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "granite_skin",
+      "sourceType": "skill",
+      "sourceId": "mountain_shelter",
+      "rootId": "mountain_shelter",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "sheltering_monolith",
+      "sourceType": "skill",
+      "sourceId": "mountain_shelter",
+      "rootId": "mountain_shelter",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "earthbound",
+      "sourceType": "skill",
+      "sourceId": "stone_quake",
+      "rootId": "stone_quake",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "cairn_blessing",
+      "sourceType": "skill",
+      "sourceId": "stone_oracle",
+      "rootId": "stone_oracle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moss_of_ages",
+      "sourceType": "skill",
+      "sourceId": "stone_oracle",
+      "rootId": "stone_oracle",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bone_cyclone",
+      "sourceType": "skill",
+      "sourceId": "bone_procession",
+      "rootId": "bone_procession",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "ossuary_pact",
+      "sourceType": "skill",
+      "sourceId": "bone_procession",
+      "rootId": "bone_procession",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_mending",
+      "sourceType": "skill",
+      "sourceId": "soul_balance",
+      "rootId": "soul_balance",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "soul_balance",
+      "rootId": "soul_balance",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "ancestral_guard",
+      "sourceType": "skill",
+      "sourceId": "ancestral_call",
+      "rootId": "ancestral_call",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_lantern",
+      "sourceType": "skill",
+      "sourceId": "ancestral_call",
+      "rootId": "ancestral_call",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "funeral_chorus",
+      "rootId": "funeral_chorus",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_mending",
+      "sourceType": "skill",
+      "sourceId": "funeral_chorus",
+      "rootId": "funeral_chorus",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ghost_step",
+      "sourceType": "skill",
+      "sourceId": "wisp_lottery",
+      "rootId": "wisp_lottery",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "wisp_lottery",
+      "rootId": "wisp_lottery",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "red_thread_cut",
+      "rootId": "red_thread_cut",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "pulse_stitch",
+      "rootId": "pulse_stitch",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "sanguine_veil",
+      "sourceType": "skill",
+      "sourceId": "scarlet_raincoat",
+      "rootId": "scarlet_raincoat",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blood_price",
+      "sourceType": "skill",
+      "sourceId": "red_bargain",
+      "rootId": "red_bargain",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "predator_banquet",
+      "rootId": "predator_banquet",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "crimson_balance",
+      "rootId": "crimson_balance",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "crimson_balance",
+      "rootId": "crimson_balance",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "heart_hunter",
+      "sourceType": "skill",
+      "sourceId": "hearts_compass",
+      "rootId": "hearts_compass",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "scarlet_lifeline",
+      "rootId": "scarlet_lifeline",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "arterial_severance",
+      "rootId": "arterial_severance",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "scarlet_covenant",
+      "sourceType": "skill",
+      "sourceId": "covenant_of_the_red_moon",
+      "rootId": "covenant_of_the_red_moon",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "covenant_of_the_red_moon",
+      "rootId": "covenant_of_the_red_moon",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "covenant_of_the_red_moon",
+      "rootId": "covenant_of_the_red_moon",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "pilgrims_grace",
+      "sourceType": "skill",
+      "sourceId": "pilgrims_passage",
+      "rootId": "pilgrims_passage",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "rebuking_ray",
+      "rootId": "rebuking_ray",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "martyrs_vigil",
+      "sourceType": "skill",
+      "sourceId": "vigil_of_the_lantern",
+      "rootId": "vigil_of_the_lantern",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "merciful_chorus",
+      "sourceType": "skill",
+      "sourceId": "mercy_resonance",
+      "rootId": "mercy_resonance",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "oath_of_sanctuary",
+      "sourceType": "skill",
+      "sourceId": "unbroken_covenant",
+      "rootId": "unbroken_covenant",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "divine_protection",
+      "sourceType": "skill",
+      "sourceId": "cathedral_of_dawn",
+      "rootId": "cathedral_of_dawn",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "bramble_hook",
+      "rootId": "bramble_hook",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "wild_instinct",
+      "sourceType": "skill",
+      "sourceId": "fox_senses",
+      "rootId": "fox_senses",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "thorn_guard",
+      "sourceType": "skill",
+      "sourceId": "thornbound_keeper",
+      "rootId": "thornbound_keeper",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "oak_heart",
+      "sourceType": "skill",
+      "sourceId": "thornbound_keeper",
+      "rootId": "thornbound_keeper",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_renewal",
+      "sourceType": "skill",
+      "sourceId": "seed_of_a_hundred_paths",
+      "rootId": "seed_of_a_hundred_paths",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "seed_of_return",
+      "sourceType": "skill",
+      "sourceId": "seed_of_a_hundred_paths",
+      "rootId": "seed_of_a_hundred_paths",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "spring_breath",
+      "sourceType": "skill",
+      "sourceId": "bloom_or_briar",
+      "rootId": "bloom_or_briar",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "bloom_or_briar",
+      "rootId": "bloom_or_briar",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "spring_breath",
+      "sourceType": "skill",
+      "sourceId": "green_canopy",
+      "rootId": "green_canopy",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "forest_closes_in",
+      "rootId": "forest_closes_in",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spring_breath",
+      "sourceType": "skill",
+      "sourceId": "worldtrees_awakening",
+      "rootId": "worldtrees_awakening",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_renewal",
+      "sourceType": "skill",
+      "sourceId": "worldtrees_awakening",
+      "rootId": "worldtrees_awakening",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "seed_of_return",
+      "sourceType": "skill",
+      "sourceId": "worldtrees_awakening",
+      "rootId": "worldtrees_awakening",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "soot_in_the_eyes",
+      "rootId": "soot_in_the_eyes",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "sidestep_into_dusk",
+      "rootId": "sidestep_into_dusk",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "silent_step",
+      "sourceType": "skill",
+      "sourceId": "borrowed_silence",
+      "rootId": "borrowed_silence",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "moonless_gash",
+      "rootId": "moonless_gash",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "shadow_echo",
+      "sourceType": "skill",
+      "sourceId": "second_silhouette",
+      "rootId": "second_silhouette",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "gloom_armor",
+      "sourceType": "skill",
+      "sourceId": "two_faces_of_night",
+      "rootId": "two_faces_of_night",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "two_faces_of_night",
+      "rootId": "two_faces_of_night",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "eclipse_procession",
+      "rootId": "eclipse_procession",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "eclipse_procession",
+      "rootId": "eclipse_procession",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "veiled_blade",
+      "sourceType": "skill",
+      "sourceId": "assassins_ascendancy",
+      "rootId": "assassins_ascendancy",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "lethality",
+      "sourceType": "skill",
+      "sourceId": "assassins_ascendancy",
+      "rootId": "assassins_ascendancy",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "five_knives_of_midnight",
+      "rootId": "five_knives_of_midnight",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "arcane_sight",
+      "sourceType": "skill",
+      "sourceId": "unclouded_lens",
+      "rootId": "unclouded_lens",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "binding_glyph",
+      "sourceType": "skill",
+      "sourceId": "weighted_glyph",
+      "rootId": "weighted_glyph",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "aether_barrier",
+      "sourceType": "skill",
+      "sourceId": "aether_spindle",
+      "rootId": "aether_spindle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "wandering_comets",
+      "rootId": "wandering_comets",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "spell_focus",
+      "sourceType": "skill",
+      "sourceId": "living_conduit",
+      "rootId": "living_conduit",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "axiom_of_equilibrium",
+      "rootId": "axiom_of_equilibrium",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mirror_ward",
+      "sourceType": "skill",
+      "sourceId": "prismatic_redoubt",
+      "rootId": "prismatic_redoubt",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "unravel_the_pattern",
+      "rootId": "unravel_the_pattern",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "unravel_the_pattern",
+      "rootId": "unravel_the_pattern",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "perfect_formula",
+      "sourceType": "skill",
+      "sourceId": "grand_theorem",
+      "rootId": "grand_theorem",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "aether_barrier",
+      "sourceType": "skill",
+      "sourceId": "grand_theorem",
+      "rootId": "grand_theorem",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "smoldering",
+      "sourceType": "skill",
+      "sourceId": "searing_brand",
+      "rootId": "searing_brand",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "furnace_heart",
+      "sourceType": "skill",
+      "sourceId": "hearth_coal",
+      "rootId": "hearth_coal",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ash_choke",
+      "sourceType": "skill",
+      "sourceId": "ash_curtain",
+      "rootId": "ash_curtain",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "embers_of_life",
+      "sourceType": "skill",
+      "sourceId": "phoenix_vigil",
+      "rootId": "phoenix_vigil",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "flameward",
+      "sourceType": "skill",
+      "sourceId": "phoenix_vigil",
+      "rootId": "phoenix_vigil",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "sun_pyre",
+      "rootId": "sun_pyre",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "firebrand",
+      "sourceType": "skill",
+      "sourceId": "sun_pyre",
+      "rootId": "sun_pyre",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "brittle_needles",
+      "rootId": "brittle_needles",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "thawing_pulse",
+      "sourceType": "skill",
+      "sourceId": "meltwater_cup",
+      "rootId": "meltwater_cup",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "winter_focus",
+      "sourceType": "skill",
+      "sourceId": "winter_hunter",
+      "rootId": "winter_hunter",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "winter_hunter",
+      "rootId": "winter_hunter",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "chilled",
+      "sourceType": "skill",
+      "sourceId": "ice_prison",
+      "rootId": "ice_prison",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "numbing_cold",
+      "sourceType": "skill",
+      "sourceId": "ice_prison",
+      "rootId": "ice_prison",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "glacial_fracture",
+      "sourceType": "skill",
+      "sourceId": "ice_prison",
+      "rootId": "ice_prison",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "crystal_shell",
+      "sourceType": "skill",
+      "sourceId": "polar_vault",
+      "rootId": "polar_vault",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "polar_vault",
+      "rootId": "polar_vault",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_stride",
+      "sourceType": "skill",
+      "sourceId": "swift_current",
+      "rootId": "swift_current",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "spark_net",
+      "rootId": "spark_net",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "conductive_brand",
+      "sourceType": "skill",
+      "sourceId": "sky_wound",
+      "rootId": "sky_wound",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "charged_edge",
+      "sourceType": "skill",
+      "sourceId": "tempest_invocation",
+      "rootId": "tempest_invocation",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "tempest_surge",
+      "sourceType": "skill",
+      "sourceId": "tempest_invocation",
+      "rootId": "tempest_invocation",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "thunder_judgement",
+      "rootId": "thunder_judgement",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mountain_resolve",
+      "sourceType": "skill",
+      "sourceId": "steadfast_heart",
+      "rootId": "steadfast_heart",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moss_of_ages",
+      "sourceType": "skill",
+      "sourceId": "cairn_rest",
+      "rootId": "cairn_rest",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "fault_crown",
+      "rootId": "fault_crown",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "sheltering_monolith",
+      "sourceType": "skill",
+      "sourceId": "worldroot_bastion",
+      "rootId": "worldroot_bastion",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "gravel_guard",
+      "sourceType": "skill",
+      "sourceId": "worldroot_bastion",
+      "rootId": "worldroot_bastion",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "corroded_nail",
+      "rootId": "corroded_nail",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mercury_step",
+      "sourceType": "skill",
+      "sourceId": "mercurial_dance",
+      "rootId": "mercurial_dance",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "sword_dance",
+      "sourceType": "skill",
+      "sourceId": "mercurial_dance",
+      "rootId": "mercurial_dance",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "barbed_shackles",
+      "sourceType": "skill",
+      "sourceId": "bladed_cage",
+      "rootId": "bladed_cage",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "iron_chorus",
+      "sourceType": "skill",
+      "sourceId": "steel_cathedral",
+      "rootId": "steel_cathedral",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "iron_bloom",
+      "sourceType": "skill",
+      "sourceId": "steel_cathedral",
+      "rootId": "steel_cathedral",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "toxic_corrosion",
+      "sourceType": "skill",
+      "sourceId": "viper_cut",
+      "rootId": "viper_cut",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bitter_balm",
+      "sourceType": "skill",
+      "sourceId": "bitter_tincture",
+      "rootId": "bitter_tincture",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_fever",
+      "sourceType": "skill",
+      "sourceId": "noxious_censer",
+      "rootId": "noxious_censer",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "nauseating_haze",
+      "sourceType": "skill",
+      "sourceId": "noxious_censer",
+      "rootId": "noxious_censer",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_hunger",
+      "sourceType": "skill",
+      "sourceId": "fanged_contract",
+      "rootId": "fanged_contract",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "virulent_breath",
+      "sourceType": "skill",
+      "sourceId": "fanged_contract",
+      "rootId": "fanged_contract",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_coating",
+      "sourceType": "skill",
+      "sourceId": "serpent_crown",
+      "rootId": "serpent_crown",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "serpent_focus",
+      "sourceType": "skill",
+      "sourceId": "serpent_crown",
+      "rootId": "serpent_crown",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "virulent_breath",
+      "sourceType": "skill",
+      "sourceId": "serpent_crown",
+      "rootId": "serpent_crown",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "last_warmth",
+      "sourceType": "skill",
+      "sourceId": "soul_candle",
+      "rootId": "soul_candle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "bone_knuckles",
+      "rootId": "bone_knuckles",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "ossuary_pact",
+      "sourceType": "skill",
+      "sourceId": "tomb_warden",
+      "rootId": "tomb_warden",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spirit_echo",
+      "sourceType": "skill",
+      "sourceId": "ancestor_whisper",
+      "rootId": "ancestor_whisper",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_mending",
+      "sourceType": "skill",
+      "sourceId": "ancestor_whisper",
+      "rootId": "ancestor_whisper",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ghost_step",
+      "sourceType": "skill",
+      "sourceId": "spirits_crossroads",
+      "rootId": "spirits_crossroads",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "spirits_crossroads",
+      "rootId": "spirits_crossroads",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "hourglass_mending",
+      "sourceType": "skill",
+      "sourceId": "sand_stitch",
+      "rootId": "sand_stitch",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "eroding_touch",
+      "rootId": "eroding_touch",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "fading_second",
+      "sourceType": "skill",
+      "sourceId": "second_skin",
+      "rootId": "second_skin",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "suspended_barrier",
+      "sourceType": "skill",
+      "sourceId": "second_skin",
+      "rootId": "second_skin",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "measured_strike",
+      "sourceType": "skill",
+      "sourceId": "precise_interval",
+      "rootId": "precise_interval",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "borrowed_moment",
+      "sourceType": "skill",
+      "sourceId": "precise_interval",
+      "rootId": "precise_interval",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "renewed_thread",
+      "sourceType": "skill",
+      "sourceId": "unbroken_chronicle",
+      "rootId": "unbroken_chronicle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "hourglass_mending",
+      "sourceType": "skill",
+      "sourceId": "unbroken_chronicle",
+      "rootId": "unbroken_chronicle",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "vanguard",
+      "sourceType": "skill",
+      "sourceId": "veterans_brace",
+      "rootId": "veterans_brace",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "unyielding_oath",
+      "sourceType": "skill",
+      "sourceId": "challenging_oath",
+      "rootId": "challenging_oath",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rallying_standard",
+      "sourceType": "skill",
+      "sourceId": "challenging_oath",
+      "rootId": "challenging_oath",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "executioners_zeal",
+      "sourceType": "skill",
+      "sourceId": "severing_instinct",
+      "rootId": "severing_instinct",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "duelists_mark",
+      "sourceType": "skill",
+      "sourceId": "severing_instinct",
+      "rootId": "severing_instinct",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_trance",
+      "sourceType": "skill",
+      "sourceId": "crimson_advance",
+      "rootId": "crimson_advance",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rage",
+      "sourceType": "skill",
+      "sourceId": "crimson_advance",
+      "rootId": "crimson_advance",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "crimson_advance",
+      "rootId": "crimson_advance",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "moonwell",
+      "sourceType": "skill",
+      "sourceId": "moonwater_draught",
+      "rootId": "moonwater_draught",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "comet_wake",
+      "sourceType": "skill",
+      "sourceId": "star_needle",
+      "rootId": "star_needle",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "orbiting_fate",
+      "sourceType": "skill",
+      "sourceId": "orbital_accord",
+      "rootId": "orbital_accord",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "stellar_precision",
+      "sourceType": "skill",
+      "sourceId": "orbital_accord",
+      "rootId": "orbital_accord",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "lunar_grace",
+      "sourceType": "skill",
+      "sourceId": "night_tithe",
+      "rootId": "night_tithe",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "void_chill",
+      "sourceType": "skill",
+      "sourceId": "night_tithe",
+      "rootId": "night_tithe",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "eclipse",
+      "sourceType": "skill",
+      "sourceId": "night_tithe",
+      "rootId": "night_tithe",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "celestial_resonance",
+      "sourceType": "skill",
+      "sourceId": "celestial_canticle",
+      "rootId": "celestial_canticle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moonwell",
+      "sourceType": "skill",
+      "sourceId": "celestial_canticle",
+      "rootId": "celestial_canticle",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "constellation_guard",
+      "sourceType": "skill",
+      "sourceId": "celestial_canticle",
+      "rootId": "celestial_canticle",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "ossuary_pact",
+      "sourceType": "skill",
+      "sourceId": "phalanx_of_dead_kings",
+      "rootId": "phalanx_of_dead_kings",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spirit_echo",
+      "sourceType": "skill",
+      "sourceId": "duet_beyond_the_veil",
+      "rootId": "duet_beyond_the_veil",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "ghost_step",
+      "sourceType": "skill",
+      "sourceId": "duet_beyond_the_veil",
+      "rootId": "duet_beyond_the_veil",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "borrowed_moment",
+      "sourceType": "skill",
+      "sourceId": "beyond_the_enemy_moment",
+      "rootId": "beyond_the_enemy_moment",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "fading_second",
+      "sourceType": "skill",
+      "sourceId": "beyond_the_enemy_moment",
+      "rootId": "beyond_the_enemy_moment",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "temporal_drag",
+      "sourceType": "skill",
+      "sourceId": "prison_of_unmoving_hours",
+      "rootId": "prison_of_unmoving_hours",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "prison_of_unmoving_hours",
+      "rootId": "prison_of_unmoving_hours",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "fading_second",
+      "sourceType": "skill",
+      "sourceId": "prison_of_unmoving_hours",
+      "rootId": "prison_of_unmoving_hours",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "constellation_guard",
+      "sourceType": "skill",
+      "sourceId": "crown_of_nine_constellations",
+      "rootId": "crown_of_nine_constellations",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "stellar_precision",
+      "sourceType": "skill",
+      "sourceId": "crown_of_nine_constellations",
+      "rootId": "crown_of_nine_constellations",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "starfire_blade",
+      "sourceType": "skill",
+      "sourceId": "crown_of_nine_constellations",
+      "rootId": "crown_of_nine_constellations",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "lunar_grace",
+      "sourceType": "skill",
+      "sourceId": "scales_of_the_eclipse",
+      "rootId": "scales_of_the_eclipse",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "eclipse",
+      "sourceType": "skill",
+      "sourceId": "scales_of_the_eclipse",
+      "rootId": "scales_of_the_eclipse",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_fever",
+      "sourceType": "skill",
+      "sourceId": "garden_of_the_last_poison",
+      "rootId": "garden_of_the_last_poison",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "toxic_corrosion",
+      "sourceType": "skill",
+      "sourceId": "garden_of_the_last_poison",
+      "rootId": "garden_of_the_last_poison",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "spore_mantle",
+      "sourceType": "skill",
+      "sourceId": "garden_of_the_last_poison",
+      "rootId": "garden_of_the_last_poison",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "serpent_focus",
+      "sourceType": "skill",
+      "sourceId": "blood_of_the_basilisk",
+      "rootId": "blood_of_the_basilisk",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_hunger",
+      "sourceType": "skill",
+      "sourceId": "blood_of_the_basilisk",
+      "rootId": "blood_of_the_basilisk",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_coating",
+      "sourceType": "skill",
+      "sourceId": "blood_of_the_basilisk",
+      "rootId": "blood_of_the_basilisk",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "last_line_of_kings",
+      "rootId": "last_line_of_kings",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "unyielding_oath",
+      "sourceType": "skill",
+      "sourceId": "last_line_of_kings",
+      "rootId": "last_line_of_kings",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "duelists_mark",
+      "sourceType": "skill",
+      "sourceId": "standard_of_conquest",
+      "rootId": "standard_of_conquest",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "standard_of_conquest",
+      "rootId": "standard_of_conquest",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "bastion",
+      "sourceType": "skill",
+      "sourceId": "mercy_of_the_unsetting_sun",
+      "rootId": "mercy_of_the_unsetting_sun",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "merciful_chorus",
+      "sourceType": "skill",
+      "sourceId": "mercy_of_the_unsetting_sun",
+      "rootId": "mercy_of_the_unsetting_sun",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "thorn_guard",
+      "sourceType": "skill",
+      "sourceId": "great_circle_of_thorns",
+      "rootId": "great_circle_of_thorns",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "great_circle_of_thorns",
+      "rootId": "great_circle_of_thorns",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "blood_price",
+      "sourceType": "skill",
+      "sourceId": "crown_of_the_crimson_sovereign",
+      "rootId": "crown_of_the_crimson_sovereign",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "crown_of_the_crimson_sovereign",
+      "rootId": "crown_of_the_crimson_sovereign",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "crown_of_the_crimson_sovereign",
+      "rootId": "crown_of_the_crimson_sovereign",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "seal_of_the_final_pulse",
+      "rootId": "seal_of_the_final_pulse",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "seal_of_the_final_pulse",
+      "rootId": "seal_of_the_final_pulse",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "starless_sentence",
+      "rootId": "starless_sentence",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "starless_sentence",
+      "rootId": "starless_sentence",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_a_thousand_shadows",
+      "rootId": "mantle_of_a_thousand_shadows",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "veiled_blade",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_a_thousand_shadows",
+      "rootId": "mantle_of_a_thousand_shadows",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "shadow_echo",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_a_thousand_shadows",
+      "rootId": "mantle_of_a_thousand_shadows",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "perfect_formula",
+      "sourceType": "skill",
+      "sourceId": "judgement_of_the_broken_star",
+      "rootId": "judgement_of_the_broken_star",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "judgement_of_the_broken_star",
+      "rootId": "judgement_of_the_broken_star",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "judgement_of_the_broken_star",
+      "rootId": "judgement_of_the_broken_star",
+      "actionIndex": 3,
+      "application": "onHit"
+    },
+    {
+      "statusId": "overcharge",
+      "sourceType": "skill",
+      "sourceId": "limit_of_incantation",
+      "rootId": "limit_of_incantation",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "cinder_skin",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_black_sun",
+      "rootId": "heart_of_the_black_sun",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "charred_armor",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_black_sun",
+      "rootId": "heart_of_the_black_sun",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_black_sun",
+      "rootId": "heart_of_the_black_sun",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "decree_of_the_frozen_throne",
+      "rootId": "decree_of_the_frozen_throne",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "numbing_cold",
+      "sourceType": "skill",
+      "sourceId": "decree_of_the_frozen_throne",
+      "rootId": "decree_of_the_frozen_throne",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "winter_focus",
+      "sourceType": "skill",
+      "sourceId": "decree_of_the_frozen_throne",
+      "rootId": "decree_of_the_frozen_throne",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "spear_of_the_storm_king",
+      "rootId": "spear_of_the_storm_king",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "avalanche_intent",
+      "sourceType": "skill",
+      "sourceId": "fall_of_the_heavenly_vault",
+      "rootId": "fall_of_the_heavenly_vault",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "fall_of_the_heavenly_vault",
+      "rootId": "fall_of_the_heavenly_vault",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "magnetic_ward",
+      "sourceType": "skill",
+      "sourceId": "birth_of_a_thousand_blades",
+      "rootId": "birth_of_a_thousand_blades",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "birth_of_a_thousand_blades",
+      "rootId": "birth_of_a_thousand_blades",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "unyielding_oath",
+      "sourceType": "skill",
+      "sourceId": "oath_of_the_last_rampart",
+      "rootId": "oath_of_the_last_rampart",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_trance",
+      "sourceType": "skill",
+      "sourceId": "oath_of_the_last_rampart",
+      "rootId": "oath_of_the_last_rampart",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "sanguine_veil",
+      "sourceType": "skill",
+      "sourceId": "clotted_cuirass",
+      "rootId": "clotted_cuirass",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "scarlet_covenant",
+      "sourceType": "skill",
+      "sourceId": "shared_vein",
+      "rootId": "shared_vein",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fervor",
+      "sourceType": "skill",
+      "sourceId": "iron_heartbeat",
+      "rootId": "iron_heartbeat",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "crimson_omen",
+      "rootId": "crimson_omen",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "vessel_of_first_blood",
+      "rootId": "vessel_of_first_blood",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "clotting_seal",
+      "sourceType": "skill",
+      "sourceId": "physicians_red_suture",
+      "rootId": "physicians_red_suture",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "crimson_mending",
+      "sourceType": "skill",
+      "sourceId": "physicians_red_suture",
+      "rootId": "physicians_red_suture",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "sanguine_veil",
+      "sourceType": "skill",
+      "sourceId": "bargain_of_two_hearts",
+      "rootId": "bargain_of_two_hearts",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blood_price",
+      "sourceType": "skill",
+      "sourceId": "bargain_of_two_hearts",
+      "rootId": "bargain_of_two_hearts",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "three_crimson_barbs",
+      "rootId": "three_crimson_barbs",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "scarlet_covenant",
+      "sourceType": "skill",
+      "sourceId": "chalice_of_kinship",
+      "rootId": "chalice_of_kinship",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "blood_price",
+      "sourceType": "skill",
+      "sourceId": "sanguine_tribunal",
+      "rootId": "sanguine_tribunal",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "coronet_of_open_veins",
+      "rootId": "coronet_of_open_veins",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "coronet_of_open_veins",
+      "rootId": "coronet_of_open_veins",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "scarlet_covenant",
+      "sourceType": "skill",
+      "sourceId": "banner_of_blood_kin",
+      "rootId": "banner_of_blood_kin",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "heart_hunter",
+      "sourceType": "skill",
+      "sourceId": "pursuit_of_the_last_heartbeat",
+      "rootId": "pursuit_of_the_last_heartbeat",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "pursuit_of_the_last_heartbeat",
+      "rootId": "pursuit_of_the_last_heartbeat",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "dawn_mending",
+      "sourceType": "skill",
+      "sourceId": "ember_of_matins",
+      "rootId": "ember_of_matins",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pilgrims_grace",
+      "sourceType": "skill",
+      "sourceId": "wandering_sanctuary_spark",
+      "rootId": "wandering_sanctuary_spark",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "pilgrims_reproof",
+      "rootId": "pilgrims_reproof",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "martyrs_vigil",
+      "sourceType": "skill",
+      "sourceId": "pledge_at_the_gate",
+      "rootId": "pledge_at_the_gate",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "inspired",
+      "sourceType": "skill",
+      "sourceId": "consecrated_lot",
+      "rootId": "consecrated_lot",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "oath_of_sanctuary",
+      "sourceType": "skill",
+      "sourceId": "ward_of_the_oathkeeper",
+      "rootId": "ward_of_the_oathkeeper",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pilgrims_grace",
+      "sourceType": "skill",
+      "sourceId": "sunlit_wayfarers",
+      "rootId": "sunlit_wayfarers",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "dawn_mending",
+      "sourceType": "skill",
+      "sourceId": "prayer_of_two_answers",
+      "rootId": "prayer_of_two_answers",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "prayer_of_two_answers",
+      "rootId": "prayer_of_two_answers",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "twin_suns_rebuke",
+      "rootId": "twin_suns_rebuke",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "consecrated_edge",
+      "sourceType": "skill",
+      "sourceId": "light_upon_the_edge",
+      "rootId": "light_upon_the_edge",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "dawn_mending",
+      "sourceType": "skill",
+      "sourceId": "light_upon_the_edge",
+      "rootId": "light_upon_the_edge",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "divine_protection",
+      "sourceType": "skill",
+      "sourceId": "crown_of_intercession",
+      "rootId": "crown_of_intercession",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "martyrs_vigil",
+      "sourceType": "skill",
+      "sourceId": "crown_of_intercession",
+      "rootId": "crown_of_intercession",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bastion",
+      "sourceType": "skill",
+      "sourceId": "fleeting_miracle",
+      "rootId": "fleeting_miracle",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "bells_of_reckoning",
+      "rootId": "bells_of_reckoning",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "merciful_chorus",
+      "sourceType": "skill",
+      "sourceId": "bells_of_reckoning",
+      "rootId": "bells_of_reckoning",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "oath_of_sanctuary",
+      "sourceType": "skill",
+      "sourceId": "shelter_of_shared_faith",
+      "rootId": "shelter_of_shared_faith",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "fortified",
+      "sourceType": "skill",
+      "sourceId": "sapwood_skin",
+      "rootId": "sapwood_skin",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_instinct",
+      "sourceType": "skill",
+      "sourceId": "elderberry_draught",
+      "rootId": "elderberry_draught",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "autumn_snare",
+      "rootId": "autumn_snare",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "autumn_snare",
+      "rootId": "autumn_snare",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "spring_breath",
+      "sourceType": "skill",
+      "sourceId": "tender_bud",
+      "rootId": "tender_bud",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "seed_of_return",
+      "sourceType": "skill",
+      "sourceId": "bed_of_young_ferns",
+      "rootId": "bed_of_young_ferns",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "nettle_footpath",
+      "rootId": "nettle_footpath",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "oak_heart",
+      "sourceType": "skill",
+      "sourceId": "summer_oak_blessing",
+      "rootId": "summer_oak_blessing",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_renewal",
+      "sourceType": "skill",
+      "sourceId": "summer_oak_blessing",
+      "rootId": "summer_oak_blessing",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "thorn_guard",
+      "sourceType": "skill",
+      "sourceId": "sheltering_stag",
+      "rootId": "sheltering_stag",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_renewal",
+      "sourceType": "skill",
+      "sourceId": "roaming_garden",
+      "rootId": "roaming_garden",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "seed_of_return",
+      "sourceType": "skill",
+      "sourceId": "green_arbitration",
+      "rootId": "green_arbitration",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "green_arbitration",
+      "rootId": "green_arbitration",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "green_arbitration",
+      "rootId": "green_arbitration",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "seed_of_return",
+      "sourceType": "skill",
+      "sourceId": "orchards_last_fruit",
+      "rootId": "orchards_last_fruit",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "fruiting_thornfield",
+      "rootId": "fruiting_thornfield",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "thorn_guard",
+      "sourceType": "skill",
+      "sourceId": "wardens_coppice",
+      "rootId": "wardens_coppice",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_renewal",
+      "sourceType": "skill",
+      "sourceId": "flood_of_spring_roots",
+      "rootId": "flood_of_spring_roots",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "flood_of_spring_roots",
+      "rootId": "flood_of_spring_roots",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "fortified",
+      "sourceType": "skill",
+      "sourceId": "verdict_of_the_elder_grove",
+      "rootId": "verdict_of_the_elder_grove",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "verdict_of_the_elder_grove",
+      "rootId": "verdict_of_the_elder_grove",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "verdict_of_the_elder_grove",
+      "rootId": "verdict_of_the_elder_grove",
+      "actionIndex": 3,
+      "application": "onHit"
+    },
+    {
+      "statusId": "gloom_armor",
+      "sourceType": "skill",
+      "sourceId": "moonwax_dressing",
+      "rootId": "moonwax_dressing",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "blind_mans_coin",
+      "rootId": "blind_mans_coin",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "blind_mans_coin",
+      "rootId": "blind_mans_coin",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "assassins_patience",
+      "sourceType": "skill",
+      "sourceId": "stillness_of_the_novice",
+      "rootId": "stillness_of_the_novice",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "black_feather_barb",
+      "rootId": "black_feather_barb",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "balm_of_the_hidden_path",
+      "rootId": "balm_of_the_hidden_path",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "veiled_blade",
+      "sourceType": "skill",
+      "sourceId": "ticket_to_midnight",
+      "rootId": "ticket_to_midnight",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "shadow_echo",
+      "sourceType": "skill",
+      "sourceId": "oath_of_two_shadows",
+      "rootId": "oath_of_two_shadows",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "oath_of_two_shadows",
+      "rootId": "oath_of_two_shadows",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "oath_of_two_shadows",
+      "rootId": "oath_of_two_shadows",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "moonthread_mantle",
+      "rootId": "moonthread_mantle",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "needle_of_the_unseen",
+      "rootId": "needle_of_the_unseen",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "witness_in_the_dark",
+      "rootId": "witness_in_the_dark",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "silent_step",
+      "sourceType": "skill",
+      "sourceId": "muffled_procession",
+      "rootId": "muffled_procession",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "lethality",
+      "sourceType": "skill",
+      "sourceId": "muffled_procession",
+      "rootId": "muffled_procession",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "veiled_blade",
+      "sourceType": "skill",
+      "sourceId": "dance_of_the_hidden_edge",
+      "rootId": "dance_of_the_hidden_edge",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "dance_of_the_hidden_edge",
+      "rootId": "dance_of_the_hidden_edge",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "gloom_armor",
+      "sourceType": "skill",
+      "sourceId": "dusk_shared_by_all",
+      "rootId": "dusk_shared_by_all",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "dusk_shared_by_all",
+      "rootId": "dusk_shared_by_all",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "evasiveness",
+      "sourceType": "skill",
+      "sourceId": "black_mirror_companion",
+      "rootId": "black_mirror_companion",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "shadow_echo",
+      "sourceType": "skill",
+      "sourceId": "black_mirror_companion",
+      "rootId": "black_mirror_companion",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "gloom_armor",
+      "sourceType": "skill",
+      "sourceId": "eclipse_beneath_the_ribs",
+      "rootId": "eclipse_beneath_the_ribs",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "eclipse_beneath_the_ribs",
+      "rootId": "eclipse_beneath_the_ribs",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "scribes_cancelled_mark",
+      "rootId": "scribes_cancelled_mark",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_sight",
+      "sourceType": "skill",
+      "sourceId": "formula_of_the_small_buckler",
+      "rootId": "formula_of_the_small_buckler",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "overcharge",
+      "sourceType": "skill",
+      "sourceId": "surplus_spark",
+      "rootId": "surplus_spark",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rune_of_force",
+      "sourceType": "skill",
+      "sourceId": "apprentices_force_rune",
+      "rootId": "apprentices_force_rune",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "aether_barrier",
+      "sourceType": "skill",
+      "sourceId": "aether_stitching",
+      "rootId": "aether_stitching",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "mirror_ward",
+      "sourceType": "skill",
+      "sourceId": "mirror_aperture",
+      "rootId": "mirror_aperture",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_sight",
+      "sourceType": "skill",
+      "sourceId": "mirror_aperture",
+      "rootId": "mirror_aperture",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "perfect_formula",
+      "sourceType": "skill",
+      "sourceId": "living_proof",
+      "rootId": "living_proof",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "aether_barrier",
+      "sourceType": "skill",
+      "sourceId": "errant_aether_reservoir",
+      "rootId": "errant_aether_reservoir",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "spell_focus",
+      "sourceType": "skill",
+      "sourceId": "fork_of_ley_lines",
+      "rootId": "fork_of_ley_lines",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "fork_of_ley_lines",
+      "rootId": "fork_of_ley_lines",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "aether_boring_shard",
+      "rootId": "aether_boring_shard",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "double_helix_of_ruin",
+      "rootId": "double_helix_of_ruin",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "arcane_sight",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_higher_mathematics",
+      "rootId": "mantle_of_higher_mathematics",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "aether_barrier",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_higher_mathematics",
+      "rootId": "mantle_of_higher_mathematics",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rune_of_force",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_higher_mathematics",
+      "rootId": "mantle_of_higher_mathematics",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "binding_glyph",
+      "sourceType": "skill",
+      "sourceId": "impossible_equation",
+      "rootId": "impossible_equation",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "twin_candle_fangs",
+      "rootId": "twin_candle_fangs",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "firebrand",
+      "sourceType": "skill",
+      "sourceId": "hearthkeepers_palm",
+      "rootId": "hearthkeepers_palm",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ash_choke",
+      "sourceType": "skill",
+      "sourceId": "ashblind_whisper",
+      "rootId": "ashblind_whisper",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "cinder_skin",
+      "sourceType": "skill",
+      "sourceId": "mantle_of_warm_cinders",
+      "rootId": "mantle_of_warm_cinders",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "furnace_heart",
+      "sourceType": "skill",
+      "sourceId": "coal_under_the_heart",
+      "rootId": "coal_under_the_heart",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "scattered_tinder",
+      "rootId": "scattered_tinder",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "charred_armor",
+      "sourceType": "skill",
+      "sourceId": "bellows_of_the_siege",
+      "rootId": "bellows_of_the_siege",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "firebrand",
+      "sourceType": "skill",
+      "sourceId": "bellows_of_the_siege",
+      "rootId": "bellows_of_the_siege",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "feast_of_the_last_ember",
+      "rootId": "feast_of_the_last_ember",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "volatile_sparks",
+      "sourceType": "skill",
+      "sourceId": "courier_of_wild_sparks",
+      "rootId": "courier_of_wild_sparks",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "furnace_heart",
+      "sourceType": "skill",
+      "sourceId": "brazier_of_comrades",
+      "rootId": "brazier_of_comrades",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "flameward",
+      "sourceType": "skill",
+      "sourceId": "brazier_of_comrades",
+      "rootId": "brazier_of_comrades",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "flameward",
+      "sourceType": "skill",
+      "sourceId": "cinders_dual_verdict",
+      "rootId": "cinders_dual_verdict",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ash_choke",
+      "sourceType": "skill",
+      "sourceId": "cinders_dual_verdict",
+      "rootId": "cinders_dual_verdict",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "smoldering",
+      "sourceType": "skill",
+      "sourceId": "cinders_dual_verdict",
+      "rootId": "cinders_dual_verdict",
+      "actionIndex": 3,
+      "application": "status"
+    },
+    {
+      "statusId": "charred_armor",
+      "sourceType": "skill",
+      "sourceId": "breath_of_the_brass_wyrm",
+      "rootId": "breath_of_the_brass_wyrm",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "cinder_skin",
+      "sourceType": "skill",
+      "sourceId": "breath_of_the_brass_wyrm",
+      "rootId": "breath_of_the_brass_wyrm",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "embers_of_life",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_ashen_phoenix",
+      "rootId": "heart_of_the_ashen_phoenix",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "flameward",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_ashen_phoenix",
+      "rootId": "heart_of_the_ashen_phoenix",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "firebrand",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_ashen_phoenix",
+      "rootId": "heart_of_the_ashen_phoenix",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "volatile_sparks",
+      "sourceType": "skill",
+      "sourceId": "duel_at_the_furnace",
+      "rootId": "duel_at_the_furnace",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "duel_at_the_furnace",
+      "rootId": "duel_at_the_furnace",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "whisper_of_the_snowfield",
+      "rootId": "whisper_of_the_snowfield",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rime_armor",
+      "sourceType": "skill",
+      "sourceId": "rime_tailors_touch",
+      "rootId": "rime_tailors_touch",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "frost_on_the_wound",
+      "rootId": "frost_on_the_wound",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "snow_travelers_rest",
+      "rootId": "snow_travelers_rest",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "numbing_cold",
+      "sourceType": "skill",
+      "sourceId": "last_icicle",
+      "rootId": "last_icicle",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "crystal_shell",
+      "sourceType": "skill",
+      "sourceId": "winter_gatekeeper",
+      "rootId": "winter_gatekeeper",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "chilled",
+      "sourceType": "skill",
+      "sourceId": "winter_gatekeeper",
+      "rootId": "winter_gatekeeper",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "numbing_cold",
+      "sourceType": "skill",
+      "sourceId": "duet_of_white_blades",
+      "rootId": "duet_of_white_blades",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "duet_of_white_blades",
+      "rootId": "duet_of_white_blades",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "thawing_pulse",
+      "sourceType": "skill",
+      "sourceId": "procession_of_the_thaw",
+      "rootId": "procession_of_the_thaw",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "glacial_fracture",
+      "sourceType": "skill",
+      "sourceId": "cartographer_of_cracks",
+      "rootId": "cartographer_of_cracks",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "winter_focus",
+      "sourceType": "skill",
+      "sourceId": "cartographer_of_cracks",
+      "rootId": "cartographer_of_cracks",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "turn_of_the_crystal_key",
+      "rootId": "turn_of_the_crystal_key",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "turn_of_the_crystal_key",
+      "rootId": "turn_of_the_crystal_key",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "taunted",
+      "sourceType": "skill",
+      "sourceId": "sentinel_of_the_ice_gate",
+      "rootId": "sentinel_of_the_ice_gate",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rime_armor",
+      "sourceType": "skill",
+      "sourceId": "sentinel_of_the_ice_gate",
+      "rootId": "sentinel_of_the_ice_gate",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "crystal_shell",
+      "sourceType": "skill",
+      "sourceId": "sentinel_of_the_ice_gate",
+      "rootId": "sentinel_of_the_ice_gate",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "ledger_of_the_blizzard",
+      "rootId": "ledger_of_the_blizzard",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "ledger_of_the_blizzard",
+      "rootId": "ledger_of_the_blizzard",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "winter_focus",
+      "sourceType": "skill",
+      "sourceId": "needle_of_the_polar_star",
+      "rootId": "needle_of_the_polar_star",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "thawing_pulse",
+      "sourceType": "skill",
+      "sourceId": "spring_beneath_the_glacier",
+      "rootId": "spring_beneath_the_glacier",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "spring_beneath_the_glacier",
+      "rootId": "spring_beneath_the_glacier",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_clarity",
+      "sourceType": "skill",
+      "sourceId": "counsel_of_clear_skies",
+      "rootId": "counsel_of_clear_skies",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "needle_of_ball_lightning",
+      "rootId": "needle_of_ball_lightning",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "thunder_shell",
+      "sourceType": "skill",
+      "sourceId": "thunder_in_the_ribs",
+      "rootId": "thunder_in_the_ribs",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "deafening_roar",
+      "sourceType": "skill",
+      "sourceId": "clap_above_the_helm",
+      "rootId": "clap_above_the_helm",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "conductive_brand",
+      "sourceType": "skill",
+      "sourceId": "weather_vanes_judgement",
+      "rootId": "weather_vanes_judgement",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "storm_stride",
+      "sourceType": "skill",
+      "sourceId": "breath_before_the_gale",
+      "rootId": "breath_before_the_gale",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_stride",
+      "sourceType": "skill",
+      "sourceId": "march_on_the_tailwind",
+      "rootId": "march_on_the_tailwind",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "conductive_brand",
+      "sourceType": "skill",
+      "sourceId": "lightning_rods_challenge",
+      "rootId": "lightning_rods_challenge",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_clarity",
+      "sourceType": "skill",
+      "sourceId": "lightning_rods_challenge",
+      "rootId": "lightning_rods_challenge",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "charged_edge",
+      "sourceType": "skill",
+      "sourceId": "storm_forged_armament",
+      "rootId": "storm_forged_armament",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "eye_of_storm",
+      "sourceType": "skill",
+      "sourceId": "keeper_of_the_calm_center",
+      "rootId": "keeper_of_the_calm_center",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "thunder_shell",
+      "sourceType": "skill",
+      "sourceId": "keeper_of_the_calm_center",
+      "rootId": "keeper_of_the_calm_center",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "harvest_of_static",
+      "rootId": "harvest_of_static",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "storm_clarity",
+      "sourceType": "skill",
+      "sourceId": "herald_of_the_high_tempest",
+      "rootId": "herald_of_the_high_tempest",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "tempest_surge",
+      "sourceType": "skill",
+      "sourceId": "herald_of_the_high_tempest",
+      "rootId": "herald_of_the_high_tempest",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "deafening_roar",
+      "sourceType": "skill",
+      "sourceId": "front_of_the_black_storm",
+      "rootId": "front_of_the_black_storm",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "charged_edge",
+      "sourceType": "skill",
+      "sourceId": "quarrel_of_four_lightnings",
+      "rootId": "quarrel_of_four_lightnings",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "conductive_brand",
+      "sourceType": "skill",
+      "sourceId": "quarrel_of_four_lightnings",
+      "rootId": "quarrel_of_four_lightnings",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "granite_skin",
+      "sourceType": "skill",
+      "sourceId": "granite_masons_blessing",
+      "rootId": "granite_masons_blessing",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moss_of_ages",
+      "sourceType": "skill",
+      "sourceId": "mossbound_bandage",
+      "rootId": "mossbound_bandage",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "earthbound",
+      "sourceType": "skill",
+      "sourceId": "burial_of_the_boots",
+      "rootId": "burial_of_the_boots",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "gravel_guard",
+      "sourceType": "skill",
+      "sourceId": "pebbles_in_orbit",
+      "rootId": "pebbles_in_orbit",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "splintered_stone",
+      "sourceType": "skill",
+      "sourceId": "shale_lottery",
+      "rootId": "shale_lottery",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "surveyors_fault_mark",
+      "rootId": "surveyors_fault_mark",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "avalanche_intent",
+      "sourceType": "skill",
+      "sourceId": "avalanche_bearers_draught",
+      "rootId": "avalanche_bearers_draught",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "taunted",
+      "sourceType": "skill",
+      "sourceId": "challenge_from_the_crag",
+      "rootId": "challenge_from_the_crag",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "mountain_resolve",
+      "sourceType": "skill",
+      "sourceId": "challenge_from_the_crag",
+      "rootId": "challenge_from_the_crag",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "moss_of_ages",
+      "sourceType": "skill",
+      "sourceId": "shelter_of_the_old_quarry",
+      "rootId": "shelter_of_the_old_quarry",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "splintered_stone",
+      "sourceType": "skill",
+      "sourceId": "cairn_breakers_swing",
+      "rootId": "cairn_breakers_swing",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "cairn_blessing",
+      "sourceType": "skill",
+      "sourceId": "cairn_breakers_swing",
+      "rootId": "cairn_breakers_swing",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "granite_skin",
+      "sourceType": "skill",
+      "sourceId": "oath_of_the_boundary_stone",
+      "rootId": "oath_of_the_boundary_stone",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "earthbound",
+      "sourceType": "skill",
+      "sourceId": "oath_of_the_boundary_stone",
+      "rootId": "oath_of_the_boundary_stone",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "splintered_stone",
+      "sourceType": "skill",
+      "sourceId": "oath_of_the_boundary_stone",
+      "rootId": "oath_of_the_boundary_stone",
+      "actionIndex": 3,
+      "application": "status"
+    },
+    {
+      "statusId": "cairn_blessing",
+      "sourceType": "skill",
+      "sourceId": "liturgy_of_the_deep_earth",
+      "rootId": "liturgy_of_the_deep_earth",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moss_of_ages",
+      "sourceType": "skill",
+      "sourceId": "liturgy_of_the_deep_earth",
+      "rootId": "liturgy_of_the_deep_earth",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "hammer_beneath_the_mountain",
+      "rootId": "hammer_beneath_the_mountain",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mountain_resolve",
+      "sourceType": "skill",
+      "sourceId": "hammer_beneath_the_mountain",
+      "rootId": "hammer_beneath_the_mountain",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "splintered_stone",
+      "sourceType": "skill",
+      "sourceId": "circle_of_walking_boulders",
+      "rootId": "circle_of_walking_boulders",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "sheltering_monolith",
+      "sourceType": "skill",
+      "sourceId": "circle_of_walking_boulders",
+      "rootId": "circle_of_walking_boulders",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "gravel_guard",
+      "sourceType": "skill",
+      "sourceId": "circle_of_walking_boulders",
+      "rootId": "circle_of_walking_boulders",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "razor_edge",
+      "sourceType": "skill",
+      "sourceId": "barbers_silver_oath",
+      "rootId": "barbers_silver_oath",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "magnetic_ward",
+      "sourceType": "skill",
+      "sourceId": "lodestones_embrace",
+      "rootId": "lodestones_embrace",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "barbed_shackles",
+      "sourceType": "skill",
+      "sourceId": "twin_barbs_of_the_trap",
+      "rootId": "twin_barbs_of_the_trap",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "tempered_will",
+      "sourceType": "skill",
+      "sourceId": "smiths_second_breath",
+      "rootId": "smiths_second_breath",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "rain_of_rust_dust",
+      "rootId": "rain_of_rust_dust",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "steel_skin",
+      "sourceType": "skill",
+      "sourceId": "forgemasters_touch",
+      "rootId": "forgemasters_touch",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "forgemasters_touch",
+      "rootId": "forgemasters_touch",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "steel_skin",
+      "sourceType": "skill",
+      "sourceId": "riveters_procession",
+      "rootId": "riveters_procession",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "mercury_step",
+      "sourceType": "skill",
+      "sourceId": "mercury_cutters_stance",
+      "rootId": "mercury_cutters_stance",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "razor_edge",
+      "sourceType": "skill",
+      "sourceId": "mercury_cutters_stance",
+      "rootId": "mercury_cutters_stance",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "hook_of_the_iron_gaoler",
+      "rootId": "hook_of_the_iron_gaoler",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "barbed_shackles",
+      "sourceType": "skill",
+      "sourceId": "hook_of_the_iron_gaoler",
+      "rootId": "hook_of_the_iron_gaoler",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "iron_bloom",
+      "sourceType": "skill",
+      "sourceId": "lotus_of_tempered_iron",
+      "rootId": "lotus_of_tempered_iron",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "tempered_will",
+      "sourceType": "skill",
+      "sourceId": "lotus_of_tempered_iron",
+      "rootId": "lotus_of_tempered_iron",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "magnetic_ward",
+      "sourceType": "skill",
+      "sourceId": "surgeon_of_silver_threads",
+      "rootId": "surgeon_of_silver_threads",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "steel_skin",
+      "sourceType": "skill",
+      "sourceId": "surgeon_of_silver_threads",
+      "rootId": "surgeon_of_silver_threads",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "last_nail_of_the_citadel",
+      "rootId": "last_nail_of_the_citadel",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "barbed_shackles",
+      "sourceType": "skill",
+      "sourceId": "garden_of_flying_shrapnel",
+      "rootId": "garden_of_flying_shrapnel",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "iron_chorus",
+      "sourceType": "skill",
+      "sourceId": "anthem_of_the_whetstone",
+      "rootId": "anthem_of_the_whetstone",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "razor_edge",
+      "sourceType": "skill",
+      "sourceId": "anthem_of_the_whetstone",
+      "rootId": "anthem_of_the_whetstone",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_coating",
+      "sourceType": "skill",
+      "sourceId": "asp_oil",
+      "rootId": "asp_oil",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spore_mantle",
+      "sourceType": "skill",
+      "sourceId": "mushroom_cowl",
+      "rootId": "mushroom_cowl",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "bitter_balm",
+      "sourceType": "skill",
+      "sourceId": "wormwood_poultice",
+      "rootId": "wormwood_poultice",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_fever",
+      "sourceType": "skill",
+      "sourceId": "fevered_needle",
+      "rootId": "fevered_needle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "nauseating_haze",
+      "sourceType": "skill",
+      "sourceId": "bile_vapor",
+      "rootId": "bile_vapor",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "serpent_focus",
+      "sourceType": "skill",
+      "sourceId": "viper_eye_salve",
+      "rootId": "viper_eye_salve",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "virulent_breath",
+      "sourceType": "skill",
+      "sourceId": "stray_plague_spine",
+      "rootId": "stray_plague_spine",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "toxic_corrosion",
+      "sourceType": "skill",
+      "sourceId": "venomers_choice",
+      "rootId": "venomers_choice",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bitter_balm",
+      "sourceType": "skill",
+      "sourceId": "bitter_camp_kettle",
+      "rootId": "bitter_camp_kettle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_hunger",
+      "sourceType": "skill",
+      "sourceId": "serpents_molt",
+      "rootId": "serpents_molt",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spore_mantle",
+      "sourceType": "skill",
+      "sourceId": "serpents_molt",
+      "rootId": "serpents_molt",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "toxic_corrosion",
+      "sourceType": "skill",
+      "sourceId": "acid_notch",
+      "rootId": "acid_notch",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "serpent_focus",
+      "sourceType": "skill",
+      "sourceId": "lot_of_green_fangs",
+      "rootId": "lot_of_green_fangs",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_coating",
+      "sourceType": "skill",
+      "sourceId": "lot_of_green_fangs",
+      "rootId": "lot_of_green_fangs",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_hunger",
+      "sourceType": "skill",
+      "sourceId": "plaguekeepers_feast",
+      "rootId": "plaguekeepers_feast",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "virulent_breath",
+      "sourceType": "skill",
+      "sourceId": "plaguekeepers_feast",
+      "rootId": "plaguekeepers_feast",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "serpent_focus",
+      "sourceType": "skill",
+      "sourceId": "scales_of_the_brood",
+      "rootId": "scales_of_the_brood",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bitter_balm",
+      "sourceType": "skill",
+      "sourceId": "apothecarys_final_recipe",
+      "rootId": "apothecarys_final_recipe",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "spore_mantle",
+      "sourceType": "skill",
+      "sourceId": "apothecarys_final_recipe",
+      "rootId": "apothecarys_final_recipe",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_fever",
+      "sourceType": "skill",
+      "sourceId": "apothecarys_final_recipe",
+      "rootId": "apothecarys_final_recipe",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "virulent_breath",
+      "sourceType": "skill",
+      "sourceId": "apothecarys_final_recipe",
+      "rootId": "apothecarys_final_recipe",
+      "actionIndex": 3,
+      "application": "status"
+    },
+    {
+      "statusId": "ancestral_guard",
+      "sourceType": "skill",
+      "sourceId": "ancestor_at_the_shoulder",
+      "rootId": "ancestor_at_the_shoulder",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "ghost_step",
+      "sourceType": "skill",
+      "sourceId": "slip_through_the_shroud",
+      "rootId": "slip_through_the_shroud",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "name_on_the_gravestone",
+      "rootId": "name_on_the_gravestone",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_mending",
+      "sourceType": "skill",
+      "sourceId": "quiet_requiem",
+      "rootId": "quiet_requiem",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "debt_to_the_departed",
+      "rootId": "debt_to_the_departed",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_lantern",
+      "sourceType": "skill",
+      "sourceId": "wick_of_memory",
+      "rootId": "wick_of_memory",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "ossuary_pact",
+      "sourceType": "skill",
+      "sourceId": "relic_for_the_living",
+      "rootId": "relic_for_the_living",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "knocking_from_the_crypt",
+      "rootId": "knocking_from_the_crypt",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "spirit_echo",
+      "sourceType": "skill",
+      "sourceId": "answer_of_the_echo",
+      "rootId": "answer_of_the_echo",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "bone_cyclone",
+      "sourceType": "skill",
+      "sourceId": "chosen_of_the_ossuary",
+      "rootId": "chosen_of_the_ossuary",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "ancestral_guard",
+      "sourceType": "skill",
+      "sourceId": "chosen_of_the_ossuary",
+      "rootId": "chosen_of_the_ossuary",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "lament_and_lantern",
+      "rootId": "lament_and_lantern",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "last_warmth",
+      "sourceType": "skill",
+      "sourceId": "procession_under_white_veils",
+      "rootId": "procession_under_white_veils",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "ghost_step",
+      "sourceType": "skill",
+      "sourceId": "procession_under_white_veils",
+      "rootId": "procession_under_white_veils",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "ossuary_spear",
+      "rootId": "ossuary_spear",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "vow_at_the_silent_gate",
+      "rootId": "vow_at_the_silent_gate",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_mending",
+      "sourceType": "skill",
+      "sourceId": "vow_at_the_silent_gate",
+      "rootId": "vow_at_the_silent_gate",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ancestral_guard",
+      "sourceType": "skill",
+      "sourceId": "vow_at_the_silent_gate",
+      "rootId": "vow_at_the_silent_gate",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "haste",
+      "sourceType": "skill",
+      "sourceId": "exit_between_heartbeats",
+      "rootId": "exit_between_heartbeats",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "temporal_drag",
+      "sourceType": "skill",
+      "sourceId": "leaden_pendulum",
+      "rootId": "leaden_pendulum",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "suspended_barrier",
+      "sourceType": "skill",
+      "sourceId": "glass_second",
+      "rootId": "glass_second",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "renewed_thread",
+      "sourceType": "skill",
+      "sourceId": "tie_the_hour",
+      "rootId": "tie_the_hour",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "dust_of_tomorrow",
+      "rootId": "dust_of_tomorrow",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "measured_strike",
+      "sourceType": "skill",
+      "sourceId": "count_the_breath",
+      "rootId": "count_the_breath",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "temporal_drag",
+      "sourceType": "skill",
+      "sourceId": "tick_and_tock",
+      "rootId": "tick_and_tock",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "last_instant",
+      "sourceType": "skill",
+      "sourceId": "borrowed_threshold",
+      "rootId": "borrowed_threshold",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "temporal_drag",
+      "sourceType": "skill",
+      "sourceId": "borrowed_threshold",
+      "rootId": "borrowed_threshold",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "hourglass_mending",
+      "sourceType": "skill",
+      "sourceId": "sands_under_the_cloak",
+      "rootId": "sands_under_the_cloak",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "fading_second",
+      "sourceType": "skill",
+      "sourceId": "sands_under_the_cloak",
+      "rootId": "sands_under_the_cloak",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "temporal_drag",
+      "sourceType": "skill",
+      "sourceId": "weight_of_a_minute",
+      "rootId": "weight_of_a_minute",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "borrowed_moment",
+      "sourceType": "skill",
+      "sourceId": "breath_returned_in_time",
+      "rootId": "breath_returned_in_time",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "renewed_thread",
+      "sourceType": "skill",
+      "sourceId": "private_hour",
+      "rootId": "private_hour",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "suspended_barrier",
+      "sourceType": "skill",
+      "sourceId": "private_hour",
+      "rootId": "private_hour",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "hourglass_mending",
+      "sourceType": "skill",
+      "sourceId": "private_hour",
+      "rootId": "private_hour",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "the_watchmakers_siege",
+      "rootId": "the_watchmakers_siege",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "suspended_barrier",
+      "sourceType": "skill",
+      "sourceId": "the_watchmakers_siege",
+      "rootId": "the_watchmakers_siege",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "measured_strike",
+      "sourceType": "skill",
+      "sourceId": "heir_to_the_extra_second",
+      "rootId": "heir_to_the_extra_second",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "borrowed_moment",
+      "sourceType": "skill",
+      "sourceId": "heir_to_the_extra_second",
+      "rootId": "heir_to_the_extra_second",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "last_instant",
+      "sourceType": "skill",
+      "sourceId": "coin_of_unlived_hours",
+      "rootId": "coin_of_unlived_hours",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "coin_of_unlived_hours",
+      "rootId": "coin_of_unlived_hours",
+      "actionIndex": 2,
+      "application": "onHit"
+    },
+    {
+      "statusId": "rage",
+      "sourceType": "skill",
+      "sourceId": "red_mist_breath",
+      "rootId": "red_mist_breath",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_trance",
+      "sourceType": "skill",
+      "sourceId": "drummers_cadence",
+      "rootId": "drummers_cadence",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "break_the_stance",
+      "rootId": "break_the_stance",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "duelists_mark",
+      "sourceType": "skill",
+      "sourceId": "duelists_salute",
+      "rootId": "duelists_salute",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rallying_standard",
+      "sourceType": "skill",
+      "sourceId": "catch_the_fallen_banner",
+      "rootId": "catch_the_fallen_banner",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "vanguard",
+      "sourceType": "skill",
+      "sourceId": "field_captains_order",
+      "rootId": "field_captains_order",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "field_captains_order",
+      "rootId": "field_captains_order",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "executioners_zeal",
+      "sourceType": "skill",
+      "sourceId": "executioners_red_vow",
+      "rootId": "executioners_red_vow",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rage",
+      "sourceType": "skill",
+      "sourceId": "executioners_red_vow",
+      "rootId": "executioners_red_vow",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "duelists_mark",
+      "sourceType": "skill",
+      "sourceId": "school_of_the_first_blade",
+      "rootId": "school_of_the_first_blade",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "rampart_sweep",
+      "rootId": "rampart_sweep",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "rallying_standard",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_company",
+      "rootId": "heart_of_the_company",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "vanguard",
+      "sourceType": "skill",
+      "sourceId": "heart_of_the_company",
+      "rootId": "heart_of_the_company",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "duelists_mark",
+      "sourceType": "skill",
+      "sourceId": "three_veteran_cuts",
+      "rootId": "three_veteran_cuts",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "three_veteran_cuts",
+      "rootId": "three_veteran_cuts",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "constellation_guard",
+      "sourceType": "skill",
+      "sourceId": "chalk_constellation",
+      "rootId": "chalk_constellation",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "eclipse",
+      "sourceType": "skill",
+      "sourceId": "cover_the_moon",
+      "rootId": "cover_the_moon",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "starfire_blade",
+      "sourceType": "skill",
+      "sourceId": "starlight_whetstone",
+      "rootId": "starlight_whetstone",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "celestial_resonance",
+      "sourceType": "skill",
+      "sourceId": "tuning_the_spheres",
+      "rootId": "tuning_the_spheres",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "void_chill",
+      "sourceType": "skill",
+      "sourceId": "airless_touch",
+      "rootId": "airless_touch",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "stellar_precision",
+      "sourceType": "skill",
+      "sourceId": "chart_of_the_hunt",
+      "rootId": "chart_of_the_hunt",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "comet_wake",
+      "sourceType": "skill",
+      "sourceId": "falling_star_omen",
+      "rootId": "falling_star_omen",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "lunar_grace",
+      "sourceType": "skill",
+      "sourceId": "bathing_in_moonlight",
+      "rootId": "bathing_in_moonlight",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moonwell",
+      "sourceType": "skill",
+      "sourceId": "bathing_in_moonlight",
+      "rootId": "bathing_in_moonlight",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "void_chill",
+      "sourceType": "skill",
+      "sourceId": "twin_marks_of_the_void",
+      "rootId": "twin_marks_of_the_void",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "comet_wake",
+      "sourceType": "skill",
+      "sourceId": "night_of_falling_crowns",
+      "rootId": "night_of_falling_crowns",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "constellation_guard",
+      "sourceType": "skill",
+      "sourceId": "night_of_falling_crowns",
+      "rootId": "night_of_falling_crowns",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "celestial_resonance",
+      "sourceType": "skill",
+      "sourceId": "vessel_of_the_northern_light",
+      "rootId": "vessel_of_the_northern_light",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "moonwell",
+      "sourceType": "skill",
+      "sourceId": "vessel_of_the_northern_light",
+      "rootId": "vessel_of_the_northern_light",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "starfire_blade",
+      "sourceType": "skill",
+      "sourceId": "meteor_weave",
+      "rootId": "meteor_weave",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "boss_briar_king_signature",
+      "rootId": "boss_briar_king_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "poisoned",
+      "sourceType": "skill",
+      "sourceId": "boss_thousand_fangs_signature",
+      "rootId": "boss_thousand_fangs_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "conductive_brand",
+      "sourceType": "skill",
+      "sourceId": "boss_first_thunder_signature",
+      "rootId": "boss_first_thunder_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "boss_blind_florist_signature",
+      "rootId": "boss_blind_florist_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "boss_torn_leaves_signature",
+      "rootId": "boss_torn_leaves_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "boss_meltwater_lady_signature",
+      "rootId": "boss_meltwater_lady_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "boss_moss_colossus_signature",
+      "rootId": "boss_moss_colossus_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "granite_skin",
+      "sourceType": "skill",
+      "sourceId": "boss_moss_colossus_signature",
+      "rootId": "boss_moss_colossus_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "toxic_corrosion",
+      "sourceType": "skill",
+      "sourceId": "boss_plague_beekeeper_signature",
+      "rootId": "boss_plague_beekeeper_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "boss_silver_huntress_signature",
+      "rootId": "boss_silver_huntress_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "lunar_grace",
+      "sourceType": "skill",
+      "sourceId": "boss_silver_huntress_signature",
+      "rootId": "boss_silver_huntress_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "battle_fatigue",
+      "sourceType": "skill",
+      "sourceId": "boss_reed_tyrant_signature",
+      "rootId": "boss_reed_tyrant_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "battle_trance",
+      "sourceType": "skill",
+      "sourceId": "boss_reed_tyrant_signature",
+      "rootId": "boss_reed_tyrant_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "boss_buried_bell_signature",
+      "rootId": "boss_buried_bell_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "boss_red_antler_signature",
+      "rootId": "boss_red_antler_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "boss_glass_seed_signature",
+      "rootId": "boss_glass_seed_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mirror_ward",
+      "sourceType": "skill",
+      "sourceId": "boss_glass_seed_signature",
+      "rootId": "boss_glass_seed_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "boss_brass_sun_signature",
+      "rootId": "boss_brass_sun_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "blackout",
+      "sourceType": "skill",
+      "sourceId": "boss_dune_queen_signature",
+      "rootId": "boss_dune_queen_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "splintered_stone",
+      "sourceType": "skill",
+      "sourceId": "boss_dune_queen_signature",
+      "rootId": "boss_dune_queen_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "boss_scarlet_admiral_signature",
+      "rootId": "boss_scarlet_admiral_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "boss_scarlet_admiral_signature",
+      "rootId": "boss_scarlet_admiral_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "static_charge",
+      "sourceType": "skill",
+      "sourceId": "boss_storm_matriarch_signature",
+      "rootId": "boss_storm_matriarch_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "charred_armor",
+      "sourceType": "skill",
+      "sourceId": "boss_cinder_butcher_signature",
+      "rootId": "boss_cinder_butcher_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "smoldering",
+      "sourceType": "skill",
+      "sourceId": "boss_cinder_butcher_signature",
+      "rootId": "boss_cinder_butcher_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "radiant_censure",
+      "sourceType": "skill",
+      "sourceId": "boss_salt_prophet_signature",
+      "rootId": "boss_salt_prophet_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "divine_protection",
+      "sourceType": "skill",
+      "sourceId": "boss_salt_prophet_signature",
+      "rootId": "boss_salt_prophet_signature",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_fever",
+      "sourceType": "skill",
+      "sourceId": "boss_golden_hydra_signature",
+      "rootId": "boss_golden_hydra_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "sure_strike",
+      "sourceType": "skill",
+      "sourceId": "boss_noon_executioner_signature",
+      "rootId": "boss_noon_executioner_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "boss_ember_phoenix_signature",
+      "rootId": "boss_ember_phoenix_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "embers_of_life",
+      "sourceType": "skill",
+      "sourceId": "boss_ember_phoenix_signature",
+      "rootId": "boss_ember_phoenix_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "barbed_shackles",
+      "sourceType": "skill",
+      "sourceId": "boss_copper_huntsman_signature",
+      "rootId": "boss_copper_huntsman_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "arcane_disruption",
+      "sourceType": "skill",
+      "sourceId": "boss_mirage_sultan_signature",
+      "rootId": "boss_mirage_sultan_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "ash_choke",
+      "sourceType": "skill",
+      "sourceId": "boss_locust_emperor_signature",
+      "rootId": "boss_locust_emperor_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "boss_obsidian_ram_signature",
+      "rootId": "boss_obsidian_ram_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "open_wound",
+      "sourceType": "skill",
+      "sourceId": "boss_harvest_reaper_signature",
+      "rootId": "boss_harvest_reaper_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "eclipse",
+      "sourceType": "skill",
+      "sourceId": "boss_hollow_duchess_signature",
+      "rootId": "boss_hollow_duchess_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "boss_ossuary_archon_signature",
+      "rootId": "boss_ossuary_archon_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "virulent_breath",
+      "sourceType": "skill",
+      "sourceId": "boss_rot_gardener_signature",
+      "rootId": "boss_rot_gardener_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "boss_carrion_king_signature",
+      "rootId": "boss_carrion_king_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "lethality",
+      "sourceType": "skill",
+      "sourceId": "boss_carrion_king_signature",
+      "rootId": "boss_carrion_king_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rust",
+      "sourceType": "skill",
+      "sourceId": "boss_rust_marshal_signature",
+      "rootId": "boss_rust_marshal_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "tempered_will",
+      "sourceType": "skill",
+      "sourceId": "boss_rust_marshal_signature",
+      "rootId": "boss_rust_marshal_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "venom_hunger",
+      "sourceType": "skill",
+      "sourceId": "boss_blood_granary_signature",
+      "rootId": "boss_blood_granary_signature",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "boss_last_lantern_signature",
+      "rootId": "boss_last_lantern_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "bone_cyclone",
+      "sourceType": "skill",
+      "sourceId": "boss_last_lantern_signature",
+      "rootId": "boss_last_lantern_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "boss_witch_of_falling_hours_signature",
+      "rootId": "boss_witch_of_falling_hours_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "fading_second",
+      "sourceType": "skill",
+      "sourceId": "boss_witch_of_falling_hours_signature",
+      "rootId": "boss_witch_of_falling_hours_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "boss_grave_boar_signature",
+      "rootId": "boss_grave_boar_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "briar_wound",
+      "sourceType": "skill",
+      "sourceId": "boss_grave_boar_signature",
+      "rootId": "boss_grave_boar_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "boss_amber_widow_signature",
+      "rootId": "boss_amber_widow_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "poisoned",
+      "sourceType": "skill",
+      "sourceId": "boss_amber_widow_signature",
+      "rootId": "boss_amber_widow_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "ash_choke",
+      "sourceType": "skill",
+      "sourceId": "boss_ashen_pilgrim_signature",
+      "rootId": "boss_ashen_pilgrim_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "skill",
+      "sourceId": "boss_ashen_pilgrim_signature",
+      "rootId": "boss_ashen_pilgrim_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "glacial_fracture",
+      "sourceType": "skill",
+      "sourceId": "boss_white_sovereign_signature",
+      "rootId": "boss_white_sovereign_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "boss_polar_devourer_signature",
+      "rootId": "boss_polar_devourer_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "mana_scorch",
+      "sourceType": "skill",
+      "sourceId": "boss_glass_empress_signature",
+      "rootId": "boss_glass_empress_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "boss_grave_frost_signature",
+      "rootId": "boss_grave_frost_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "pale_rebuke",
+      "sourceType": "skill",
+      "sourceId": "boss_grave_frost_signature",
+      "rootId": "boss_grave_frost_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "comet_wake",
+      "sourceType": "skill",
+      "sourceId": "boss_starved_aurora_signature",
+      "rootId": "boss_starved_aurora_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "lunar_grace",
+      "sourceType": "skill",
+      "sourceId": "boss_starved_aurora_signature",
+      "rootId": "boss_starved_aurora_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "sure_strike",
+      "sourceType": "skill",
+      "sourceId": "boss_frozen_executioner_signature",
+      "rootId": "boss_frozen_executioner_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "rootbound",
+      "sourceType": "skill",
+      "sourceId": "boss_mother_white_web_signature",
+      "rootId": "boss_mother_white_web_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "frostbite",
+      "sourceType": "skill",
+      "sourceId": "boss_mother_white_web_signature",
+      "rootId": "boss_mother_white_web_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "fault_line",
+      "sourceType": "skill",
+      "sourceId": "boss_iron_icebreaker_signature",
+      "rootId": "boss_iron_icebreaker_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "mountain_resolve",
+      "sourceType": "skill",
+      "sourceId": "boss_iron_icebreaker_signature",
+      "rootId": "boss_iron_icebreaker_signature",
+      "actionIndex": 2,
+      "application": "status"
+    },
+    {
+      "statusId": "chronal_erosion",
+      "sourceType": "skill",
+      "sourceId": "boss_last_hour_keeper_signature",
+      "rootId": "boss_last_hour_keeper_signature",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "borrowed_moment",
+      "sourceType": "skill",
+      "sourceId": "boss_last_hour_keeper_signature",
+      "rootId": "boss_last_hour_keeper_signature",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "funeral_lament",
+      "sourceType": "skill",
+      "sourceId": "boss_black_snow_abbess_signature",
+      "rootId": "boss_black_snow_abbess_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "night_wound",
+      "sourceType": "skill",
+      "sourceId": "boss_black_snow_abbess_signature",
+      "rootId": "boss_black_snow_abbess_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "stellar_precision",
+      "sourceType": "skill",
+      "sourceId": "boss_comet_wolf_signature",
+      "rootId": "boss_comet_wolf_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "comet_wake",
+      "sourceType": "skill",
+      "sourceId": "boss_comet_wolf_signature",
+      "rootId": "boss_comet_wolf_signature",
+      "actionIndex": 1,
+      "application": "onHit"
+    },
+    {
+      "statusId": "void_chill",
+      "sourceType": "skill",
+      "sourceId": "boss_heart_of_last_glacier_signature",
+      "rootId": "boss_heart_of_last_glacier_signature",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "oak_heart",
+      "sourceType": "skill",
+      "sourceId": "boss_briar_wall",
+      "rootId": "boss_briar_wall",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "spring_breath",
+      "sourceType": "skill",
+      "sourceId": "boss_green_renewal",
+      "rootId": "boss_green_renewal",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bloodlust",
+      "sourceType": "skill",
+      "sourceId": "boss_hunting_fervor",
+      "rootId": "boss_hunting_fervor",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "wild_instinct",
+      "sourceType": "skill",
+      "sourceId": "boss_hunting_fervor",
+      "rootId": "boss_hunting_fervor",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "spore_mantle",
+      "sourceType": "skill",
+      "sourceId": "boss_spore_carapace",
+      "rootId": "boss_spore_carapace",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "cinder_skin",
+      "sourceType": "skill",
+      "sourceId": "boss_furnace_form",
+      "rootId": "boss_furnace_form",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "volatile_sparks",
+      "sourceType": "skill",
+      "sourceId": "boss_furnace_form",
+      "rootId": "boss_furnace_form",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "charred_armor",
+      "sourceType": "skill",
+      "sourceId": "boss_slag_rain",
+      "rootId": "boss_slag_rain",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "predators_thirst",
+      "sourceType": "skill",
+      "sourceId": "boss_blood_feast",
+      "rootId": "boss_blood_feast",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "arcane_sight",
+      "sourceType": "skill",
+      "sourceId": "boss_predators_gaze",
+      "rootId": "boss_predators_gaze",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "lethality",
+      "sourceType": "skill",
+      "sourceId": "boss_predators_gaze",
+      "rootId": "boss_predators_gaze",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "ossuary_pact",
+      "sourceType": "skill",
+      "sourceId": "boss_ossuary_wall",
+      "rootId": "boss_ossuary_wall",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "gloom_armor",
+      "sourceType": "skill",
+      "sourceId": "boss_night_mantle",
+      "rootId": "boss_night_mantle",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "shadow_echo",
+      "sourceType": "skill",
+      "sourceId": "boss_night_mantle",
+      "rootId": "boss_night_mantle",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "soul_mending",
+      "sourceType": "skill",
+      "sourceId": "boss_grave_mending",
+      "rootId": "boss_grave_mending",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "bleeding",
+      "sourceType": "skill",
+      "sourceId": "boss_rending_sweep",
+      "rootId": "boss_rending_sweep",
+      "actionIndex": 0,
+      "application": "onHit"
+    },
+    {
+      "statusId": "snowveil",
+      "sourceType": "skill",
+      "sourceId": "boss_glacial_shell",
+      "rootId": "boss_glacial_shell",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "numbing_cold",
+      "sourceType": "skill",
+      "sourceId": "boss_winter_edict",
+      "rootId": "boss_winter_edict",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "white_silence",
+      "sourceType": "skill",
+      "sourceId": "boss_winter_edict",
+      "rootId": "boss_winter_edict",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "stellar_precision",
+      "sourceType": "skill",
+      "sourceId": "boss_stellar_oath",
+      "rootId": "boss_stellar_oath",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "starfire_blade",
+      "sourceType": "skill",
+      "sourceId": "boss_stellar_oath",
+      "rootId": "boss_stellar_oath",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "rime_armor",
+      "sourceType": "skill",
+      "sourceId": "boss_last_thaw",
+      "rootId": "boss_last_thaw",
+      "actionIndex": 1,
+      "application": "status"
+    },
+    {
+      "statusId": "inspired",
+      "sourceType": "effect",
+      "sourceId": "priest_benediction",
+      "rootId": "priest_benediction",
+      "actionIndex": 0,
+      "application": "status"
+    },
+    {
+      "statusId": "burning",
+      "sourceType": "effect",
+      "sourceId": "mage_ember_spark",
+      "rootId": "mage_ember_spark",
+      "actionIndex": 0,
+      "application": "status"
+    }
+  ]
+}
