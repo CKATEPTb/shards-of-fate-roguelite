@@ -1,4 +1,4 @@
-import type { ActionDefinition, AttackHand, AttackSlot, BodyPart, Combatant, CombatEvent, TargetSelector } from '@shards/shared';
+import { weaponAttackBonusMultiplier, type ActionDefinition, type AttackHand, type AttackSlot, type BodyPart, type Combatant, type CombatEvent, type TargetSelector } from '@shards/shared';
 import { definitionFor, type CombatContext } from './context';
 import { damageReductionFor, modifiersFor, modifierSourcesFor } from './modifiers';
 import { matchesTargetRelation, selectTargets } from './targets';
@@ -30,6 +30,8 @@ export interface ActionContext {
   attackHand?: AttackHand;
   attackSlot?: AttackSlot;
   weaponPower?: number;
+  /** Bonus contribution for one basic strike; never repeats on-hit effects or skills. */
+  weaponBonusMultiplier?: 1 | 2;
 }
 
 function actionAmount(ctx: CombatContext, action: ActionDefinition, options: ActionContext): number {
@@ -38,12 +40,15 @@ function actionAmount(ctx: CombatContext, action: ActionDefinition, options: Act
   // Legacy scaling:healing is only an alias; every scaled action uses the same Power.
   // The per-hand override exists solely for basic weapon strikes, never for a skill.
   const stat = action.scaling ? Math.max(0, (options.weaponPower ?? options.source.stats.power) + modifiers.powerBonus) : 0;
-  const scaling = Math.floor(stat * (action.factor ?? 1)) + (action.type === 'damage' ? modifiers.damageBonus : 0);
+  const bonusMultiplier = options.weaponBonusMultiplier ?? 1;
+  const scaling = bonusMultiplier * (Math.floor(stat * (action.factor ?? 1)) + (action.type === 'damage' ? modifiers.damageBonus : 0));
   let amount = action.dice ? rollFor(ctx, options.source, action.dice, action.type, scaling, attackIdentity(options)) : scaling;
   // Each independent blessing contributes its own die; buffs never disappear through reduction into one string.
   if (action.type === 'damage' && options.origin === 'attack') {
     for (const modifier of modifierSourcesFor(ctx, options.source)) if (modifier.damageBonusDice) {
-      amount += rollFor(ctx, options.source, modifier.damageBonusDice, 'бонус к урону', 0, attackIdentity(options));
+      for (let contribution = 0; contribution < bonusMultiplier; contribution++) {
+        amount += rollFor(ctx, options.source, modifier.damageBonusDice, 'бонус к урону', 0, attackIdentity(options));
+      }
     }
   }
   const duration = action.scaleWithRemainingDuration ? options.remaining ?? 1 : 1;
@@ -184,7 +189,8 @@ function executeAction(ctx: CombatContext, action: ActionDefinition, options: Ac
     let landed = false;
     let missed = false;
     for (const attack of attacks) {
-      const strike: ActionContext = { ...options, attackHand: attack.attackHand, attackSlot: attack.attackSlot, weaponPower: weaponPowerFor(ctx, options.source, attack) };
+      const strike: ActionContext = { ...options, attackHand: attack.attackHand, attackSlot: attack.attackSlot,
+        weaponPower: weaponPowerFor(ctx, options.source, attack), weaponBonusMultiplier: weaponAttackBonusMultiplier(attack.item.weapon) };
       // The original target remains selected: the second hand never retargets a corpse.
       if (!canContinueAttack(ctx, strike, target)) continue;
       const result = dealDamage(ctx, { ...action, dice: attack.item.weapon!.damage }, strike, target);

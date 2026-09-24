@@ -12,6 +12,12 @@ export interface EquipmentWeapon {
   damage?: string;
 }
 
+/** A two-handed basic strike concentrates the bonus budget of both hands in one hit.
+ * Weapon dice, accuracy, critical checks and on-hit effects still occur once. */
+export function weaponAttackBonusMultiplier(weapon: EquipmentWeapon | undefined): 1 | 2 {
+  return weapon?.hands === 2 && weapon.kind !== 'shield' && weapon.damage ? 2 : 1;
+}
+
 export function isHandSlot(slot: EquipmentSlot): slot is AttackSlot {
   return slot === 'rightHand' || slot === 'leftHand';
 }

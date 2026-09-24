@@ -1,4 +1,4 @@
-import { BODY_PARTS, type ActionDefinition, type CombatChoice, type CombatState, type Combatant, type DiceCheck, type GameContent, type Modifiers, type SkillDefinition, type TargetSelector } from '@shards/shared';
+import { BODY_PARTS, weaponAttackBonusMultiplier, type ActionDefinition, type CombatChoice, type CombatState, type Combatant, type DiceCheck, type GameContent, type Modifiers, type SkillDefinition, type TargetSelector } from '@shards/shared';
 import { bodyPartArmor, canBodyAct, healableHealthRatio } from './anatomy';
 import { compareIds, definitionFor, type CombatContext } from './context';
 import { getDifficultyProfile } from './difficulty';
@@ -80,7 +80,7 @@ class Evaluation {
       + (action.type === 'damage' ? modifiers.damageBonus : 0));
   }
 
-  damage(action: ActionDefinition, source: Combatant, target: Combatant, periodic = false, power?: number): number {
+  damage(action: ActionDefinition, source: Combatant, target: Combatant, periodic = false, power?: number, bonusMultiplier: 1 | 2 = 1): number {
     if (this.mods(target).invulnerable) return 0;
     const defense = this.mods(target), offense = this.mods(source);
     const armorMean = (armor: number) => { const value = Math.max(0, Math.floor(armor)); return Math.floor(value / 20) * 10.5 + (value % 20 ? (value % 20 + 1) / 2 : 0); };
@@ -92,7 +92,12 @@ class Evaluation {
     const protection = (action.bypassArmor ? 0 : armor + this.reduction(target)) + guard;
     const bonuses = periodic ? 0 : modifierSourcesFor(this.ctx, source).reduce((sum, modifiers) => sum + diceMean(modifiers.damageBonusDice), 0);
     const difficulty = source.team === 'enemies' && action.damagePerStack === undefined ? getDifficultyProfile(this.content, this.state.difficultyId).enemyDamageMultiplier : 1;
-    const raw = (action.damagePerStack ?? this.amount(action, source, power) + bonuses) * difficulty;
+    const powerContribution = action.scaling ? Math.floor(Math.max(0, (power ?? source.stats.power) + offense.powerBonus) * (action.factor ?? 1)) : 0;
+    // The two-handed strike keeps its native weapon dice and one hit/critical roll.
+    // Skills and periodic actions keep their existing, unmultiplied estimate.
+    const amount = bonusMultiplier === 1 ? this.amount(action, source, power) + bonuses
+      : Math.max(0, diceMean(action.dice) + bonusMultiplier * (powerContribution + offense.damageBonus + bonuses));
+    const raw = (action.damagePerStack ?? amount) * difficulty;
     const critical = periodic ? 0 : offense.guaranteedCrit ? 1 : clamp((21 - Math.ceil(20 - source.stats.crit - offense.critBonus + (target.stats.resilience ?? 0) + defense.resilienceBonus)) / 20, .05, 1);
     return (periodic ? 1 : this.hitChance(source, target)) * ((1 - critical) * Math.max(0, raw - protection) + critical * Math.max(0, raw * 2 - protection));
   }
@@ -104,7 +109,8 @@ class Evaluation {
     const weapons = weaponAttacksFor(this.ctx, source);
     const value = source.body && !canBodyAct(source.body) ? 0 : weapons === undefined
       ? this.damage(action, source, target) * (action.hits ?? 1)
-      : weapons.reduce((sum, attack) => sum + this.damage({ ...action, dice: attack.item.weapon!.damage }, source, target, false, weaponPowerFor(this.ctx, source, attack)), 0);
+      : weapons.reduce((sum, attack) => sum + this.damage({ ...action, dice: attack.item.weapon!.damage }, source, target, false,
+        weaponPowerFor(this.ctx, source, attack), weaponAttackBonusMultiplier(attack.item.weapon)), 0);
     this.attacks.set(key, value);
     return value;
   }
@@ -162,9 +168,12 @@ class Evaluation {
   modifierValue(target: Combatant, modifiers: Modifiers): number {
     const current = this.mods(target), attack = this.averageAttack(target), incoming = this.incoming(target);
     const basic = definitionFor(this.ctx, target.definitionId).basicAttack;
-    const hits = weaponAttacksFor(this.ctx, target)?.length ?? basic.hits ?? 1;
+    const weapons = weaponAttacksFor(this.ctx, target);
+    const hits = weapons?.length ?? basic.hits ?? 1;
+    const bonusApplications = weapons?.reduce((sum, attack) => sum + weaponAttackBonusMultiplier(attack.item.weapon), 0) ?? hits;
     const damaging = attack > 0;
-    const offensive = damaging ? hits * ((modifiers.powerBonus ?? 0) * (basic.factor ?? 1) + (modifiers.damageBonus ?? 0) + diceMean(modifiers.damageBonusDice)) * .85
+    const offensive = damaging ? bonusApplications * ((basic.scaling ? (modifiers.powerBonus ?? 0) * (basic.factor ?? 1) : 0)
+      + (modifiers.damageBonus ?? 0) + diceMean(modifiers.damageBonusDice)) * .85
       + attack * ((modifiers.accuracyBonus ?? 0) * .045 + (modifiers.critBonus ?? 0) * .04
         + (modifiers.guaranteedCrit && !current.guaranteedCrit ? .8 : 0)
         + (modifiers.repeatAttack ? checkChance(modifiers.repeatAttack) - checkChance(current.repeatAttack) : 0)) : 0;
