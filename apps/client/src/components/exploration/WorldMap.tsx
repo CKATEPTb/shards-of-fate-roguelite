@@ -1,4 +1,4 @@
-import { useId, useMemo } from 'react';
+import { memo, useId, useMemo } from 'react';
 import type { ExplorationState, GridPoint } from '@shards/shared';
 import { seasonAltarNodeIds, surfaceNodeIdForChunk } from '@shards/game-core';
 import { seasonColors, seasonLabels } from './labels';
@@ -9,7 +9,7 @@ const { center: CENTER, radius: RADIUS, spacing: SPACING } = MINIMAP_GEOMETRY;
 const altarLabels = { spring: 'Алтарь весны', summer: 'Алтарь лета', autumn: 'Алтарь осени', winter: 'Алтарь зимы' };
 
 /** Circular surroundings with clipped passage lines towards off-map neighbors. */
-export function WorldMap({ world }: { world: ExplorationState }) {
+export const WorldMap = memo(function WorldMap({ world }: { world: ExplorationState }) {
   const clipId = useId();
   const byId = useMemo(() => new Map(world.graph.nodes.map(node => [node.id, node])), [world.graph]);
   const currentId = surfaceNodeIdForChunk(world.currentChunkId);
@@ -37,4 +37,7 @@ export function WorldMap({ world }: { world: ExplorationState }) {
     })}
     </g>
   </svg>;
-}
+}, (previous, next) => previous.world.graph === next.world.graph
+  && previous.world.visited === next.world.visited
+  && previous.world.currentChunkId === next.world.currentChunkId
+  && previous.world.chunk.layer === next.world.chunk.layer);

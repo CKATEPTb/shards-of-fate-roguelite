@@ -82,7 +82,15 @@ export function saveNetworkSession(storage: SessionStorage, identity: SessionIde
 }
 
 export function needsCheckpoint(previous: ExpeditionState, next: ExpeditionState): boolean {
-  return previous.bosses !== next.bosses || previous.completed !== next.completed || previous.progression !== next.progression
+  const beforeBosses = previous.bosses, afterBosses = next.bosses;
+  // Pausing the seasonal clock shifts its deadline every combat tick. Persist
+  // that through ordinary checkpoints, rather than blocking rendering 25 times/s.
+  const pausedDeadlineOnly = !!beforeBosses && !!afterBosses
+    && beforeBosses.spawned === afterBosses.spawned
+    && beforeBosses.nextAtTick !== null && afterBosses.nextAtTick !== null
+    && Boolean(previous.cooperative?.battles.length || previous.combat)
+    && afterBosses.nextAtTick - beforeBosses.nextAtTick === next.world.tick - previous.world.tick;
+  return (beforeBosses !== afterBosses && !pausedDeadlineOnly) || previous.completed !== next.completed || previous.progression !== next.progression
     || Math.floor(previous.world.tick / 125) !== Math.floor(next.world.tick / 125)
     || previous.world.currentChunkId !== next.world.currentChunkId
     || !!next.combat && next.combat.nextSequence !== previous.combat?.nextSequence

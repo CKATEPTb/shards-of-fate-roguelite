@@ -74,7 +74,9 @@ export function createHouseHeroReveal(scene: Phaser.Scene, objects: EnvironmentO
           const alpha = reduced ? target : reveal.alpha + (target - reveal.alpha) * (1 - Math.exp(-Math.max(0, delta) / 65));
           reveal.setOrigin(source.originX, source.originY).setPosition(transform.tx, transform.ty)
             .setScale(transform.scaleX, transform.scaleY).setRotation(transform.rotation)
-            .setFlip(source.flipX, source.flipY).setDepth(image.depth + 0.001 + index * 0.0001).setAlpha(alpha).setVisible(true);
+            .setFlip(source.flipX, source.flipY).setAlpha(alpha).setVisible(true);
+          const depth = image.depth + 0.001 + index * 0.0001;
+          if (reveal.depth !== depth) reveal.setDepth(depth);
           if (alpha > 0.01) visibleCount++;
         }
       }
