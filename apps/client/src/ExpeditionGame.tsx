@@ -8,8 +8,9 @@ import { MenuPanel } from "./components/exploration/MenuPanel";
 import { BattleOverlay } from "./components/exploration/BattleOverlay";
 import { AdventureRewards } from './components/exploration/AdventureRewards';
 import { SeasonBossTimer } from './components/exploration/SeasonBossTimer';
+import { BattleTurnTimer } from './components/exploration/BattleTurnTimer';
 import { BossSummonDialog } from './components/exploration/BossSummonDialog';
-import type { ExpeditionState } from '@shards/shared';
+import type { CombatState, ExpeditionState } from '@shards/shared';
 import type { NetworkSession } from './network/session';
 import { makeBattleEnvironment } from './game/battleEnvironment';
 import { useGameAudio } from './audio/useGameAudio';
@@ -32,6 +33,13 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
   const activeBattle = cooperative?.battles.find(battle => battle.combat === combat);
   const battleKey = combat ? JSON.stringify([world.graph.seed, activeBattle?.id
     ?? `${world.currentChunkId}:${expeditionState.roaming?.battleSerial ?? 0}:${expeditionState.activePoiId ?? combat.encounterId}`]) : undefined;
+  const [presentedBattle, setPresentedBattle] = useState<{ key: string; state: CombatState }>();
+  const combatPresented = useCallback((next: CombatState) => {
+    if (battleKey) setPresentedBattle({ key: battleKey, state: next });
+    expedition.combatPresented(next);
+  }, [battleKey, expedition.combatPresented]);
+  const shownCombat = presentedBattle?.key === battleKey ? presentedBattle?.state : undefined;
+  const bossTimerPaused = Boolean(cooperative?.battles.length || combat);
   useGameAudio(expeditionState, expedition.content, controlledActorId, battleKey, network?.getPresentationEpoch());
   // Encounter mobs stay locked in place even if the initiating hero later escapes.
   // Capture the local scenery once; action updates and late reinforcements keep it stable.
@@ -58,7 +66,7 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
   useEffect(() => { setPaused(!network && menuOpen); }, [menuOpen, network, setPaused]);
 
   return (
-    <main className={`game ${reducedMotion ? "reduced-motion" : ""}`} data-season-bosses={!!expedition.bosses} aria-label="Осколки судьбы">
+    <main className={`game ${reducedMotion ? "reduced-motion" : ""}`} data-season-bosses={!!expedition.bosses || !!combat} aria-label="Осколки судьбы">
       <div className="game-playfield" inert={dialogOpen}>
         <div className="world-stage" aria-hidden={combat ? true : undefined}>
           <Suspense fallback={<div className="scene-loading" role="status">Лес просыпается…</div>}>
@@ -70,7 +78,7 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
         {!combat && <InformationHud content={expedition.content} world={world} state={partyState} selected={controlledActorId} disabled={dialogOpen} />}
         {!combat && <LoadoutHud content={expedition.content} state={partyState} controlledActorId={controlledActorId} disabled={dialogOpen}
           progress={expedition.progress} onEquipInventory={expedition.equipInventory} />}
-        {combat && <BattleOverlay content={expedition.content} autoFinish state={combat} environment={battleEnvironment} selected={controlledActorId} reducedMotion={reducedMotion} onAction={expedition.chooseCombatAction} onPresented={expedition.combatPresented} controllableActorIds={expedition.controllableActorIds} onContinue={expedition.continueExploration} canControl={expedition.canControl} multiplayer={!!network} />}
+        {combat && <BattleOverlay content={expedition.content} autoFinish state={combat} environment={battleEnvironment} selected={controlledActorId} reducedMotion={reducedMotion} onAction={expedition.chooseCombatAction} onPresented={combatPresented} controllableActorIds={expedition.controllableActorIds} onContinue={expedition.continueExploration} canControl={expedition.canControl} multiplayer={!!network} />}
         {!combat && expedition.progress && (expedition.progress.rewards.length > 0
           ? <button className="adventure-bag-button" onClick={() => expedition.setRewardsOpen(true)} aria-label="Неподобранная добыча">
             Добыча <b>{expedition.progress.rewards.length}</b><span aria-hidden="true">◇</span> {expedition.progress.coins} <small>монет</small>
@@ -80,7 +88,10 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
           </div>)}
         {!combat && <button className="game-menu-button" onClick={() => setMenuOpen(true)} aria-haspopup="dialog"><span aria-hidden="true">☰</span>Меню</button>}
       </div>
-      {expedition.bosses && <SeasonBossTimer progress={expedition.bosses} tick={world.tick} completed={victorious} />}
+      {combat ? <BattleTurnTimer state={combat} presented={shownCombat} tick={world.tick}
+        choiceDeadlineTick={activeBattle?.choiceDeadlineTick} controllableActorIds={expedition.controllableActorIds}
+        legacyDeadlineMs={activeBattle ? undefined : expedition.legacyChoiceDeadlineMs} reducedMotion={reducedMotion} />
+        : expedition.bosses && <SeasonBossTimer progress={expedition.bosses} tick={world.tick} completed={victorious} paused={bossTimerPaused} />}
       {menuOpen && <GameDialog title="Привал" onClose={closeMenu} className="panel-menu">
         <MenuPanel reducedMotion={reducedMotion} onReducedMotion={expedition.setReducedMotion} onLeave={() => onLeave(expedition.current.current)} onResume={closeMenu} network={expedition.networkInfo} />
       </GameDialog>}

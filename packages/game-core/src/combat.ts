@@ -47,9 +47,9 @@ function beginRound(ctx: CombatContext): void {
   ctx.state.turnIndex = 0;
 }
 
-function completeTurn(ctx: CombatContext, actor: Combatant): void {
+function completeTurn(ctx: CombatContext, actor: Combatant, message = `${actor.name}: конец хода`): void {
   if (present(actor)) tickStatuses(ctx, actor, 'TURN_ENDED');
-  ctx.emit({ type: 'TURN_ENDED', actorId: actor.id, message: `${actor.name}: конец хода` });
+  ctx.emit({ type: 'TURN_ENDED', actorId: actor.id, message });
   if (!actor.escaped) { expireStatuses(ctx, actor); expireShields(ctx, actor); }
   delete ctx.state.pendingActorId;
   ctx.state.turnIndex++;
@@ -136,6 +136,20 @@ export function submitCombatAction(state: CombatState, content: GameContent, cho
     runAttackTurn(ctx, actor, skill?.actions ?? [definitionFor(ctx, actor.definitionId).basicAttack], skill?.target ?? 'enemy', skill?.id, choice.targetId);
   }
   completeTurn(ctx, actor);
+  return updated;
+}
+
+/** A timed-out choice still resolves every end-of-turn aura, shield and expiry. */
+export function skipCombatTurn(state: CombatState, content: GameContent, actorId: string): CombatState {
+  const pending = state.units.find(unit => unit.id === actorId);
+  if (isTerminal(state) || state.pendingActorId !== actorId || !pending || pending.team !== 'heroes' || !present(pending)) {
+    throw new Error('Нет ожидающего хода этого героя.');
+  }
+  const updated = structuredClone(state);
+  const ctx = createContext(updated, content);
+  const actor = updated.units.find(unit => unit.id === actorId)!;
+  delete updated.pendingActorId;
+  completeTurn(ctx, actor, `${actor.name}: время на выбор истекло, ход пропущен`);
   return updated;
 }
 

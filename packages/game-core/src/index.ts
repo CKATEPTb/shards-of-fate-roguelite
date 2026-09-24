@@ -6,7 +6,7 @@ export * from './equipment-sets';
 export * from './equipment-choice';
 export { modifiersFor, modifierSourcesFor } from './modifiers';
 export * from './difficulty';
-export { stepCombat, submitCombatAction, combatTargets, runCombat, isTerminal, type CombatDecisionPolicy } from './combat';
+export { stepCombat, submitCombatAction, skipCombatTurn, combatTargets, runCombat, isTerminal, type CombatDecisionPolicy } from './combat';
 export { COMBAT_RULES } from './combat-rules';
 export { isRandomTargetSelector } from './targets';
 export { createRng, createRoomRng, createEntityRng, createCombatEntityRng, nextRandom } from './random';

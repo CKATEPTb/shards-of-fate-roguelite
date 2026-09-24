@@ -1,5 +1,6 @@
 import { adventureContent, contentWithLoadouts, restoreProgress } from './progression';
 import type { CoopActor, CoopBattle, CoopState, GameContent, GridPoint, MovementState, RoamingGroup, RoamingMob, WorldActor } from '@shards/shared';
+import { COMBAT_CHOICE_TIMEOUT_MS } from '@shards/shared';
 import { startHeroBody } from '../anatomy';
 import { hashValue } from '../canonical';
 import { isCurrentShippedContent, restoreContentHash } from '../content-hash';
@@ -9,7 +10,7 @@ import { createRoomRng } from '../random';
 import { deserializeSnapshot } from '../snapshot';
 import { array, finite, integer, oneOf, record, same, string } from '../snapshot-values';
 import { validateActorIds } from '../world/movement';
-import { createMovementState, validateMovementBonus } from '../world/movement-speed';
+import { createMovementState, MOVEMENT_TICK_MS, validateMovementBonus } from '../world/movement-speed';
 import { coopPartyFailed } from './battles';
 import { coopBattleDiceOwners, coopBattleRng } from './entity-dice';
 import { restoreSeasonBosses } from './boss-snapshot';
@@ -154,7 +155,7 @@ export function deserializeCoop(json: string, content: GameContent): CoopState {
   const reservedActors = new Set<string>();
   const reservedMobs = new Set<string>();
   const battles: CoopBattle[] = array(data.battles, 'coop.battles', 4).map(value => {
-    const saved = record(value, 'battle', ['id', 'chunkId', 'actorIds', 'initialActorIds', 'mobIds', 'initiatorActorId', 'initiatorMobId', 'combat', 'playing', 'speed', 'elapsedMs', 'presentationMs', 'presentationUntilTick', 'loadouts']);
+    const saved = record(value, 'battle', ['id', 'chunkId', 'actorIds', 'initialActorIds', 'mobIds', 'initiatorActorId', 'initiatorMobId', 'combat', 'playing', 'speed', 'elapsedMs', 'presentationMs', 'presentationUntilTick', 'choiceDeadlineTick', 'loadouts']);
     const chunkId = string(saved.chunkId, 'battle.chunkId');
     const actorIds = ids(saved.actorIds, 'battle.actorIds', 4);
     const initialActorIds = saved.initialActorIds === undefined ? undefined : ids(saved.initialActorIds, 'battle.initialActorIds', 4);
@@ -193,10 +194,17 @@ export function deserializeCoop(json: string, content: GameContent): CoopState {
         }
       }
     }
+    const presentationUntilTick = saved.presentationUntilTick === undefined ? undefined : integer(saved.presentationUntilTick, 'battle.presentationUntilTick');
+    const storedChoiceDeadline = saved.choiceDeadlineTick === undefined ? undefined : integer(saved.choiceDeadlineTick, 'battle.choiceDeadlineTick');
+    // Legacy saves had no decision clock. Migrate once; subsequent saves retain
+    // the exact absolute deadline, including a deadline that has already passed.
+    const choiceDeadlineTick = combat.pendingActorId ? storedChoiceDeadline
+      ?? Math.max(tick, presentationUntilTick ?? tick) + Math.ceil(COMBAT_CHOICE_TIMEOUT_MS / MOVEMENT_TICK_MS) : undefined;
     return { loadouts, id: string(saved.id, 'battle.id'), chunkId, actorIds, ...(initialActorIds ? { initialActorIds } : {}), mobIds, initiatorActorId, initiatorMobId, combat,
       elapsedMs: finite(saved.elapsedMs, 'battle.elapsedMs', 0),
       ...(saved.presentationMs === undefined ? {} : { presentationMs: finite(saved.presentationMs, 'battle.presentationMs', 0) }),
-      ...(saved.presentationUntilTick === undefined ? {} : { presentationUntilTick: integer(saved.presentationUntilTick, 'battle.presentationUntilTick') }) };
+      ...(presentationUntilTick === undefined ? {} : { presentationUntilTick }),
+      ...(choiceDeadlineTick === undefined ? {} : { choiceDeadlineTick }) };
   });
   if (new Set(battles.map(battle => battle.id)).size !== battles.length) throw new Error('Duplicate co-op battle');
   const state: CoopState = { worldVersion: data.worldVersion === undefined ? 2 : integer(data.worldVersion, 'coop.worldVersion', 1, 3) as 1 | 2 | 3, progression, version: 1, contentHash: hashValue(content), seed, difficultyId, characterIds, tick, diceIndex, diceCounters, actors, groups, battles,

@@ -1,9 +1,9 @@
 import { battleLoadouts, contentWithLoadouts } from './progression';
 import { awardAdventureLoot } from './rewards';
 import { hashValue } from '../canonical';
-import { combatEventsDuration, COMBAT_TURN_MS, HERO_LIGHT_RADIUS_TILES, type CombatChoice, type CoopActor, type CoopBattle, type CoopEncounterPreview, type CoopEvent, type CoopResult, type CoopState, type GameContent, type GridPoint, type RoamingGroup, type WorldChunk } from '@shards/shared';
+import { combatEventsDuration, COMBAT_CHOICE_TIMEOUT_MS, COMBAT_TURN_MS, HERO_LIGHT_RADIUS_TILES, type CombatChoice, type CoopActor, type CoopBattle, type CoopEncounterPreview, type CoopEvent, type CoopResult, type CoopState, type GameContent, type GridPoint, type RoamingGroup, type WorldChunk } from '@shards/shared';
 import { isBodyAlive } from '../anatomy';
-import { isTerminal, stepCombat, submitCombatAction } from '../combat';
+import { isTerminal, skipCombatTurn, stepCombat, submitCombatAction } from '../combat';
 import { createCombat } from '../create';
 import { partyBodies } from '../expedition/party-health';
 import { findRoamingEncounter, ROAMING_REINFORCEMENT_RADIUS } from '../roaming/encounters';
@@ -198,15 +198,24 @@ export function performCoopBattleAction(state: CoopState, battleId: string, choi
   return transitionCoopBattle(state, battleId, 0, content, choice);
 }
 
-function transitionCoopBattle(state: CoopState, battleId: string, elapsedMs: number, content: GameContent, choice?: CombatChoice): CoopResult {
+export function performCoopBattleTimeout(state: CoopState, battleId: string, actorId: string, turn: number, content: GameContent): CoopResult {
+  return transitionCoopBattle(state, battleId, 0, content, undefined, { actorId, turn });
+}
+
+function transitionCoopBattle(state: CoopState, battleId: string, elapsedMs: number, content: GameContent, choice?: CombatChoice,
+  timeout?: { actorId: string; turn: number }): CoopResult {
   const battle = state.battles.find(candidate => candidate.id === battleId);
   if (!battle || isTerminal(battle.combat)) return { state, events: [] };
-  if (!choice && battle.combat.pendingActorId) return { state, events: [] };
+  if (timeout && (battle.combat.pendingActorId !== timeout.actorId || battle.combat.turn !== timeout.turn
+    || battle.choiceDeadlineTick === undefined || state.tick < battle.choiceDeadlineTick)) return { state, events: [] };
+  if (choice && battle.choiceDeadlineTick !== undefined && state.tick >= battle.choiceDeadlineTick) return { state, events: [] };
+  if (!choice && !timeout && battle.combat.pendingActorId) return { state, events: [] };
   const diceIndex = state.diceIndex;
   const rng = coopBattleRng(state, battle.combat, battle.mobIds);
   const before = { ...battle.combat, rng };
   content = contentWithLoadouts(content, battle.loadouts);
-  const stepped = choice ? submitCombatAction(before, content, choice) : stepCombat(before, content);
+  const stepped = choice ? submitCombatAction(before, content, choice)
+    : timeout ? skipCombatTurn(before, content, timeout.actorId) : stepCombat(before, content);
   if (stepped.nextSequence === before.nextSequence && stepped.pendingActorId === before.pendingActorId
     && stepped.status === before.status && stepped.turn === before.turn) return { state, events: [] };
   // A complete turn may inspect its own events; retain history only after all
@@ -217,8 +226,10 @@ function transitionCoopBattle(state: CoopState, battleId: string, elapsedMs: num
   state = advanceCoopDice(state, dice, rng.entityDice!.counters);
   const nextDiceIndex = state.diceIndex;
   const presentationMs = combatEventsDuration(stepped.events.filter(event => event.sequence >= before.nextSequence));
+  const presentationUntilTick = state.tick + Math.ceil(presentationMs / MOVEMENT_TICK_MS);
   const next = { ...battle, combat, elapsedMs: combat.pendingActorId ? 0 : elapsedMs,
-    presentationMs, presentationUntilTick: state.tick + Math.ceil(presentationMs / MOVEMENT_TICK_MS) };
+    presentationMs, presentationUntilTick,
+    choiceDeadlineTick: combat.pendingActorId ? presentationUntilTick + Math.ceil(COMBAT_CHOICE_TIMEOUT_MS / MOVEMENT_TICK_MS) : undefined };
   state = { ...state, diceIndex: nextDiceIndex, battles: state.battles.map(candidate => candidate.id === battleId ? next : candidate) };
   const escaped = combat.units.filter(unit => unit.team === 'heroes' && unit.escaped
     && !before.units.find(previous => previous.id === unit.id)?.escaped);
@@ -241,6 +252,7 @@ function transitionCoopBattle(state: CoopState, battleId: string, elapsedMs: num
   state = { ...state, failed: coopPartyFailed(state) };
   const event: CoopEvent = choice
     ? { type: 'battle-action', battleId, choice, diceIndex, nextDiceIndex, elapsedMs: next.elapsedMs, dice }
+    : timeout ? { type: 'battle-timeout', battleId, actorId: timeout.actorId, turn: timeout.turn, diceIndex, nextDiceIndex, elapsedMs: next.elapsedMs, dice }
     : { type: 'battle-step', battleId, diceIndex, nextDiceIndex, elapsedMs: next.elapsedMs, dice };
   return { state, events: [event] };
 }

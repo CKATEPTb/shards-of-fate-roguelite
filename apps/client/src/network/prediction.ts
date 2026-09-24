@@ -1,4 +1,4 @@
-import { applyCoopInput, MOVEMENT_TICK_MS, stepCoop } from '@shards/game-core';
+import { applyCoopInput, getCoopBattle, MOVEMENT_TICK_MS, stepCoop } from '@shards/game-core';
 import type { MultiplayerCommand } from '@shards/protocol';
 import type { CoopResult, CoopState, GameContent } from '@shards/shared';
 
@@ -54,6 +54,10 @@ export class CoopPrediction {
     const owned = structuredClone(input);
     this.advanceTo(owned.tick);
     owned.diceIndex ??= this.heroDiceIndex(this.state);
+    if (owned.command.type === 'battle' && owned.command.action === 'choose' && owned.command.expectedTurn === undefined) {
+      const battle = getCoopBattle(this.state, this.actorId);
+      if (battle) owned.command = { ...owned.command, expectedTurn: battle.combat.turn };
+    }
     const result = applyCoopInput(this.state, this.actorId, owned.command, this.content, owned.tick);
     if (result.accepted === false) return result;
     this.pending.push(owned);
@@ -103,6 +107,13 @@ export class CoopPrediction {
 
   private heroDiceIndex(state: CoopState): number { return state.diceCounters?.[`hero:${this.actorId}`] ?? 0; }
   private staleAction(input: PredictedInput, state: CoopState): boolean {
+    const command = input.command;
+    if (command.type === 'battle' && command.action === 'choose' && command.expectedTurn !== undefined) {
+      const battle = getCoopBattle(state, this.actorId);
+      const sameEncounter = battle && (battle.id === command.battleId
+        || command.battleId.replace(/^battle:\d+:/, '') === battle.initiatorMobId);
+      if (sameEncounter && command.expectedTurn < battle.combat.turn) return true;
+    }
     return (input.command.type === 'move' || input.command.type === 'battle')
       && input.diceIndex !== undefined && input.diceIndex < this.heroDiceIndex(state);
   }

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { DIFFICULTY_IDS } from '@shards/shared';
 
 /** Version of the browser-hosted multiplayer session contract. */
-export const MULTIPLAYER_VERSION = 16 as const;
+export const MULTIPLAYER_VERSION = 18 as const;
 export const ROOM_REQUEST_ROUTE = 'room.request';
 export const ROOM_EVENTS_ROUTE = 'room.events';
 export const MAX_ROOM_MEMBERS = 4;
@@ -62,7 +62,8 @@ export const multiplayerCommandSchema = z.union([
     rewardIds: z.array(rewardId),
   }).strict(),
   z.object({ type: z.literal('battle'), battleId: id, action: z.literal('continue') }).strict(),
-  z.object({ type: z.literal('battle'), battleId: id, action: z.literal('choose'), choice: combatChoiceSchema }).strict(),
+  z.object({ type: z.literal('battle'), battleId: id, action: z.literal('choose'), choice: combatChoiceSchema,
+    expectedTurn: z.number().int().nonnegative().safe().optional() }).strict(),
 ]);
 export type MultiplayerCommand = z.infer<typeof multiplayerCommandSchema>;
 const multiplayerCommandEntrySchema = z.object({ command: multiplayerCommandSchema, input: multiplayerInputSchema.optional() }).strict();

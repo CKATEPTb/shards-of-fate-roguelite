@@ -64,7 +64,12 @@ export function advanceCoopTo(state: CoopState, tick: number, _content: GameCont
     }
     const battles = state.battles.map(battle => !battle.combat.pendingActorId && !isTerminal(battle.combat)
       ? { ...battle, elapsedMs: battle.elapsedMs + MOVEMENT_TICK_MS } : battle);
-    state = advanceCampfireHealing({ ...state, tick: state.tick + 1, actors, groups, battles });
+    // The room has one seasonal clock: any ongoing encounter pauses it for
+    // everyone, including heroes exploring other chunks. Replayed clock ticks
+    // shift the deadline identically without broadcasting countdown updates.
+    const bosses = state.battles.length && state.bosses?.nextAtTick != null
+      ? { ...state.bosses, nextAtTick: state.bosses.nextAtTick + 1 } : state.bosses;
+    state = advanceCampfireHealing({ ...state, tick: state.tick + 1, actors, groups, battles, bosses });
   }
   return state;
 }

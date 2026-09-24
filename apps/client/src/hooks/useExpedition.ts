@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { approachCampfire, chooseExpeditionCombatAction, commandCoop, coopView, createCombat, enableRoaming, isBodyAlive, leaveEncounter, moveExpedition, partyBodies, stepCoop, stepExpedition, stepExpeditionCombat, upgradeSoloAdventure, MOVEMENT_TICK_MS } from '@shards/game-core';
-import { SEASON_BOSS_ORDER, type CombatChoice, type CombatState, type CoopCommand, type ExpeditionState, type GridPoint, type InventoryTarget, type RewardResolution, type Season } from '@shards/shared';
+import { approachCampfire, chooseExpeditionCombatAction, commandCoop, coopView, createCombat, enableRoaming, isBodyAlive, leaveEncounter, moveExpedition, partyBodies, skipExpeditionCombatTurn, stepCoop, stepExpedition, stepExpeditionCombat, upgradeSoloAdventure, MOVEMENT_TICK_MS } from '@shards/game-core';
+import { COMBAT_CHOICE_TIMEOUT_MS, SEASON_BOSS_ORDER, type CombatChoice, type CombatState, type CoopCommand, type ExpeditionState, type GridPoint, type InventoryTarget, type RewardResolution, type Season } from '@shards/shared';
 import { gameContent, isFinished } from '../catalog';
 import type { NetworkSession } from '../network/session';
 import { needsCheckpoint, sessionEnded } from '../session/storage';
@@ -18,6 +18,7 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
   const [state, setState] = useState(() => network ? initial : upgradeSoloAdventure(initial, gameContent));
   const current = useRef(state);
   const [presentedCombat, setPresentedCombat] = useState<CombatState | null>(null);
+  const [legacyChoiceDeadlineMs, setLegacyChoiceDeadlineMs] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const [notice, setNotice] = useState('');
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -109,6 +110,22 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     return () => window.clearTimeout(timer);
   }, [network, state.cooperative, state.combat, paused, presentedCombat, commit]);
 
+  useEffect(() => {
+    const combat = state.combat;
+    if (network || state.cooperative || !combat?.pendingActorId || isFinished(combat)
+      || presentedCombat?.nextSequence !== combat.nextSequence || presentedCombat?.pendingActorId !== combat.pendingActorId) {
+      setLegacyChoiceDeadlineMs(null);
+      return;
+    }
+    const actorId = combat.pendingActorId, turn = combat.turn;
+    const deadline = performance.now() + COMBAT_CHOICE_TIMEOUT_MS;
+    setLegacyChoiceDeadlineMs(deadline);
+    const timer = window.setTimeout(() => {
+      commit(skipExpeditionCombatTurn(current.current, gameContent, actorId, turn));
+    }, COMBAT_CHOICE_TIMEOUT_MS);
+    return () => window.clearTimeout(timer);
+  }, [network, state.cooperative, state.combat, presentedCombat, commit]);
+
   const send = useCallback((command: CoopCommand): boolean => {
     if (!canControl) return false;
     if (network) return network.sendCommand(command);
@@ -175,7 +192,7 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
   const chooseCombatAction = useCallback((choice: CombatChoice) => {
     const cooperative = network?.getCoopState() ?? current.current.cooperative;
     const battle = cooperative?.battles.find(item => item.combat === current.current.combat);
-    if (battle) return send({ type: 'battle', battleId: battle.id, action: 'choose', choice });
+    if (battle) return send({ type: 'battle', battleId: battle.id, action: 'choose', choice, expectedTurn: battle.combat.turn });
     if (network || !current.current.combat) return false;
     try { commit(chooseExpeditionCombatAction(current.current, gameContent, choice)); return true; }
     catch (error) { setNotice(error instanceof Error ? error.message : 'Действие недоступно.'); return false; }
@@ -253,7 +270,7 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
   return {
     world: state.world, content, controlledActorId, move, interact, combat: state.combat,
     groups: state.roaming?.chunks[state.world.currentChunkId], partyState: state.combat ?? preview,
-    chooseCombatAction, combatPresented, controllableActorIds, continueExploration, canControl,
+    chooseCombatAction, combatPresented, controllableActorIds, continueExploration, canControl, legacyChoiceDeadlineMs,
     current, difficultyId: state.difficultyId ?? 'normal', notice, setNotice, clearedPoiIds: state.clearedPoiIds,
     reducedMotion, setReducedMotion, setPaused, defeated, failed: !!state.failed, completed: !!state.completed,
     bosses: state.bosses ?? state.cooperative?.bosses, bossSummon, cancelBossSummon, confirmBossSummon,

@@ -19,6 +19,10 @@ export function applyCoopInput(state: CoopState, actorId: string, command: CoopC
     const battle = getCoopBattle(state, actorId);
     const sameEncounter = battle && (battle.id === command.battleId
       || command.battleId.replace(/^battle:\d+:/, '') === battle.initiatorMobId);
+    if (sameEncounter && command.action === 'choose' && command.expectedTurn !== undefined
+      && command.expectedTurn !== battle.combat.turn) {
+      return { state, events: [], accepted: false, reason: 'Это действие относится к другому ходу боя.' };
+    }
     return commandCoop(state, actorId, sameEncounter ? { ...command, battleId: battle.id } : command, content);
   }
   if (command.type !== 'move' || !command.from) return commandCoop(state, actorId, command, content);

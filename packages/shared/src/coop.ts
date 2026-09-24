@@ -31,6 +31,8 @@ export interface CoopBattle {
   /** Duration of the last transition's complete presentation, including initiative dice. */
   presentationMs?: number;
   presentationUntilTick?: number;
+  /** Absolute room tick; a pending hero decision keeps this deadline across reconnects. */
+  choiceDeadlineTick?: number;
   elapsedMs: number;
 }
 
@@ -71,7 +73,7 @@ export type CoopCommand =
   | { type: 'move'; chunkId: string; x: number; y: number; from?: GridPoint; fromElapsedMs?: number }
   | { type: 'rest'; chunkId: string; poiId: string }
   | { type: 'battle'; battleId: string; action: 'continue' }
-  | { type: 'battle'; battleId: string; action: 'choose'; choice: CombatChoice };
+  | { type: 'battle'; battleId: string; action: 'choose'; choice: CombatChoice; expectedTurn?: number };
 
 export interface CoopDiceAdvance { ownerId: string; index: number; nextIndex: number }
 
@@ -87,6 +89,7 @@ export type CoopEvent =
   | { type: 'battle-join'; battleId: string; actorIds: string[] }
   | { type: 'battle-step'; battleId: string; diceIndex: number; nextDiceIndex: number; elapsedMs: number; dice?: CoopDiceAdvance[] }
   | { type: 'battle-action'; battleId: string; choice: CombatChoice; diceIndex: number; nextDiceIndex: number; elapsedMs: number; dice?: CoopDiceAdvance[] }
+  | { type: 'battle-timeout'; battleId: string; actorId: string; turn: number; diceIndex: number; nextDiceIndex: number; elapsedMs: number; dice?: CoopDiceAdvance[] }
   | { type: 'battle-end'; battleId: string }
   | { type: 'rest'; actorId: string; chunkId: string; poiId: string }
   | { type: 'structure'; actorId: string; chunkId: string; structureId: string; completed?: boolean }

@@ -10,6 +10,26 @@
 .season-boss-timer[data-urgent="true"] { opacity: .95; }
 .season-boss-timer[data-awaiting-victory="true"] .season-boss-countdown > span:first-of-type { color: var(--season-boss-color); }
 .season-boss-timer[data-completed="true"] { --season-boss-color: #d9c994 !important; }
+.season-boss-countdown > .season-boss-pause { display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0; color: #c4c9b3; font-size: 8px; letter-spacing: .1px; }
+.season-boss-pause > svg { width: 9px; height: 9px; opacity: .75; }
+.season-boss-timer[data-paused="true"] .season-boss-track > span { opacity: .36; }
+.battle-turn-timer { --season-boss-color: #c5cbb2; width: min(320px, calc(100% - 32px)); opacity: .84; }
+.battle-turn-countdown { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 22px; padding: 0 9px; background: radial-gradient(ellipse, #091612a6, transparent 78%); font-size: 9px; letter-spacing: .25px; }
+.battle-turn-clock { flex: 0 0 auto; width: 19px; height: 19px; color: var(--season-boss-color); }
+.battle-turn-timer-label { flex: 0 0 auto; color: #e1e1c9; white-space: nowrap; }
+.battle-turn-timer-actor { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #aeba9d; }
+.battle-turn-countdown > time { display: inline-flex; align-items: baseline; gap: 3px; flex: 0 0 auto; min-width: 30px; justify-content: flex-end; color: var(--season-boss-color); font-size: 12px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: .4px; }
+.battle-turn-countdown > time > small { font-size: 8px; font-weight: 400; opacity: .78; }
+.battle-turn-timer[data-counting="true"] { opacity: .97; }
+.battle-turn-timer[data-counting="true"][data-own-turn="true"] { --season-boss-color: #e5ce8b; }
+.battle-turn-timer[data-urgent="true"] { --season-boss-color: #efaa83; opacity: 1; }
+.battle-turn-timer[data-urgent="true"] .battle-turn-clock { animation: battle-turn-last-seconds 1s ease-in-out infinite alternate; }
+.battle-turn-timer[data-urgent="true"] .battle-turn-timer-label { color: #f2cead; }
+.battle-turn-timer[data-counting="false"] .battle-turn-track { opacity: .3; }
+.battle-turn-track > span { background: linear-gradient(90deg, color-mix(in srgb, var(--season-boss-color) 35%, transparent), var(--season-boss-color)); opacity: .85; }
+.battle-turn-timer[data-reduced="true"] .battle-turn-clock { animation: none; }
+.battle-turn-timer[data-reduced="true"] .battle-turn-track > span { transition: none; }
+@keyframes battle-turn-last-seconds { from { opacity: .62; } to { opacity: 1; } }
 /* Float the timer over the scenery; only HUD anchors reserve its slim top row. */
 .game[data-season-bosses="true"] .battle-turn-queue { top: calc(max(8px, env(safe-area-inset-top)) + 28px); }
 .game[data-season-bosses="true"] .battle-canvas { --battle-season-offset: 28px; }
@@ -24,4 +44,4 @@
 @media (max-height: 540px) {
   .game[data-season-bosses="true"] .battle-turn-queue { top: calc(max(4px, env(safe-area-inset-top)) + 28px); }
 }
-@media (prefers-reduced-motion: reduce) { .season-boss-track > span { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .season-boss-track > span { transition: none; } .battle-turn-timer .battle-turn-clock { animation: none; } }

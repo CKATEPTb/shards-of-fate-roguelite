@@ -1,7 +1,7 @@
 import { SEASON_BOSS_INTERVAL_MS, SEASON_BOSS_ORDER, type CoopState, type GameContent, type SeasonBossProgress, type SeasonBossSpawn } from '@shards/shared';
 import { array, integer, oneOf, record, same, string } from '../snapshot-values';
 import { MOVEMENT_TICK_MS } from '../world/movement-speed';
-import { initialSeasonBosses } from './bosses';
+import { initialSeasonBosses, isSeasonBossDefeated } from './bosses';
 
 const INTERVAL_TICKS = SEASON_BOSS_INTERVAL_MS / MOVEMENT_TICK_MS;
 type BossRestoreState = Pick<CoopState, 'tick' | 'actors' | 'groups' | 'killedEnemyIds'>;
@@ -45,7 +45,7 @@ export function restoreSeasonBosses(value: unknown, state: BossRestoreState, con
     return { nextAtTick: null, spawned };
   }
   const last = spawned.at(-1);
-  const awaitingVictory = spawned.some(boss => !state.killedEnemyIds.includes(boss.mobId));
+  const awaitingVictory = spawned.some(boss => !isSeasonBossDefeated(state, boss));
   if (awaitingVictory && data.nextAtTick === null) return { nextAtTick: null, spawned };
   const nextAtTick = integer(data.nextAtTick, 'coop.bosses.nextAtTick',
     (last?.summonedAtTick ?? 0) + INTERVAL_TICKS, state.tick + INTERVAL_TICKS);

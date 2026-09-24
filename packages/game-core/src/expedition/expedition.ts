@@ -2,7 +2,7 @@ import { createCoopState, commandCoop, stepCoop } from '../coop/coop';
 import { coopView } from '../coop/view';
 import type { CombatChoice, DifficultyId, ExpeditionState, GameContent, GridPoint } from '@shards/shared';
 import { createCombat } from '../create';
-import { isTerminal, stepCombat, submitCombatAction } from '../combat';
+import { isTerminal, skipCombatTurn, stepCombat, submitCombatAction } from '../combat';
 import { hashString } from '../random';
 import { createExploration, requestMove, stepExploration } from '../world';
 import { initializeMovementSpeeds, resetMovementProgress } from './movement-speeds';
@@ -78,6 +78,13 @@ export function stepExpedition(state: ExpeditionState, content: GameContent, ela
 export function stepExpeditionCombat(state: ExpeditionState, content: GameContent): ExpeditionState {
   if (!state.combat || isTerminal(state.combat) || state.combat.pendingActorId) return state;
   return withExpeditionCombat(state, stepCombat(state.combat, content));
+}
+
+/** Complete an unfinished battle from the old solo format before migration. */
+export function skipExpeditionCombatTurn(state: ExpeditionState, content: GameContent, actorId: string, turn: number): ExpeditionState {
+  if (state.cooperative || !state.combat || isTerminal(state.combat)
+    || state.combat.pendingActorId !== actorId || state.combat.turn !== turn) return state;
+  return withExpeditionCombat(state, skipCombatTurn(state.combat, content, actorId));
 }
 
 export function chooseExpeditionCombatAction(state: ExpeditionState, content: GameContent, choice: CombatChoice): ExpeditionState {

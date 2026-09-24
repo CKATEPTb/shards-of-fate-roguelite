@@ -1,6 +1,8 @@
 import type { CombatEvent, CombatState } from './model';
 
 export const COMBAT_TURN_MS = 1150;
+/** Decision time begins only after the prepared hero turn has been presented. */
+export const COMBAT_CHOICE_TIMEOUT_MS = 30_000;
 export const COMBAT_STRIKE_MS = 640;
 export const COMBAT_DEATH_TAIL_MS = 200;
 export const COMBAT_DIE_MS = 720;

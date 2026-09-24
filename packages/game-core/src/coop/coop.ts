@@ -11,7 +11,7 @@ import { createExploration } from '../world/movement';
 import { createMovementState, MOVEMENT_TICK_MS } from '../world/movement-speed';
 import { isWalkable, samePoint } from '../world/grid';
 import { findPath } from '../world/pathfinding';
-import { detectCoopBattles, getCoopBattle, performCoopBattleAction, performCoopBattleStep } from './battles';
+import { detectCoopBattles, getCoopBattle, performCoopBattleAction, performCoopBattleStep, performCoopBattleTimeout } from './battles';
 import { applyCoopEvent } from './events';
 import { advanceCoopTo, coopLocks, motionEvent, rebuildMotion, resolveCoopGates, sameMotion, stopCoopActor } from './movement';
 import { compareCoopIds, coopChunk, ensureCoopChunk } from './world';
@@ -48,6 +48,8 @@ export function commandCoop(state: CoopState, actorId: string, command: CoopComm
       return { state: applyCoopEvent(state, event, content), events: [event], accepted: true };
     }
     if (isTerminal(battle.combat)) return rejected(state, 'Бой уже завершён.');
+    if (command.expectedTurn !== undefined && command.expectedTurn !== battle.combat.turn) return rejected(state, 'Этот ход уже завершён.');
+    if (battle.choiceDeadlineTick !== undefined && state.tick >= battle.choiceDeadlineTick) return rejected(state, 'Время на выбор действия истекло.');
     const unit = battle.combat.units.find(candidate => candidate.id === command.choice.actorId);
     if (!unit || unit.team !== 'heroes' || unit.definitionId !== actorId) return rejected(state, 'Вы можете выбрать действие только своего героя.');
     if (battle.combat.pendingActorId !== unit.id) return rejected(state, 'Сейчас ход другого участника.');
@@ -159,7 +161,15 @@ export function stepCoop(state: CoopState, content: GameContent): CoopResult {
       continue;
     }
     const interval = battle.presentationMs ?? combatTurnDuration(battle.combat);
-    if (battle.combat.pendingActorId || isTerminal(battle.combat) || battle.elapsedMs < interval) continue;
+    if (battle.combat.pendingActorId) {
+      if (battle.choiceDeadlineTick !== undefined && state.tick >= battle.choiceDeadlineTick) {
+        const result = performCoopBattleTimeout(state, battle.id, battle.combat.pendingActorId, battle.combat.turn, content);
+        state = result.state;
+        events.push(...result.events);
+      }
+      continue;
+    }
+    if (isTerminal(battle.combat) || battle.elapsedMs < interval) continue;
     const result = performCoopBattleStep(state, battle.id, battle.elapsedMs - interval, content);
     state = result.state;
     events.push(...result.events);

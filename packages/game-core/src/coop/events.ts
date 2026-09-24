@@ -4,7 +4,7 @@ import { interactAdventure } from './interactions';
 import { CAMPFIRE_LIFETIME_TICKS } from './campfire-runtime';
 import { restBody } from '../anatomy';
 import { advanceCoopTo, enterCoopChunk, rebuildMotion, stopCoopActor } from './movement';
-import { finishCoopBattle, joinCoopBattle, performCoopBattleAction, performCoopBattleStep, startCoopBattle } from './battles';
+import { finishCoopBattle, joinCoopBattle, performCoopBattleAction, performCoopBattleStep, performCoopBattleTimeout, startCoopBattle } from './battles';
 import { summonSeasonBoss } from './bosses';
 
 export function applyCoopEvent(state: CoopState, event: CoopEvent, content: GameContent): CoopState {
@@ -32,11 +32,13 @@ export function applyCoopEvent(state: CoopState, event: CoopEvent, content: Game
     case 'battle-start': return startCoopBattle(state, event, content);
     case 'battle-join': return joinCoopBattle(state, event, content);
     case 'battle-step':
-    case 'battle-action': {
+    case 'battle-action':
+    case 'battle-timeout': {
       const result = event.type === 'battle-action' ? performCoopBattleAction(state, event.battleId, event.choice, content)
+        : event.type === 'battle-timeout' ? performCoopBattleTimeout(state, event.battleId, event.actorId, event.turn, content)
         : performCoopBattleStep(state, event.battleId, event.elapsedMs, content);
       const replayed = result.events[0];
-      if (!replayed || replayed.type !== 'battle-step' && replayed.type !== 'battle-action') throw new Error('Co-op battle transition did not replay');
+      if (!replayed || replayed.type !== 'battle-step' && replayed.type !== 'battle-action' && replayed.type !== 'battle-timeout') throw new Error('Co-op battle transition did not replay');
       if (state.diceIndex !== event.diceIndex || replayed.type !== event.type || result.state.diceIndex !== event.nextDiceIndex
         || JSON.stringify(replayed.dice) !== JSON.stringify(event.dice)) throw new Error('Co-op entity dice counters diverged');
       return result.state;

@@ -1,7 +1,7 @@
 import { BODY_PARTS, SEASON_BOSS_ORDER, type BodyPart, type CombatState, type CoopBattle, type CoopState, type DifficultyId, type GameContent, type GridPoint, type HeroLoadout, type RewardRarity, type Season } from '@shards/shared';
 import { activeEquipmentSetBonuses, bodyMovementMultiplier, commandCoop, createCoopState, hashValue, isBodyAlive, isTerminal, type CombatDecisionPolicy } from '@shards/game-core';
 import { finishCoopBattle, performCoopBattleAction, performCoopBattleStep, startCoopBattle } from '../../../packages/game-core/src/coop/battles';
-import { engageSeasonBosses, summonSeasonBoss } from '../../../packages/game-core/src/coop/bosses';
+import { engageSeasonBosses, isSeasonBossDefeated, seasonBossEscortPool, summonSeasonBoss } from '../../../packages/game-core/src/coop/bosses';
 import { advanceCampfireHealing, CAMPFIRE_HEAL_TICKS, discoverCampfires } from '../../../packages/game-core/src/coop/campfire-runtime';
 import { equippedHero } from '../../../packages/game-core/src/coop/progression';
 import { coopChunk, coopGraph, ensureCoopChunk } from '../../../packages/game-core/src/coop/world';
@@ -113,10 +113,14 @@ export function campaignBattleContent(content: GameContent, state: CoopState, ba
     skills: content.skills.filter(skill => skills.has(skill.id)), effects: content.effects.filter(effect => effects.has(effect.id)) });
 }
 
-/** Retain every selectable boss, so the real summon RNG and roster selection remain unchanged. */
+/** Retain every selectable boss and escort, preserving the production summon roster. */
 export function campaignBossContent(content: GameContent, state: CoopState): GameContent {
+  const enemyIds = [...new Set([
+    ...content.enemies.filter(enemy => enemy.tags.includes('BOSS')).map(enemy => enemy.id),
+    ...SEASON_BOSS_ORDER.flatMap(season => seasonBossEscortPool(content, season).map(enemy => enemy.id)),
+  ])];
   return campaignBattleContent(content, state, { actorIds: [...state.characterIds],
-    combat: { enemyIds: content.enemies.filter(enemy => enemy.tags.includes('BOSS')).map(enemy => enemy.id) } as CombatState });
+    combat: { enemyIds } as CombatState });
 }
 
 /**
@@ -158,7 +162,7 @@ export function simulateCampaign(inputContent: GameContent, options: CampaignOpt
     for (const spawn of state.bosses?.spawned ?? []) {
       const stage = stages.find(stage => stage.season === spawn.season)!;
       stage.enemyId = spawn.enemyId; stage.summonedAtMinute = spawn.summonedAtTick / TICKS_PER_MINUTE;
-      if (!stage.defeated && state.killedEnemyIds.includes(spawn.mobId)) {
+      if (!stage.defeated && isSeasonBossDefeated(state, spawn)) {
         stage.defeated = true; stage.defeatedAtMinute = minutes(); stage.livingHeroes = alive().length; stage.gearScore = totalGear();
       }
     }
@@ -237,7 +241,9 @@ export function simulateCampaign(inputContent: GameContent, options: CampaignOpt
       }
       clockTo(state.tick + Math.max(1, Math.ceil((battle.presentationMs ?? 0) / MOVEMENT_TICK_MS)));
     }
-    const spawn = state.bosses?.spawned.find(spawn => battle.mobIds.includes(spawn.mobId));
+    const spawn = state.bosses?.spawned.find(spawn => battle.mobIds.includes(spawn.mobId)
+      || spawn.chunkId === battle.chunkId && state.groups[spawn.chunkId]?.some(group => group.id === spawn.mobId
+        && group.members.some(mob => battle.mobIds.includes(mob.id))));
     const heroes = battle.combat.units.filter(unit => unit.team === 'heroes');
     battles.push({ index: battles.length, kind: spawn ? 'boss' : 'roaming', ...(spawn ? { season: spawn.season } : {}),
       chunkId: battle.chunkId, enemyIds: [...battle.combat.enemyIds ?? []], party: [...battle.actorIds], status: battle.combat.status,

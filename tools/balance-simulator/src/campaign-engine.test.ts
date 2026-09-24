@@ -4,7 +4,7 @@ import { BODY_PARTS, SEASON_BOSS_ORDER, type AdventureReward, type CombatChoice,
 import { createCoopState, isTerminal } from '@shards/game-core';
 import { finishCoopBattle, performCoopBattleAction, performCoopBattleStep, startCoopBattle } from '../../../packages/game-core/src/coop/battles';
 import { changeLoadout, contentWithLoadouts } from '../../../packages/game-core/src/coop/progression';
-import { SEASON_BOSS_INTERVAL_TICKS, summonSeasonBoss } from '../../../packages/game-core/src/coop/bosses';
+import { SEASON_BOSS_INTERVAL_TICKS, seasonBossEscortPool, summonSeasonBoss } from '../../../packages/game-core/src/coop/bosses';
 import { simulationPolicy } from '../../../packages/game-core/src/simulation-policy';
 import { campaignBattleContent, campaignBossContent, simulateCampaign } from './campaign';
 import { campaignSkillValue, optimizeCampaignInventory } from './campaign-gear';
@@ -70,7 +70,9 @@ describe('accelerated campaign engine', () => {
     state = { ...state, tick: SEASON_BOSS_INTERVAL_TICKS, diceCounters: { 'hero:mage': 71, 'hero:rogue': 137 } };
     const rules = campaignBossContent(gameContent, state);
     expect(rules.equipmentCatalog).toBeUndefined();
-    expect(rules.enemies.map(enemy => enemy.id)).toEqual(gameContent.enemies.filter(enemy => enemy.tags.includes('BOSS')).map(enemy => enemy.id));
+    const escortIds = new Set(SEASON_BOSS_ORDER.flatMap(season => seasonBossEscortPool(gameContent, season).map(enemy => enemy.id)));
+    expect(rules.enemies.map(enemy => enemy.id)).toEqual(gameContent.enemies
+      .filter(enemy => enemy.tags.includes('BOSS') || escortIds.has(enemy.id)).map(enemy => enemy.id));
     const full = summonSeasonBoss(state, gameContent), compact = summonSeasonBoss(state, rules);
     expect(full.battles).toHaveLength(1);
     expect(compact.battles).toHaveLength(1);

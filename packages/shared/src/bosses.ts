@@ -15,7 +15,7 @@ export interface SeasonBossSpawn {
 
 /** Active-game ticks pause when the host leaves. Each seasonal summon happens once. */
 export interface SeasonBossProgress {
-  /** Null while a summoned boss is alive, and permanently after the fourth summon. */
+  /** Room deadline, shifted during any battle. Null until the summoned boss and its pack are defeated, and after the fourth summon. */
   nextAtTick: number | null;
   spawned: SeasonBossSpawn[];
 }

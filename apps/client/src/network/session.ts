@@ -142,6 +142,14 @@ export class NetworkSession {
   }
   sendCommand(command: MultiplayerCommand): boolean {
     if (this.view.status !== 'connected' || this.view.room?.phase !== 'playing') return false;
+    // A timeout may end a turn without consuming this hero's dice. Bind the
+    // intention before transport so it cannot become their next turn's action.
+    if (command.type === 'battle' && command.action === 'choose' && command.expectedTurn === undefined) {
+      const battleId = command.battleId;
+      const combat = this.getCoopState()?.battles.find(battle => battle.id === battleId)?.combat;
+      if (!combat) return false;
+      command = { ...command, expectedTurn: combat.turn };
+    }
     const parsed = multiplayerCommandSchema.safeParse(command);
     if (!parsed.success) return false;
     if (this.isHost) {
