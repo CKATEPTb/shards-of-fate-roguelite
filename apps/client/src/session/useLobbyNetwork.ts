@@ -10,7 +10,9 @@ import type { SavedSession } from './storage';
 interface LobbyAction { generation: number; token: symbol }
 
 function relayUrl(): string {
-  return import.meta.env.VITE_RELAY_URL || `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/rsocket`;
+  return import.meta.env.VITE_RELAY_URL || (import.meta.env.DEV
+    ? `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/rsocket`
+    : 'wss://sof-ws.ckateptb.dev/rsocket');
 }
 
 /** Solo remains local until an invitation is created; joining is only possible from an invitation. */

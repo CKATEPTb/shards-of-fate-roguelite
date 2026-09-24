@@ -11,7 +11,7 @@ npm run dev:server
 npm run dev
 ```
 
-Open the game using the host computer's LAN IP with Vite's port, accessible to friends on the same network. Vite proxies `/rsocket` to `127.0.0.1:8787`, so every browser connects through the game's origin. Allow incoming connections to Vite's port in the host computer's firewall. Administrators can configure a different relay using `VITE_RELAY_URL` before building the client or `RELAY_TARGET` when starting Vite. The lobby has no server address field.
+Open the game using the host computer's LAN IP with Vite's port, accessible to friends on the same network. In development (`npm run dev`), the client defaults to `/rsocket` on the game's origin; Vite proxies it to `127.0.0.1:8787`. Allow incoming connections to Vite's port in the host computer's firewall. Set `RELAY_TARGET` when starting Vite to change the development proxy destination. An explicit `VITE_RELAY_URL` overrides the client default when starting Vite or building the frontend. The lobby has no server address field.
 
 Choose “Новая игра”, select a hero, difficulty and seed, then press “Пригласить” beneath the fire inside the character picker. This creates a room and opens a dialog with a shareable link containing `#invite=ABC234`, plus “Скопировать” and “ОК” buttons. Every participant, including the host, presses “Готов” to claim their chosen hero. Selection alone does not reserve a hero: when several players select the same character, the first to become ready claims it. Ready players must press “Не готов” before changing their hero. When everyone is ready, the host's “Не готов” button becomes “Играть”. The link retains the opened site's address; localhost links are not rewritten to a guessed LAN address. A room holds up to four connected players.
 
@@ -19,7 +19,9 @@ Guests can also open the invitation after the expedition has started. They choos
 
 ## Hosting
 
-Run `npm run start:server` with Node.js 22.12 or newer. The process uses `tsx` from the repository install. Serve the built frontend and reverse-proxy `/rsocket` to this process with WebSocket Upgrade support. An HTTPS site needs a `wss://` relay URL. Invitation links contain a room code, never a relay address; the site determines the relay. A room code works only against the same relay process, so use one process or sticky routing for multiple instances.
+The built frontend defaults to `wss://sof-ws.ckateptb.dev/rsocket`, including when served by `npm run preview`. It connects directly to that relay, so the frontend host does not need a `/rsocket` reverse proxy. Set `VITE_RELAY_URL` before building to override this endpoint; changing `RELAY_TARGET` alone does not change the built client's destination.
+
+For a deployment using your own relay, run `npm run start:server` with Node.js 22.12 or newer. The process uses `tsx` from the repository install. Expose its `/rsocket` endpoint through a WebSocket-capable TLS proxy and build the frontend with that `wss://` URL in `VITE_RELAY_URL`. The proxy may share the frontend's HTTPS domain or use a separate relay domain. Invitation links contain a room code, never a relay address; the site determines the relay. A room code works only against the same relay process, so use one process or sticky routing for multiple instances.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
