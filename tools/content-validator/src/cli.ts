@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { EQUIPMENT_ITEMS, EQUIPMENT_SETS, gameContent } from '@shards/game-data';
 import { assertValidContent, assertValidEquipmentCatalog } from './index';
+import { assertContentAvailability } from './playability';
 
 try {
   const file = process.argv[2];
@@ -9,6 +10,10 @@ try {
   if (!file) assertValidEquipmentCatalog(EQUIPMENT_ITEMS, EQUIPMENT_SETS);
   console.log(`Content valid: ${content.characters.length} characters, ${content.enemies.length} enemies, ${content.skills.length} skills, ${content.effects.length} effects, ${content.statuses.length} statuses, ${content.encounters.length} encounters.`);
   if (!file) console.log(`Equipment valid: ${Object.keys(EQUIPMENT_ITEMS).length} items, ${Object.keys(EQUIPMENT_SETS).length} sets.`);
+  if (!file) {
+    const { counts } = assertContentAvailability(content);
+    console.log(`Playable content: ${counts.enemies} enemies (${counts.bosses} bosses), ${counts.items} items, ${counts.sets} sets, ${counts.learnedSkills} learned skills, ${counts.auras} auras + ${counts.setAuras} set auras. No unreachable entries.`);
+  }
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));
   process.exitCode = 1;

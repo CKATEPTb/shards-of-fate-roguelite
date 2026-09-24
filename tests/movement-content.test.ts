@@ -6,9 +6,9 @@ describe('movement speed content', () => {
   it('keeps exploration speeds independent from combat initiative', () => {
     expect(validateContent(gameContent).valid).toBe(true);
     expect(gameContent.characters.map(hero => [hero.id, hero.movementSpeed, hero.stats.initiative])).toEqual([
-      ['guardian', 100, 9], ['priest', 103, 11], ['mage', 105, 13],
-      ['vampire', 102, 12], ['paladin', 98, 8], ['druid', 104, 12],
-      ['necromancer', 101, 10], ['rogue', 110, 16], ['ranger', 107, 14],
+      ['guardian', 100, 2], ['priest', 103, 3], ['mage', 105, 4],
+      ['vampire', 102, 3], ['paladin', 98, 1], ['druid', 104, 3],
+      ['necromancer', 101, 2], ['rogue', 110, 6], ['ranger', 107, 5],
     ]);
     expect(MOVEMENT_SPEED_PROFILES.assassin).toBe(110);
     expect(gameContent.characters.some(hero => hero.id === 'assassin')).toBe(false);

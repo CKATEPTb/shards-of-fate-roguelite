@@ -5,6 +5,7 @@ import { distanceSquared, roamingNavigation } from './navigation';
 import { placeRoamingFormation, safeRoamingPoint } from './placement';
 import { roamingRandom, shuffled } from './random';
 import { getDifficultyProfile } from '../difficulty';
+import { patrolEnemyPools, type PatrolPopulationEntry } from './population';
 
 const CATEGORY_IDS: Record<RoamingCategory, string[]> = {
   normal: ['rat', 'wolf', 'slime', 'spider', 'goblin_scout', 'thornling'],
@@ -30,8 +31,6 @@ function legacyRoster(category: RoamingCategory, content: GameContent, random: (
   });
 }
 
-interface CatalogEntry { enemy: EnemyDefinition; family: string; tier: number; pack: boolean }
-
 /** Every choice is a die on this chunk's independent encounter stream. */
 function die(random: () => number, sides: number): number { return 1 + Math.floor(random() * sides); }
 function succeeds(random: () => number, chance: number): boolean { return die(random, 100) <= Math.round(chance * 100); }
@@ -42,28 +41,9 @@ function chunkDepth(chunk: WorldChunk): number {
   return coordinates ? Math.hypot(Number(coordinates[1]), Number(coordinates[2])) : 0;
 }
 
-function depthTier(depth: number): number {
-  return depth < 4 ? 1 : depth < 10 ? 2 : depth < 20 ? 3 : depth < 35 ? 4 : 5;
-}
-
-function catalogEntries(chunk: WorldChunk, content: GameContent): CatalogEntry[] {
-  const season = `SEASON_${chunk.season.toUpperCase()}`;
-  const basement = chunk.layer === 'basement';
-  return content.enemies.flatMap(enemy => {
-    if (!enemy.tags.includes('ACT_1') || !enemy.tags.includes(season) || enemy.tags.includes('AQUATIC')
-      || enemy.tags.includes('BASEMENT') !== basement) return [];
-    const family = enemy.tags.find(tag => tag.startsWith('FAMILY_'))?.slice(7);
-    const tier = Number(enemy.tags.find(tag => /^TIER_[1-5]$/.test(tag))?.slice(5));
-    return family && tier ? [{ enemy, family, tier, pack: enemy.tags.includes('PACK') }] : [];
-  });
-}
-
-function catalogRoster(entries: CatalogEntry[], category: RoamingCategory, depth: number, random: () => number): EnemyDefinition[] {
-  const baseTier = depthTier(depth);
-  const targetTier = Math.min(5, baseTier + (category === 'normal' ? 0 : 1));
-  // Custom catalogs may omit bands; use the nearest available band without abandoning the habitat.
-  const nearest = Math.min(...entries.map(entry => Math.abs(entry.tier - targetTier)));
-  const tierEntries = entries.filter(entry => Math.abs(entry.tier - targetTier) === nearest);
+function catalogRoster(pools: { leaders: PatrolPopulationEntry[]; escorts: PatrolPopulationEntry[] }, category: RoamingCategory,
+  depth: number, random: () => number, populationRandom: () => number): EnemyDefinition[] {
+  const tierEntries = pools.leaders;
   const family = pick([...new Set(tierEntries.map(entry => entry.family))], random);
   const familyEntries = tierEntries.filter(entry => entry.family === family);
   const pack = familyEntries.every(entry => entry.pack);
@@ -80,6 +60,12 @@ function catalogRoster(entries: CatalogEntry[], category: RoamingCategory, depth
   take('damage');
   if (selected.length < size && !pack) take('healer');
   while (selected.length < size) take('damage');
+  // A veteran keeps the patrol dangerous while younger relatives of every role
+  // remain present in the outer seasons. Starting encounters stay unchanged.
+  if (depth >= 4 && selected.length >= 2 && die(populationRandom, 4) === 4) {
+    const escorts = pools.escorts.filter(entry => entry.family === family);
+    if (escorts.length) selected[selected.length - 1] = pick(escorts, populationRandom).enemy;
+  }
   return selected;
 }
 
@@ -87,8 +73,9 @@ function catalogRoster(entries: CatalogEntry[], category: RoamingCategory, depth
 export function generateRoamingGroups(seed: string, chunk: WorldChunk, content: GameContent, difficultyId: DifficultyId = 'normal'): RoamingGroup[] {
   const difficulty = getDifficultyProfile(content, difficultyId);
   const random = roamingRandom(seed, `generate:${chunk.id}`);
-  const catalog = catalogEntries(chunk, content);
   const depth = chunkDepth(chunk);
+  const habitat = chunk.layer === 'basement' ? 'basement' : 'surface';
+  const catalog = patrolEnemyPools(content, chunk.season, habitat, depth, 'normal', 1).leaders;
   const startingArea = catalog.length > 0 && depth < 4;
   const count = startingArea ? 2 : 1 + die(random, 3);
   const groups: RoamingGroup[] = [];
@@ -100,7 +87,10 @@ export function generateRoamingGroups(seed: string, chunk: WorldChunk, content: 
   for (let index = 0; index < count; index++) {
     const category: RoamingCategory = index === minibossIndex ? 'miniboss'
       : !startingArea && succeeds(random, difficulty.epicGroupChance) ? 'epic' : 'normal';
-    const definitions = catalog.length ? catalogRoster(catalog, category, depth, random) : legacyRoster(category, content, random);
+    const populationRandom = roamingRandom(seed, `population:${chunk.id}:${index}`);
+    const populationRoll = category === 'miniboss' ? die(populationRandom, 20) : 1;
+    const pools = patrolEnemyPools(content, chunk.season, habitat, depth, category, populationRoll);
+    const definitions = catalog.length ? catalogRoster(pools, category, depth, random, populationRandom) : legacyRoster(category, content, random);
     // Start separate enough for both isolated encounters and occasional overlaps.
     const ordered = [...candidates].sort((a, b) => {
       const clearance = (point: GridPoint) => Math.min(100, ...groups.map(group => distanceSquared(point, group.home)));

@@ -70,6 +70,8 @@ describe('expedition equipment themes', () => {
     limitedItems[available[0].id] = available[0];
     const mutable = { ...gameContent, equipmentCatalog: { ...catalog, items: limitedItems } };
     let state = createCoopState('MUTABLE-LOOT-POOL', ['guardian'], mutable);
+    // Starter items are valid loot too; exhaust them to isolate changes to the custom pool.
+    state.removedRewardIds.push(...[...starterIds].map(id => coopRewardId('guardian:equipment', id!)));
     const chunkId = state.actors[0].chunkId;
     for (let index = 0; index < 4; index++) state = awardAdventureLoot(state, 'guardian', `chest:before-${index}`, chunkId, mutable);
     expect(state.progression!.heroes.guardian.rewards.some(reward => reward.definitionId === available[0].id)).toBe(true);

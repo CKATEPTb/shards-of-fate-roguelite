@@ -10,6 +10,8 @@ import { getCoopBattle, startCoopBattle } from './battles';
 import { withinCoopBattleReach } from './battle-reach';
 import { initialProgress } from './progression';
 import { summonSeasonBoss } from './bosses';
+import { roamingRandom } from '../roaming/random';
+import { wellEnemyPool } from '../roaming/population';
 
 export function interactAdventure(state: CoopState, actorId: string, chunkId: string, poiId: string, content: GameContent): CoopState {
   const actor = state.actors.find(hero => hero.id === actorId);
@@ -38,10 +40,9 @@ export function interactAdventure(state: CoopState, actorId: string, chunkId: st
   const outcome = drawDie(4, rng, 'EVENT');
   state = { ...state, diceIndex: state.diceIndex + 1, diceCounters: { ...state.diceCounters, [owner]: rng.diceIndex } };
   if (outcome !== 1) return awardAdventureLoot(state, actorId, source, chunkId, content);
-  const tier = adventureDistance(state, chunkId) < 4 ? 1 : adventureDistance(state, chunkId) < 10 ? 2 : adventureDistance(state, chunkId) < 20 ? 3 : adventureDistance(state, chunkId) < 35 ? 4 : 5;
-  const aquatic = content.enemies.filter(enemy => enemy.tags.includes('AQUATIC') && enemy.tags.includes(`SEASON_${chunk.season.toUpperCase()}`));
-  const preferred = aquatic.filter(enemy => enemy.tags.includes(`TIER_${tier}`));
-  const pool = preferred.length ? preferred : aquatic.length ? aquatic : content.enemies;
+  const populationRoll = 1 + Math.floor(roamingRandom(state.seed, `well-population:${poi.id}`)() * 20);
+  const aquatic = wellEnemyPool(content, chunk.season, adventureDistance(state, chunkId), populationRoll);
+  const pool = aquatic.length ? aquatic : content.enemies;
   const enemy = pool[drawDie(pool.length, rng, 'EVENT') - 1];
   const mobId = `${poi.id}:water:${actorId}`;
   const group: RoamingGroup = { id: mobId, category: 'normal', chases: true, home: poi.position, mode: 'chase', targetActorId: actorId,

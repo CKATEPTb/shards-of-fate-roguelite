@@ -20,12 +20,13 @@ function frozenLootCache(content: GameContent): FrozenLootCache | undefined {
   return cache;
 }
 
-function rewardEntries(content: GameContent, kind: AdventureReward['kind'], rarity: RewardRarity): readonly LootEntry[] {
+/** The actual adventure pool includes standalone and starter items as well as collection pieces. */
+export function adventureRewardEntries(content: GameContent, kind: AdventureReward['kind'], rarity: RewardRarity): readonly LootEntry[] {
   const cache = frozenLootCache(content), key = `${kind}:${rarity}`;
   const found = cache?.entries.get(key);
   if (found) return found;
   const entries = (kind === 'equipment'
-    ? Object.values(content.equipmentCatalog?.items ?? {}).filter(item => item.setId && content.equipmentCatalog?.sets[item.setId]?.bonuses?.length)
+    ? Object.values(content.equipmentCatalog?.items ?? {})
     : content.skills.filter(skill => skill.rarity)).filter(entry => entry.rarity === rarity).sort((a, b) => compareCoopIds(a.id, b.id));
   cache?.entries.set(key, entries);
   return entries;
@@ -90,7 +91,7 @@ export function awardAdventureLoot(state: CoopState, actorId: string, source: st
   for (const kind of kinds) {
     const upgraded = rollRewardRarity(base, luck, rng);
     rng = upgraded.rng as typeof rng;
-    const entries = rewardEntries(content, kind, upgraded.rarity);
+    const entries = adventureRewardEntries(content, kind, upgraded.rarity);
     const used = new Set([...hero.rewards, ...(hero.inventory ?? []), ...rewards].filter(reward => reward.kind === kind).map(reward => reward.definitionId));
     let pool = entries.filter(entry => !used.has(entry.id)
       && !state.removedRewardIds.includes(coopRewardId(`${actorId}:${kind}`, entry.id)));

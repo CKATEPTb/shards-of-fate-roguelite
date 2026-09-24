@@ -5,6 +5,7 @@ import { actOneBossMetadata, actOneEnemyMetadata, applyEquipmentToHero, equipmen
 import { activeEquipmentSetBonuses, bodyPartArmor, parseDice, startHeroBody } from '@shards/game-core';
 import { BODY_PARTS, equipmentItemFitsSlot, type ActionDefinition, type GameContent, type RewardRarity, type UnitDefinition } from '@shards/shared';
 import { equipmentLootPool, featuredEquipmentSetIds } from '../../../packages/game-core/src/coop/equipment-loot-pool';
+import { adventureRewardEntries } from '../../../packages/game-core/src/coop/rewards';
 
 const rarities: RewardRarity[] = ['common', 'rare', 'epic', 'legendary'];
 const attributes = ['power', 'initiative', 'evasion', 'crit', 'agility', 'accuracy', 'resilience', 'luck'] as const;
@@ -50,8 +51,8 @@ export function setCollectionOdds(content: GameContent, draws: number, trials = 
   if (!Number.isInteger(draws) || draws < 1 || !Number.isInteger(trials) || trials < 1) throw new Error('draws and trials must be positive integers');
   const catalog = content.equipmentCatalog;
   if (!catalog) throw new Error('Equipment catalog is required');
-  const items = Object.values(catalog.items).filter(item => item.setId && catalog.sets[item.setId]?.bonuses?.length);
-  const pools = rarities.map(rarity => items.filter(item => item.rarity === rarity));
+  const pools = rarities.map(rarity => adventureRewardEntries(content, 'equipment', rarity).map(entry => catalog.items[entry.id]));
+  const items = pools.flat();
   const odds = base === 'uniform-catalog' ? undefined : rarityProbabilities(base, luck);
   const random = auditRandom(0xA71D17 + draws * 17 + rarities.indexOf(base as RewardRarity) + luck * 31);
   // Reuse 64 independently seeded theme rosters to avoid re-sorting a large catalog for every drop.
@@ -80,7 +81,7 @@ export function setCollectionOdds(content: GameContent, draws: number, trials = 
         item = available[Math.floor(random() * available.length)];
       }
       used.add(item.id);
-      sets.set(item.setId!, (sets.get(item.setId!) ?? 0) + 1);
+      if (item.setId && catalog.sets[item.setId]?.bonuses?.length) sets.set(item.setId, (sets.get(item.setId) ?? 0) + 1);
     }
     const counts = [...sets.values()];
     maxPieces += Math.max(0, ...counts);
@@ -183,7 +184,7 @@ export function buildContentAudit(content: GameContent = gameContent, collection
       'Full-outfit stats use the guardian as a fixed reference and include cumulative 2/4/6-piece bonuses with intact anatomy.',
     ],
     counts: { heroes: content.characters.length, enemies: content.enemies.length, ordinaryActOneEnemies: enemies.length, bosses: bosses.length, skills: content.skills.length, learnableSkills: content.skills.filter(skill => skill.rarity).length, statuses: content.statuses.length, equipmentItems: items.length, sets: sets.length },
-    equipment: { itemRarities: tally(items.map(item => item.rarity)), eligibleLootItemRarities: tally(items.filter(item => item.setId && catalog.sets[item.setId]?.bonuses?.length).map(item => item.rarity)), setRarities: tally(sets.map(set => set.rarity ?? 'starter')), itemBoundsByRarityAndSlot, fullOutfitReference: reference.id,
+    equipment: { itemRarities: tally(items.map(item => item.rarity)), eligibleLootItemRarities: tally(rarities.flatMap(rarity => adventureRewardEntries(content, 'equipment', rarity).map(item => item.rarity!))), setRarities: tally(sets.map(set => set.rarity ?? 'starter')), itemBoundsByRarityAndSlot, fullOutfitReference: reference.id,
       fullOutfitsByRarity: Object.fromEntries(rarities.map(rarity => { const matching = outfits.filter(outfit => outfit.rarity === rarity); return [rarity, Object.fromEntries(['maxHp', ...attributes].map(key => [key, distribution(matching.map(outfit => Number(outfit[key as keyof typeof outfit])))]))]; })),
       luckiestOutfits: [...outfits].sort((a, b) => Number(b['luck' as keyof typeof b]) - Number(a['luck' as keyof typeof a])).slice(0, 8),
       capstoneFrequencies: tally(outfits.map(outfit => Object.keys(outfit.capstone).sort().join('+'))),

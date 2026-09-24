@@ -25,7 +25,7 @@ export const mysticAuras = [
     tick('last_warmth', 'Последнее тепло', 'heal', '1d12', 'TURN_STARTED', { duration: 2, visual: { form: 'embers', motion: 'breathe', motif: 'wisp' } }),
   ]),
   ...auraGroup('time', 0, [
-    buff('haste', 'Ускорение', { initiativeBonus: 5 }, { visual: { form: 'arcs', motion: 'orbit', motif: 'hourglass' } }),
+    buff('haste', 'Ускорение', { agilityBonus: 3, evasionBonus: 2 }, { visual: { form: 'arcs', motion: 'orbit', motif: 'hourglass' } }),
     buff('temporal_drag', 'Вязкое время', { initiativeBonus: -5, accuracyBonus: -1 }, { polarity: 'negative', visual: { form: 'chains', motion: 'breathe', motif: 'hourglass' } }),
     buff('borrowed_moment', 'Заимствованный миг', { repeatAttack: { dice: '1d4', atLeast: 4 }, agilityBonus: 2 }, { duration: 2, visual: { form: 'orbit', motion: 'zigzag', motif: 'hourglass' } }),
     buff('fading_second', 'Ускользающая секунда', { evasionBonus: 5, critBonus: -2 }, { visual: { form: 'mist', motion: 'pulse', motif: 'hourglass' } }),

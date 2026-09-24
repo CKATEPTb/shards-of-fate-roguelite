@@ -189,8 +189,8 @@ export const mysticProportionalSkills = [
   ...skillSchool('time', 530, [
     {
       id: 'exit_between_heartbeats', name: 'Выход между ударами сердца', rarity: 'common', cooldown: 3, target: 'ally', projectile: 'arcane',
-      description: 'Даёт союзнику Последнее мгновение на 2 хода: Проворность для побега +6, Уклонение +1. Само действие побега не выполняется.',
-      actions: [{ type: 'status', statusId: 'last_instant', duration: 2 }],
+      description: 'Даёт союзнику Ускорение на 3 хода: Проворность для побега +3, Уклонение +2. Само действие побега не выполняется; текущая очередь ходов сохраняется.',
+      actions: [{ type: 'status', statusId: 'haste', duration: 3 }],
       tags: ['ESCAPE', 'EVASION'], icon: { frame: 'arrows', motif: 'hourglass', accent: 'feather' },
     },
     {

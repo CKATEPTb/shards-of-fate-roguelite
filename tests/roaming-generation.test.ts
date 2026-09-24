@@ -26,7 +26,7 @@ describe('deterministic roaming population', () => {
         if (group.category === 'miniboss') bosses++;
         if (group.chases) chasing++;
         expect(group.members.length).toBeGreaterThanOrEqual(1);
-        expect(group.members.length).toBeLessThanOrEqual(group.category === 'normal' ? 4 : group.category === 'epic' ? 3 : 1);
+        expect(group.members.length).toBeLessThanOrEqual(group.category === 'epic' ? 4 : 3);
         for (const member of group.members) {
           expect(gameContent.enemies.some(enemy => enemy.id === member.definitionId)).toBe(true);
           expect(chunk.tiles[member.position.y * chunk.size + member.position.x].walkable).toBe(true);

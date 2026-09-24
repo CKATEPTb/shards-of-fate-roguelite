@@ -21,6 +21,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate": "tsx tools/content-validator/src/cli.ts",
+    "audit:availability": "tsx tools/content-validator/src/availability-cli.ts",
     "simulate": "tsx tools/balance-simulator/src/cli.ts",
     "simulate:campaign": "tsx tools/balance-simulator/src/campaign-cli.ts",
     "check": "npm run validate && npm test && npm run build",

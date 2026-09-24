@@ -5,6 +5,7 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
+    "@shards/game-core": "*",
     "@shards/shared": "*",
     "@shards/game-data": "*",
     "zod": "4.6.5"

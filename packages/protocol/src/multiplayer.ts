@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { DIFFICULTY_IDS } from '@shards/shared';
 
 /** Version of the browser-hosted multiplayer session contract. */
-export const MULTIPLAYER_VERSION = 13 as const;
+export const MULTIPLAYER_VERSION = 16 as const;
 export const ROOM_REQUEST_ROUTE = 'room.request';
 export const ROOM_EVENTS_ROUTE = 'room.events';
 export const MAX_ROOM_MEMBERS = 4;

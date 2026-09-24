@@ -1,6 +1,7 @@
 import type { GameContent, UnitDefinition } from '@shards/shared';
 import { hashValue } from './canonical';
 import { same } from './snapshot-values';
+import { isBeforeCatalogAvailability } from './content-hash-availability';
 
 const HERO_SKILLS_CONTENT_HASH = '62d7f4af';
 const AURA_CATALOGUE_CONTENT_HASH = '3399186d';
@@ -118,6 +119,7 @@ export function isLegacyEquipmentContentHash(value: unknown, content: GameConten
 export function restoreContentHash(value: unknown, content: GameContent, path: string): string {
   const currentHash = hashValue(content);
   if (value === currentHash) return currentHash;
+  if (isBeforeCatalogAvailability(value, content)) return currentHash;
   // Compare exact previous shapes, including heroes with saved fitted loadouts.
   // This does not accept unrelated changes to old skills, enemies or equipment.
   const previousBossContent = beforeBossCatalogue(content);
