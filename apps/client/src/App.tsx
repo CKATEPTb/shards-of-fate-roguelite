@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { ExpeditionGame } from './ExpeditionGame';
 import { useSession } from './session/useSession';
 import { MainMenu } from './session/MainMenu';
@@ -9,6 +9,8 @@ import { clearInvitation, readInvitation } from './session/invitations';
 import './session/session.css';
 import { AudioSettingsPanel } from './components/AudioSettings';
 import { initAudio, setMenuAudioScene } from './audio/engine';
+
+const KnowledgeBase = lazy(() => import('./knowledge/KnowledgeBase').then(module => ({ default: module.KnowledgeBase })));
 
 export function App() {
   const [invitation, setInvitation] = useState(readInvitation);
@@ -43,7 +45,8 @@ export function App() {
     {session.screen === 'lobby' ? <Lobby key={invitation ? `invite:${invitation.code || 'invalid'}` : session.lobbySave ? `resume:${session.lobbySave.id}` : 'solo'} invitation={invitation} savedRun={session.lobbySave ?? undefined} onBack={back} onStart={session.start} /> : session.screen === 'game' && session.active
       ? <ExpeditionGame key={session.active.id} initial={session.active.state} onCheckpoint={session.checkpoint} onEnded={session.end} onLeave={session.leave} />
       : <MenuFrame>
-        {session.screen === 'menu' && <MainMenu saved={session.saved} onContinue={session.resume} onNew={newGame} onSettings={() => session.setScreen('settings')} onExit={exit} />}
+        {session.screen === 'menu' && <MainMenu saved={session.saved} onContinue={session.resume} onNew={newGame} onKnowledge={() => session.setScreen('knowledge')} onSettings={() => session.setScreen('settings')} onExit={exit} />}
+        {session.screen === 'knowledge' && <Suspense fallback={<section className="menu-message" aria-busy="true"><h1>База знаний</h1><p>Открываем страницы…</p><button className="secondary-button" onClick={back}>В главное меню</button></section>}><KnowledgeBase onBack={back} /></Suspense>}
         {session.screen === 'settings' && <section className="menu-message menu-audio-settings"><span className="eyebrow">Звуки путешествия</span><h1>Настройки</h1><AudioSettingsPanel /><button className="secondary-button" onClick={back}>В главное меню</button></section>}
         {session.screen === 'exit' && <section className="menu-message"><span className="eyebrow">До следующего путешествия</span><h1>Можно закрыть вкладку</h1><p>Игра остановлена. Ваше последнее автосохранение осталось здесь.</p><button className="secondary-button" onClick={back}>В главное меню</button></section>}
       </MenuFrame>}

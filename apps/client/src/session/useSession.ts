@@ -4,7 +4,7 @@ import type { DifficultyId, ExpeditionState } from '@shards/shared';
 import { gameContent } from '../catalog';
 import { clearPrototypeSaves, createSessionId, readSession, saveSession, SESSION_STORAGE_KEY, sessionEnded, type SavedNetworkSession, type SavedSession, type SavedSoloSession } from './storage';
 
-export type SessionScreen = 'menu' | 'lobby' | 'game' | 'settings' | 'exit';
+export type SessionScreen = 'menu' | 'lobby' | 'game' | 'knowledge' | 'settings' | 'exit';
 function initialSave(): { saved: SavedSession | null; error: string } {
   try { clearPrototypeSaves(localStorage); return { saved: readSession(localStorage, gameContent), error: '' }; }
   catch { return { saved: null, error: 'Не удалось прочитать сохранение. Можно начать новую игру.' }; }

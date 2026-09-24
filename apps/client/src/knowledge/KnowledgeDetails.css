@@ -1,0 +1,69 @@
+.kdetail-content { display: grid; gap: 20px; min-width: 0; color: var(--knowledge-ink, #eee1bf); }
+.kdetail-description { margin: 0; font-size: 14px; line-height: 1.6; color: #d9d9c7; }
+.kdetail-section { display: grid; gap: 10px; min-width: 0; }
+.kdetail-section h3 { margin: 0; font-size: 13px; letter-spacing: .04em; color: #d5bc80; }
+.kdetail-section h4 { margin: 0; font-size: 13px; line-height: 1.4; }
+.kdetail-note { margin: 0; font-size: 12px; line-height: 1.5; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; overflow: hidden; border: 1px solid #8b9c7730; border-radius: 9px; background: #8b9c7720; }
+.kdetail-facts:empty { display: none; }
+.kdetail-facts > div { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: #101b1de6; min-width: 0; }
+.kdetail-facts dt { font-size: 11px; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-facts dd { margin: 0; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+.kdetail-links { display: grid; gap: 6px; min-width: 0; }
+.kdetail-link { display: flex; align-items: center; gap: 10px; min-width: 0; width: 100%; text-align: left; padding: 9px 11px; background: #102023a3; border: 1px solid #8b9c7733; border-radius: 8px; color: inherit; cursor: pointer; }
+.kdetail-link:hover, .kdetail-aura-link:hover { background: #243738a8; border-color: #cbb67480; }
+.kdetail-link:focus-visible, .kdetail-aura-link:focus-visible, .kdetail-sources summary:focus-visible { outline: 2px solid #ddc481; outline-offset: 3px; }
+.kdetail-link > span:not(.kdetail-link-icon):not(.kdetail-link-arrow) { display: grid; gap: 3px; min-width: 0; flex: 1; }
+.kdetail-link strong { font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+.kdetail-link small { font-size: 11px; line-height: 1.4; color: var(--knowledge-muted, #aab8a5); overflow-wrap: anywhere; }
+.kdetail-link-icon { display: inline-flex; flex: 0 0 36px; width: 36px; height: 36px; align-items: center; justify-content: center; }
+.kdetail-link-icon > svg, .kdetail-link-icon > img { width: 36px; height: 36px; flex-shrink: 0; }
+.kdetail-unit-icon { display: block; image-rendering: pixelated; object-fit: contain; background: radial-gradient(ellipse at bottom, #56707140, transparent 75%); border-radius: 6px; flex-shrink: 0; }
+.kdetail-link-arrow { flex: 0 0 auto; color: #a38d55; font-size: 16px; }
+.kdetail-link[data-rarity="rare"] { border-left: 2px solid #71acf0; }
+.kdetail-link[data-rarity="epic"] { border-left: 2px solid #b996ef; }
+.kdetail-link[data-rarity="legendary"] { border-left: 2px solid #e0b867; }
+.kdetail-rules { display: grid; gap: 7px; margin: 0; padding-left: 19px; font-size: 13px; line-height: 1.5; }
+.kdetail-rules li::marker { color: #a0b68c; }
+.kdetail-body-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.kdetail-body-grid:empty { display: none; }
+.kdetail-body-grid > div { display: grid; gap: 4px; padding: 10px 12px; border: 1px solid #8b9c772b; border-radius: 8px; background: #10202380; }
+.kdetail-body-grid strong { font-size: 12px; margin-bottom: 3px; }
+.kdetail-body-grid span { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-body-grid b { color: var(--knowledge-ink, #eee1bf); }
+.kdetail-actions { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; counter-reset: action; }
+.kdetail-actions > li { padding: 12px; background: #102023a3; border: 1px solid #8b9c7730; border-radius: 8px; counter-increment: action; }
+.kdetail-action-copy { display: grid; gap: 5px; }
+.kdetail-action-copy strong { font-size: 13px; line-height: 1.5; }
+.kdetail-action-copy > span { font-size: 11px; line-height: 1.5; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-action-auras { display: grid; gap: 6px; margin-top: 10px; }
+.kdetail-aura-link { display: flex; gap: 9px; align-items: center; width: 100%; padding: 8px; border: 1px solid #738f6540; border-radius: 7px; background: #0b161950; color: inherit; text-align: left; cursor: pointer; }
+.kdetail-aura-link > svg { flex: 0 0 auto; }
+.kdetail-aura-link > span { display: grid; gap: 3px; min-width: 0; }
+.kdetail-aura-link strong { font-size: 12px; line-height: 1.4; }
+.kdetail-aura-link small { font-size: 11px; line-height: 1.45; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-passive { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid #b6a56e3d; border-radius: 9px; background: #2d2e212b; }
+.kdetail-passive > svg { flex: 0 0 auto; }
+.kdetail-passive > div { min-width: 0; }
+.kdetail-passive p { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: #c6d0bd; }
+.kdetail-set-bonuses { display: grid; gap: 8px; }
+.kdetail-set-bonuses > article { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border: 1px solid #b6a56e30; border-radius: 9px; background: #272d2338; }
+.kdetail-set-bonuses > article > div:last-child { min-width: 0; flex: 1; display: grid; gap: 8px; }
+.kdetail-set-bonuses p { margin: 0; font-size: 12px; line-height: 1.5; color: #c6d0bd; }
+.kdetail-set-threshold { width: 42px; flex: 0 0 42px; text-align: center; display: grid; gap: 2px; padding: 7px 2px; border: 1px solid #baa06450; border-radius: 7px; }
+.kdetail-set-threshold b { font-size: 22px; font-weight: 500; color: #e0c17c; }
+.kdetail-set-threshold span { font-size: 9px; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-dice-rules { display: grid; gap: 8px; }
+.kdetail-dice-rules p { display: flex; align-items: flex-start; gap: 12px; margin: 0; padding: 10px 12px; border-left: 2px solid #78978950; background: #14212370; }
+.kdetail-dice-rules p > strong { min-width: 39px; font-size: 13px; }
+.kdetail-dice-rules p > span { font-size: 11px; line-height: 1.6; color: var(--knowledge-muted, #aab8a5); }
+.kdetail-sources summary { cursor: pointer; padding: 8px 0; color: #d5bc80; font-size: 13px; }
+.kdetail-sources[open] summary { margin-bottom: 7px; }
+@media (max-width: 400px) {
+  .kdetail-content { gap: 17px; }
+  .kdetail-facts > div, .kdetail-body-grid > div { padding: 9px; }
+  .kdetail-link { padding: 8px; gap: 8px; }
+  .kdetail-set-bonuses > article { padding: 10px; gap: 8px; }
+}
+.kdetail-passive-icon { width: 42px; height: 42px; flex: 0 0 42px; color: #d6c493; }
+.kdetail-passive-icon svg { display: block; width: 100%; height: 100%; }
