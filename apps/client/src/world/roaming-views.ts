@@ -18,9 +18,11 @@ function drawMarker(view: MobView, highlighted: boolean) {
   view.markerKey = key;
   const color = categoryColors[group.category];
   const art = actor.marker.clear();
-  art.lineStyle(highlighted ? 2 : 1, color, highlighted ? 1 : 0.5).strokeEllipse(0, 0, highlighted ? 31 : 25, highlighted ? 11 : 8);
-  if (highlighted) art.fillStyle(color, 0.14).fillEllipse(0, 0, 31, 11);
-  const top = -26 * actor.sprite.scaleY;
+  const footprint = actor.visualScale / 1.65;
+  art.lineStyle(highlighted ? 2 : 1, color, highlighted ? 1 : 0.5)
+    .strokeEllipse(0, 0, (highlighted ? 31 : 25) * footprint, (highlighted ? 11 : 8) * footprint);
+  if (highlighted) art.fillStyle(color, 0.14).fillEllipse(0, 0, 31 * footprint, 11 * footprint);
+  const top = -28 * actor.visualScale;
   art.fillStyle(color, 0.94);
   if (group.category === 'epic') art.fillTriangle(-4, top, 0, top - 5, 4, top).fillTriangle(-4, top, 4, top, 0, top + 5);
   if (group.category === 'miniboss') art.fillPoints([{ x: -6, y: top - 5 }, { x: -3, y: top - 1 }, { x: 0, y: top - 7 }, { x: 3, y: top - 1 }, { x: 6, y: top - 5 }, { x: 5, y: top + 3 }, { x: -5, y: top + 3 }], true);
@@ -58,7 +60,7 @@ export function createRoamingViews(scene: Phaser.Scene) {
         if (!view) {
           const scale = group.category === 'miniboss' ? 2.05 : group.category === 'epic' ? 1.8 : 1.65;
           const actor = createActorView(scene, mob, { definitionId: mob.definitionId, enemy: true, scale });
-          const label = scene.add.text(0, -31 * scale, '', {
+          const label = scene.add.text(0, -31 * actor.visualScale, '', {
             fontFamily: 'Georgia, serif', fontSize: '9px', fontStyle: 'bold', color: '#edc165',
             stroke: '#142219', strokeThickness: 2, padding: { x: 2, y: 1 },
           }).setOrigin(0.5, 1).setVisible(false);

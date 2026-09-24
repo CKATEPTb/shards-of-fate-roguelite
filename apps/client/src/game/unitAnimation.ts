@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { HeroBody, UnitDefinition } from '@shards/shared';
 import { resolveUnitArt, unitFrameMetrics, unitFramePixels } from '../art/unitFrames';
 import { heroAppearanceKey } from '../art/heroAppearance';
+import { enemyArtId } from '../art/enemyAppearance';
 import { heroLoadoutKey, heroVisualItem, resolveHeroVisualLoadout, type HeroRenderState, type HeroVisualLoadout, type ResolvedHeroLoadout } from '../art/heroLoadout';
 import { getHeroRig } from '../art/heroRig';
 import type { HeroRig, HeroSocket, HeroSocketName } from '../art/heroRigTypes';
@@ -53,8 +54,8 @@ function atlasLifetime(scene: Phaser.Scene): UnitAtlasLifetime {
 /** One small canvas atlas per unit, reused by every instance within a Phaser game. */
 export function ensureUnitAtlas(scene: Phaser.Scene, definition: UnitArtDefinition, enemy = false, body?: HeroBody, equipment?: HeroVisualLoadout): string {
   const loadout = resolveHeroVisualLoadout(definition, equipment);
-  const artId = resolveUnitArt(definition.sprite || definition.id, definition.role, enemy);
-  const textureKey = `animated-unit-v19:${enemy ? 'enemy' : 'hero'}:${artId}${enemy ? '' : `:${heroAppearanceKey(body)}:${heroLoadoutKey(loadout)}`}`;
+  const artId = enemy ? enemyArtId(definition) : resolveUnitArt(definition.sprite || definition.id, definition.role, false);
+  const textureKey = `animated-unit-v20:${enemy ? 'enemy' : 'hero'}:${artId}${enemy ? '' : `:${heroAppearanceKey(body)}:${heroLoadoutKey(loadout)}`}`;
   if (scene.textures.exists(textureKey)) return textureKey;
   const framesPerFacing = UNIT_MOTIONS.reduce((sum, motion) => sum + UNIT_CLIPS[motion].frames, 0);
   const columns = 8;
@@ -167,7 +168,7 @@ export function updateUnitAppearance(sprite: Phaser.GameObjects.Sprite, state: H
   lifetime.release(previous);
 }
 
-/** Logical game scale is unchanged when a hero atlas has twice the resolution. */
+/** Convert logical scale once for either kind of high-resolution unit atlas. */
 export function setUnitScale(sprite: Phaser.GameObjects.Sprite, scale: number): Phaser.GameObjects.Sprite {
   const binding = bindings.get(sprite);
   return sprite.setScale(scale * unitFrameMetrics(binding?.enemy ?? false).displayScale);
@@ -227,9 +228,10 @@ export function getUnitSocket(sprite: Phaser.GameObjects.Sprite, name: HeroSocke
   let socket: HeroSocket | undefined;
   if (binding.enemy) {
     const { size, footY } = unitFrameMetrics(true);
-    const x = name === 'rightHand' ? 22 : name === 'leftHand' ? 10 : size / 2;
+    const resolution = size / 32;
+    const x = name === 'rightHand' ? 22 * resolution : name === 'leftHand' ? 10 * resolution : size / 2;
     socket = { x: facing === 'west' ? size - 1 - x : x,
-      y: name === 'ground' ? footY : name === 'head' ? 10 : name === 'chest' ? 18 : 20, rotation: 0 };
+      y: name === 'ground' ? footY : (name === 'head' ? 10 : name === 'chest' ? 18 : 20) * resolution, rotation: 0 };
   } else {
     if (binding.socketFrame !== frameName || !binding.rig) {
       binding.rig = getHeroRig(resolveUnitArt(binding.definition.sprite || binding.definition.id, binding.definition.role, false), facing, motion, frame, binding.body, binding.loadout);

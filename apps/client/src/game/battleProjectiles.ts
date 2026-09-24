@@ -1,4 +1,4 @@
-import { PROJECTILE_KINDS, type CombatEvent, type Combatant, type GameContent, type ProjectileKind } from '@shards/shared';
+import { baseSkillId, PROJECTILE_KINDS, type CombatEvent, type Combatant, type GameContent, type ProjectileKind } from '@shards/shared';
 import { findDefinition, gameContent } from '../catalog';
 
 const ELEMENTS: [string, ProjectileKind][] = [
@@ -16,8 +16,9 @@ export function battleProjectileKind(actor: Combatant, action: CombatEvent, cont
   const explicit = PROJECTILE_KINDS.find(kind => skillTags.includes(`PROJECTILE_${kind.toUpperCase()}`))
     ?? ELEMENTS.find(([tag]) => skillTags.includes(`PROJECTILE_${tag}`))?.[1];
   if (explicit) return explicit;
-  if (action.skillId === 'mage_ignite') return 'fire';
-  if (action.skillId === 'necromancer_ward') return 'bone';
+  const canonicalId = action.skillId && baseSkillId(action.skillId);
+  if (canonicalId === 'mage_ignite') return 'fire';
+  if (canonicalId === 'necromancer_ward') return 'bone';
   const supportive = skill?.actions.some(entry => entry.type === 'heal' || entry.type === 'shield')
     || skill && ['ally', 'allAllies', 'lowestHealthAlly'].includes(skill.target);
   const element = ELEMENTS.find(([tag]) => skillTags.includes(tag))?.[1]

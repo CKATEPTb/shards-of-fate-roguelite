@@ -7,6 +7,7 @@ import { advanceMotion } from './motion';
 import { createPlannedMotion, resumePlannedMotion, syncPlannedMotion, type PlannedMotionTrack } from './planned-motion';
 import { tileCenter } from './projection';
 import { actorDepth } from './actor-depth';
+import { enemyArtId, getEnemyAppearance } from '../art/enemyAppearance';
 
 export interface ActorView {
   container: Phaser.GameObjects.Container;
@@ -17,19 +18,25 @@ export interface ActorView {
   /** Actual interpolated travel; facing and terrain changes do not restart a stride. */
   walkDistance: number;
   dead: boolean;
+  /** Logical dimensions, independent of the atlas resolution. */
+  visualScale: number;
   selected?: boolean;
 }
 
 export function createActorView(scene: Phaser.Scene, actor: WorldActor, appearance?: { definitionId: string; enemy: boolean; scale: number }, definition?: UnitDefinition): ActorView {
   const point = tileCenter(actor.position);
-  const shadow = scene.add.ellipse(0, 0, 22, 6, 0x101f19, 0.4);
-  const contact = scene.add.ellipse(0, 0, 14, 3, 0x0a1511, 0.52);
+  const unit = definition ?? findDefinition(appearance?.definitionId ?? actor.id);
+  const enemy = appearance?.enemy ?? false;
+  const visualScale = (appearance?.scale ?? 1.65) * (enemy ? getEnemyAppearance(enemyArtId(unit))?.scale ?? 1 : 1);
+  const footprint = visualScale / 1.65;
+  const shadow = scene.add.ellipse(0, 0, 22 * footprint, 6 * footprint, 0x101f19, 0.4);
+  const contact = scene.add.ellipse(0, 0, 14 * footprint, 3 * footprint, 0x0a1511, 0.52);
   const marker = scene.add.graphics();
-  const sprite = setUnitScale(createUnitSprite(scene, definition ?? findDefinition(appearance?.definitionId ?? actor.id), appearance?.enemy ?? false, 0, 0, actor.body), appearance?.scale ?? 1.65);
+  const sprite = setUnitScale(createUnitSprite(scene, unit, enemy, 0, 0, actor.body), visualScale);
   const container = scene.add.container(point.x, point.y, [shadow, contact, marker, sprite]).setDepth(actorDepth(point.y));
   const dead = !!actor.body && !isBodyAlive(actor.body);
   if (dead) setUnitAnimation(sprite, 'death', 'south', true);
-  return { container, marker, sprite, motion: createPlannedMotion(point, MOVEMENT_TICK_MS), facing: 'south', walkDistance: 0, dead };
+  return { container, marker, sprite, motion: createPlannedMotion(point, MOVEMENT_TICK_MS), facing: 'south', walkDistance: 0, dead, visualScale };
 }
 
 export function updateActorView(actor: WorldActor, view: ActorView, selected: boolean, immediate: boolean, terrain?: Terrain, nextTerrain?: Terrain, definition?: UnitDefinition) {
@@ -50,7 +57,8 @@ export function updateActorView(actor: WorldActor, view: ActorView, selected: bo
     const restored = view.motion.position;
     view.container.setPosition(restored.x, restored.y);
   }
-  view.container.setDepth(actorDepth(view.container.y, selected));
+  const depth = actorDepth(view.container.y, selected);
+  if (view.container.depth !== depth) view.container.setDepth(depth);
   if (view.selected === selected && wasDead === view.dead) return;
   view.selected = selected;
   view.marker.clear();
@@ -68,7 +76,10 @@ export function animateActor(view: ActorView, delta: number, reduced: boolean, p
   const distance = advanceMotion(view.motion, delta);
   const { x, y } = view.motion.position;
   if (distance > 0) view.facing = facingFromDelta(view.motion.direction.x, view.motion.direction.y, view.facing);
-  view.container.setPosition(x, y).setDepth(actorDepth(y, view.selected));
+  view.container.setPosition(x, y);
+  const depth = actorDepth(y, view.selected);
+  // Phaser queues a full scene sort even when setDepth receives the same value.
+  if (view.container.depth !== depth) view.container.setDepth(depth);
   if (distance > 0) {
     view.walkDistance += distance;
     setUnitWalkDistance(view.sprite, view.facing, view.walkDistance, reduced);

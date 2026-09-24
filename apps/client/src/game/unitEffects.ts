@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { baseSkillId } from '@shards/shared';
 import type { HeroSocketName } from '../art/heroRigTypes';
 import { getUnitSocket, unitCastingHand } from './unitAnimation';
 import { drawPersistentAuras, hasPersistentAura, persistentAuraStateKey, type AuraVisualState } from './auraVisuals';
@@ -80,7 +81,7 @@ export class UnitEffects {
       mage_ignite: [0xf0a160, 'flame'], necromancer_ward: [0xc7b692, 'leaves'],
       priest_prayer: [0xf0d790, 'rays'], damage_burst: [0xd9b999, 'rays'],
     };
-    const profile = profiles[skillId];
+    const profile = profiles[baseSkillId(skillId)];
     if (!profile || this.state.dead) return;
     this.trigger('cast', profile[0]);
     this.burstColor = profile[0];

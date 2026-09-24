@@ -4,7 +4,7 @@ import { gameContent } from '../catalog';
 import { isBodyAlive } from '@shards/game-core';
 import type { BattleScene } from "../game/BattleScene";
 import { mountBattle } from "../game/mountBattle";
-import { battleLayout, readBattleInsets, type BattleStage } from '../game/battleLayout';
+import { battleRosterLayout, battleUnitGeometry, readBattleInsets, type BattleStage } from '../game/battleLayout';
 import type { BattleEnvironment } from '../game/battleEnvironment';
 import { AuraDescription, StatusBadges, unitAuras } from './StatusBadges';
 import { BattleTurnQueue } from './BattleTurnQueue';
@@ -89,7 +89,7 @@ export function BattleCanvas({
   useEffect(() => { if (targeting) setAura(undefined); }, [targeting]);
   const units = (['heroes', 'enemies'] as const).flatMap(team => {
     const members = visibleState.units.filter(unit => unit.team === team);
-    const placements = members.length ? battleLayout(team, members.length, size) : [];
+    const placements = battleRosterLayout(members, size, content);
     return members.map((unit, index) => ({ unit, position: placements[index] }));
   });
   const auraUnit = visibleState.units.find(unit => unit.id === aura?.unitId);
@@ -121,7 +121,7 @@ export function BattleCanvas({
               <span className="battle-target-crown" aria-hidden="true">⌄</span>
               <span className="battle-target-ring" aria-hidden="true" />
             </button>
-            <div className="battle-unit-auras" inert={targeting} style={{ top: 43, maxWidth: position.labelWidth }}>
+            <div className="battle-unit-auras" inert={targeting} style={{ top: battleUnitGeometry(position, unit.team === 'enemies').auraY, maxWidth: position.labelWidth }}>
               <StatusBadges unit={unit} roster={visibleState.units} content={content} onInspect={details => setAura({ unitId: unit.id, auraId: details.id })} />
             </div>
           </div>;

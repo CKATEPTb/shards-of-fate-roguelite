@@ -1,4 +1,4 @@
-import type { EquipmentItemDefinition, EquipmentSlot, HeroBody, UnitDefinition } from '@shards/shared';
+import { baseEquipmentItemId, resolveEquipmentItem, type EquipmentItemDefinition, type EquipmentSlot, type HeroBody, type UnitDefinition } from '@shards/shared';
 import { EQUIPMENT_ITEMS, STARTER_ANATOMY } from '@shards/game-data';
 import { HERO_ART_IDS } from './heroOutfit';
 import type { HeroWeaponKind } from './heroWeapons';
@@ -26,7 +26,7 @@ export const HERO_VISUAL_ITEMS: Readonly<Record<string, HeroVisualItem>> = Objec
 );
 
 export function heroVisualItem(id: string | null | undefined, slot: EquipmentSlot): HeroVisualItem | undefined {
-  const item = id ? HERO_VISUAL_ITEMS[id] : undefined;
+  const item = id && resolveEquipmentItem(EQUIPMENT_ITEMS, id) ? HERO_VISUAL_ITEMS[baseEquipmentItemId(id)] : undefined;
   return item && (item.slot === slot || item.slot === 'hand' && (slot === 'rightHand' || slot === 'leftHand')) ? item : undefined;
 }
 

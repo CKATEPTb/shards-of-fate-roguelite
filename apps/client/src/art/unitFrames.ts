@@ -1,48 +1,47 @@
-import { drawNature, drawQuadruped, drawSlime, drawSpider } from './creatureSprites';
-import { drawHumanoid } from './humanoidSprites';
+import { drawEnemy } from './enemySprites';
+import { drawBoss } from './bossSprites';
+import { ENEMY_FOOT_Y, ENEMY_FRAME_SIZE, getEnemyAppearance } from './enemyAppearance';
 import { drawHeroParts } from './heroParts';
 import { getHeroRig, HERO_FRAME_SIZE, HERO_FOOT_Y } from './heroRig';
 import { resolveHeroVisualLoadout, type HeroVisualLoadout } from './heroLoadout';
 import { HERO_ART_IDS } from './heroOutfit';
 import type { HeroBody } from '@shards/shared';
 import { PixelCanvas, type Pixel } from './pixelCanvas';
-import { unitPalette } from './unitPalette';
-import { UNIT_CLIPS, UNIT_FOOT_Y, UNIT_FRAME_SIZE, unitPose, type UnitFacing, type UnitMotion } from './unitPose';
+import { UNIT_CLIPS, UNIT_FRAME_SIZE, unitPose, type UnitFacing, type UnitMotion } from './unitPose';
 
 const heroIds = new Set<string>(HERO_ART_IDS);
-const enemyIds = new Set(['rat', 'wolf', 'slime', 'spider', 'goblin_scout', 'goblin_archer', 'goblin_shaman', 'boar', 'thornling', 'elite_warden']);
 
-/** Higher hero detail keeps the same ground anchor and logical on-screen footprint. */
+/** Higher detail keeps a consistent ground anchor and logical on-screen footprint. */
 export function unitFrameMetrics(enemy = false) {
   return enemy
-    ? { size: UNIT_FRAME_SIZE, footY: UNIT_FOOT_Y, displayScale: 1 }
+    ? { size: ENEMY_FRAME_SIZE, footY: ENEMY_FOOT_Y, displayScale: UNIT_FRAME_SIZE / ENEMY_FRAME_SIZE }
     : { size: HERO_FRAME_SIZE, footY: HERO_FOOT_Y, displayScale: UNIT_FRAME_SIZE / HERO_FRAME_SIZE };
 }
 
 export function resolveUnitArt(sprite: string, role: string, enemy: boolean): string {
-  if ((enemy ? enemyIds : heroIds).has(sprite)) return sprite;
+  if (enemy ? getEnemyAppearance(sprite) : heroIds.has(sprite)) return sprite;
   return enemy ? 'goblin_scout' : role === 'tank' ? 'guardian' : role === 'healer' ? 'priest' : 'mage';
 }
 
 function collapse(pixels: Pixel[], frame: number, id: string): Pixel[] {
   if (!pixels.length) return pixels;
   const progress = frame / (UNIT_CLIPS.death.frames - 1);
-  const result = new PixelCanvas();
-  const soft = id === 'slime' || id === 'spider';
+  const result = new PixelCanvas(ENEMY_FRAME_SIZE);
+  const profile = getEnemyAppearance(id);
+  const soft = profile && ['larva', 'leech', 'spider', 'wyrm', 'wraith'].includes(profile.form);
+  const center = ENEMY_FRAME_SIZE / 2;
   const falling = pixels.map((pixel) => {
     if (soft) {
-      return { ...pixel, x: Math.round(16 + (pixel.x - 16) * (1 + progress * 0.12)), y: Math.round(UNIT_FOOT_Y + (pixel.y - UNIT_FOOT_Y) * (1 - progress * 0.76)) };
+      return { ...pixel, x: Math.round(center + (pixel.x - center) * (1 + progress * 0.06)), y: Math.round(ENEMY_FOOT_Y + (pixel.y - ENEMY_FOOT_Y) * (1 - progress * 0.76)) };
     } else {
-      const angle = progress * Math.PI / 2;
-      const x = pixel.x - 16;
-      const y = pixel.y - 27;
-      // Move the pivot as the unit falls so tall silhouettes remain inside the frame.
-      return { ...pixel, x: Math.round(16 - progress * 9 + x * Math.cos(angle) - y * Math.sin(angle) * 0.8),
-        y: Math.round(26 + x * Math.sin(angle) * 0.5 + y * Math.cos(angle)) };
+      // Broad bodies buckle to their knees, keeping antlers/wings inside the atlas.
+      const x = pixel.x - center, y = pixel.y - ENEMY_FOOT_Y;
+      return { ...pixel, x: Math.round(center + x * (1 - progress * .13) + Math.sin(-y / 14) * progress * 2),
+        y: Math.round(ENEMY_FOOT_Y + y * (1 - progress * .72) + x * progress * .06) };
     }
   });
   // Fallen bodies settle on the same floor; normalize before clipping the atlas.
-  const groundOffset = UNIT_FOOT_Y - 1 - Math.max(...falling.map((pixel) => pixel.y));
+  const groundOffset = ENEMY_FOOT_Y - 1 - Math.max(...falling.map((pixel) => pixel.y));
   for (const pixel of falling) result.point(pixel.x, pixel.y + groundOffset, pixel.color);
   return result.result();
 }
@@ -66,16 +65,13 @@ export function unitFramePixels(
     return art.result();
   }
   const drawingFacing = facing === 'west' ? 'east' : facing;
-  const pose = unitPose(motion === 'cast' || motion === 'attackLeft' ? 'attack' : motion, frame);
-  const p = unitPalette(id);
-  const art = new PixelCanvas(UNIT_FRAME_SIZE);
-  if (['rat', 'wolf', 'boar'].includes(id)) drawQuadruped(art, id, drawingFacing, pose, p);
-  else if (id === 'slime') drawSlime(art, drawingFacing, pose, p);
-  else if (id === 'spider') drawSpider(art, drawingFacing, pose, p);
-  else if (id === 'thornling' || id === 'elite_warden') drawNature(art, id, drawingFacing, pose, p);
-  else drawHumanoid(art, id, drawingFacing, pose, p);
+  const pose = unitPose(motion === 'attackLeft' ? 'attack' : motion, frame);
+  const profile = getEnemyAppearance(id)!;
+  const art = new PixelCanvas(ENEMY_FRAME_SIZE);
+  if (profile.boss) drawBoss(art, profile, drawingFacing, pose);
+  else drawEnemy(art, profile, drawingFacing, pose);
   let result = art.result();
   if (motion === 'death') result = collapse(result, pose.frame, id);
-  if (facing === 'west') result = result.map((pixel) => ({ ...pixel, x: UNIT_FRAME_SIZE - 1 - pixel.x }));
+  if (facing === 'west') result = result.map((pixel) => ({ ...pixel, x: ENEMY_FRAME_SIZE - 1 - pixel.x }));
   return result.sort((left, right) => left.y - right.y || left.x - right.x);
 }

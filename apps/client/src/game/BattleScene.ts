@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import type { CombatEvent, CombatState, Combatant, GameContent } from "@shards/shared";
-import { BODY_PARTS } from "@shards/shared";
+import { baseSkillId, BODY_PARTS } from "@shards/shared";
 import { bodyCombatHealth, isBodyAlive } from "@shards/game-core";
 import { findDefinition, gameContent } from "../catalog";
 import { createUnitSprite, getUnitSocket, setUnitAnimation, setUnitScale, unitBlockMotion, unitCastingHand, updateUnitDefinition, type UnitFacing } from "./unitAnimation";
@@ -11,7 +11,7 @@ import { battleProjectileKind, projectileTargets } from './battleProjectiles';
 import { battleMotion } from "./battleMotion";
 import { drawLandscape, type BattleLandscape } from "./landscape";
 import type { BattleEnvironment } from './battleEnvironment';
-import { battleLayout, readBattleInsets, type BattlePlacement, type BattleStage } from "./battleLayout";
+import { battleRosterLayout, battleUnitGeometry, readBattleInsets, type BattlePlacement, type BattleStage } from "./battleLayout";
 import { applyPresentedEvent, battleBeats, type BattleBeat } from './battlePlayback';
 import { UNIT_MOTIONS, type UnitMotion } from '../art/unitPose';
 import { isInitiativeRoll, type InitiativePresentation } from './initiativePresentation';
@@ -171,7 +171,7 @@ export class BattleScene extends Phaser.Scene {
     if (this.landscapeSize !== `${this.scale.width}:${this.scale.height}`) this.rebuildLandscape();
     for (const team of ['heroes', 'enemies'] as const) {
       const units = [...this.presented.values()].filter(unit => unit.team === team && this.views.has(unit.id));
-      const placements = units.length ? battleLayout(team, units.length, this.stage()) : [];
+      const placements = battleRosterLayout(units, this.stage(), this.content);
       units.forEach((unit, index) => {
         const view = this.views.get(unit.id)!;
         const previous = { x: view.x, y: view.y };
@@ -189,11 +189,12 @@ export class BattleScene extends Phaser.Scene {
     view.x = placement.x;
     view.y = placement.y;
     view.scale = placement.scale;
-    view.footprint = Math.max(0.45, Math.min(1, placement.labelWidth / 80));
-    view.bar.setScale(view.footprint);
+    const geometry = battleUnitGeometry(placement, unit.team === 'enemies');
+    view.footprint = geometry.footprint;
+    view.bar.setScale(geometry.barScale);
     view.container.setPosition(placement.x, placement.y).setDepth(placement.y);
     setUnitScale(view.sprite, placement.scale * view.growth);
-    view.label.setFontSize(placement.fontSize);
+    view.label.setFontSize(placement.fontSize).setY(geometry.labelY);
     let name = unit.name;
     view.label.setText(name);
     while (view.label.width > placement.labelWidth && name.length > 1) {
@@ -256,13 +257,9 @@ export class BattleScene extends Phaser.Scene {
       this.views.forEach((view) => { view.effects.destroy(); view.container.destroy(); });
       this.views.clear();
       const counts = { heroes: 0, enemies: 0 };
-      const totals = {
-        heroes: state.units.filter((unit) => unit.team === "heroes").length,
-        enemies: state.units.filter((unit) => unit.team === "enemies").length,
-      };
       const placements = {
-        heroes: battleLayout('heroes', totals.heroes, this.stage()),
-        enemies: battleLayout('enemies', totals.enemies, this.stage()),
+        heroes: battleRosterLayout(state.units.filter(unit => unit.team === 'heroes'), this.stage(), this.content),
+        enemies: battleRosterLayout(state.units.filter(unit => unit.team === 'enemies'), this.stage(), this.content),
       };
       for (const unit of state.units) {
         const i = counts[unit.team]++;
@@ -340,7 +337,7 @@ export class BattleScene extends Phaser.Scene {
   private syncRoster(state: CombatState) {
     for (const team of ['heroes', 'enemies'] as const) {
       const units = state.units.filter(unit => unit.team === team);
-      const placements = units.length ? battleLayout(team, units.length, this.stage()) : [];
+      const placements = battleRosterLayout(units, this.stage(), this.content);
       units.forEach((unit, index) => {
         const placement = placements[index];
         const view = this.views.get(unit.id);
@@ -428,14 +425,14 @@ export class BattleScene extends Phaser.Scene {
     view.marker.clear();
     if (this.selected === unit.id || this.selected === unit.definitionId || this.presentedTurnOrder[this.presentedTurnIndex] === unit.id) {
       view.marker.lineStyle(1.5, 0xdaca91, 0.75).strokeEllipse(0, 0, 74 * view.growth * view.footprint, 22 * view.footprint);
-      const top = -26 * view.scale * view.growth;
+      const top = -(unit.team === 'enemies' ? 29 : 26) * view.scale * view.growth;
       view.marker.fillStyle(0xe0d09c).fillTriangle(-4, top - 6, 4, top - 6, 0, top);
     }
   }
 
   private createUnit(unit: Combatant, placement: BattlePlacement): UnitView {
     const { x, y, scale, labelWidth, fontSize } = placement;
-    const footprint = Math.max(0.45, Math.min(1, labelWidth / 80));
+    const { footprint, barScale, labelY } = battleUnitGeometry(placement, unit.team === 'enemies');
     const definition = findDefinition(unit.definitionId, this.content);
     const shadow = this.add.ellipse(0, 0, 47, 12, 0x08160e, 0.4);
     const contact = this.add.ellipse(0, 0, 29, 5, 0x07140d, 0.55);
@@ -446,9 +443,9 @@ export class BattleScene extends Phaser.Scene {
     setUnitAnimation(sprite, dead ? 'death' : 'idle', facing, this.reduced || dead);
     sprite.anims.timeScale = this.speed;
     const effects = new UnitEffects(this, sprite);
-    const bar = this.add.graphics().setScale(footprint);
+    const bar = this.add.graphics().setScale(barScale);
     const label = this.add
-      .text(0, 28, unit.name, {
+      .text(0, labelY, unit.name, {
         fontFamily: "Arial, sans-serif",
         fontSize: `${fontSize}px`,
         color: "#d4d8bb",
@@ -666,7 +663,7 @@ export class BattleScene extends Phaser.Scene {
       if (!view || view.dead) continue;
       if (events.some(event => event.targetId === unit.id && event.type === 'HEALED' && (event.amount ?? 0) > 0)) view.effects.trigger('heal');
       if (events.some(event => event.targetId === unit.id && event.type === 'SHIELD_CREATED')) view.effects.trigger('shield');
-      if (events.some(event => event.targetId === unit.id && event.type === 'DAMAGE' && event.skillId === 'mage_ignite')) view.effects.trigger('fire');
+      if (events.some(event => event.targetId === unit.id && event.type === 'DAMAGE' && event.skillId && baseSkillId(event.skillId) === 'mage_ignite')) view.effects.trigger('fire');
       const damaged = events.some(event => event.type === 'DAMAGE' && event.targetId === unit.id && (event.amount ?? 0) > 0);
       const blocked = events.some(event => event.type === 'BLOCKED' && event.targetId === unit.id);
       // Location misses do not mean evasion; only accuracy misses animate dodge.
