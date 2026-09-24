@@ -263,13 +263,18 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
 
   const partyKey = state.world.actors.map(actor => actor.id).join(',');
   const healthKey = JSON.stringify(partyBodies(state.world.actors));
-  const preview = useMemo(() => createCombat({ seed: state.world.graph.seed, characterIds: partyKey.split(','), heroBodies: partyBodies(state.world.actors),
-    encounterId: content.encounters[0].id, difficultyId: state.difficultyId }, content), [state.world.graph.seed, partyKey, healthKey, state.difficultyId, content]);
+  const partyState = useMemo(() => {
+    // Battle content contains only its participants' loadouts. Other heroes in
+    // this chunk can have different gear, so never build a world preview from it.
+    if (state.combat) return state.combat;
+    return createCombat({ seed: state.world.graph.seed, characterIds: partyKey.split(','), heroBodies: partyBodies(state.world.actors),
+      encounterId: content.encounters[0].id, difficultyId: state.difficultyId }, content);
+  }, [state.combat, state.world.graph.seed, partyKey, healthKey, state.difficultyId, content]);
   const controlledHeroes = network?.controllableHeroIds ?? state.world.actors.map(actor => actor.id);
   const controllableActorIds = state.combat?.units.filter(unit => unit.team === 'heroes' && controlledHeroes.includes(unit.definitionId)).map(unit => unit.id) ?? [];
   return {
     world: state.world, content, controlledActorId, move, interact, combat: state.combat,
-    groups: state.roaming?.chunks[state.world.currentChunkId], partyState: state.combat ?? preview,
+    groups: state.roaming?.chunks[state.world.currentChunkId], partyState,
     chooseCombatAction, combatPresented, controllableActorIds, continueExploration, canControl, legacyChoiceDeadlineMs,
     current, difficultyId: state.difficultyId ?? 'normal', notice, setNotice, clearedPoiIds: state.clearedPoiIds,
     reducedMotion, setReducedMotion, setPaused, defeated, failed: !!state.failed, completed: !!state.completed,
