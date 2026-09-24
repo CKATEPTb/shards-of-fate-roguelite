@@ -1,0 +1,77 @@
+.npc-workshop { --npc-toolbar: 83px; position: relative; width: 100%; height: 100dvh; overflow: hidden; background: #14231b; }
+.npc-workshop-toolbar { height: var(--npc-toolbar); display: flex; gap: 24px; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid #9b9c7040; background: linear-gradient(110deg, #23372b, #13231b); }
+.npc-workshop-brand { display: grid; gap: 4px; flex: none; }
+.npc-workshop-brand > span, .npc-workshop-eyebrow { color: #9eaf91; font-size: 10px; text-transform: uppercase; letter-spacing: .16em; }
+.npc-workshop-brand > strong { font: 500 29px/1 var(--serif); color: #e7ddbc; }
+.npc-workshop-selectors { display: flex; gap: 12px; min-width: 0; }
+.npc-workshop-selectors label { display: grid; gap: 4px; min-width: 0; }
+.npc-workshop-selectors label > span { color: #a8b59b; font-size: 10px; }
+.npc-workshop-selectors select { width: 155px; min-width: 0; min-height: 37px; padding: 5px 8px; color: #d7ddc6; background: #13231b; border: 1px solid #83956c70; border-radius: 4px; font-size: 12px; }
+.npc-workshop-body { height: calc(100% - var(--npc-toolbar)); display: grid; grid-template-columns: minmax(0, 1fr) 360px; }
+.npc-workshop-map { position: relative; min-width: 0; min-height: 0; isolation: isolate; }
+.npc-workshop-map-caption { position: absolute; pointer-events: none; bottom: 25px; left: 24px; display: grid; gap: 5px; padding: 11px 17px; border-left: 2px solid #bdab70; background: linear-gradient(90deg, #07140bd9, #07140b00); text-shadow: 0 1px 3px #000; }
+.npc-workshop-map-caption > span { color: #b9c6a5; font-size: 11px; }
+.npc-workshop-map-caption > strong { font: 500 30px/1 var(--serif); color: #e6dcc0; }
+.npc-workshop-map-caption > small { color: #bdc4af; font-size: 10px; }
+.npc-workshop-panel { min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 30px 26px 24px; border-left: 1px solid #8f936a40; background: radial-gradient(ellipse at 70% 0, #84754416, transparent 65%), #14231bf5; scrollbar-width: thin; scrollbar-color: #52674c transparent; }
+.npc-workshop-panel h1 { margin-top: 9px; color: #ece2c5; font: 500 42px/1.1 var(--serif); }
+.npc-workshop-description { margin-top: 16px; min-height: 74px; color: #b6c5ab; font-size: 12px; line-height: 1.8; }
+.npc-workshop-wallet { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0 21px; padding-block: 16px; border-block: 1px solid #a7af8135; }
+.npc-workshop-wallet dt { color: #a2b293; font-size: 10px; }
+.npc-workshop-wallet dd { margin: 7px 0 0; color: #d9c991; font-size: 24px; font-variant-numeric: tabular-nums; }
+.npc-workshop-open { width: 100%; min-height: 47px; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 9px 17px; border: 1px solid #e4d7a16b; border-radius: 5px; background: linear-gradient(#d0c18d, #b9a670); color: #24301d; font-size: 12px; font-weight: 700; }
+.npc-workshop-open:hover { filter: brightness(1.1); }
+.npc-workshop-open > span { font-size: 23px; font-weight: 400; }
+.npc-workshop-help, .npc-workshop-note { color: #93a68d; font-size: 10px; line-height: 1.8; }
+.npc-workshop-help { margin: 11px 0 18px; }
+.npc-workshop-bag { margin-block: 16px; border-block: 1px solid #7d926133; }
+.npc-workshop-bag summary { cursor: pointer; padding-block: 13px; color: #c7cfae; font-size: 12px; }
+.npc-workshop-bag ul { list-style: none; padding: 0 0 8px; margin: 0; max-height: 240px; overflow: auto; scrollbar-width: thin; }
+.npc-workshop-bag li { display: flex; align-items: center; gap: 11px; min-height: 49px; color: #b8c5ae; font-size: 11px; line-height: 1.5; }
+.npc-workshop-bag li > svg { flex: none; width: 36px; height: 36px; }
+.npc-workshop-utilities { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.npc-workshop-utilities > label { display: flex; align-items: center; gap: 5px; color: #a9b49b; font-size: 10px; }
+.npc-workshop-utilities button { min-height: 40px; padding: 6px 9px; border: 1px solid #7c8d6250; border-radius: 4px; color: #bac6a8; font-size: 10px; }
+.npc-workshop-status { min-height: 41px; margin-block: 15px 7px; color: #d1c696; font-size: 11px; line-height: 1.7; }
+.npc-workshop-seed { display: block; margin-top: 13px; color: #6d8d77; font-size: 9px; overflow-wrap: anywhere; }
+.npc-workshop-sheet { position: absolute; top: var(--npc-toolbar); bottom: 0; left: 0; right: 0; pointer-events: none; }
+.npc-workshop-sheet > * { pointer-events: auto; }
+.npc-workshop-sheet .loadout-hud { top: 14px; bottom: auto; }
+.npc-workshop .dialog-backdrop { top: var(--npc-toolbar); padding: 18px; }
+.npc-workshop:has(.npc-service-dialog) .npc-workshop-toolbar { opacity: .44; }
+.npc-workshop:has(.npc-service-dialog) .npc-workshop-sheet { visibility: hidden; }
+@media (max-width: 950px) {
+  .npc-workshop-toolbar { gap: 14px; padding-inline: 16px; }
+  .npc-workshop-brand > strong { font-size: 24px; }
+  .npc-workshop-selectors { gap: 7px; }
+  .npc-workshop-selectors select { width: 126px; }
+  .npc-workshop-body { grid-template-columns: minmax(0, 1fr) 300px; }
+  .npc-workshop-panel { padding: 24px 20px; }
+}
+@media (max-width: 700px) {
+  .npc-workshop { --npc-toolbar: 111px; }
+  .npc-workshop-toolbar { display: block; padding: 10px 10px 8px; }
+  .npc-workshop-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .npc-workshop-brand > span { font-size: 9px; }
+  .npc-workshop-brand > strong { font-size: 23px; }
+  .npc-workshop-selectors { display: grid; grid-template-columns: 1.1fr 1fr .8fr; gap: 6px; }
+  .npc-workshop-selectors select { width: 100%; min-height: 38px; padding: 4px; font-size: 16px; }
+  .npc-workshop-selectors label > span { font-size: 9px; }
+  .npc-workshop-body { display: block; overflow: auto; }
+  .npc-workshop-map { height: min(48dvh, 420px); min-height: 230px; }
+  .npc-workshop-map-caption { bottom: 11px; left: 13px; }
+  .npc-workshop-map-caption > strong { font-size: 25px; }
+  .npc-workshop-map-caption > small { display: none; }
+  .npc-workshop-panel { overflow: visible; padding: 22px 20px; border-left: 0; border-top: 1px solid #8f936a40; }
+  .npc-workshop-panel h1 { font-size: 36px; }
+  .npc-workshop-description { min-height: 0; margin-top: 10px; }
+  .npc-workshop-wallet { margin-top: 17px; padding-block: 12px; }
+  .npc-workshop .dialog-backdrop { top: 0; padding: 6px; }
+}
+@media (max-height: 570px) and (min-width: 701px) {
+  .npc-workshop { --npc-toolbar: 68px; }
+  .npc-workshop-toolbar { padding-block: 4px; }
+  .npc-workshop-brand > strong { font-size: 23px; }
+  .npc-workshop-panel { padding-block: 17px; }
+  .npc-workshop .dialog-backdrop { top: 0; padding: 6px; }
+}

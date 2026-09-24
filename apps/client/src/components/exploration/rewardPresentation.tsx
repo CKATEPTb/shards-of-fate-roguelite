@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { type AdventureReward, type EquipmentSlot, type HeroBody, type Modifiers, type StarterEquipment, type UnitDefinition } from '@shards/shared';
+import { resolveEquipmentItem, type AdventureReward, type EquipmentSlot, type HeroBody, type Modifiers, type StarterEquipment, type UnitDefinition } from '@shards/shared';
 import { activeEquipmentSetBonuses, bodyCombatStats, startHeroBody } from '@shards/game-core';
 import { applyEquipmentToHero, EQUIPMENT_ITEMS, gameContent } from '@shards/game-data';
 import { HERO_VISUAL_SLOTS, type HeroVisualLoadout } from '../../art/heroLoadout';
@@ -17,10 +17,10 @@ export const rewardAttributes = [
 export const rewardSlotNames: Record<EquipmentSlot, string> = { head: 'Голова', chest: 'Тело', gloves: 'Перчатки', pants: 'Штаны', boots: 'Сапоги', amulet: 'Амулет', ring1: 'Кольцо I', ring2: 'Кольцо II', rightHand: 'Правая рука', leftHand: 'Левая рука' };
 export const signed = (value: number) => `${value > 0 ? '+' : ''}${value.toLocaleString('ru-RU', { maximumFractionDigits: 1 })}`;
 export const rewardSkill = (id: string | null) => gameContent.skills.find(skill => skill.id === id);
-export const rewardName = (reward: AdventureReward) => reward.kind === 'equipment' ? EQUIPMENT_ITEMS[reward.definitionId]?.name ?? 'Предмет' : rewardSkill(reward.definitionId)?.name ?? 'Способность';
+export const rewardName = (reward: AdventureReward) => reward.kind === 'equipment' ? resolveEquipmentItem(EQUIPMENT_ITEMS, reward.definitionId)?.name ?? 'Предмет' : rewardSkill(reward.definitionId)?.name ?? 'Способность';
 
 export function RewardArt({ reward }: { reward: AdventureReward }) {
-  const item = reward.kind === 'equipment' ? EQUIPMENT_ITEMS[reward.definitionId] : undefined;
+  const item = reward.kind === 'equipment' ? resolveEquipmentItem(EQUIPMENT_ITEMS, reward.definitionId) : undefined;
   const skill = reward.kind === 'skill' ? rewardSkill(reward.definitionId) : undefined;
   if (skill?.icon) return <SkillIcon icon={skill.icon} size={42} />;
   return item ? <EquipmentIcon item={item} /> : <LoadoutIcon kind="extra" />;

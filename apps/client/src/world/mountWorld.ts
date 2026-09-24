@@ -11,6 +11,7 @@ export function mountWorld(
   onProjection: (view: WorldFrame) => void,
   onInspectMob: (groupId: string | null) => void = () => {},
   onInteract?: (poiId: string) => void,
+  onRevive?: (targetActorId: string) => void,
 ) {
   const surface = document.createElement('div');
   surface.className = 'world-surface';
@@ -19,7 +20,7 @@ export function mountWorld(
   const boot = window.setTimeout(() => {
     if (disposed) return;
     host.append(surface);
-    const scene = new WorldScene(onMove, onProjection, onInspectMob, onInteract);
+    const scene = new WorldScene(onMove, onProjection, onInspectMob, onInteract, onRevive);
     game = new Phaser.Game({
       type: Phaser.CANVAS,
       parent: surface,

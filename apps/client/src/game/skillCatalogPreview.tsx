@@ -83,7 +83,7 @@ function SkillCatalogWorkshop() {
     return () => { scene.current = undefined; game.destroy(true); };
   }, []);
   useEffect(() => { scene.current?.configure(settings); }, [settings]);
-  const matchingOtherFilters = useMemo(() => gameContent.skills.filter(candidate => (scope === 'all' || candidate.tags.includes('LEARNABLE'))
+  const matchingOtherFilters = useMemo(() => gameContent.skills.filter(candidate => !candidate.tags.includes('UPGRADED') && (scope === 'all' || candidate.tags.includes('LEARNABLE'))
     && (family === 'all' || candidate.icon?.family === family)
     && (kind === 'all' || skillKinds(candidate).some(value => value === kind))
     && (target === 'all' || candidate.target === target || candidate.actions.some(action => action.target === target))
@@ -92,7 +92,7 @@ function SkillCatalogWorkshop() {
   const rarityCounts = useMemo(() => Object.fromEntries(SKILL_RARITIES.map(value => [value, matchingOtherFilters.filter(candidate => candidate.rarity === value).length])) as Record<SkillRarity, number>, [matchingOtherFilters]);
   const targets = [...new Set(gameContent.skills.flatMap(candidate => [candidate.target, ...candidate.actions.flatMap(action => action.target ?? [])]))];
   const families = [...new Set(gameContent.skills.flatMap(candidate => candidate.icon ? [candidate.icon.family] : []))];
-  const learned = gameContent.skills.filter(candidate => candidate.tags.includes('LEARNABLE')).length;
+  const learned = gameContent.skills.filter(candidate => candidate.tags.includes('LEARNABLE') && !candidate.tags.includes('UPGRADED')).length;
   const toggleAura = (auraId: string) => setMuted(current => current.includes(auraId) ? current.filter(value => value !== auraId) : [...current, auraId]);
   const selectSkill = (skillId: string) => { setId(skillId); setMuted([]); };
   return <main className="aura-atlas grimoire" style={{ '--atlas-accent': skill.icon?.colors[1] ?? '#d3bd8a' } as CSSProperties}>

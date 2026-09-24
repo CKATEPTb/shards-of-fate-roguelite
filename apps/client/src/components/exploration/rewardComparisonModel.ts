@@ -1,4 +1,4 @@
-import { BODY_PARTS, occupiedHandSlots, type AdventureReward, type HeroBody, type HeroProgress, type StarterEquipment, type UnitDefinition } from '@shards/shared';
+import { BODY_PARTS, occupiedHandSlots, resolveEquipmentItem, type AdventureReward, type HeroBody, type HeroProgress, type StarterEquipment, type UnitDefinition } from '@shards/shared';
 import { bodyPartArmor, bodyPartLossThreshold, previewEquipmentChoice, startHeroBody } from '@shards/game-core';
 import { applyEquipmentToHero, equipItem, EQUIPMENT_ITEMS, EQUIPMENT_SETS } from '@shards/game-data';
 import { canFitReward, fitReward, type RewardDraft, type RewardTarget } from './rewardFitting';
@@ -28,7 +28,7 @@ export function compareRewardEquipment(hero: UnitDefinition, progress: HeroProgr
     progress.rewards.filter(entry => entry.kind === 'equipment').map(entry => ({ id: entry.id, itemId: entry.definitionId })),
     fitReward(fitting.draft, progress.rewards, reward.id, target).equipment, EQUIPMENT_ITEMS)
     : previewEquipmentChoice(saved, [{ id: reward.id, itemId: reward.definitionId }], [{ rewardId: reward.id, slot: target }], EQUIPMENT_ITEMS);
-  const wantedHands = occupiedHandSlots({ slot: target, weapon: EQUIPMENT_ITEMS[reward.definitionId].weapon });
+  const wantedHands = occupiedHandSlots({ slot: target, weapon: resolveEquipmentItem(EQUIPMENT_ITEMS, reward.definitionId)!.weapon });
   const sameItem = (first: StarterEquipment, second: StarterEquipment) => first.slot === second.slot && first.id === second.id;
   const preview = { ...candidate, removed: equipped.filter(item => item.slot === target
     || occupiedHandSlots(item).some(hand => wantedHands.includes(hand)) || !candidate.equipment.some(next => sameItem(item, next))) };

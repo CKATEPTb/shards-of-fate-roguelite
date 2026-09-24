@@ -5,10 +5,14 @@ import { gameContent, isFinished } from '../catalog';
 import type { NetworkSession } from '../network/session';
 import { needsCheckpoint, sessionEnded } from '../session/storage';
 import { planPoiApproach, poiApproachReadiness, type PoiApproach } from './poiApproach';
+import { planReviveApproach, reviveApproachReadiness, type ReviveApproach } from './reviveApproach';
+import { useAllyFollow } from './useAllyFollow';
+import type { EquipmentSlot, NpcKind, NpcSkillSlot, RewardRarity } from '@shards/shared';
 
 const subscribeLocal = () => () => undefined;
 const getLocalConnection = () => null;
 interface BossSummonRequest { poiId: string; chunkId: string; transitions: number; season: Season }
+interface NpcServiceRequest extends PoiApproach { kind: NpcKind }
 
 /** One clock drives solo and network worlds, including fires during cards and rewards. */
 export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: ExpeditionState) => boolean, onEnded: () => void, network?: NetworkSession) {
@@ -25,8 +29,11 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
   const [rewardsOpen, setRewardsOpen] = useState(false);
   const seenRewards = useRef(new Set<string>());
   const pendingInteraction = useRef<PoiApproach | null>(null);
+  const pendingRevive = useRef<ReviveApproach | null>(null);
   const [bossSummon, setBossSummon] = useState<BossSummonRequest | null>(null);
   const pendingSummon = useRef<BossSummonRequest | null>(null);
+  const [npcService, setNpcService] = useState<NpcServiceRequest | null>(null);
+  const pendingService = useRef<NpcServiceRequest | null>(null);
   const seenBosses = useRef(new Set((initial.bosses ?? initial.cooperative?.bosses)?.spawned.map(spawn => spawn.mobId) ?? []));
   const bossNoticesReady = useRef(true);
   const localBody = state.world.actors.find(actor => actor.id === controlledActorId)?.body;
@@ -139,11 +146,34 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     } catch (error) { setNotice(error instanceof Error ? error.message : 'Действие недоступно.'); return false; }
   }, [network, canControl, controlledActorId, commit]);
 
+  const { followingActorId, follow: selectFollowTarget, cancelFollow } = useAllyFollow(state, controlledActorId, canControl, send, network);
   const cancelBossSummon = useCallback(() => { pendingSummon.current = null; setBossSummon(null); }, []);
+  const closeNpcService = useCallback(() => { pendingService.current = null; setNpcService(null); }, []);
+  const follow = useCallback((targetActorId: string) => {
+    const cooperative = network?.getCoopState() ?? current.current.cooperative;
+    if (!canControl || !cooperative || current.current.combat || cooperative.failed || cooperative.completed
+      || targetActorId === controlledActorId || !cooperative.actors.some(actor => actor.id === targetActorId)) return;
+    pendingInteraction.current = null;
+    pendingRevive.current = null;
+    cancelBossSummon();
+    closeNpcService();
+    setNotice('');
+    selectFollowTarget(targetActorId);
+  }, [network, canControl, controlledActorId, selectFollowTarget, cancelBossSummon, closeNpcService]);
   const offerInteraction = useCallback((chunkId: string, poiId: string) => {
     const previous = current.current;
     if (previous.world.currentChunkId !== chunkId) return;
     const poi = previous.world.chunk.pois.find(candidate => candidate.id === poiId);
+    if (poi?.kind === 'npc' && poi.npcKind) {
+      const plan = planPoiApproach(previous, controlledActorId, poiId);
+      if (plan.type !== 'interact') return;
+      const request = { ...plan.approach, kind: poi.npcKind };
+      pendingService.current = request;
+      cancelBossSummon();
+      setRewardsOpen(false);
+      setNpcService(request);
+      return;
+    }
     if (poi?.kind !== 'altar') { send({ type: 'interact', chunkId, poiId }); return; }
     const plan = planPoiApproach(previous, controlledActorId, poiId);
     if (plan.type !== 'interact' || !poi.bossSeason) {
@@ -157,7 +187,14 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     pendingSummon.current = request;
     setRewardsOpen(false);
     setBossSummon(request);
-  }, [controlledActorId, send]);
+  }, [controlledActorId, send, cancelBossSummon]);
+
+  useEffect(() => {
+    const request = pendingService.current;
+    if (!request) return;
+    if (!canControl || poiApproachReadiness(request, state, controlledActorId,
+      network && !network.isHost ? network.getConfirmedCoopState() : undefined) !== 'ready') closeNpcService();
+  }, [state, canControl, controlledActorId, network, closeNpcService]);
 
   useEffect(() => {
     const request = pendingSummon.current;
@@ -199,8 +236,11 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
   }, [network, send, commit]);
 
   const move = useCallback((point: GridPoint) => {
+    cancelFollow();
     pendingInteraction.current = null;
+    pendingRevive.current = null;
     cancelBossSummon();
+    closeNpcService();
     const previous = current.current;
     const actor = previous.world.actors.find(hero => hero.id === controlledActorId);
     if (!actor || previous.combat || defeated) return;
@@ -211,9 +251,11 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     if (network || previous.cooperative) send({ type: 'move', chunkId: previous.world.currentChunkId, from: actor.position,
       fromElapsedMs: movement.state.world.actors.find(hero => hero.id === controlledActorId)?.movement?.elapsedMs ?? 0, x: target.x, y: target.y });
     else commit(movement.state);
-  }, [controlledActorId, defeated, network, send, commit, cancelBossSummon]);
+  }, [controlledActorId, defeated, network, send, commit, cancelFollow, cancelBossSummon, closeNpcService]);
 
   const interact = useCallback((poiId: string) => {
+    cancelFollow();
+    pendingRevive.current = null;
     const previous = current.current;
     if (!canControl || previous.combat || previous.completed || previous.failed || defeated) return;
     const pending = pendingInteraction.current;
@@ -223,6 +265,7 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
       network && !network.isHost ? network.getConfirmedCoopState() : undefined) === 'wait') return;
     pendingInteraction.current = null;
     cancelBossSummon();
+    closeNpcService();
     const plan = planPoiApproach(previous, controlledActorId, poiId);
     if (plan.type === 'unavailable') { setNotice(plan.reason); return; }
     setNotice('');
@@ -237,7 +280,7 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     pendingInteraction.current = plan.approach;
     if (!send({ type: 'move', chunkId: plan.approach.chunkId, from: actor.position,
       x: plan.approach.position.x, y: plan.approach.position.y })) pendingInteraction.current = null;
-  }, [canControl, controlledActorId, defeated, send, offerInteraction, cancelBossSummon, network]);
+  }, [canControl, controlledActorId, defeated, send, offerInteraction, cancelFollow, cancelBossSummon, closeNpcService, network]);
 
   useEffect(() => {
     const pending = pendingInteraction.current;
@@ -251,9 +294,68 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     if (readiness === 'ready') offerInteraction(pending.chunkId, pending.poiId);
   }, [state, canControl, controlledActorId, network, offerInteraction]);
 
+  const revive = useCallback((targetActorId: string) => {
+    cancelFollow();
+    const previous = current.current;
+    const cooperative = network?.getCoopState() ?? previous.cooperative;
+    if (!canControl || previous.combat || defeated || !cooperative) return;
+    const confirmed = network && !network.isHost ? network.getConfirmedCoopState() : undefined;
+    const pending = pendingRevive.current;
+    // Keep both the route and the captured death deadline on repeated clicks.
+    if (pending?.targetActorId === targetActorId
+      && reviveApproachReadiness(pending, cooperative, controlledActorId, confirmed) === 'wait') return;
+    pendingRevive.current = null;
+    pendingInteraction.current = null;
+    cancelBossSummon();
+    closeNpcService();
+    const plan = planReviveApproach(cooperative, controlledActorId, targetActorId);
+    if (plan.type === 'unavailable') { setNotice(plan.reason); return; }
+    setNotice('');
+    const approach = plan.approach;
+    if (plan.type === 'revive') {
+      const readiness = reviveApproachReadiness(approach, cooperative, controlledActorId, confirmed);
+      if (readiness === 'wait') pendingRevive.current = approach;
+      else if (readiness === 'ready') send({ type: 'revive', chunkId: approach.chunkId,
+        targetActorId, expectedReviveUntilTick: approach.expectedReviveUntilTick });
+      return;
+    }
+    const actor = cooperative.actors.find(candidate => candidate.id === controlledActorId)!;
+    pendingRevive.current = approach;
+    if (!send({ type: 'move', chunkId: approach.chunkId, from: actor.position,
+      x: approach.position.x, y: approach.position.y })) pendingRevive.current = null;
+  }, [canControl, controlledActorId, defeated, network, send, cancelFollow, cancelBossSummon, closeNpcService]);
+
+  useEffect(() => {
+    const pending = pendingRevive.current;
+    if (!pending) return;
+    const cooperative = network?.getCoopState() ?? state.cooperative;
+    if (!canControl || state.combat || !cooperative) { pendingRevive.current = null; return; }
+    const readiness = reviveApproachReadiness(pending, cooperative, controlledActorId,
+      network && !network.isHost ? network.getConfirmedCoopState() : undefined);
+    if (readiness === 'wait') return;
+    // Sending updates projection synchronously; clear first to make arrival one-shot.
+    pendingRevive.current = null;
+    if (readiness === 'ready') send({ type: 'revive', chunkId: pending.chunkId,
+      targetActorId: pending.targetActorId, expectedReviveUntilTick: pending.expectedReviveUntilTick });
+  }, [state, canControl, controlledActorId, network, send]);
+
   const resolveRewards = useCallback((resolution: RewardResolution) => send({ type: 'resolve-rewards', ...resolution }), [send]);
   const collectReward = useCallback((rewardId: string) => send({ type: 'collect-reward', rewardId }), [send]);
+  const collectAllRewards = useCallback((rewardIds: string[]) => send({ type: 'collect-rewards', rewardIds }), [send]);
   const equipInventory = useCallback((inventoryId: string, slot: InventoryTarget) => send({ type: 'equip-inventory', inventoryId, slot }), [send]);
+  const setAutoEquipment = useCallback((enabled: boolean) => send({ type: 'set-auto-equipment', enabled }), [send]);
+  const buyNpcOffer = useCallback((offerId: string) => {
+    const request = pendingService.current;
+    return !!request && send({ type: 'npc-buy', chunkId: request.chunkId, poiId: request.poiId, offerId });
+  }, [send]);
+  const upgradeNpcEquipment = useCallback((slot: EquipmentSlot, expectedItemId: string) => {
+    const request = pendingService.current;
+    return !!request && send({ type: 'npc-upgrade-equipment', chunkId: request.chunkId, poiId: request.poiId, slot, expectedItemId });
+  }, [send]);
+  const upgradeNpcSkill = useCallback((slot: NpcSkillSlot, expectedId: string, expectedRarity: RewardRarity) => {
+    const request = pendingService.current;
+    return !!request && send({ type: 'npc-upgrade-skill', chunkId: request.chunkId, poiId: request.poiId, slot, expectedId, expectedRarity });
+  }, [send]);
   const continueExploration = useCallback(() => {
     const cooperative = network?.getCoopState() ?? current.current.cooperative;
     const battle = cooperative?.battles.find(item => item.combat === current.current.combat);
@@ -273,13 +375,14 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
   const controlledHeroes = network?.controllableHeroIds ?? state.world.actors.map(actor => actor.id);
   const controllableActorIds = state.combat?.units.filter(unit => unit.team === 'heroes' && controlledHeroes.includes(unit.definitionId)).map(unit => unit.id) ?? [];
   return {
-    world: state.world, content, controlledActorId, move, interact, combat: state.combat,
+    world: state.world, content, controlledActorId, move, interact, revive, follow, followingActorId, combat: state.combat,
     groups: state.roaming?.chunks[state.world.currentChunkId], partyState,
     chooseCombatAction, combatPresented, controllableActorIds, continueExploration, canControl, legacyChoiceDeadlineMs,
     current, difficultyId: state.difficultyId ?? 'normal', notice, setNotice, clearedPoiIds: state.clearedPoiIds,
     reducedMotion, setReducedMotion, setPaused, defeated, failed: !!state.failed, completed: !!state.completed,
     bosses: state.bosses ?? state.cooperative?.bosses, bossSummon, cancelBossSummon, confirmBossSummon,
-    campfires: state.progression?.campfires, progress, rewardsOpen, setRewardsOpen, resolveRewards, collectReward, equipInventory,
+    npcService, closeNpcService, buyNpcOffer, upgradeNpcEquipment, upgradeNpcSkill,
+    campfires: state.progression?.campfires, progress, rewardsOpen, setRewardsOpen, resolveRewards, collectReward, collectAllRewards, equipInventory, setAutoEquipment,
     networkInfo: connection?.room ? { code: connection.room.code, isHost: network!.isHost } : undefined,
   };
 }

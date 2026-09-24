@@ -106,6 +106,7 @@ export function buildLoadout(state: CombatState, controlledActorId: string, cont
     maxHp: unit?.stats.maxHp ?? 0,
     shield: unit?.shield ?? 0,
     unit,
+    allAttributes: attributes,
     attributes: attributes.filter(attribute => attribute.numericValue !== 0),
     body,
     armor,

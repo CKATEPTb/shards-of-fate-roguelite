@@ -59,6 +59,7 @@ export function skillActionText(action: ActionDefinition): string {
 }
 
 export function skillSource(skill: SkillDefinition): string {
+  if (skill.tags.includes('UPGRADED')) return 'Улучшение у начертателя';
   if (skill.tags.includes('LEARNABLE')) return 'Каталог изучаемых навыков';
   const owners = [...gameContent.characters, ...gameContent.enemies].filter(unit => unit.skillIds.includes(skill.id)).map(unit => unit.name);
   return owners.length ? owners.join(', ') : 'Каталог игровых навыков';

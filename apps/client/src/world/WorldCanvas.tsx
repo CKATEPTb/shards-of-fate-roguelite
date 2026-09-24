@@ -1,12 +1,14 @@
 // @refresh reset
 // Phaser owns cached textures and effects; hot updates must rebuild the scene, not the expedition.
 import { useEffect, useMemo, useRef } from 'react';
-import type { ExplorationState, GameContent, GridPoint, RoamingGroup } from '@shards/shared';
-import { findPath } from '@shards/game-core';
+import type { CoopActor, ExplorationState, GameContent, GridPoint, RoamingGroup } from '@shards/shared';
+import { findPath, isBodyAlive } from '@shards/game-core';
 import { mountWorld } from './mountWorld';
 import type { WorldScene } from './WorldScene';
 import { TILE_SIZE, type WorldProjection } from './projection';
 import { ExitIndicators, updateExitIndicators } from './ExitMarkerOverlay';
+import { AllyIndicators, updateAllyIndicators } from './AllyMarkerOverlay';
+import { allyIndicatorTargets } from './allyIndicators';
 import { isInteractivePoi, type CampfireTimes } from './poiInteraction';
 import { gameContent } from '../catalog';
 import './world.css';
@@ -26,12 +28,19 @@ export interface WorldCanvasProps {
   inspectedGroupId?: string | null;
   onInspectMob?: (groupId: string | null) => void;
   onInteract?: (poiId: string) => void;
+  onRevive?: (targetActorId: string) => void;
+  allies?: readonly CoopActor[];
+  followingActorId?: string | null;
+  onFollow?: (actorId: string) => void;
   campfires?: CampfireTimes;
   content?: GameContent;
 }
 
-export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, disabled = false, paused = disabled, inCombat = false, clearedPoiIds = [], groups, previewGroupIds, inspectedGroupId, onInspectMob, onInteract, campfires, content = gameContent }: WorldCanvasProps) {
+const noAllies: readonly CoopActor[] = [];
+
+export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, disabled = false, paused = disabled, inCombat = false, clearedPoiIds = [], groups, previewGroupIds, inspectedGroupId, onInspectMob, onInteract, onRevive, allies = noAllies, followingActorId, onFollow, campfires, content = gameContent }: WorldCanvasProps) {
   const actor = state.actors.find(item => item.id === controlledActorId);
+  const canMove = !disabled && !inCombat && !!actor && (!actor.body || isBodyAlive(actor.body));
   // Reuse the actual movement rules, including the ban on passing through other gates.
   // Only tile arrivals or terrain changes recompute routes; animation frames do not.
   const reachableExits = useMemo(() => actor ? state.chunk.exits.filter(exit =>
@@ -39,19 +48,28 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
     || findPath(state.chunk, actor.position, exit.position).length > 0) : [], [state.chunk, actor?.position]);
   const currentExits = useRef(reachableExits);
   currentExits.current = reachableExits;
+  const otherAllies = useMemo(() => allies.filter(ally => ally.id !== controlledActorId), [allies, controlledActorId]);
+  const allyTargets = useMemo(() => allyIndicatorTargets(otherAllies, state, controlledActorId, followingActorId),
+    [otherAllies, state.graph, state.chunk, state.currentChunkId, controlledActorId, followingActorId]);
+  const currentAllyTargets = useRef(allyTargets);
+  currentAllyTargets.current = allyTargets;
   const host = useRef<HTMLDivElement>(null);
   const exitMarkers = useRef<SVGSVGElement>(null);
+  const allyMarkers = useRef<HTMLDivElement>(null);
   const projection = useRef<WorldProjection | null>(null);
   const scene = useRef<WorldScene | null>(null);
   const move = useRef(onMove);
   const inspect = useRef(onInspectMob);
   const interact = useRef(onInteract);
+  const revive = useRef(onRevive);
   const canInteract = Boolean(onInteract);
-  const presentation = useRef({ state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, content });
+  const canRevive = Boolean(onRevive);
+  const presentation = useRef({ state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, canRevive, content });
   move.current = onMove;
   inspect.current = onInspectMob;
   interact.current = onInteract;
-  presentation.current = { state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, content };
+  revive.current = onRevive;
+  presentation.current = { state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, canRevive, content };
 
   // Recreate scene effects together with their owning canvas surface.
   useEffect(() => {
@@ -63,6 +81,7 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
       (view) => {
         projection.current = view;
         updateExitIndicators(exitMarkers.current, currentExits.current, view);
+        updateAllyIndicators(allyMarkers.current, currentAllyTargets.current, currentExits.current, view);
         element.dataset.cameraScrollX = String(view.scrollX);
         element.dataset.cameraScrollY = String(view.scrollY);
         element.dataset.cameraZoom = String(view.zoom);
@@ -82,6 +101,7 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
       },
       groupId => inspect.current?.(groupId),
       poiId => interact.current?.(poiId),
+      actorId => revive.current?.(actorId),
     );
     return () => { scene.current = null; dispose(); };
   }, []);
@@ -90,7 +110,11 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
     scene.current?.showWorld(presentation.current);
     // Loading another seed may change the gates while leaving the camera still.
     if (projection.current) updateExitIndicators(exitMarkers.current, reachableExits, projection.current);
-  }, [state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, reachableExits, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, content]);
+  }, [state, controlledActorId, reducedMotion, disabled, paused, inCombat, clearedPoiIds, reachableExits, groups, previewGroupIds, inspectedGroupId, campfires, canInteract, canRevive, content]);
+
+  useEffect(() => {
+    if (projection.current) updateAllyIndicators(allyMarkers.current, allyTargets, reachableExits, projection.current);
+  }, [allyTargets, reachableExits, canMove, onFollow]);
 
   return (
     <div className="world-canvas-frame">
@@ -105,13 +129,14 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
         data-actor-x={actor?.position.x}
         data-actor-y={actor?.position.y}
         role="region"
-        aria-label="Карта мира. Нажмите на землю для движения, на сундук, колодец, портал или лестницу для взаимодействия. Стрелки перемещают героя, E использует ближайший объект. Камера следует за героем."
-        tabIndex={disabled ? -1 : 0}
-        onPointerDown={() => { if (!disabled) host.current?.focus({ preventScroll: true }); }}
+        aria-label="Карта мира. Нажмите на землю для движения, на сундук, колодец, портал, лестницу или мастера для взаимодействия. Нажмите на павшего союзника с таймером, чтобы подойти и поднять его. Стрелки перемещают героя, E использует ближайший объект или поднимает союзника. Камера следует за героем."
+        tabIndex={canMove ? 0 : -1}
+        onPointerDown={() => { if (canMove) host.current?.focus({ preventScroll: true }); }}
         onKeyDown={(event) => {
-          if (disabled || !actor) return;
+          if (!canMove || !actor) return;
           if (event.code === 'KeyE' || event.key === 'Enter') {
             if (event.repeat) { event.preventDefault(); return; }
+            if (scene.current?.reviveNearby()) { event.preventDefault(); return; }
             const nearby = state.chunk.pois.filter(isInteractivePoi).map(poi => ({ poi,
               distance: Math.abs(poi.position.x - actor.position.x) + Math.abs(poi.position.y - actor.position.y),
             })).filter(candidate => candidate.distance <= 1).sort((a, b) => a.distance - b.distance)[0];
@@ -126,7 +151,8 @@ export function WorldCanvas({ state, controlledActorId, reducedMotion, onMove, d
           }
         }}
       />
-      <ExitIndicators surfaceRef={exitMarkers} exits={reachableExits} hidden={disabled} onMove={onMove} />
+      <ExitIndicators surfaceRef={exitMarkers} exits={reachableExits} hidden={!canMove} onMove={onMove} />
+      <AllyIndicators surfaceRef={allyMarkers} allies={otherAllies} followingActorId={followingActorId} hidden={!canMove} onFollow={onFollow} content={content} />
     </div>
   );
 }

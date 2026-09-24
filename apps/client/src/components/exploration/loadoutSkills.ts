@@ -1,4 +1,4 @@
-import type { Combatant, GameContent, SkillDefinition, UnitDefinition } from '@shards/shared';
+import { baseSkillId, type Combatant, type GameContent, type SkillDefinition, type UnitDefinition } from '@shards/shared';
 import { gameContent } from '../../catalog';
 import type { LoadoutIconKind, LoadoutSlot } from './loadoutModel';
 import { passiveDiceRules, skillDiceRules } from './diceRules';
@@ -17,10 +17,10 @@ const passiveIcons: Record<string, LoadoutIconKind> = {
 export function activeLoadoutSlot(id: 'class' | 'characterActive' | 'extra1' | 'extra2', category: string, skill: SkillDefinition | undefined, unit?: Combatant, content: GameContent = gameContent): LoadoutSlot {
   const owner = unit && [...content.characters, ...content.enemies].find(definition => definition.id === unit.definitionId);
   const fallback = id === 'extra1' || id === 'extra2' ? 'extra' : id;
-  return { id, icon: skill ? skillIcons[skill.id] ?? fallback : fallback, category, name: skill?.name ?? 'Не назначен',
+  return { id, icon: skill ? skillIcons[baseSkillId(skill.id)] ?? fallback : fallback, category, name: skill?.name ?? 'Не назначен',
     description: skill?.description ?? 'Способность в этом слоте пока не назначена.', empty: !skill,
     diceRules: skill ? skillDiceRules(skill, owner || undefined, content) : [],
-    rarity: skill?.rarity,
+    rarity: skill?.rarity ?? (skill && (id === 'class' || id === 'characterActive') ? 'common' : undefined),
     contentId: skill?.id, cooldown: skill ? { base: skill.cooldown, remaining: unit?.cooldowns[skill.id] ?? 0 } : undefined };
 }
 
@@ -39,6 +39,7 @@ export function passiveLoadoutSlot(definition?: UnitDefinition, unit?: Combatant
       : effect?.description ?? 'Пассивная способность пока не назначена.'),
     empty: !metadata && !partyProtection && !effect,
     contentId: definition && (metadata || partyProtection) ? `${definition.id}:passive` : effect?.id,
+    rarity: metadata?.rarity ?? 'common',
     diceRules: passiveDiceRules(definition, content),
     badge: partyProtection ? `−${protection}` : undefined,
     cooldown: effect && effect.internalCooldown > 0 ? { base: effect.internalCooldown, remaining: unit?.effectCooldowns[effect.id] ?? 0 } : undefined,

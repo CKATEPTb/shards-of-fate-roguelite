@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type SyntheticEvent } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type SyntheticEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { BODY_PARTS, type CombatState, type GameContent, type HeroProgress, type InventoryTarget } from '@shards/shared';
 import { gameContent } from '../../catalog';
 import { buildLoadout, type LoadoutSlot } from './loadoutModel';
@@ -15,6 +16,7 @@ import { EquipmentIcon } from '../EquipmentIcon';
 import { activeLoadoutSlot } from './loadoutSkills';
 import { InventorySlotPanel } from './InventorySlotPanel';
 import { RewardEquipmentDetails } from './RewardEquipmentDetails';
+import { CharacterInventory } from './CharacterInventory';
 import './loadoutHud.css';
 import './characterSheetCompact.css';
 
@@ -23,30 +25,41 @@ type Inspection = { kind: 'slot'; id: LoadoutSlot['id'] } | { kind: 'body' } | {
 const slotTarget = (id: LoadoutSlot['id']): InventoryTarget | null => id === 'helmet' ? 'head' : id === 'extra1' ? 'skill0' : id === 'extra2' ? 'skill1'
   : id === 'class' || id === 'characterActive' || id === 'passive' ? null : id;
 
-/** A fixed overview and a contextual inspector share the same screen space. */
-export function LoadoutHud({ state, controlledActorId, disabled, initialOpen = false, content = gameContent, progress, onEquipInventory }: {
+/** The equipment entry point opens the fullscreen bag or a read-only character sheet. */
+export const LoadoutHud = memo(function LoadoutHud({ state, controlledActorId, disabled, initialOpen = false, content = gameContent, progress, onEquipInventory, onSetAutoEquipment }: {
   state: CombatState; controlledActorId: string; disabled: boolean; initialOpen?: boolean; content?: GameContent;
   progress?: HeroProgress; onEquipInventory?: (inventoryId: string, slot: InventoryTarget) => boolean;
+  onSetAutoEquipment?: (enabled: boolean) => boolean;
 }) {
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const origin = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(initialOpen);
   const [inspection, setInspection] = useState<Inspection | null>(null);
-  const model = useMemo(() => buildLoadout(state, controlledActorId, content), [state, controlledActorId, content]);
+  // The closed HUD only needs the actor name; equipment/effect previews are
+  // expensive to rebuild on game snapshots while no sheet is visible.
+  const model = useMemo(() => open ? buildLoadout(state, controlledActorId, content) : null, [open, state, controlledActorId, content]);
+  const unit = model?.unit ?? state.units.find(candidate => candidate.team === 'heroes'
+    && (candidate.id === controlledActorId || candidate.definitionId === controlledActorId));
+  const heroName = unit?.name ?? 'Герой';
   const inventoryEnabled = !!progress && !!onEquipInventory;
-  const hero = gameContent.characters.find(character => character.id === model.unit?.definitionId)
-    ?? content.characters.find(character => character.id === model.unit?.definitionId);
-  const skillSlots = useMemo(() => progress ? model.skills.map(slot => {
-    if (slot.id !== 'extra1' && slot.id !== 'extra2') return slot;
-    const skillId = progress.skills[slot.id === 'extra1' ? 0 : 1];
-    return activeLoadoutSlot(slot.id, 'Найденная способность', content.skills.find(skill => skill.id === skillId), model.unit, content);
-  }) : model.skills, [progress, model.skills, model.unit, content]);
-  const selectedSlot = inspection?.kind === 'slot' ? [...model.equipment, ...skillSlots].find(slot => slot.id === inspection.id) : undefined;
+  const hero = gameContent.characters.find(character => character.id === unit?.definitionId)
+    ?? content.characters.find(character => character.id === unit?.definitionId);
+  const fullInventory = inventoryEnabled && !!hero;
+  const savedSkills = progress?.skills;
+  const skillSlots = useMemo(() => {
+    if (!model) return [];
+    return savedSkills ? model.skills.map(slot => {
+      if (slot.id !== 'extra1' && slot.id !== 'extra2') return slot;
+      const skillId = savedSkills[slot.id === 'extra1' ? 0 : 1];
+      return activeLoadoutSlot(slot.id, 'Найденная способность', content.skills.find(skill => skill.id === skillId), model.unit, content);
+    }) : model.skills;
+  }, [savedSkills, model, content]);
+  const selectedSlot = model && inspection?.kind === 'slot' ? [...model.equipment, ...skillSlots].find(slot => slot.id === inspection.id) : undefined;
   const target = selectedSlot ? slotTarget(selectedSlot.id) : null;
-  const equipped = useMemo(() => model.equipment.flatMap(slot => slot.equipment && !slot.occupiedBy ? [slot.equipment] : []), [model.equipment]);
-  const attribute = inspection?.kind === 'attribute' ? model.attributes.find(entry => entry.id === inspection.id) : undefined;
-  const effect = inspection?.kind === 'effect' ? characterEffects(model.unit, state.units, state.status === 'running', content).find(entry => entry.id === inspection.id) : undefined;
+  const equipped = useMemo(() => model?.equipment.flatMap(slot => slot.equipment && !slot.occupiedBy ? [slot.equipment] : []) ?? [], [model]);
+  const attribute = model && inspection?.kind === 'attribute' ? model.attributes.find(entry => entry.id === inspection.id) : undefined;
+  const effect = model && inspection?.kind === 'effect' ? characterEffects(model.unit, state.units, state.status === 'running', content).find(entry => entry.id === inspection.id) : undefined;
 
   const inspect = (next: Inspection) => {
     if (!inspection) origin.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -94,20 +107,27 @@ export function LoadoutHud({ state, controlledActorId, disabled, initialOpen = f
   </li>;
 
   return <section className={`loadout-hud ${open ? 'loadout-inspected' : ''}`} data-testid="loadout-hud" data-inspected={String(open)} data-hud-interactive
-    aria-label={`Персонаж: ${model.heroName}`} role={open ? 'dialog' : undefined} aria-modal={open ? true : undefined} aria-labelledby={open ? 'character-sheet-name' : undefined}
+    aria-label={`Персонаж: ${heroName}`} role={open && !fullInventory ? 'dialog' : undefined} aria-modal={open && !fullInventory ? true : undefined} aria-labelledby={open && !fullInventory ? 'character-sheet-name' : undefined}
     onKeyDown={event => {
       if (!open || event.key !== 'Tab') return;
-      const controls = [...(panel.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], summary, [tabindex="0"]') ?? [])]
+      const controls = [...(panel.current?.querySelectorAll<HTMLElement>('button:not(:disabled), select:not(:disabled), input:not(:disabled), a[href], summary, [tabindex="0"]') ?? [])]
         .filter(control => control.getClientRects().length > 0 && !control.closest('[hidden]'));
       const first = controls[0], last = controls[controls.length - 1];
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }}>
     <button ref={toggle} type="button" className="loadout-toggle" data-testid="loadout-toggle" disabled={disabled} aria-expanded={open} aria-controls="loadout-panel"
-      aria-label={`Персонаж: ${model.heroName}`} title="Персонаж и снаряжение" onPointerDown={intercept} onPointerUp={intercept}
+      aria-label={`Персонаж: ${heroName}`} title="Персонаж и снаряжение" onPointerDown={intercept} onPointerUp={intercept}
       onClick={event => { intercept(event); if (open) closePanel(); else setOpen(true); }}><CharacterSilhouetteIcon /></button>
-    {open && <div className="character-sheet-backdrop" aria-hidden="true" onPointerDown={event => { intercept(event); closePanel(); }} />}
-    {open && <div ref={panel} id="loadout-panel" className="loadout-panel character-sheet-compact" data-testid="loadout-panel"
+    {open && model && fullInventory && progress && hero && onEquipInventory && createPortal(<div className="inventory-modal-layer" data-hud-interactive
+      role="dialog" aria-modal="true" aria-labelledby="character-sheet-name" onPointerDown={intercept} onPointerUp={intercept} onClick={intercept}>
+      <div ref={panel} id="loadout-panel" className="inventory-fullscreen-panel" data-testid="loadout-panel">
+        <CharacterInventory key={controlledActorId} model={model} skillSlots={skillSlots} hero={hero} progress={progress} state={state} content={content}
+          onEquip={onEquipInventory} onSetAutoEquipment={onSetAutoEquipment} onClose={closePanel} />
+      </div>
+    </div>, document.body)}
+    {open && !fullInventory && <div className="character-sheet-backdrop" aria-hidden="true" onPointerDown={event => { intercept(event); closePanel(); }} />}
+    {open && model && !fullInventory && <div ref={panel} id="loadout-panel" className="loadout-panel character-sheet-compact" data-testid="loadout-panel"
       onPointerDown={intercept} onPointerUp={intercept} onClick={intercept}>
       <header className="character-sheet-heading">
         {inspection && <button type="button" className="character-sheet-back" aria-label="Назад к персонажу" onClick={back}>←</button>}
@@ -159,4 +179,4 @@ export function LoadoutHud({ state, controlledActorId, disabled, initialOpen = f
       <CharacterSkillList compact slots={skillSlots} content={content} onInspectSlot={slot => inspect({ kind: 'slot', id: slot.id })} selectedId={selectedSlot?.id} />
     </div>}
   </section>;
-}
+});

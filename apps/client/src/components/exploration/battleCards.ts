@@ -1,5 +1,5 @@
-import type { Combatant, GameContent, SkillDefinition } from '@shards/shared';
-import { canBodyAct, isBodyAlive } from '@shards/game-core';
+import { strongerRepeatCheck, weaponAttackBonusMultiplier, type Combatant, type GameContent, type SkillDefinition } from '@shards/shared';
+import { canBodyAct, equipmentCondition, isBodyAlive } from '@shards/game-core';
 import { findDefinition, gameContent } from '../../catalog';
 import type { BattleCard } from './BattleHand';
 import { equipmentModifierSources } from '../../game/equipmentAuras';
@@ -25,7 +25,13 @@ function formulaFor(skill: SkillDefinition, actor: Combatant, content: GameConte
   }
   const duration = action.duration ? `${action.duration} ${action.duration === 1 ? 'ход' : 'хода'}` : '';
   if (status?.modifiers.damageBonusDice) return `+${status.modifiers.damageBonusDice} · ${duration}`;
-  if (status?.modifiers.repeatAttack) return `${status.modifiers.repeatAttack.dice} ≥ ${status.modifiers.repeatAttack.atLeast}`;
+  if (status?.modifiers.repeatAttack) {
+    const definition = findDefinition(actor.definitionId, content);
+    const passive = definition.id === 'ranger' && definition.passive?.rarity && definition.passive.rarity !== 'common'
+      ? definition.modifiers.repeatAttack : undefined;
+    const check = strongerRepeatCheck(passive, status.modifiers.repeatAttack)!;
+    return `${check.dice} ≥ ${check.atLeast}`;
+  }
   if (status?.modifiers.guaranteedCrit) return `Крит · ${duration}`;
   if (status?.modifiers.invulnerable) return `Защита · ${duration}`;
   return duration || 'Особое действие';
@@ -35,9 +41,14 @@ export function cardsForActor(actor: Combatant, content: GameContent = gameConte
   const definition = findDefinition(actor.definitionId, content);
   const canAct = !actor.body || canBodyAct(actor.body);
   const available = (actor.body ? isBodyAlive(actor.body) : actor.hp > 0) && !actor.escaped;
+  const doubledAttack = definition.anatomy?.equipment.some(item => weaponAttackBonusMultiplier(item.weapon) === 2
+    && (!actor.body || equipmentCondition(item, actor.body).active));
+  const weaponRule = doubledAttack
+    ? 'Двуручное оружие: один удар с базовыми кубиками оружия. Вклад Силы и числовые бонусы урона ×2; каждый бонусный кубик урона бросается дважды.'
+    : 'С двумя одноручными оружиями — по одному удару каждой рукой.';
   const cards: BattleCard[] = [{
     id: 'attack', name: 'Атака', art: 'sure_strike', formula: '1d20 · попадание', targetLabel: 'Противник',
-    description: 'Атака выбранного противника. С двумя одноручными оружиями — по одному удару каждой рукой. Попадание: грань 1d20 строго выше Уклонения цели − Точности; натуральная 1 — промах, 20 — попадание. Крит: отдельный 1d20 ≥ 20 − Крит + Стойкость цели; натуральная 20 всегда даёт крит. Крит удваивает готовый урон, включая Силу, до защиты.',
+    description: `Атака выбранного противника. ${weaponRule} Попадание: грань 1d20 строго выше Уклонения цели − Точности; натуральная 1 — промах, 20 — попадание. Крит: отдельный 1d20 ≥ 20 − Крит + Стойкость цели; натуральная 20 всегда даёт крит. Крит удваивает готовый урон, включая Силу, до защиты.`,
     cooldown: 0, totalCooldown: 0, available: available && canAct, tone: 'attack', choice: { type: 'attack', actorId: actor.id },
   }];
   definition.skillIds.forEach(id => {
@@ -52,7 +63,8 @@ export function cardsForActor(actor: Combatant, content: GameContent = gameConte
       : skill.target === 'randomUnit' ? 'Случайная цель'
       : hostile ? 'Противник' : 'Союзник';
     cards.push({
-      id: skill.id, name: skill.name, art: skill.id, formula: formulaFor(skill, actor, content), targetLabel, rarity: skill.rarity,
+      id: skill.id, name: skill.name, art: skill.id, formula: formulaFor(skill, actor, content), targetLabel,
+      rarity: skill.rarity ?? (skill.tags.includes('ROLE') || skill.tags.includes('CHARACTER') ? 'common' : undefined),
       description: `${skill.description}${skill.target.startsWith('random') ? ' Слегка потяните карту и отпустите вне зоны отмены: цель определит кубик.' : ''}`,
       cooldown: actor.cooldowns[id] ?? 0, totalCooldown: skill.cooldown,
       available: available && canAct && !(actor.cooldowns[id] ?? 0), tone: hostile ? 'attack' : 'support',

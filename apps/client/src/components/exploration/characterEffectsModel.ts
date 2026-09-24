@@ -1,4 +1,4 @@
-import type { ActiveStatus, Combatant, DiceCheck, GameContent, Modifiers, ShieldLayer, StatusDefinition } from '@shards/shared';
+import { strongerRepeatCheck, type ActiveStatus, type Combatant, type DiceCheck, type GameContent, type Modifiers, type ShieldLayer, type StatusDefinition } from '@shards/shared';
 import { gameContent } from '../../catalog';
 import { unitAuras } from '../StatusBadges';
 import { isBodyAlive } from '@shards/game-core';
@@ -93,6 +93,18 @@ function effectBonuses(unit: Combatant, definition: StatusDefinition | undefined
   for (const [key, name] of Object.entries(specialModifiers)) {
     const value = definition.modifiers[key as keyof Modifiers];
     if (!value) continue;
+    if (key === 'repeatAttack') {
+      const owner = definitionFor(unit, content);
+      const trained = owner?.id === 'ranger' && owner.passive?.rarity && owner.passive.rarity !== 'common' ? owner.modifiers.repeatAttack : undefined;
+      if (trained) {
+        const sources = [owner?.modifiers, ...equipmentModifierSources(unit, owner), ...unit.statuses.map(status => statusFor(status.id, content)?.modifiers)];
+        const active = sources.reduce<DiceCheck | undefined>((current, modifiers) => strongerRepeatCheck(trained, modifiers?.repeatAttack ?? current), undefined)!;
+        const local = value as DiceCheck;
+        const overridden = active.dice !== local.dice || active.atLeast !== local.atLeast;
+        result.push({ text: `${name}: ${active.dice}, успех на ${active.atLeast}+${overridden ? ' · более сильная действующая проверка' : ''}`, overridden });
+        continue;
+      }
+    }
     const latest = [...unit.statuses].reverse().find(status => statusFor(status.id, content)?.modifiers[key as keyof Modifiers] !== undefined);
     const replaced = latest && latest.id !== definition.id ? statusFor(latest.id, content)?.name : undefined;
     const rule = typeof value === 'string' ? value : typeof value === 'object' ? `${value.dice}, успех на ${value.atLeast}+` : '';

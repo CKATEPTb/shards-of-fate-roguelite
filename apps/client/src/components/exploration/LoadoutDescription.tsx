@@ -1,3 +1,4 @@
+import { weaponAttackBonusMultiplier } from '@shards/shared';
 import type { LoadoutSlot } from './loadoutModel';
 import { bodyPartNames } from './body-status-model';
 import { DiceLegend, DiceText, type DiceRule } from '../DiceText';
@@ -5,9 +6,12 @@ import { EquipmentRarityBadge } from '../EquipmentRarity';
 
 /** Shared description content for hover, keyboard focus, and pinned touch inspection. */
 export function LoadoutDescription({ slot }: { slot: LoadoutSlot }) {
+  const doubledAttack = weaponAttackBonusMultiplier(slot.weapon) === 2;
   const rules: DiceRule[] = [...(slot.diceRules ?? []), ...(slot.weapon?.damage ? [{
     dice: slot.weapon.damage, modifiable: true,
-    reason: 'К базовому броску оружия применяются бонусы силы и урона, предусмотренные текущей атакой. При двух оружиях каждое наносит свой удар.',
+    reason: doubledAttack
+      ? 'В обычной атаке базовые кубики оружия бросаются один раз. Вклад Силы и числовые бонусы урона удваиваются; каждый бонусный кубик урона бросается дважды.'
+      : 'К базовому броску оружия применяются бонусы силы и урона, предусмотренные текущей атакой. При двух оружиях каждое наносит свой удар.',
   }] : [])];
   return <>
     <span className="loadout-tooltip-category">{slot.category}</span><strong>{slot.occupiedBy ?? slot.name}</strong>
@@ -15,12 +19,13 @@ export function LoadoutDescription({ slot }: { slot: LoadoutSlot }) {
     <p><DiceText text={slot.description} rules={rules} /></p>
     {slot.occupiedBy && <span className="loadout-passive-label">Занята двуручным оружием</span>}
     {slot.weapon && <span className="loadout-passive-label">{slot.weapon.hands === 2 ? 'Двуручное · занимает обе руки' : 'Одноручное · любая свободная рука'}</span>}
+    {doubledAttack && <p>Обычная атака: вклад Силы и числовые бонусы урона ×2; каждый бонусный кубик урона бросается дважды.</p>}
     {slot.condition && <>
       <span className={`loadout-equipment-state loadout-equipment-${slot.condition}`}>
         {slot.condition === 'unavailable' ? 'Недоступно: конечность отключена или утрачена' : slot.condition === 'partial' ? 'Действует частично: сохранилась половина комплекта' : 'Экипировано'}
       </span>
       {!!slot.armor && <div className="loadout-equipment-armor">Защита каждой покрытой части <b>+{slot.armor}</b></div>}
-      {slot.weapon?.damage && <div className="loadout-equipment-armor">Кубик урона оружия <b><DiceText text={slot.weapon.damage} rules={rules} /></b></div>}
+      {slot.weapon?.damage && <div className="loadout-equipment-armor">Базовый урон оружия <b><DiceText text={slot.weapon.damage} rules={rules} /></b></div>}
       {Object.entries(slot.bonuses ?? {}).filter(([key, value]) => key !== 'healing' && value).map(([key, value]) => <div key={key} className="loadout-equipment-armor">{({ power: 'Сила', initiative: 'Инициатива', evasion: 'Уклонение', crit: 'Критический удар', accuracy: 'Точность', resilience: 'Стойкость', agility: 'Проворность', luck: 'Удача' } as Record<string, string>)[key]} <b>{value! > 0 ? '+' : ''}{value}</b></div>)}
       <dl className="loadout-equipment-parts">{slot.bodyParts?.map(part => <div key={part}>
         <dt>{bodyPartNames[part]}</dt>

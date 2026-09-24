@@ -1,5 +1,5 @@
 import { EQUIPMENT_ITEMS } from '@shards/game-data';
-import { canEquipInSlot, occupiedHandSlots,
+import { canEquipInSlot, occupiedHandSlots, resolveEquipmentItem,
   type AdventureReward, type EquipmentItemDefinition, type EquipmentSlot, type HeroProgress } from '@shards/shared';
 
 export type RewardDraft = {
@@ -14,8 +14,7 @@ export const EMPTY_REWARD_DRAFT: RewardDraft = { equipment: [], skills: [] };
 const isSkillTarget = (target: RewardTarget): target is 'skill0' | 'skill1' => target === 'skill0' || target === 'skill1';
 
 function equipmentFor(reward: AdventureReward | undefined): EquipmentItemDefinition | undefined {
-  return reward?.kind === 'equipment' && Object.hasOwn(EQUIPMENT_ITEMS, reward.definitionId)
-    ? EQUIPMENT_ITEMS[reward.definitionId] : undefined;
+  return reward?.kind === 'equipment' ? resolveEquipmentItem(EQUIPMENT_ITEMS, reward.definitionId) : undefined;
 }
 
 export function canFitReward(reward: AdventureReward, target: RewardTarget): boolean {

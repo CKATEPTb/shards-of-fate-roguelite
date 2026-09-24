@@ -7,6 +7,7 @@ import { BattleHand, type BattleCard } from './BattleHand';
 import { cardsForActor } from './battleCards';
 import { useBattleCardDrag } from './useBattleCardDrag';
 import './manualCombat.css';
+import './revival.css';
 
 const BattleCanvas = lazy(() => import('../BattleCanvas').then(module => ({ default: module.BattleCanvas })));
 const finished = (state: CombatState) => ['victory', 'defeat', 'draw', 'escaped'].includes(state.status);
@@ -40,7 +41,8 @@ export function BattleOverlay({ state, selected, reducedMotion, environment, con
   const turnKey = `${signature(state)}:${state.turn}:${state.nextSequence}:${state.pendingActorId ?? ''}`;
   const actor = state.units.find(unit => unit.id === state.pendingActorId);
   const permitted = controllableActorIds ?? (multiplayer ? [] : state.units.filter(unit => unit.team === 'heroes').map(unit => unit.id));
-  const active = canvasReady && canControl && Boolean(actor && !actor.escaped && permitted.includes(actor.id)) && !resolving && submitted !== turnKey && !finished(state);
+  const alive = (unit: CombatState['units'][number]) => unit.hp > 0 && !unit.escaped && (!unit.body || isBodyAlive(unit.body));
+  const active = canvasReady && canControl && Boolean(actor && alive(actor) && permitted.includes(actor.id)) && !resolving && submitted !== turnKey && !finished(state);
   const handActor = actor && permitted.includes(actor.id) ? actor : state.units.find(unit => unit.id === lastActorId && permitted.includes(unit.id))
     ?? state.units.find(unit => permitted.includes(unit.id) && (unit.id === selected || unit.definitionId === selected))
     ?? state.units.find(unit => permitted.includes(unit.id));
@@ -102,6 +104,7 @@ export function BattleOverlay({ state, selected, reducedMotion, environment, con
     : automatic && group && targets.length > 1 ? skill?.target === 'allAllies' ? 'Весь отряд' : 'Все противники'
     : visible.units.find(unit => unit.id === (gesture.drag?.targetId ?? (automatic ? targets[0] : undefined)))?.name;
   const selectedHero = visible.units.find(unit => unit.team === 'heroes' && (unit.id === selected || unit.definitionId === selected));
+  const spectating = multiplayer && !!selectedHero && !selectedHero.escaped && !alive(selectedHero);
   const runEnds = !multiplayer && visible.status !== 'escaped' && (visible.status !== 'victory' || Boolean(selectedHero && (selectedHero.hp <= 0 || selectedHero.body && !isBodyAlive(selectedHero.body))));
   const currentId = visible.pendingActorId ?? visible.turnOrder[visible.turnIndex];
   const currentUnit = visible.units.find(unit => unit.id === currentId);
@@ -117,7 +120,8 @@ export function BattleOverlay({ state, selected, reducedMotion, environment, con
     </Suspense></div>
     {!done && <div className="combat-sr-only" role="status">Раунд {visible.round || '—'} · {caption}</div>}
     <ol className="combat-sr-only" aria-label="События боя" aria-live="polite" aria-relevant="additions">{visible.events.map(event => <li key={event.sequence}>{event.message}</li>)}</ol>
-    {!done && cards.length > 0 && <BattleHand cards={cards} selectedId={selectedCard?.id} active={active} gesture={gesture} targetName={targetName} reducedMotion={reducedMotion} automatic={Boolean(automatic)}
+    {spectating && !done && <div className="battle-spectator-notice" role="status"><span aria-hidden="true">◇</span><div><strong>Вы наблюдаете за боем</strong><p>После боя у союзников будет 3 минуты, чтобы вас поднять.</p></div></div>}
+    {!done && !spectating && cards.length > 0 && <BattleHand cards={cards} selectedId={selectedCard?.id} active={active} gesture={gesture} targetName={targetName} reducedMotion={reducedMotion} automatic={Boolean(automatic)}
       onSelect={id => {
         const card = cards.find(item => item.id === id);
         const automaticTarget = card && automaticTargetFor(card);

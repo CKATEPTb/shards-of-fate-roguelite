@@ -1,5 +1,6 @@
 import type { GridPoint, WorldChunk, WorldPoi } from '@shards/shared';
 import { tileCenter, TILE_SIZE } from './projection';
+import { npcNames, npcWorldAnchors } from './npcArt';
 
 export type CampfireTimes = Record<string, { litAtTick: number; expiresAtTick: number }>;
 
@@ -11,12 +12,18 @@ export function fireRemaining(poiId: string, tick: number, fires?: CampfireTimes
 }
 
 export function isInteractivePoi(poi: WorldPoi): boolean {
-  return ['portal', 'chest', 'well', 'stairs-down', 'stairs-up'].includes(poi.kind) || poi.kind === 'altar' && !!poi.bossSeason;
+  return ['portal', 'chest', 'well', 'stairs-down', 'stairs-up'].includes(poi.kind)
+    || poi.kind === 'altar' && !!poi.bossSeason || poi.kind === 'npc' && !!poi.npcKind;
 }
 
 /** Hit the visible object, including its upper edge, rather than only its ground tile. */
 export function interactivePoiAt(chunk: WorldChunk, point: GridPoint, isVisible: (poi: WorldPoi) => boolean): WorldPoi | undefined {
   return chunk.pois.filter(poi => isInteractivePoi(poi) && isVisible(poi)).find(poi => {
+    if (poi.kind === 'npc') {
+      const bounds = npcWorldAnchors(chunk, poi)?.hit;
+      return !!bounds && point.x >= bounds.x && point.x <= bounds.x + bounds.width
+        && point.y >= bounds.y && point.y <= bounds.y + bounds.height;
+    }
     const center = tileCenter(poi.position);
     if (poi.kind === 'well') {
       const structure = chunk.structures.find(item => item.id === poi.structureId);
@@ -34,6 +41,7 @@ export function interactivePoiAt(chunk: WorldChunk, point: GridPoint, isVisible:
 }
 
 export function poiLabel(poi: WorldPoi, cleared: boolean): string {
+  if (poi.kind === 'npc' && poi.npcKind) return `${npcNames[poi.npcKind]} · ${poi.npcKind === 'merchant' ? 'торговать' : poi.npcKind === 'blacksmith' ? 'улучшить снаряжение' : 'улучшить навыки'}`;
   if (poi.kind === 'portal') return 'Портал · перейти';
   if (poi.kind === 'chest') return cleared ? 'Пустой сундук' : 'Сундук · открыть';
   if (poi.kind === 'well') return cleared ? 'Вода уже выпита' : 'Колодец · испить';

@@ -1,0 +1,50 @@
+.inventory-bag-panel { display: flex; flex: 1; flex-direction: column; width: 100%; height: 100%; min-width: 0; min-height: 0; color: #d2dac7; font: 400 12px/1.4 Manrope, Arial, sans-serif; }
+.inventory-bag-panel *, .inventory-bag-panel *::before, .inventory-bag-panel *::after { box-sizing: border-box; }
+.inventory-bag-heading { display: flex; flex: none; align-items: center; gap: 9px; min-width: 0; margin: 0 0 10px; }
+.inventory-bag-heading h3 { margin: 0; color: #eee3bc; font: 600 20px/1.2 Manrope, Arial, sans-serif; }
+.inventory-bag-heading-icon { display: block; flex: none; width: 28px; height: 28px; color: #d3bd86; }
+.inventory-bag-heading-icon > svg, .inventory-bag-category-icon > svg, .inventory-bag-empty-icon > svg { display: block; width: 100%; height: 100%; }
+.inventory-bag-total { display: grid; place-items: center; min-width: 26px; min-height: 24px; margin-left: auto; padding: 2px 7px; border: 1px solid #b8bd8540; border-radius: 6px; background: #9dac7111; color: #dfd6af; font-size: 12px; font-variant-numeric: tabular-nums; }
+.inventory-bag-sort { display: flex; flex: none; gap: 3px; min-width: 0; padding: 3px; border: 1px solid #a2b08730; border-radius: 8px; background: #09140f55; }
+.inventory-bag-sort > button { flex: 1; min-width: 44px; min-height: 44px; padding: 5px 7px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: #a7b49b; font: 500 11px/1.35 Manrope, Arial, sans-serif; cursor: pointer; touch-action: manipulation; }
+.inventory-bag-sort > button[aria-pressed='true'] { border-color: #c8ba7d50; background: #8b905626; color: #eee0ae; box-shadow: inset 0 1px #eee0ae0b; }
+.inventory-bag-hint { display: flex; flex: none; align-items: center; gap: 5px; min-height: 24px; margin: 7px 1px 9px; color: #a5b59c; font-size: 11px; line-height: 1.4; }
+.inventory-bag-hint-mark { flex: none; color: #9fcead; font-size: 10px; }
+.inventory-bag-hint-count { color: #b8cba8; white-space: nowrap; }
+.inventory-bag-scroll { flex: 1; min-width: 0; min-height: 0; overflow: auto; overflow-anchor: none; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #6d7c5766 transparent; padding: 2px 6px 12px 2px; scroll-padding-block: 8px; }
+.inventory-bag-category { min-width: 0; margin: 0 0 16px; }
+.inventory-bag-category-heading { display: flex; align-items: center; gap: 7px; min-width: 0; margin: 0 0 7px; padding: 0 0 6px; border-bottom: 1px solid #a7b28727; }
+.inventory-bag-category-icon { display: block; flex: none; width: 22px; height: 22px; color: #aebd95; }
+.inventory-bag-category-heading h4 { flex: 1; min-width: 0; margin: 0; color: #cbd5bb; font: 600 12px/1.4 Manrope, Arial, sans-serif; overflow-wrap: anywhere; }
+.inventory-bag-category-count { flex: none; min-width: 18px; color: #95a786; text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; }
+.inventory-bag-category[data-empty='true'] { margin-bottom: 10px; }
+.inventory-bag-category[data-empty='true'] .inventory-bag-category-heading { margin-bottom: 0; border-bottom-style: dashed; opacity: .65; }
+.inventory-bag-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.inventory-bag-cell { min-width: 0; margin: 0; padding: 0; }
+.inventory-bag-item { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 4px; width: 100%; min-width: 44px; min-height: 96px; height: 100%; margin: 0; padding: 7px 5px 6px; overflow: hidden; border: 1px solid var(--equipment-rarity-border, #a7b4bd48); border-radius: 7px; background: linear-gradient(155deg, #bacd9710, #08120fcc); color: #cdd5c1; font: inherit; text-align: center; cursor: pointer; touch-action: pan-y; }
+.inventory-bag-item::before { position: absolute; inset: 0 13px auto; height: 2px; border-radius: 0 0 3px 3px; background: var(--equipment-rarity, #b9c4cb); content: ''; opacity: .8; }
+.inventory-bag-item-art { display: grid; flex: none; place-items: center; width: 44px; height: 44px; color: var(--equipment-rarity, #c7d0b7); }
+.inventory-bag-item-art > svg { display: block; width: 100%; height: 100%; max-width: 100%; max-height: 100%; }
+.inventory-bag-item-name { display: -webkit-box; min-width: 0; max-width: 100%; overflow: hidden; color: var(--equipment-rarity, #cbd4bb); font-size: 10px; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
+.inventory-bag-item[data-matching-set='true'] { background: linear-gradient(155deg, #52846130, #0c1f19dd); box-shadow: inset 0 0 0 1px #9bcaab94; }
+.inventory-bag-item[aria-pressed='true'] { border-color: #e6d395; background: linear-gradient(155deg, #a295533b, #17251bdd); box-shadow: inset 0 0 0 1px #e6d3958c, 0 0 10px #dbc2741c; }
+.inventory-bag-set-mark { position: absolute; top: 5px; left: 6px; color: #aad8b8; font-size: 8px; line-height: 1; }
+.inventory-bag-slot-mark { position: absolute; top: 4px; right: 5px; color: #d4e6be; font-size: 11px; font-weight: 700; line-height: 1; }
+.inventory-bag-item:disabled { opacity: .5; cursor: default; }
+.inventory-modal-layer .inventory-bag-item { touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.inventory-bag-item[data-draggable='true'] { cursor: grab; }
+.inventory-bag-item[data-dragging='true'] { opacity: .4; cursor: grabbing; }
+.inventory-bag-item-art[data-inventory-drag-handle] { touch-action: none; cursor: grab; }
+.inventory-bag-item-art[data-inventory-drag-handle] * { pointer-events: none; }
+.inventory-bag-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 220px; height: 100%; padding: 25px 16px; text-align: center; }
+.inventory-bag-empty-icon { width: 58px; height: 58px; margin-bottom: 6px; color: #8a9b736e; }
+.inventory-bag-empty strong { color: #c9d1b8; font-size: 15px; font-weight: 600; }
+.inventory-bag-empty p { max-width: 250px; margin: 0; color: #96a58b; font-size: 12px; line-height: 1.6; }
+.inventory-bag-panel button:focus-visible, .inventory-bag-scroll:focus-visible { outline: 2px solid #e8d69a; outline-offset: 2px; }
+@media (hover: hover) { .inventory-bag-sort > button:hover, .inventory-bag-item:not(:disabled):hover { border-color: #d0c489; background-color: #8d965425; } }
+@media (max-width: 420px) {
+  .inventory-bag-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 6px; }
+  .inventory-bag-heading { margin-bottom: 8px; }
+  .inventory-bag-sort > button { padding-inline: 4px; font-size: 10px; }
+  .inventory-bag-item { min-height: 94px; }
+}

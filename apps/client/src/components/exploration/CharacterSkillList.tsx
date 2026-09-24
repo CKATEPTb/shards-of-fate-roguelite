@@ -42,10 +42,12 @@ function descriptionFor(slot: LoadoutSlot): string {
 }
 
 /** Compact inspection keeps all five slots visible; the default retains the expanded rules. */
-export function CharacterSkillList({ slots, content = gameContent, onSelectSlot, selectedSlot, compact = false, onInspectSlot, selectedId }: {
+export function CharacterSkillList({ slots, content = gameContent, onSelectSlot, selectedSlot, compact = false, onInspectSlot, selectedId, dropTargets, hoveredDropTarget }: {
   slots: readonly LoadoutSlot[]; content?: GameContent;
   onSelectSlot?: (target: 'skill0' | 'skill1') => void; selectedSlot?: InventoryTarget | null;
   compact?: boolean; onInspectSlot?: (slot: LoadoutSlot) => void; selectedId?: string | null;
+  dropTargets?: readonly { target: InventoryTarget; reason: string }[];
+  hoveredDropTarget?: InventoryTarget | null;
 }) {
   const heading = useId();
   const [localId, setLocalId] = useState<string | null>(null);
@@ -62,6 +64,8 @@ export function CharacterSkillList({ slots, content = gameContent, onSelectSlot,
   if (compact) return <section className="character-skills-compact" aria-labelledby={heading}>
     <h3 id={heading}>Способности</h3>
     <ol className="character-skills-strip" data-testid="skill-slots">{slots.map(slot => {
+      const target = skillTarget(slot);
+      const drop = dropTargets?.find(choice => choice.target === target);
       const rarity = slot.rarity ?? content.skills.find(skill => skill.id === slot.contentId)?.rarity;
       const remaining = slot.cooldown?.remaining ?? 0;
       const cooldownLabel = remaining > 0 ? `Доступно через ${turns(remaining)}`
@@ -69,6 +73,8 @@ export function CharacterSkillList({ slots, content = gameContent, onSelectSlot,
       const label = `${SLOT_LABELS[slot.id] ?? slot.category}: ${slot.name}${rarity ? `. ${SKILL_RARITY_NAMES[rarity]}` : ''}${slot.empty ? '. Пустой слот' : `. ${cooldownLabel}`}`;
       return <li key={slot.id}><button type="button" className="character-skill-tile" onClick={() => inspect(slot)}
         data-loadout-slot={slot.id} data-testid={`loadout-slot-${slot.id}`} data-empty={String(slot.empty)}
+        data-inventory-drop-target={dropTargets ? target : undefined} data-drop-allowed={drop ? !drop.reason : dropTargets?.length === 0 ? true : undefined}
+        data-drop-hover={!!drop && hoveredDropTarget === target}
         data-content-id={slot.contentId} data-cooldown={remaining} data-rarity={rarity}
         data-selected={isSelected(slot)} data-recharging={remaining > 0} aria-expanded={isSelected(slot)} aria-label={label} title={label}>
         <span className="character-skill-tile-label">{SHORT_SLOT_LABELS[slot.id] ?? slot.category}</span>
@@ -100,7 +106,7 @@ export function CharacterSkillList({ slots, content = gameContent, onSelectSlot,
         <div className="character-skill-art" aria-hidden="true"><SkillArtwork slot={slot} content={content} /></div>
         <div className="character-skill-content">
           <span className="character-skill-category">{SLOT_LABELS[slot.id] ?? slot.category}</span>
-          <SkillRarityBadge rarity={content.skills.find(skill => skill.id === slot.contentId)?.rarity} />
+          <SkillRarityBadge rarity={slot.rarity ?? content.skills.find(skill => skill.id === slot.contentId)?.rarity} />
           <div className="character-skill-heading"><h4>{selectable ? <button type="button" className="character-skill-open" data-loadout-slot={slot.id}
             aria-expanded={isSelected(slot)} aria-controls={!onInspectSlot && isSelected(slot) ? 'inventory-slot-panel' : undefined}>
             {slot.name}<span className="sr-only">{onInspectSlot ? '. Открыть описание способности' : '. Открыть подходящие находки для слота'}</span>

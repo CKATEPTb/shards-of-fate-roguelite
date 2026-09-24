@@ -1,4 +1,4 @@
-import { BODY_PARTS, type HeroBody, type StarterEquipment } from '@shards/shared';
+import { BODY_PARTS, weaponAttackBonusMultiplier, type HeroBody, type StarterEquipment } from '@shards/shared';
 import { equipmentCondition } from '@shards/game-core';
 import { EQUIPMENT_SETS } from '@shards/game-data';
 import { DiceText, type DiceRule } from '../DiceText';
@@ -13,15 +13,19 @@ export interface RewardEquipmentDetailsProps {
   /** The outfit displayed by this card, with its matching body state. */
   equipment?: readonly StarterEquipment[];
   compareWith?: EquipmentSetComparisonContext;
+  showSetBonuses?: boolean;
 }
 
 /** Item descriptions and contributions are always expanded. */
-export function RewardEquipmentDetails({ item, body, equipment = [], compareWith }: RewardEquipmentDetailsProps) {
+export function RewardEquipmentDetails({ item, body, equipment = [], compareWith, showSetBonuses = true }: RewardEquipmentDetailsProps) {
   const condition = body ? equipmentCondition(item, body) : undefined;
   const fraction = condition?.bonusFraction ?? 1;
   const dice = item.weapon?.damage;
+  const doubledAttack = weaponAttackBonusMultiplier(item.weapon) === 2;
   const rules: DiceRule[] = dice ? [{ dice, modifiable: true,
-    reason: 'Базовый бросок оружия получает применимые бонусы атаки. При двух оружиях каждое наносит свой отдельный удар.' }] : [];
+    reason: doubledAttack
+      ? 'В обычной атаке базовые кубики оружия бросаются один раз. Вклад Силы и числовые бонусы урона удваиваются; каждый бонусный кубик урона бросается дважды.'
+      : 'Базовый бросок оружия получает применимые бонусы атаки. При двух оружиях каждое наносит свой отдельный удар.' }] : [];
   const attributes = rewardAttributes.filter(([key]) => item.bonuses?.[key]);
   const set = item.setId ? EQUIPMENT_SETS[item.setId] : undefined;
   const parts = BODY_PARTS.filter(part => item.resources[part] || item.armor && item.bodyParts.includes(part)).map(part => ({
@@ -41,8 +45,9 @@ export function RewardEquipmentDetails({ item, body, equipment = [], compareWith
     </p>}
     {item.weapon && <div className="reward-equipment-weapon">
       <span>{item.weapon.hands === 2 ? 'Двуручное' : 'Одноручное'}</span>
-      <p>{dice ? <>Урон <strong><DiceText text={dice} rules={rules} /></strong></> : 'Щит · без урона'}</p>
+      <p>{dice ? <>Базовый урон <strong><DiceText text={dice} rules={rules} /></strong></> : 'Щит · без урона'}</p>
     </div>}
+    {doubledAttack && <p className="reward-equipment-description">Обычная атака: вклад Силы и числовые бонусы урона ×2; каждый бонусный кубик урона бросается дважды.</p>}
     {!!attributes.length && <section className="reward-equipment-attributes" aria-label="Бонусы предмета">
       <dl>{attributes.map(([key, name]) => {
         const base = item.bonuses![key]!, effective = base * fraction;
@@ -60,6 +65,6 @@ export function RewardEquipmentDetails({ item, body, equipment = [], compareWith
       </div>)}
     </section>}
     <p className="reward-equipment-description"><DiceText text={item.description} rules={rules} /></p>
-    {set && <RewardSetSummary set={set} item={item} equipment={equipment} body={body} compareWith={compareWith} />}
+    {set && showSetBonuses && <RewardSetSummary set={set} item={item} equipment={equipment} body={body} compareWith={compareWith} />}
   </div>;
 }

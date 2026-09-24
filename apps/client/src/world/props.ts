@@ -15,6 +15,7 @@ import { createHouseHeroReveal, type HeroAppearance } from './house-hero-reveal'
 import { RenderedVisibility } from './rendered-visibility';
 import { textureAlpha } from './texture-alpha';
 import { containsPoint, entersHouse } from './house-visibility';
+import { createNpcServices } from './npcArt';
 
 export interface EnvironmentUpdate {
   /** Interpolated character feet and cursor use world pixels. The route uses tiles. */
@@ -34,6 +35,8 @@ export interface EnvironmentRenderer {
   pointVisibility(point: GridPoint, depth: number): number;
   /** Closed house contents cannot be discovered through pointer interaction. */
   isPoiVisible(poi: WorldPoi): boolean;
+  /** World-pixel positions inside a closed house must not expose ally markers. */
+  isInteriorRevealed(point: GridPoint): boolean;
   destroy(): void;
   readonly count: number;
   readonly occludedCount: number;
@@ -84,7 +87,8 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
     } else if (isBush) object.foliage = { image, x: base.x, y: base.y, phase: variant % 628 / 100 };
     objects.set(id, object);
   }
-  const formations = [...(chunk.layer === 'basement' ? [] : createRocks(scene, chunk)), ...createStructures(scene, chunk)];
+  const serviceNpcs = createNpcServices(scene, chunk);
+  const formations = [...(chunk.layer === 'basement' ? [] : createRocks(scene, chunk)), ...createStructures(scene, chunk), ...serviceNpcs.objects];
   formations.forEach((object, index) => {
     const id = chunk.size * chunk.size + index;
     objects.set(id, object);
@@ -96,7 +100,7 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
   const enteredHouses = new Set<string>();
   const smoke = createChimneySmoke(scene, formations.flatMap(object => object.smokeSource ? [object.smokeSource] : []));
   const campfires = createCampfires(scene, chunk.pois.filter(poi => poi.kind === 'campfire').map(poi => tileCenter(poi.position)));
-  const animatedCount = water.count + smoke.count + campfires.count + [...objects.values()].filter(object => object.foliage).length;
+  const animatedCount = water.count + smoke.count + campfires.count + serviceNpcs.count + [...objects.values()].filter(object => object.foliage).length;
   const index = new OcclusionIndex(props, new WalkableGround(chunk));
   const visibility = new RenderedVisibility([...objects.values()].flatMap(object => object.images), textureAlpha);
   const fading = new Set<number>();
@@ -113,10 +117,16 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
     get revealedRoofs() { return roofs.reduce((count, object) => count + Number(object.images[0].alpha < 0.999), 0); },
     get exteriorReveals() { return houseHeroReveal.count; },
     pointVisibility(point, depth) { return visibility.pointVisibility(point, depth); },
+    isInteriorRevealed(point) {
+      return roofs.every(roof => !containsPoint(roof.occluder.house!.geometry.interior, point)
+        || enteredHouses.has(roof.occluder.house!.geometry.id) && roof.images[0].alpha < 0.999);
+    },
     isPoiVisible(poi) {
       const point = tileCenter(poi.position);
       return roofs.every(roof => {
         const house = roof.occluder.house!.geometry;
+        // Service NPCs stand at the exterior approach; interior chests retain the roof gate below.
+        if (poi.kind === 'npc' && poi.structureId === house.id && !containsPoint(house.interior, point)) return true;
         if (poi.structureId !== house.id && !containsPoint(house.interior, point)) return true;
         // Require a hero inside now, even while a previously opened roof is
         // still fading closed. Cursor and route probes cannot discover a room.
@@ -137,6 +147,7 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
       water.update(delta, reducedMotion, visibleBounds);
       smoke.update(delta, reducedMotion, visibleBounds);
       campfires.update(delta, reducedMotion, visibleBounds, campfireLit);
+      serviceNpcs.update(delta, reducedMotion, visibleBounds);
       // The full route changes on simulation ticks, not on animation frames.
       if (previousPath !== path) {
         routeOcclusion = index.find(path.map(point => ({ point: tileCenter(point), width: 7, height: 7, ground: true })));
@@ -191,6 +202,7 @@ export function createEnvironment(scene: Phaser.Scene, chunk: WorldChunk): Envir
       water.destroy();
       smoke.destroy();
       campfires.destroy();
+      serviceNpcs.destroy();
       fading.clear();
       obscured.clear();
       enteredHouses.clear();

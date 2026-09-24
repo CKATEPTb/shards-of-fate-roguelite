@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import type { ExpeditionState, GameContent } from '@shards/shared';
+import { isBodyAlive } from '@shards/game-core';
 import { initAudio, playSound, restoreMenuAudioScene, setAudioScene } from './engine';
 import { fireRemaining } from '../world/poiInteraction';
 import type { MusicScene } from './types';
@@ -57,15 +58,21 @@ export function useGameAudio(state: ExpeditionState, content: GameContent, actor
           intensity: world.chunk.layer === 'basement' ? .8 : world.chunk.season === 'winter' ? .2 : .45 });
       }
     }
-    if (progress && priorProgress) {
+    if (progress && priorProgress && progress !== priorProgress) {
       const sources = new Set(priorProgress.claimedSources);
       const received = progress.claimedSources.filter(source => !sources.has(source));
       if (received.some(source => source.startsWith('chest:'))) playSound('chest', { volume: .8 });
       else if (received.some(source => source.startsWith('well:'))) playSound('well', { volume: .7 });
       else if (!combat && progress.rewards.length > priorProgress.rewards.length) playSound('loot', { volume: .55 });
       if (!combat && progress.coins > priorProgress.coins) playSound('coin', { volume: .38 });
+      if (!combat && (progress.npcPurchases?.length ?? 0) > (priorProgress.npcPurchases?.length ?? 0)) playSound('coin', { volume: .38 });
       if (JSON.stringify(progress.equipment) !== JSON.stringify(priorProgress.equipment)
-        || JSON.stringify(progress.skills) !== JSON.stringify(priorProgress.skills)) playSound('equip', { volume: .65 });
+        || JSON.stringify(progress.skills) !== JSON.stringify(priorProgress.skills)
+        || JSON.stringify(progress.nativeSkillRarities) !== JSON.stringify(priorProgress.nativeSkillRarities)) playSound('equip', { volume: .65 });
+    }
+    for (const revived of world.actors) {
+      const previous = old.world.actors.find(actor => actor.id === revived.id);
+      if (previous?.reviveUntilTick !== undefined && revived.reviveUntilTick === undefined && revived.body && isBodyAlive(revived.body)) playSound('heal', { volume: .5 });
     }
     const oldSpawns = new Set((old.bosses ?? old.cooperative?.bosses)?.spawned.map(spawn => spawn.mobId));
     if (bosses?.spawned.some(spawn => !oldSpawns.has(spawn.mobId) && spawn.chunkId === world.currentChunkId)) playSound('bossArrival', { volume: .8 });

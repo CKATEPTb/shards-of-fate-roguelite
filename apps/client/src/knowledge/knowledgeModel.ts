@@ -137,16 +137,18 @@ export function createKnowledgeCatalog(content: GameContent): KnowledgeEntry[] {
     }
   }
   for (const skill of content.skills) {
+    if (skill.tags.includes('UPGRADED')) continue;
     const owners = skillOwners.get(skill.id) ?? [];
-    const group = skill.rarity ? 'Изучаемые' : classSkillIds.has(skill.id) ? 'Классовые'
+    const group = skill.tags.includes('LEARNABLE') ? 'Изучаемые' : classSkillIds.has(skill.id) ? 'Классовые'
       : owners.some(owner => heroIds.has(owner.id)) ? 'Навыки героев'
         : owners.some(owner => owner.tags.includes('BOSS')) ? 'Навыки боссов'
           : owners.length ? 'Навыки противников' : 'Другие навыки';
     const auraNames = skill.actions.flatMap(action => [action.statusId, action.onHitStatusId])
       .flatMap(id => id && statuses.get(id) ? [statuses.get(id)!.name] : []);
+    const rarity = skill.rarity ?? (skill.tags.includes('ROLE') || skill.tags.includes('CHARACTER') ? 'common' : undefined);
     entries.push({ ...base('skill', 'skills', skill, group,
-      join([skill.rarity && rarityNames[skill.rarity], targetNames[skill.target], `Перезарядка: ${skill.cooldown}`]),
-      { rarity: skill.rarity, search: [...owners.map(owner => owner.name), ...auraNames] }), kind: 'skill', tab: 'skills', skill });
+      join([rarity && rarityNames[rarity], targetNames[skill.target], `Перезарядка: ${skill.cooldown}`]),
+      { rarity, search: [...owners.map(owner => owner.name), ...auraNames] }), kind: 'skill', tab: 'skills', skill });
   }
   for (const status of content.statuses) {
     const group = status.polarity === 'positive' ? 'Положительные' : status.polarity === 'negative' ? 'Отрицательные' : 'Ауры';
@@ -155,6 +157,7 @@ export function createKnowledgeCatalog(content: GameContent): KnowledgeEntry[] {
       join([group, status.visual && auraFamilies[status.visual.family], timing])), kind: 'aura', tab: 'auras', status });
   }
   for (const effect of content.effects) {
+    if (effect.tags.includes('UPGRADED')) continue;
     const owners = (effectOwners.get(effect.id) ?? []).map(unit => unit.name);
     entries.push({ ...base('effect', 'auras', effect, 'Пассивные эффекты', join(['Пассивный эффект', ...owners]),
       { search: owners }), kind: 'effect', tab: 'auras', effect });

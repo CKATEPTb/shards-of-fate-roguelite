@@ -59,7 +59,10 @@
 .reward-pickup .equipment-rarity-badge > span { font-size: 12px; }
 .reward-pickup-identity > strong { color: var(--equipment-rarity, #dce1c7); font-size: 14px; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
 .reward-pickup-description { grid-column: 1 / -1; display: block; min-width: 0; color: #c0cbb0; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
-.reward-pickup-description > span { display: block; margin-bottom: 4px; color: #97aa91; font-size: 12px; }
+.reward-pickup-kind { display: block; color: #97aa91; font-size: 12px; }
+.reward-pickup-copy { display: block; margin-top: 6px; }
+.reward-pickup-details { display: block; margin-top: 9px; color: #d8dfc7; }
+.reward-pickup[aria-expanded='true'] { border-color: var(--equipment-rarity, #c9c99c); background-color: #bbbe9014; box-shadow: inset 0 0 0 1px var(--equipment-rarity-border, #acb79555); }
 .reward-pickup-action { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 32px; padding-top: 9px; border-top: 1px solid #aab7802d; color: #ddcea2; font-size: 13px; font-weight: 600; }
 .reward-pickup-action > span { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #bdb17d4f; border-radius: 50%; font-size: 17px; font-weight: 400; line-height: 1; }
 .reward-pickup[aria-disabled='true'] { border-color: #acc68d91; background-color: #6c925926; cursor: default; }
@@ -70,6 +73,11 @@
 .reward-empty p { color: var(--reward-muted); font-size: 14px; }
 .reward-loot-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex: none; padding: 14px 24px; border-top: 1px solid #a5b18433; background: #0b1a13a1; }
 .reward-pickup-status { min-width: 0; color: #bdccb0; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.reward-loot-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.reward-collect-all { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 14px; border: 1px solid #a8bd8480; border-radius: 7px; background: linear-gradient(135deg, #afc48c24, #75946618); color: #d9e4bf !important; font-size: 14px !important; font-weight: 600 !important; white-space: nowrap; }
+.reward-collect-all > span { color: #bccf9e; font-size: 18px; font-weight: 400; line-height: 1; }
+.reward-loot-actions > button:disabled { opacity: .45; cursor: default; box-shadow: none; }
+.reward-collect-all[aria-busy='true'] { opacity: .66; }
 .reward-done { display: inline-flex; align-items: center; justify-content: center; gap: 15px; flex: none; padding: 10px 18px; border: 1px solid #c9af759c; border-radius: 7px; background: linear-gradient(135deg, #b8a06a32, #8f7d4d25); color: #eee0b5 !important; font-size: 14px !important; font-weight: 600 !important; }
 .reward-done > span { color: #c8b482; font-size: 18px; }
 .reward-warning-backdrop { position: absolute; z-index: 92; inset: 0; display: grid; place-items: center; padding: 18px; background: #050d09bb; backdrop-filter: blur(5px); }
@@ -81,8 +89,9 @@
 .reward-warning button { width: 100%; padding: 10px 14px; border: 1px solid #afba8d66; border-radius: 6px; background: #abc2940a; color: #d3dcc0; font-size: 14px; line-height: 1.5; }
 @media (hover: hover) {
   .reward-close:hover { border-color: #ced1a77c; background-color: #b6bd8e16; }
-  .reward-pickup:not([aria-disabled='true']):hover { border-color: var(--equipment-rarity, #c9c99c); background-color: #bbbe9020; transform: translateY(-2px); }
-  .reward-done:hover { border-color: #e2c98f; background-color: #d1b87727; }
+  .reward-pickup:not([aria-disabled='true']):hover { border-color: var(--equipment-rarity, #c9c99c); background-color: #bbbe9020; }
+  .reward-done:not(:disabled):hover { border-color: #e2c98f; background-color: #d1b87727; }
+  .reward-collect-all:not(:disabled):hover { border-color: #ccda9f; background-color: #b2c78525; }
 }
 @media (max-width: 700px) {
   .adventure-rewards-overlay { padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)); }
@@ -96,8 +105,10 @@
   .reward-pickup-identity > strong { font-size: 13px; line-height: 1.4; }
   .reward-pickup-description { font-size: 12px; line-height: 1.5; }
   .reward-pickup-action { padding-top: 7px; font-size: 12px; }
-  .reward-loot-footer { gap: 12px; padding: 12px 15px; }
+  .reward-loot-footer { display: grid; gap: 8px; padding: 10px 15px; }
   .reward-pickup-status { font-size: 12px; }
+  .reward-loot-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; width: 100%; }
+  .reward-collect-all { gap: 7px; padding: 9px 10px; font-size: 13px !important; }
   .reward-done { gap: 8px; padding: 9px 13px; font-size: 13px !important; }
   .reward-warning { padding: 23px 20px; }
 }

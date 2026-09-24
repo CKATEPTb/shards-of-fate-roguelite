@@ -1,0 +1,6 @@
+.battle-spectator-notice { position: absolute; z-index: 8; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 30px); padding: 13px 19px; border: 1px solid #c3b79a40; border-radius: 12px; background: #15231dcc; backdrop-filter: blur(8px); color: #dddbc5; pointer-events: none; }
+.battle-spectator-notice > span { color: #d6c799; font-size: 30px; }
+.battle-spectator-notice strong { font-size: 14px; font-weight: 600; }
+.battle-spectator-notice p { margin: 5px 0 0; color: #b9beab; font-size: 12px; line-height: 1.5; }
+.revival-timer[data-expired='true'] { opacity: .68; }
+@media (max-width: 540px) { .battle-spectator-notice { gap: 9px; padding: 11px 14px; } .battle-spectator-notice strong { font-size: 13px; } .battle-spectator-notice p { font-size: 11px; } }

@@ -1,0 +1,10 @@
+.ally-indicators { position: absolute; inset: 0; z-index: 42; overflow: hidden; pointer-events: none; }
+.ally-indicator { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; width: 68px; min-width: 44px; height: 72px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #f3e8ca; font: inherit; cursor: pointer; pointer-events: auto; touch-action: none; user-select: none; visibility: hidden; }
+.ally-indicator-head { position: relative; display: block; width: 44px; height: 44px; flex: 0 0 44px; border: 2px solid #afc4a3; border-radius: 50%; background: #142921f5; box-shadow: 0 2px 7px #000a; }
+.ally-indicator-portrait { display: block; width: 100%; height: 100%; border-radius: inherit; image-rendering: pixelated; }
+.ally-indicator-direction { position: absolute; right: -7px; bottom: -3px; width: 17px; height: 17px; border-radius: 50%; background: #12231a; transform: rotate(var(--ally-direction, 0deg)); fill: #e6ddb9; stroke: #12231a; stroke-width: .6; }
+.ally-indicator-name { display: block; max-width: 68px; height: 14px; margin-top: 2px; padding: 0 3px; border-radius: 3px; background: #102019e8; font-size: 10px; font-weight: 700; line-height: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ally-indicator-following { height: 10px; color: #fbe094; font-size: 9px; font-weight: 700; line-height: 10px; text-shadow: 0 1px 3px #000, 0 0 3px #000; }
+.ally-indicator[data-following="true"] .ally-indicator-head { border-color: #f6da86; background: #3b3923f5; box-shadow: 0 0 0 2px #716335cc, 0 2px 7px #000a; }
+.ally-indicator:hover .ally-indicator-head, .ally-indicator:focus-visible .ally-indicator-head { border-color: #fff0b9; box-shadow: 0 0 0 3px #577659e8; }
+.ally-indicator:focus-visible { outline: 2px solid #fff0b9; outline-offset: 2px; }

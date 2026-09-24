@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react';
-import { BODY_PARTS, type ActionDefinition, type CombatEventType, type EffectDefinition, type EquipmentItemDefinition,
+import { BODY_PARTS, weaponAttackBonusMultiplier, type ActionDefinition, type CombatEventType, type EffectDefinition, type EquipmentItemDefinition,
   type EquipmentSetDefinition, type Modifiers, type SkillDefinition, type StatusDefinition, type TargetSelector, type UnitDefinition } from '@shards/shared';
 import { bodyPartArmor, startHeroBody } from '@shards/game-core';
 import { EQUIPMENT_ITEMS, EQUIPMENT_SETS } from '@shards/game-data';
 import { gameContent } from '../catalog';
 import { unitFramePixels, resolveUnitArt } from '../art/unitFrames';
 import { resolveHeroVisualLoadout } from '../art/heroLoadout';
+import { enemyArtId } from '../art/enemyAppearance';
+import { unitPortraitViewBox } from '../art/unitPortrait';
 import { EquipmentIcon } from '../components/EquipmentIcon';
 import { SkillIcon } from '../components/SkillIcon';
 import { AuraIcon } from '../components/AuraIcon';
@@ -33,9 +35,8 @@ const unitTab = (unit: UnitDefinition): KnowledgeTabId => heroIds.has(unit.id) ?
 function unitPortrait(unit: UnitDefinition): string {
   const cached = portraitCache.get(unit);
   if (cached) return cached;
-  const enemy = !heroIds.has(unit.id), art = resolveUnitArt(unit.sprite, unit.role, enemy);
-  const crop = !enemy ? '18 3 28 28' : art === 'elite_warden' ? '5 1 23 23' : art === 'thornling' ? '5 7 23 23'
-    : art === 'spider' ? '9 15 15 15' : ['rat', 'wolf', 'boar', 'slime'].includes(art) ? '7 13 18 18' : '7 4 18 18';
+  const enemy = !heroIds.has(unit.id), art = enemy ? enemyArtId(unit) : resolveUnitArt(unit.sprite, unit.role, false);
+  const crop = unitPortraitViewBox(art, enemy);
   const pixels = unitFramePixels(art, unit.role, enemy, 'south', 'idle', 0, undefined, enemy ? undefined : resolveHeroVisualLoadout(unit));
   const paths = new Map<string, string[]>();
   for (const pixel of pixels) {
@@ -152,8 +153,10 @@ function UnitDetails({ unit, onNavigate }: { unit: UnitDefinition; onNavigate: N
     [key, (unit.stats[key] ?? 0) + (typeof unit.modifiers[bonus] === 'number' ? unit.modifiers[bonus]! : 0)]));
   const skills = unit.skillIds.flatMap(id => skillById.get(id) ?? []);
   const passives = unit.effectIds.flatMap(id => effectById.get(id) ?? []);
-  const weaponAttacks = unit.anatomy?.equipment.filter(item => item.weapon?.damage).map(item => ({ ...unit.basicAttack, dice: item.weapon!.damage }));
+  const weaponAttacks = unit.anatomy?.equipment.filter(item => item.weapon?.damage).map(item => ({ ...unit.basicAttack,
+    dice: item.weapon!.damage, factor: (unit.basicAttack.factor ?? 1) * weaponAttackBonusMultiplier(item.weapon) }));
   const attacks = weaponAttacks?.length ? weaponAttacks : [unit.basicAttack];
+  const doubledAttack = unit.anatomy?.equipment.some(item => weaponAttackBonusMultiplier(item.weapon) === 2);
   return <>
     <p className="kdetail-description"><DiceText text={unit.description} rules={passiveDiceRules(unit)} /></p>
     <Section title={hero ? 'Начальные характеристики' : 'Базовые характеристики'} note={hero ? 'Со стартовой экипировкой и пассивными бонусами.' : 'Без множителей сложности и размера отряда.'}>
@@ -166,6 +169,7 @@ function UnitDetails({ unit, onNavigate }: { unit: UnitDefinition; onNavigate: N
     </div>)}</div><p className="kdetail-note">При нуле рука или нога перестаёт работать. Утрата части — при −50% её максимальной прочности; утрата головы или торса означает гибель.</p></Section>}
     <Section title={attacks.length > 1 ? 'Атака двумя оружиями' : 'Обычная атака'}>
       {attacks.length > 1 && <p className="kdetail-note">Один ход: сначала удар одной рукой, затем другой. Для каждого — свои броски.</p>}
+      {doubledAttack && <p className="kdetail-note">Один удар. Базовые кубики оружия бросаются один раз; вклад Силы и числовые бонусы урона ×2. Каждый бонусный кубик урона бросается дважды.</p>}
       <ActionList actions={attacks} target="enemy" onNavigate={onNavigate} />
     </Section>
     {!!skills.length && <Section title="Активные способности"><References entries={skills.map(skillReference)} onNavigate={onNavigate} /></Section>}
@@ -191,13 +195,17 @@ function SetBonuses({ set, onNavigate }: { set: EquipmentSetDefinition; onNaviga
 }
 function ItemDetails({ item, onNavigate }: { item: EquipmentItemDefinition; onNavigate: Navigate }) {
   const set = item.setId ? EQUIPMENT_SETS[item.setId] : undefined;
-  const rules: DiceRule[] = item.weapon?.damage ? [{ dice: item.weapon.damage, modifiable: true, reason: 'К броску оружия применяются бонусы обычной атаки владельца.' }] : [];
+  const doubledAttack = weaponAttackBonusMultiplier(item.weapon) === 2;
+  const rules: DiceRule[] = item.weapon?.damage ? [{ dice: item.weapon.damage, modifiable: true, reason: doubledAttack
+    ? 'В обычной атаке базовые кубики оружия бросаются один раз. Вклад Силы и числовые бонусы урона удваиваются; каждый бонусный кубик урона бросается дважды.'
+    : 'К броску оружия применяются бонусы обычной атаки владельца.' }] : [];
   return <><p className="kdetail-description"><DiceText text={item.description} rules={rules} /></p>
     <Facts values={[
       ['Место', itemReference(item).note],
       ...(item.weapon ? [['Хват', item.weapon.hands === 2 ? 'Двуручное · резервирует обе руки' : 'Одноручное'],
-        ['Урон оружия', item.weapon.damage ? <DiceText text={item.weapon.damage} rules={rules} /> : 'Щит: без собственного удара']] as Array<[string, ReactNode]> : []),
+        ['Базовый урон оружия', item.weapon.damage ? <DiceText text={item.weapon.damage} rules={rules} /> : 'Щит: без собственного удара']] as Array<[string, ReactNode]> : []),
     ]} />
+    {doubledAttack && <p className="kdetail-note">Обычная атака: вклад Силы и числовые бонусы урона ×2; каждый бонусный кубик урона бросается дважды.</p>}
     <Section title="Что даёт предмет"><Facts values={rewardAttributes.filter(([key]) => item.bonuses?.[key]).map(([key, name]) => [name, signed(item.bonuses![key]!)])} />
       <div className="kdetail-body-grid">{BODY_PARTS.filter(part => item.resources[part] || item.armor && item.bodyParts.includes(part)).map(part => <div key={part}>
         <strong>{bodyPartNames[part]}</strong>{!!item.resources[part] && <span>Прочность <b>{signed(item.resources[part]!)}</b></span>}
@@ -223,7 +231,7 @@ function SkillDetails({ skill, onNavigate }: { skill: SkillDefinition; onNavigat
   return <><p className="kdetail-description"><DiceText text={skill.description} rules={rules} /></p>
     <Facts values={[
       ['Цель', targetName(skill.target)], ['Перезарядка', skill.cooldown ? skillTurns(skill.cooldown) : 'Нет'],
-      ['Стоимость', 'Одно действие своего хода'], ['Получение', skill.rarity ? 'Можно найти в наградах и экипировать в дополнительный слот' : skill.tags.includes('ROLE') ? 'Классовая способность' : 'Врождённая способность'],
+      ['Стоимость', 'Одно действие своего хода'], ['Получение', skill.tags.includes('UPGRADED') ? 'Улучшение у начертателя' : skill.tags.includes('LEARNABLE') ? 'Можно найти в наградах и экипировать в дополнительный слот' : skill.tags.includes('ROLE') ? 'Классовая способность' : 'Врождённая способность'],
     ]} />
     <Section title="Действие навыка"><ActionList actions={skill.actions} target={skill.target} rules={rules} onNavigate={onNavigate} /></Section>
     <DiceGuide rules={rules} />
@@ -247,8 +255,8 @@ function effectRules(effect: EffectDefinition): DiceRule[] {
 function AuraSources({ status, onNavigate }: { status: StatusDefinition; onNavigate: Navigate }) {
   const applies = (actions: readonly ActionDefinition[]) => actions.some(action => action.statusId === status.id || action.onHitStatusId === status.id);
   const sources: Reference[] = [
-    ...gameContent.skills.filter(skill => applies(skill.actions)).map(skillReference),
-    ...gameContent.effects.filter(effect => applies(effect.actions)).map(effect => ({ tab: 'auras' as const, sourceId: effect.id, name: effect.name, note: 'Пассивный эффект' })),
+    ...gameContent.skills.filter(skill => !skill.tags.includes('UPGRADED') && applies(skill.actions)).map(skillReference),
+    ...gameContent.effects.filter(effect => !effect.tags.includes('UPGRADED') && applies(effect.actions)).map(effect => ({ tab: 'auras' as const, sourceId: effect.id, name: effect.name, note: 'Пассивный эффект' })),
     ...gameContent.statuses.filter(aura => aura.id !== status.id && applies(aura.actions)).map(aura => ({ tab: 'auras' as const, sourceId: aura.id, name: aura.name,
       note: 'Накладывается другой аурой', icon: <AuraIcon id={aura.id} visual={aura.visual} size={36} /> })),
   ];

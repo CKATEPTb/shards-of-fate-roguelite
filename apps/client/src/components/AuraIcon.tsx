@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { AuraVisualDefinition } from '@shards/shared';
+import { baseSkillId, type AuraVisualDefinition } from '@shards/shared';
 import { gameContent } from '../catalog';
 import { CatalogAuraIcon } from './CatalogAuraIcon';
 import { SkillIcon } from './SkillIcon';
@@ -92,7 +92,8 @@ function Artwork({ id }: { id: string }): ReactNode {
 export function AuraIcon({ id, size = 32, visual }: { id: string; size?: number; visual?: AuraVisualDefinition }) {
   const skillIcon = gameContent.skills.find(skill => skill.id === id)?.icon;
   if (skillIcon) return <SkillIcon icon={skillIcon} size={size} />;
-  const kind = aliases[id] ?? id;
+  const canonicalId = baseSkillId(id);
+  const kind = aliases[canonicalId] ?? canonicalId;
   const catalogueVisual = visual ?? gameContent.statuses.find(status => status.id === kind)?.visual;
   if (catalogueVisual) return <CatalogAuraIcon visual={catalogueVisual} size={size} />;
   const warm = ['taunted', 'bastion', 'inspired', 'prayer', 'radiance', 'paladin', 'burst'].includes(kind);

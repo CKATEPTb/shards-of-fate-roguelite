@@ -6,6 +6,8 @@ import { LIGHT_STYLES, WORLD_DARKNESS, lightFalloff, lightPulse, lightingOverlay
 export interface WorldLightingFrame {
   heroes: readonly GridPoint[];
   campfires: readonly GridPoint[];
+  /** Permanent service torches use radial light without tree or wall raycasts. */
+  torches?: readonly GridPoint[];
   projection: WorldProjection;
   delta: number;
   reducedMotion: boolean;
@@ -19,6 +21,7 @@ export interface WorldLighting {
 interface LightStamp { reveal: HTMLCanvasElement; warmth: HTMLCanvasElement }
 let nextLightingId = 0;
 const STAMP_SIZE = 384;
+const LIGHT_PULSE_STEP_MS = 50;
 
 function gradientStamp(kind: WorldLightKind, warm: boolean): HTMLCanvasElement {
   const canvas = document.createElement('canvas');
@@ -38,7 +41,7 @@ function gradientStamp(kind: WorldLightKind, warm: boolean): HTMLCanvasElement {
   return canvas;
 }
 
-/** Canvas-only illumination: four cached stamps and one viewport-sized half-resolution mask. */
+/** Canvas-only illumination: six cached stamps and one viewport-sized half-resolution mask. */
 export function createWorldLighting(scene: Phaser.Scene): WorldLighting {
   const key = `world-lighting:${++nextLightingId}`;
   const texture = scene.textures.createCanvas(key, 1, 1);
@@ -48,24 +51,27 @@ export function createWorldLighting(scene: Phaser.Scene): WorldLighting {
   const stamps: Record<WorldLightKind, LightStamp> = {
     hero: { reveal: gradientStamp('hero', false), warmth: gradientStamp('hero', true) },
     campfire: { reveal: gradientStamp('campfire', false), warmth: gradientStamp('campfire', true) },
+    torch: { reveal: gradientStamp('torch', false), warmth: gradientStamp('torch', true) },
   };
   let elapsed = 0;
   let destroyed = false;
   let lastFrame = '';
 
   return {
-    update({ heroes, campfires, projection, delta, reducedMotion }) {
+    update({ heroes, campfires, torches, projection, delta, reducedMotion }) {
       if (destroyed || projection.width <= 0 || projection.height <= 0 || projection.zoom <= 0) return;
       if (!reducedMotion) elapsed += Math.max(0, Math.min(delta, 250));
+      // Only cosmetic flicker is sampled at 20 Hz; light positions remain frame-accurate.
+      const pulseTime = Math.floor(elapsed / LIGHT_PULSE_STEP_MS) * LIGHT_PULSE_STEP_MS;
       const placement = lightingOverlayPlacement(projection);
       if (texture.width !== placement.canvasWidth || texture.height !== placement.canvasHeight) {
         texture.setSize(placement.canvasWidth, placement.canvasHeight);
         overlay.setSize(placement.canvasWidth, placement.canvasHeight).updateDisplayOrigin();
       }
       overlay.setPosition(placement.x, placement.y).setDisplaySize(placement.width, placement.height);
-      const lights = visibleWorldLights(heroes, campfires, projection);
+      const lights = visibleWorldLights(heroes, campfires, projection, torches);
       const signature = `${projection.width}:${projection.height}:${projection.zoom}:` + lights.map((light) =>
-        `${light.kind}:${light.x.toFixed(2)}:${light.y.toFixed(2)}:${lightPulse(light.kind, elapsed, reducedMotion).toFixed(4)}`).join('|');
+        `${light.kind}:${light.x.toFixed(2)}:${light.y.toFixed(2)}:${lightPulse(light.kind, pulseTime, reducedMotion).toFixed(4)}`).join('|');
       if (signature === lastFrame) return;
       lastFrame = signature;
       const scaleX = texture.width / projection.width;
@@ -80,14 +86,14 @@ export function createWorldLighting(scene: Phaser.Scene): WorldLighting {
       // Destination-out combines overlapping reveals continuously; no additive white discs.
       context.globalCompositeOperation = 'destination-out';
       for (const light of lights) {
-        context.globalAlpha = lightPulse(light.kind, elapsed, reducedMotion);
+        context.globalAlpha = lightPulse(light.kind, pulseTime, reducedMotion);
         context.drawImage(stamps[light.kind].reveal,
           (light.x - light.radius) * scaleX, (light.y - light.radius) * scaleY,
           light.radius * 2 * scaleX, light.radius * 2 * scaleY);
       }
       context.globalCompositeOperation = 'source-over';
       for (const light of lights) {
-        context.globalAlpha = lightPulse(light.kind, elapsed, reducedMotion);
+        context.globalAlpha = lightPulse(light.kind, pulseTime, reducedMotion);
         context.drawImage(stamps[light.kind].warmth,
           (light.x - light.radius) * scaleX, (light.y - light.radius) * scaleY,
           light.radius * 2 * scaleX, light.radius * 2 * scaleY);

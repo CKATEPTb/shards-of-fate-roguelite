@@ -14,7 +14,7 @@ const samePosition = (left: GridPoint, right: GridPoint) => left.x === right.x &
 export function planPoiApproach(state: ExpeditionState, actorId: string, poiId: string): PoiPlan {
   const actor = state.world.actors.find(candidate => candidate.id === actorId);
   const poi = state.world.chunk.pois.find(candidate => candidate.id === poiId);
-  if (!actor || !poi || !['portal', 'chest', 'well', 'stairs-down', 'stairs-up', 'altar'].includes(poi.kind)) {
+  if (!actor || !poi || !['portal', 'chest', 'well', 'stairs-down', 'stairs-up', 'altar', 'npc'].includes(poi.kind)) {
     return { type: 'unavailable', reason: 'Здесь нет доступного объекта.' };
   }
   if (poi.kind === 'altar') {
@@ -25,7 +25,7 @@ export function planPoiApproach(state: ExpeditionState, actorId: string, poiId: 
     if (poi.bossSeason !== next) return { type: 'unavailable', reason: bosses?.spawned.some(spawn => spawn.season === poi.bossSeason)
       ? 'Босс этого сезона уже призван.' : 'Сначала призовите босса предыдущего сезона.' };
   }
-  if (state.progression?.heroes[actorId]?.claimedSources.includes(`${poi.kind}:${poi.id}`)) {
+  if ((poi.kind === 'chest' || poi.kind === 'well') && state.progression?.heroes[actorId]?.claimedSources.includes(`${poi.kind}:${poi.id}`)) {
     return { type: 'unavailable', reason: poi.kind === 'well' ? 'Вы уже использовали этот колодец.' : 'Вы уже открыли этот сундук.' };
   }
   const approach: PoiApproach = { poiId, chunkId: state.world.currentChunkId, position: { ...poi.position }, transitions: state.world.transitions };

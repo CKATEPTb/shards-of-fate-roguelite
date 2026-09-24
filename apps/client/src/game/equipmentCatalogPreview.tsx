@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BODY_PARTS, isRingSlot, type EquipmentItemDefinition, type EquipmentSetBonusDefinition, type EquipmentSetDefinition, type EquipmentSlot, type Modifiers, type StarterEquipment, type UnitDefinition } from '@shards/shared';
+import { BODY_PARTS, isRingSlot, weaponAttackBonusMultiplier, type EquipmentItemDefinition, type EquipmentSetBonusDefinition, type EquipmentSetDefinition, type EquipmentSlot, type Modifiers, type StarterEquipment, type UnitDefinition } from '@shards/shared';
 import { activeEquipmentSetBonuses, bodyPartArmor, confirmEquipmentChoice, previewEquipmentChoice, startHeroBody, type EquipmentChoiceSelection, type EquipmentReward } from '@shards/game-core';
 import { applyEquipmentToHero, CATALOG_EQUIPMENT_ITEMS, CATALOG_EQUIPMENT_SETS, EQUIPMENT_ITEMS, EQUIPMENT_SETS, gameContent } from '@shards/game-data';
 import { HERO_VISUAL_SLOTS, type HeroVisualLoadout } from '../art/heroLoadout';
@@ -258,11 +258,12 @@ function EquipmentWorkshop() {
           <div className="equipment-item-heading"><EquipmentGlyph item={selectedItem} size={60} /><div><span className="equipment-eyebrow">{selectedItem.slot === 'hand' ? HERO_WEAPONS.find(kind => kind.kind === selectedItem.weapon?.kind)?.name : isRingSlot(selectedItem.slot) ? 'Кольцо' : slotNames[selectedItem.slot]}</span><h3>{selectedItem.name}</h3><EquipmentRarityBadge rarity={selectedItem.rarity} /></div></div>
           <span className="equipment-item-status">{itemInDraft ? 'В примерке' : itemInUse ? 'Надето' : available.has(selectedItem.id) ? 'Доступно для выбора' : 'Предмет уже выбран'}</span>
           <div className="equipment-item-stats">
-            {selectedItem.weapon?.damage && <span>Урон <b>{selectedItem.weapon.damage}</b></span>}{selectedItem.weapon && <span>Хват <b>{selectedItem.weapon.hands === 2 ? 'Две руки' : 'Одна рука'}</b></span>}
+            {selectedItem.weapon?.damage && <span>Базовый урон <b>{selectedItem.weapon.damage}</b></span>}{selectedItem.weapon && <span>Хват <b>{selectedItem.weapon.hands === 2 ? 'Две руки' : 'Одна рука'}</b></span>}
             {!!selectedItem.armor && <span>Защита части <b>+{selectedItem.armor}</b></span>}
             {Object.entries(selectedItem.resources).map(([part, value]) => <span key={part}>Прочность · {bodyNames[part as keyof typeof bodyNames]} <b>+{value}</b></span>)}
             {numericStats.filter(([key]) => selectedItem.bonuses?.[key]).map(([key, name]) => <span key={key}>{name} <b>{signed(selectedItem.bonuses![key]!)}</b></span>)}
           </div>
+          {weaponAttackBonusMultiplier(selectedItem.weapon) === 2 && <p className="equipment-help">Обычная атака: вклад Силы и числовые бонусы урона ×2; каждый бонусный кубик урона бросается дважды.</p>}
           <details className="equipment-detail-disclosure"><summary>Описание предмета</summary><p>{selectedItem.description}</p></details>
           {selectedItem.slot === 'hand' && <label className="equipment-hand-picker"><span>В какую руку</span><select aria-label="Рука для выбранного предмета" value={handSlot} onChange={event => setHandSlot(event.target.value as EquipmentSlot)}><option value="rightHand">Правая рука</option><option value="leftHand">Левая рука</option></select></label>}
           {isRingSlot(selectedItem.slot) && <label className="equipment-hand-picker"><span>Слот кольца</span><select aria-label="Слот для выбранного кольца" value={ringSlot} onChange={event => setRingSlot(event.target.value as 'ring1' | 'ring2')}><option value="ring1">Кольцо 1</option><option value="ring2">Кольцо 2</option></select></label>}

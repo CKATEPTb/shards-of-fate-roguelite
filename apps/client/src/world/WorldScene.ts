@@ -13,6 +13,8 @@ import { drawMovementCursor } from './movementCursor';
 import { createRoamingViews } from './roaming-views';
 import { fireRemaining, interactivePoiAt, poiLabel, type CampfireTimes } from './poiInteraction';
 import { gameContent } from '../catalog';
+import { npcTorchPositions, npcWorldAnchors } from './npcArt';
+import { createCorpseViews } from './corpse-views';
 
 const MOVEMENT_MARKER_DEPTH = 90_002;
 
@@ -29,6 +31,7 @@ export interface WorldPresentation {
   inspectedGroupId?: string | null;
   campfires?: CampfireTimes;
   canInteract?: boolean;
+  canRevive?: boolean;
   content?: GameContent;
 }
 
@@ -58,10 +61,12 @@ export class WorldScene extends Phaser.Scene {
   private resumePending = false;
   private lighting?: ReturnType<typeof createWorldLighting>;
   private campfires: GridPoint[] = [];
+  private torches: GridPoint[] = [];
   private litCampfireIds = new Set<string>();
   private landmarkTime = 0;
   private landmarkFrame = -1;
   private mobs?: ReturnType<typeof createRoamingViews>;
+  private corpses?: ReturnType<typeof createCorpseViews>;
   private inspectedIntent: string | null = null;
   private hoverPointer?: Phaser.Input.Pointer;
 
@@ -70,6 +75,7 @@ export class WorldScene extends Phaser.Scene {
     private onProjection: (view: WorldFrame) => void,
     private onInspectMob: (groupId: string | null) => void = () => {},
     private onInteract?: (poiId: string) => void,
+    private onRevive?: (targetActorId: string) => void,
   ) {
     super('world');
   }
@@ -86,6 +92,7 @@ export class WorldScene extends Phaser.Scene {
       backgroundColor: '#17242a', padding: { x: 7, y: 4 }, stroke: '#102026', strokeThickness: 1,
     }).setOrigin(.5, 1).setDepth(MOVEMENT_MARKER_DEPTH + 1).setAlpha(.94).setVisible(false);
     this.mobs = createRoamingViews(this);
+    this.corpses = createCorpseViews(this);
     this.input.on('pointerdown', this.pointerDown, this);
     this.input.on('pointermove', this.pointerMove, this);
     this.input.on('pointerup', this.pointerUp, this);
@@ -104,6 +111,7 @@ export class WorldScene extends Phaser.Scene {
       this.views.clear();
       this.environment?.destroy();
       this.mobs?.destroy();
+      this.corpses?.clear();
       this.lighting?.destroy();
     });
     if (this.presentation) this.renderWorld(this.presentation, true);
@@ -173,9 +181,10 @@ export class WorldScene extends Phaser.Scene {
     this.mobs?.updateVisibility({ heroes, viewport: visibleWorldBounds(projection),
       pointVisibility: (point, depth) => this.environment?.pointVisibility(point, depth) ?? 0 },
     disabled, this.presentation.previewGroupIds ?? []);
+    this.corpses?.updateVisibility(this.views, this.environment, visibleWorldBounds(projection));
     if (this.presentation.inspectedGroupId && !this.mobs?.isGroupVisible(this.presentation.inspectedGroupId)) this.inspect(null);
     if (this.hoverPointer && !this.drag && !disabled && !this.hoverPointer.wasTouch) this.pointerMove(this.hoverPointer);
-    this.lighting?.update({ heroes, campfires: this.campfires, projection, delta, reducedMotion });
+    this.lighting?.update({ heroes, campfires: this.campfires, torches: this.torches, projection, delta, reducedMotion });
     this.publishProjection();
     if (paused && !this.pausePending) {
       this.pausePending = true;
@@ -205,6 +214,7 @@ export class WorldScene extends Phaser.Scene {
       this.tweens.killAll();
       this.views.forEach((view) => view.container.destroy());
       this.views.clear();
+      this.corpses?.clear();
     }
     if (changedChunk) {
       this.regions = chunkRegions(state.chunk);
@@ -215,6 +225,7 @@ export class WorldScene extends Phaser.Scene {
       createTerrainTexture(this, state.chunk, this.textureKey);
       this.background = this.add.image(0, 0, this.textureKey).setOrigin(0).setDepth(0);
       this.environment = createEnvironment(this, state.chunk);
+      this.torches = npcTorchPositions(state.chunk);
       this.refreshCameraBounds();
       this.signature = signature;
       this.renderedChunk = state.chunk;
@@ -253,6 +264,7 @@ export class WorldScene extends Phaser.Scene {
       const nextTerrain = next ? state.chunk.tiles[next.y * state.chunk.size + next.x].terrain : undefined;
       updateActorView(actor, view, actor.id === controlledActorId, resetActors || enteringCombat, terrain, nextTerrain, definition);
     }
+    this.corpses?.sync(state.actors, state.tick);
     this.mobs?.sync(presentation.groups ?? [], state.chunk, resetActors || enteringCombat);
     if (resetActors) { this.hoverPointer = undefined; this.inspect(null); }
     if (resetActors || controlledActorChanged || enteringCombat) this.resetCameraFocus();
@@ -297,7 +309,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private pointerDown(pointer: Phaser.Input.Pointer) {
-    if (this.presentation?.disabled || !pointer.leftButtonDown()) return;
+    if (!this.canControlActor() || !pointer.leftButtonDown()) return;
     this.drag = { x: pointer.x, y: pointer.y, moved: false };
     this.hoverArt?.clear();
     this.poiLabel?.setVisible(false);
@@ -305,7 +317,7 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private pointerMove(pointer: Phaser.Input.Pointer) {
-    if (!this.presentation || this.presentation.disabled) return;
+    if (!this.presentation || !this.canControlActor()) return;
     if (!pointer.wasTouch) this.hoverPointer = pointer;
     if (this.drag && pointer.isDown) {
       const dx = pointer.x - this.drag.x;
@@ -319,6 +331,15 @@ export class WorldScene extends Phaser.Scene {
     }
     const point = this.pointerTile(pointer);
     this.cursor = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
+    const corpse = this.presentation.canRevive && this.onRevive ? this.corpses?.atPoint(this.cursor) : undefined;
+    if (corpse) {
+      this.inspect(null);
+      this.hoverArt?.clear();
+      if (this.hoverArt) drawMovementCursor(this.hoverArt, corpse.position);
+      const center = tileCenter(corpse.position);
+      this.poiLabel?.setText('Поднять союзника').setPosition(center.x, center.y - 26).setVisible(true);
+      return;
+    }
     const mob = this.mobs?.inspect(this.cursor);
     if (!pointer.wasTouch) this.inspect(mob?.groupId ?? null);
     const { state, controlledActorId } = this.presentation;
@@ -332,8 +353,10 @@ export class WorldScene extends Phaser.Scene {
     if (poi) {
       const center = tileCenter(poi.position);
       drawMovementCursor(this.hoverArt, poi.position);
+      const caption = npcWorldAnchors(chunk, poi)?.caption
+        ?? { x: center.x, y: center.y - (poi.kind === 'portal' ? 61 : poi.kind === 'chest' ? 33 : 24) };
       this.poiLabel?.setText(poiLabel(poi, this.presentation.clearedPoiIds.includes(poi.id)))
-        .setPosition(center.x, center.y - (poi.kind === 'portal' ? 61 : poi.kind === 'chest' ? 33 : 24)).setVisible(true);
+        .setPosition(caption.x, caption.y).setVisible(true);
       return;
     }
     const originRegion = actor && this.regions ? regionAt(chunk, this.regions, actor.position) : -1;
@@ -359,13 +382,19 @@ export class WorldScene extends Phaser.Scene {
     this.drag = undefined;
     this.hoverArt?.clear();
     this.poiLabel?.setVisible(false);
-    if (!drag || drag.moved || !this.presentation || this.presentation.disabled) return;
+    if (!drag || drag.moved || !this.presentation || !this.canControlActor()) return;
     if (Math.hypot(pointer.x - drag.x, pointer.y - drag.y) > 8) return;
     const point = this.pointerTile(pointer);
     const chunk = this.presentation.state.chunk;
     if (point.x < 0 || point.y < 0 || point.x >= chunk.size || point.y >= chunk.size) return;
+    const worldPoint = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
+    const corpse = this.presentation.canRevive && this.onRevive ? this.corpses?.atPoint(worldPoint) : undefined;
+    if (corpse && this.onRevive) {
+      this.inspect(null);
+      this.onRevive(corpse.id);
+      return;
+    }
     if (pointer.wasTouch) {
-      const worldPoint = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
       const hit = this.mobs?.inspect(worldPoint);
       this.inspect(hit?.groupId ?? null);
       if (hit) { this.hoverArt?.clear(); return; }
@@ -378,6 +407,22 @@ export class WorldScene extends Phaser.Scene {
       return;
     }
     this.onMove(point);
+  }
+
+  /** Keyboard rescue uses the same visible body and deadline as pointer input. */
+  reviveNearby(): boolean {
+    if (!this.canControlActor() || !this.presentation?.canRevive || !this.onRevive) return false;
+    const actor = this.presentation.state.actors.find(item => item.id === this.presentation!.controlledActorId);
+    const corpse = actor && this.corpses?.nearby(actor);
+    if (!corpse) return false;
+    this.onRevive(corpse.id);
+    return true;
+  }
+
+  private canControlActor(): boolean {
+    if (!this.presentation || this.presentation.disabled || this.presentation.inCombat) return false;
+    const actor = this.presentation.state.actors.find(item => item.id === this.presentation!.controlledActorId);
+    return !!actor && (!actor.body || isBodyAlive(actor.body));
   }
 
   private inspect(groupId: string | null) {

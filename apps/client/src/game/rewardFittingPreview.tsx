@@ -11,6 +11,7 @@ import '../styles.css';
 import './rewardFittingPreview.css';
 
 const firstHero = gameContent.characters.find(hero => hero.id === 'guardian') ?? gameContent.characters[0];
+const inventoryPreview = new URLSearchParams(window.location.search).get('inventory') === '1';
 
 /** Curated catalogue examples; browsing the workshop never advances the game's dice. */
 function workshopRewards(heroId: string, batch: number): AdventureReward[] {
@@ -44,7 +45,15 @@ function workshopRewards(heroId: string, batch: number): AdventureReward[] {
 
 function workshopState(heroId: string, batch: number) {
   const state = createCoopState('inventory-workshop', [heroId], gameContent);
-  state.progression!.heroes[heroId] = { ...state.progression!.heroes[heroId], coins: 240, rewards: workshopRewards(heroId, batch) };
+  const rewards = workshopRewards(heroId, batch);
+  const sets = new Set(rewards.slice(0, 2).map(reward => CATALOG_EQUIPMENT_ITEMS.find(item => item.id === reward.definitionId)?.setId));
+  const collection: AdventureReward[] = inventoryPreview ? CATALOG_EQUIPMENT_ITEMS.filter(item => item.setId && sets.has(item.setId)
+    && !rewards.some(reward => reward.definitionId === item.id)).map((item, index) => ({
+      id: `workshop-set:${heroId}:${batch}:${index}`, kind: 'equipment', definitionId: item.id, rarity: item.rarity ?? 'common',
+      source: `workshop:${batch}`, luckRolls: [],
+    })) : [];
+  state.progression!.heroes[heroId] = { ...state.progression!.heroes[heroId], coins: 240,
+    rewards: inventoryPreview ? [] : rewards, inventory: inventoryPreview ? [...rewards, ...collection] : [] };
   return state;
 }
 
@@ -55,8 +64,8 @@ function RewardFittingWorkshop() {
   const current = useRef(state);
   current.current = state;
   const progress = state.progression!.heroes[heroId];
-  const [open, setOpen] = useState(true);
-  const [sheetRequest, setSheetRequest] = useState(0);
+  const [open, setOpen] = useState(!inventoryPreview);
+  const [sheetRequest, setSheetRequest] = useState(inventoryPreview ? 1 : 0);
   const [message, setMessage] = useState('');
   const hero = gameContent.characters.find(item => item.id === heroId) ?? firstHero;
   const equipped = useMemo(() => progress.equipment.map(item => equipItem(item.itemId, item.slot)), [progress.equipment]);
@@ -72,7 +81,8 @@ function RewardFittingWorkshop() {
     if (!result.accepted) { setMessage(result.reason ?? 'Не удалось применить выбор.'); return false; }
     current.current = result.state;
     setState(result.state);
-    setMessage(command.type === 'collect-reward' ? 'Находка в сумке.' : command.type === 'equip-inventory' ? 'Снаряжение обновлено.' : 'Неподобранные находки оставлены.');
+    setMessage(command.type === 'set-auto-equipment' ? command.enabled ? 'Автозамена экипировки включена.' : 'Автозамена экипировки выключена.'
+      : command.type === 'collect-rewards' ? 'Все находки в сумке.' : command.type === 'collect-reward' ? 'Находка в сумке.' : command.type === 'equip-inventory' ? 'Снаряжение обновлено.' : 'Неподобранные находки оставлены.');
     if (command.type === 'equip-inventory') playSound('equip', { volume: .65 });
     return true;
   };
@@ -90,8 +100,8 @@ function RewardFittingWorkshop() {
     const nextHero = gameContent.characters.find(item => item.id === id);
     if (!nextHero || open) return;
     const next = batch + 1;
-    setHeroId(id); setBatch(next); setMessage(''); setSheetRequest(0);
-    const updated = workshopState(id, next); current.current = updated; setState(updated); setOpen(true);
+    setHeroId(id); setBatch(next); setMessage(''); setSheetRequest(inventoryPreview ? 1 : 0);
+    const updated = workshopState(id, next); current.current = updated; setState(updated); setOpen(!inventoryPreview);
   };
 
   return <main className="reward-fitting-preview" aria-label="Мастерская добычи и экипировки">
@@ -108,7 +118,7 @@ function RewardFittingWorkshop() {
         <div className="reward-preview-hero"><FittingHero hero={hero} equipment={equipped} body={body} facing="south" /><span aria-hidden="true">◇</span></div>
         <span className="reward-preview-eyebrow">Привал после похода</span>
         <h1>{hero.name}</h1>
-        <p>Нажмите на слот в окне персонажа, чтобы увидеть подходящие находки.</p>
+        <p>Откройте персонажа: слева — сумка, рядом — снаряжение и бонусы комплектов.</p>
         <dl className="reward-preview-summary" aria-label="Собранные находки">
           <div><dt>В сумке</dt><dd>{progress.inventory?.length ?? 0}</dd></div>
           <div><dt>Надето</dt><dd>{progress.equipment.length}</dd></div>
@@ -122,10 +132,18 @@ function RewardFittingWorkshop() {
       </div>
     </section>
     <LoadoutHud key={`${heroId}:${sheetRequest}`} state={sheet} content={content} controlledActorId={heroId} disabled={open} initialOpen={sheetRequest > 0}
-      progress={progress} onEquipInventory={(inventoryId, slot) => send({ type: 'equip-inventory', inventoryId, slot })} />
+      progress={progress} onEquipInventory={(inventoryId, slot) => send({ type: 'equip-inventory', inventoryId, slot })}
+      onSetAutoEquipment={enabled => send({ type: 'set-auto-equipment', enabled })} />
     {open && <AdventureRewards key={`${heroId}:${batch}`} heroId={heroId} progress={progress} body={body}
-      onCollect={rewardId => send({ type: 'collect-reward', rewardId })} onResolve={choice => send({ type: 'resolve-rewards', ...choice })} onClose={() => setOpen(false)} />}
+      onCollect={rewardId => send({ type: 'collect-reward', rewardId })} onCollectAll={rewardIds => send({ type: 'collect-rewards', rewardIds })}
+      onResolve={choice => send({ type: 'resolve-rewards', ...choice })} onClose={() => setOpen(false)} />}
   </main>;
 }
 
-createRoot(document.getElementById('root')!).render(<RewardFittingWorkshop />);
+// Reuse the workshop root on HMR; creating another root leaves old portals behind.
+const previewRoot: ReturnType<typeof createRoot> = import.meta.hot?.data.rewardFittingRoot ?? createRoot(document.getElementById('root')!);
+if (import.meta.hot) {
+  import.meta.hot.data.rewardFittingRoot = previewRoot;
+  import.meta.hot.accept();
+}
+previewRoot.render(<RewardFittingWorkshop />);

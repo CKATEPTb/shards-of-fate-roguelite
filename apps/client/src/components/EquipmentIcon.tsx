@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { EquipmentItemDefinition, EquipmentSetVisualDefinition, StarterEquipment, WeaponKind } from '@shards/shared';
+import { baseEquipmentItemId, type EquipmentItemDefinition, type EquipmentSetVisualDefinition, type StarterEquipment, type WeaponKind } from '@shards/shared';
 import { equipmentAccents, equipmentIsPlate, equipmentStyle, equipmentTheme } from '../art/heroEquipmentTheme';
 import { equipmentMaterial, type HeroMaterial } from '../art/heroPartEquipment';
 import './equipmentRarity.css';
@@ -11,7 +11,7 @@ type IconColors = HeroMaterial & ReturnType<typeof equipmentAccents>;
 /** Cosmetic identity stays stable when an item moves between inventory and either hand/ring slot. */
 function itemSignature(item: EquipmentIconItem): number {
   let value = 2166136261;
-  for (const character of item.id ?? item.name) value = Math.imul(value ^ character.charCodeAt(0), 16777619);
+  for (const character of item.id ? baseEquipmentItemId(item.id) : item.name) value = Math.imul(value ^ character.charCodeAt(0), 16777619);
   return value >>> 0;
 }
 

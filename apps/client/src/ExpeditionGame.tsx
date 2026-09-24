@@ -9,7 +9,9 @@ import { BattleOverlay } from "./components/exploration/BattleOverlay";
 import { AdventureRewards } from './components/exploration/AdventureRewards';
 import { SeasonBossTimer } from './components/exploration/SeasonBossTimer';
 import { BattleTurnTimer } from './components/exploration/BattleTurnTimer';
+import { RevivalTimer } from './components/exploration/RevivalTimer';
 import { BossSummonDialog } from './components/exploration/BossSummonDialog';
+import { NpcServiceDialog } from './components/exploration/NpcServiceDialog';
 import type { CombatState, ExpeditionState } from '@shards/shared';
 import type { NetworkSession } from './network/session';
 import { makeBattleEnvironment } from './game/battleEnvironment';
@@ -52,15 +54,17 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
       ?? world.chunk.spawn;
     return makeBattleEnvironment(world, focus, expedition.campfires);
   }, [battleKey]);
-  const coopEncounters = useMemo(() => cooperative ? (groups ?? []).map(group => previewCoopEncounter(cooperative, controlledActorId, group.id)) : undefined,
-    [cooperative, controlledActorId, groups]);
-  const encounters = useMemo(() => coopEncounters ?? (groups ?? []).map(group => previewRoamingEncounter(world.chunk, groups ?? [], world.actors, group.id)), [coopEncounters, world.chunk, world.actors, groups]);
-  const inspected = groups?.find(group => group.id === inspectedGroupId);
-  const encounter = inspected ? encounters[groups!.indexOf(inspected)] : undefined;
+  // Recruiting a preview includes pathfinding. Only the inspected pack needs it.
+  const encounter = useMemo(() => !inspectedGroupId ? undefined : cooperative
+    ? previewCoopEncounter(cooperative, controlledActorId, inspectedGroupId)
+    : previewRoamingEncounter(world.chunk, groups ?? [], world.actors, inspectedGroupId),
+  [inspectedGroupId, cooperative, controlledActorId, world.chunk, world.actors, groups]);
   useEffect(() => { setInspectedGroupId(null); }, [world.currentChunkId, world.graph, combat !== null, menuOpen, expedition.rewardsOpen, !!expedition.bossSummon, defeated]);
   const victorious = expedition.completed && !expedition.failed;
   const runEnded = victorious || (network ? expedition.failed : defeated);
-  const dialogOpen = menuOpen || expedition.rewardsOpen && !combat || !!expedition.bossSummon || runEnded;
+  const revivalDeadline = defeated && !runEnded ? world.actors.find(actor => actor.id === controlledActorId)?.reviveUntilTick : undefined;
+  const awaitingRevival = revivalDeadline !== undefined && world.tick < revivalDeadline;
+  const dialogOpen = menuOpen || expedition.rewardsOpen && !combat || !!expedition.bossSummon || !!expedition.npcService || runEnded;
   const victoryRewards = victorious && !defeated && (expedition.rewardsOpen || !!expedition.progress?.rewards.length);
 
   useEffect(() => { setPaused(!network && menuOpen); }, [menuOpen, network, setPaused]);
@@ -70,14 +74,15 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
       <div className="game-playfield" inert={dialogOpen}>
         <div className="world-stage" aria-hidden={combat ? true : undefined}>
           <Suspense fallback={<div className="scene-loading" role="status">Лес просыпается…</div>}>
-            <WorldCanvas content={expedition.content} campfires={expedition.campfires} onInteract={expedition.interact} state={world} controlledActorId={controlledActorId} reducedMotion={reducedMotion} onMove={expedition.move} disabled={dialogOpen || combat !== null || defeated} paused={combat !== null || runEnded} inCombat={combat !== null} clearedPoiIds={expedition.clearedPoiIds}
+            <WorldCanvas content={expedition.content} campfires={expedition.campfires} onInteract={expedition.interact} onRevive={expedition.revive} state={world} controlledActorId={controlledActorId} reducedMotion={reducedMotion} onMove={expedition.move} disabled={dialogOpen || combat !== null || defeated} paused={combat !== null || runEnded} inCombat={combat !== null} clearedPoiIds={expedition.clearedPoiIds}
+              allies={cooperative?.actors} followingActorId={expedition.followingActorId} onFollow={expedition.follow}
               groups={groups} previewGroupIds={encounter?.groupIds} onInspectMob={inspectMob} inspectedGroupId={inspectedGroupId} />
           </Suspense>
         </div>
         <div className="world-shade" />
         {!combat && <InformationHud content={expedition.content} world={world} state={partyState} selected={controlledActorId} disabled={dialogOpen} />}
         {!combat && <LoadoutHud content={expedition.content} state={partyState} controlledActorId={controlledActorId} disabled={dialogOpen}
-          progress={expedition.progress} onEquipInventory={expedition.equipInventory} />}
+          progress={expedition.progress} onEquipInventory={expedition.equipInventory} onSetAutoEquipment={expedition.setAutoEquipment} />}
         {combat && <BattleOverlay content={expedition.content} autoFinish state={combat} environment={battleEnvironment} selected={controlledActorId} reducedMotion={reducedMotion} onAction={expedition.chooseCombatAction} onPresented={combatPresented} controllableActorIds={expedition.controllableActorIds} onContinue={expedition.continueExploration} canControl={expedition.canControl} multiplayer={!!network} />}
         {!combat && expedition.progress && (expedition.progress.rewards.length > 0
           ? <button className="adventure-bag-button" onClick={() => expedition.setRewardsOpen(true)} aria-label="Неподобранная добыча">
@@ -91,14 +96,20 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
       {combat ? <BattleTurnTimer state={combat} presented={shownCombat} tick={world.tick}
         choiceDeadlineTick={activeBattle?.choiceDeadlineTick} controllableActorIds={expedition.controllableActorIds}
         legacyDeadlineMs={activeBattle ? undefined : expedition.legacyChoiceDeadlineMs} reducedMotion={reducedMotion} />
+        : revivalDeadline !== undefined ? <RevivalTimer deadline={revivalDeadline} tick={world.tick} />
         : expedition.bosses && <SeasonBossTimer progress={expedition.bosses} tick={world.tick} completed={victorious} paused={bossTimerPaused} />}
       {menuOpen && <GameDialog title="Привал" onClose={closeMenu} className="panel-menu">
         <MenuPanel reducedMotion={reducedMotion} onReducedMotion={expedition.setReducedMotion} onLeave={() => onLeave(expedition.current.current)} onResume={closeMenu} network={expedition.networkInfo} />
       </GameDialog>}
-      {!menuOpen && !combat && !defeated && !expedition.bossSummon && expedition.rewardsOpen && expedition.progress && <AdventureRewards
+      {!menuOpen && !combat && !defeated && !expedition.bossSummon && !expedition.npcService && expedition.rewardsOpen && expedition.progress && <AdventureRewards
         heroId={controlledActorId} progress={expedition.progress} body={world.actors.find(actor => actor.id === controlledActorId)?.body}
-        onCollect={expedition.collectReward} onResolve={expedition.resolveRewards} onClose={() => expedition.setRewardsOpen(false)} />}
+        onCollect={expedition.collectReward} onCollectAll={expedition.collectAllRewards} onResolve={expedition.resolveRewards} onClose={() => expedition.setRewardsOpen(false)} />}
       {!menuOpen && !combat && expedition.bossSummon && <BossSummonDialog season={expedition.bossSummon.season} onCancel={expedition.cancelBossSummon} onConfirm={expedition.confirmBossSummon} />}
+      {!menuOpen && !combat && !defeated && !runEnded && expedition.npcService && expedition.progress && <NpcServiceDialog
+        key={`${expedition.npcService.poiId}:${controlledActorId}`}
+        kind={expedition.npcService.kind} seed={world.graph.seed} poiId={expedition.npcService.poiId}
+        heroId={controlledActorId} progress={expedition.progress} onClose={expedition.closeNpcService}
+        onBuy={expedition.buyNpcOffer} onUpgradeEquipment={expedition.upgradeNpcEquipment} onUpgradeSkill={expedition.upgradeNpcSkill} />}
       {!menuOpen && !combat && runEnded && !victoryRewards && <GameDialog title={victorious ? 'Четыре сезона пройдены' : 'Поход завершён'} onClose={() => setMenuOpen(true)} className="panel-expedition-ended">
         <div className="expedition-ended-panel" data-testid="expedition-ended">
           <p>{victorious ? 'Боссы весны, лета, осени и зимы повержены. Ваш отряд победил!' : network ? 'Поход отряда завершён. Для нового путешествия создайте новую комнату.' : 'Сессия завершена. Следующее путешествие начнётся у нового костра.'}</p>
@@ -107,7 +118,9 @@ export function ExpeditionGame({ initial, onCheckpoint, onEnded, onLeave, networ
           </div>
         </div>
       </GameDialog>}
-      {network && !notice && !menuOpen && defeated && !runEnded && <div className="game-notice glass-panel" role="status"><span>Ваш герой погиб. Можно наблюдать за отрядом или выйти через меню.{network.isHost ? ' Ваш выход закроет комнату; поход останется в сохранении.' : ''}</span></div>}
+      {network && !notice && !menuOpen && defeated && !runEnded && <div className="game-notice glass-panel" role="status"><span>{awaitingRevival
+        ? 'Союзник может подойти и нажать на ваше тело, чтобы поднять вас. Всё снаряжение сохранится.'
+        : 'Воскресить героя уже нельзя. Можно наблюдать за отрядом или выйти через меню.'}{network.isHost ? ' Ваш выход закроет комнату; поход останется в сохранении.' : ''}</span></div>}
       {notice && <div className="game-notice glass-panel" role="status"><span>{notice}</span><button onClick={() => expedition.setNotice("")} aria-label="Закрыть уведомление">×</button></div>}
     </main>
   );

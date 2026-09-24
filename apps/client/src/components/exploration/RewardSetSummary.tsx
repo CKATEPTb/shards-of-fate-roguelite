@@ -1,4 +1,4 @@
-import type { EquipmentSetDefinition, HeroBody, StarterEquipment } from '@shards/shared';
+import { baseEquipmentItemId, type EquipmentSetDefinition, type HeroBody, type StarterEquipment } from '@shards/shared';
 import { equipmentCondition } from '@shards/game-core';
 import { EquipmentIcon } from '../EquipmentIcon';
 import { DiceText } from '../DiceText';
@@ -24,7 +24,7 @@ export interface RewardSetSummaryProps {
 function activePieces(setId: string, equipment: readonly StarterEquipment[], body?: HeroBody) {
   // Matches the combat rules: duplicate catalogue IDs count once, inactive gear not at all.
   return new Set(equipment.filter(item => item.id && item.setId === setId
-    && (!body || equipmentCondition(item, body).active)).map(item => item.id)).size;
+    && (!body || equipmentCondition(item, body).active)).map(item => baseEquipmentItemId(item.id!))).size;
 }
 
 /** An item's own set, with every threshold and its participating outfit visible. */
@@ -42,11 +42,11 @@ export function RewardSetSummary({ set, item, equipment, body, compareWith }: Re
   const sameItem = (entry: StarterEquipment) => entry.id === item.id && entry.slot === item.slot;
   const inspectedEquipped = equipment.find(sameItem);
   const counted = new Set<string>();
-  if (inspectedEquipped?.id && (!body || equipmentCondition(inspectedEquipped, body).active)) counted.add(inspectedEquipped.id);
+  if (inspectedEquipped?.id && (!body || equipmentCondition(inspectedEquipped, body).active)) counted.add(baseEquipmentItemId(inspectedEquipped.id));
   const members = equipment.filter(entry => entry.setId === set.id && !sameItem(entry)).map(entry => {
     const active = !!entry.id && (!body || equipmentCondition(entry, body).active);
-    const duplicate = active && counted.has(entry.id!);
-    if (active) counted.add(entry.id!);
+    const duplicate = active && counted.has(baseEquipmentItemId(entry.id!));
+    if (active) counted.add(baseEquipmentItemId(entry.id!));
     return { entry, active, duplicate };
   });
   if (!milestones.length) return null;

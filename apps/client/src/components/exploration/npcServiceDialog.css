@@ -1,0 +1,138 @@
+.game-dialog.npc-service-dialog { width: min(820px, 100%); height: min(780px, calc(100dvh - 36px)); max-height: 100%; border-color: #a49a6e91; border-radius: 12px; background: radial-gradient(ellipse at 90% 0, #76663820, transparent 60%), linear-gradient(145deg, #203126f5, #101f19fc); }
+.npc-service-dialog *, .npc-service-dialog *::before, .npc-service-dialog *::after { box-sizing: border-box; }
+.npc-service-dialog .dialog-heading { flex: none; padding: 16px 20px 12px; }
+.npc-service-dialog .dialog-heading h2 { margin: 3px 0 0; font-size: 28px; }
+.npc-service-dialog .dialog-content { display: flex; flex-direction: column; flex: 1; min-height: 0; padding: 0 20px; overflow: hidden; color: #cdd6bd; }
+.npc-service-dialog button { font-family: inherit; cursor: pointer; }
+.npc-service-dialog button:focus-visible, .npc-detail-scroll:focus-visible { outline: 2px solid #e8d49a; outline-offset: 2px; }
+.npc-service-intro { display: flex; flex: none; align-items: center; gap: 18px; justify-content: space-between; padding: 11px 0 14px; }
+.npc-service-intro > p { margin: 0; max-width: 52ch; color: #b3c0a8; font-size: 13px; line-height: 1.5; }
+.npc-wallet { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.npc-wallet > small { color: #b6b999; font-size: 11px; white-space: nowrap; }
+.npc-coins { display: inline-flex; align-items: center; gap: 5px; color: #ecd191; font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.npc-coins > svg { width: 18px; height: 18px; flex: none; fill: #c3953325; stroke: currentColor; stroke-width: 1.3; }
+.npc-wallet .npc-coins { font-size: 18px; }
+.npc-wallet .npc-coins > svg { width: 21px; height: 21px; }
+.npc-selection-area { flex: none; padding-bottom: 14px; }
+.npc-rarities { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 9px; }
+.npc-rarities button { min-height: 36px; min-width: 0; padding: 5px; color: var(--equipment-rarity, #cbd4bb); border: 1px solid var(--equipment-rarity-border, #a8b08850); border-radius: 6px; background: #06160d33; font-size: 12px; }
+.npc-rarities button[aria-pressed='true'] { background: var(--equipment-rarity-glow, #e0cf9b18); box-shadow: inset 0 -2px var(--equipment-rarity, #dfd1a5); }
+.npc-offer-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.npc-choice { position: relative; min-width: 0; color: #d7dfc7; border: 1px solid var(--equipment-rarity-border, #8f9e744a); border-radius: 8px; background: #04170e40; transition: border-color .14s, background-color .14s; }
+.npc-choice[aria-pressed='true'] { background: #c5b47b16; outline: 1px solid #d6c48c; outline-offset: -1px; box-shadow: inset 0 0 20px #d0be7310; }
+.npc-offer-choice { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: center; gap: 6px 9px; min-height: 102px; padding: 10px; text-align: left; }
+.npc-choice-copy { min-width: 0; }
+.npc-choice-copy small { display: block; color: #a7b299; font-size: 11px; margin-bottom: 4px; }
+.npc-choice-copy strong { display: block; color: var(--equipment-rarity, #d8dfbf); font-size: 12px; font-weight: 550; line-height: 1.3; overflow-wrap: anywhere; }
+.npc-choice-price { grid-column: 1 / -1; justify-self: end; min-height: 18px; color: #b8cea2; font-size: 12px; }
+.npc-art { display: grid; width: 38px; height: 38px; place-items: center; flex: none; color: var(--equipment-rarity, #b1bc9d); }
+.npc-art > svg { width: 100%; height: 100%; max-width: 100%; max-height: 100%; }
+.npc-equipment-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; }
+.npc-ability-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; }
+.npc-slot-choice { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 3px; min-height: 81px; }
+.npc-slot-choice > span:last-of-type { font-size: 11px; line-height: 1.3; overflow-wrap: anywhere; }
+.npc-slot-choice:not([data-equipment-rarity]) { color: #9aa78f; background: #10221940; border-style: dashed; }
+.npc-slot-choice:not([data-equipment-rarity]) .npc-art { opacity: .5; }
+.npc-slot-choice > i { position: absolute; right: 3px; top: 2px; color: #eabb70; font-style: normal; font-size: 14px; }
+.npc-detail-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #647557 transparent; padding: 1px 3px 8px 1px; border-top: 1px solid #a8b18128; }
+.npc-offer-detail { padding: 15px 0 4px; }
+.npc-detail-identity { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.npc-detail-identity > div { min-width: 0; }
+.npc-detail-identity h3 { margin: 5px 0 0; color: var(--equipment-rarity, #e0dfba); font-size: 15px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+.npc-description { margin: 12px 0; color: #c6d0b8; font-size: 13px; line-height: 1.65; overflow-wrap: anywhere; }
+.npc-detail-note { margin: 10px 0 0; color: #aebca1; font-size: 12px; line-height: 1.5; }
+.npc-detail-note strong, .npc-detail-note b { color: #d3dabd; font-weight: 550; }
+.npc-small-heading { margin: 15px 0 9px; color: #d7d1ad; font-size: 12px; font-weight: 600; }
+.npc-set-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 16px; }
+.npc-set-items > div { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.npc-set-items > div > .equipment-icon { flex: none; }
+.npc-set-items > div > span:last-child { color: var(--equipment-rarity, #c7d1b6); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+.npc-set-bonuses { margin-top: 15px; border-top: 1px solid #a8b18125; }
+.npc-set-bonuses > p { display: flex; gap: 12px; margin: 10px 0; font-size: 12px; line-height: 1.5; }
+.npc-set-bonuses > p > b { align-self: start; flex: none; padding: 3px 6px; color: #d6c798; border: 1px solid #bfb27330; border-radius: 4px; font-size: 11px; font-weight: 500; }
+.npc-set-bonuses > p strong { display: block; margin-bottom: 2px; color: #d2d9bb; font-weight: 550; }
+.npc-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-top: 12px; }
+.npc-comparison-card { min-width: 0; padding: 12px; border: 1px solid #9fb08125; border-radius: 8px; background: #05130b25; }
+.npc-comparison-card > h4 { margin: 0 0 11px; color: #b3be9c; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; font-weight: 500; }
+.npc-comparison-card:last-child { background: #bfc88308; border-color: #b4c38540; }
+.npc-comparison-card .npc-description { margin-bottom: 0; }
+.npc-description mark { color: inherit; background: transparent; }
+.npc-description mark[data-change='gain'] { color: #d6efb8; background: #98ba6420; border-radius: 2px; }
+.npc-description mark[data-change='loss'] { color: #d7b6a4; background: #c4876220; border-radius: 2px; }
+.npc-stat-changes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 20px; margin: 14px 0 0; padding: 12px; border: 1px solid #adc38530; border-radius: 7px; background: #89a5580a; }
+.npc-stat-changes > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3px 7px; min-width: 0; font-size: 12px; line-height: 1.4; }
+.npc-stat-changes dt { color: #bbc8aa; }
+.npc-stat-changes dd { display: inline-flex; align-items: baseline; gap: 5px; margin: 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.npc-stat-changes dd > span { color: #a4b198; }
+.npc-stat-changes dd > b { color: #d9e4c2; font-weight: 600; }
+.npc-stat-changes em { font-style: normal; }
+.npc-stat-changes [data-change='gain'] em, .npc-stat-changes [data-change='gain'] dd > b { color: #c9e99e; }
+.npc-stat-changes [data-change='loss'] em { color: #ecb3a6; }
+.npc-max-rarity { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 135px; gap: 8px; text-align: center; }
+.npc-max-rarity > span { color: #e6be78; font-size: 35px; line-height: 1; }
+.npc-max-rarity > strong { color: #e1c798; font-size: 14px; font-weight: 550; }
+.npc-max-rarity > p { margin: 0; color: #aab79d; font-size: 12px; line-height: 1.4; }
+.npc-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; margin: 0; padding: 20px; text-align: center; color: #aaba9d; }
+.npc-empty > svg { width: 46px; height: 46px; opacity: .45; }
+.npc-empty > h3 { margin: 12px 0 0; color: #d0d7b8; font-size: 16px; }
+.npc-empty > p { max-width: 42ch; margin: 8px 0 0; font-size: 13px; line-height: 1.6; }
+.npc-service-footer { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 72px; padding: 12px 0; border-top: 1px solid #abb78430; }
+.npc-transaction-status { min-width: 0; color: #b4c39f; font-size: 12px; line-height: 1.45; }
+.npc-purchase { display: inline-flex; align-items: center; justify-content: center; gap: 18px; flex: none; min-width: 170px; min-height: 44px; padding: 10px 16px; border: 1px solid #c7bb7b87; border-radius: 7px; background: linear-gradient(135deg, #677344, #414e30); color: #f0e5ba; font-size: 14px; font-weight: 600; }
+.npc-purchase:disabled { cursor: default; background: #8b94701b; border-color: #a4aa753d; color: #a1ac91; }
+.npc-purchase:disabled .npc-coins { color: #a89c78; }
+@media (hover: hover) { .npc-choice:hover, .npc-rarities button:hover { border-color: #ddca8b; background-color: #afa66b1b; } .npc-purchase:not(:disabled):hover { border-color: #e7d89b; background: linear-gradient(135deg, #75824b, #4c5c37); } }
+@media (max-width: 620px) {
+  .game-dialog.npc-service-dialog { height: calc(100dvh - 24px); border-radius: 9px; }
+  .npc-service-dialog .dialog-heading { padding: 13px 13px 9px; }
+  .npc-service-dialog .dialog-heading h2 { font-size: 24px; }
+  .npc-service-dialog .dialog-heading .eyebrow { font-size: 9px; }
+  .npc-service-dialog .dialog-content { padding-inline: 12px; }
+  .npc-service-intro { gap: 10px; padding: 8px 0 11px; }
+  .npc-service-intro > p { font-size: 12px; line-height: 1.4; }
+  .npc-wallet .npc-coins { font-size: 16px; }
+  .npc-selection-area { padding-bottom: 10px; }
+  .npc-rarities { gap: 4px; margin-bottom: 7px; }
+  .npc-rarities button { min-height: 36px; font-size: 11px; padding-inline: 2px; }
+  .npc-offer-row { gap: 5px; }
+  .npc-offer-choice { display: flex; flex-direction: column; gap: 5px; padding: 7px 5px; min-height: 142px; text-align: center; }
+  .npc-choice-copy { flex: 1; }
+  .npc-choice-copy small { font-size: 10px; margin-bottom: 3px; }
+  .npc-choice-copy strong { font-size: 11px; line-height: 1.25; }
+  .npc-choice-price { align-self: center; }
+  .npc-equipment-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+  .npc-slot-choice { gap: 4px; min-height: 67px; padding: 6px 2px; }
+  .npc-slot-choice > span:last-of-type { font-size: 10px; }
+  .npc-slot-choice .npc-art { width: 32px; height: 32px; }
+  .npc-ability-row { gap: 4px; }
+  .npc-comparison { gap: 7px; padding-top: 9px; }
+  .npc-comparison-card { padding: 8px; }
+  .npc-comparison-card > h4 { font-size: 10px; margin-bottom: 9px; letter-spacing: .025em; }
+  .npc-comparison .npc-detail-identity { flex-direction: column; align-items: flex-start; gap: 7px; }
+  .npc-detail-identity h3 { font-size: 13px; margin-top: 5px; }
+  .npc-comparison .equipment-rarity-badge { font-size: 10px; }
+  .npc-description { margin-top: 9px; font-size: 12px; line-height: 1.55; }
+  .npc-stat-changes { grid-template-columns: minmax(0, 1fr); padding: 9px; gap: 6px; margin-top: 10px; }
+  .npc-set-items { gap: 8px 10px; }
+  .npc-set-items > div { gap: 5px; align-items: flex-start; }
+  .npc-set-items > div > span:last-child { font-size: 11px; }
+  .npc-service-footer { gap: 8px; min-height: 72px; padding-block: 10px; }
+  .npc-purchase { min-width: 135px; padding: 9px 12px; gap: 10px; font-size: 13px; }
+  .npc-transaction-status { font-size: 11px; }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .game-dialog.npc-service-dialog { height: calc(100dvh - 16px); }
+  .npc-service-dialog .dialog-heading { padding-block: 8px; }
+  .npc-service-dialog .dialog-heading .eyebrow, .npc-service-intro > p { display: none; }
+  .npc-service-dialog .dialog-content { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1.3fr); grid-template-rows: auto minmax(0, 1fr) auto; column-gap: 14px; }
+  .npc-service-intro { grid-column: 1; grid-row: 1; padding: 5px 0 9px; }
+  .npc-wallet { flex-direction: row; align-items: center; gap: 9px; }
+  .npc-selection-area { grid-column: 1; grid-row: 2; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+  .npc-detail-scroll { grid-column: 2; grid-row: 1 / 3; }
+  .npc-service-footer { grid-column: 1 / -1; min-height: 60px; padding-block: 8px; }
+  .npc-equipment-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .npc-offer-choice { display: flex; flex-direction: column; padding: 7px 4px; text-align: center; }
+  .npc-choice-copy strong { font-size: 11px; }
+  .npc-rarities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .npc-choice { transition: none; } }
