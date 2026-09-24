@@ -8,6 +8,7 @@
 .season-boss-track { height: 2px; background: #c5d3b11a; box-shadow: 0 1px 1px #03100b66; overflow: hidden; }
 .season-boss-track > span { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, var(--season-boss-color)); opacity: .68; transform: scaleX(var(--season-boss-remaining)); transform-origin: left; transition: transform 80ms linear; }
 .season-boss-timer[data-urgent="true"] { opacity: .95; }
+.season-boss-timer[data-awaiting-victory="true"] .season-boss-countdown > span:first-of-type { color: var(--season-boss-color); }
 .season-boss-timer[data-completed="true"] { --season-boss-color: #d9c994 !important; }
 /* Float the timer over the scenery; only HUD anchors reserve its slim top row. */
 .game[data-season-bosses="true"] .battle-turn-queue { top: calc(max(8px, env(safe-area-inset-top)) + 28px); }

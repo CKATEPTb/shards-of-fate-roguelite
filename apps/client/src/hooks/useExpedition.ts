@@ -149,7 +149,8 @@ export function useExpedition(initial: ExpeditionState, onCheckpoint: (state: Ex
     const nextSeason = bosses && SEASON_BOSS_ORDER.find(season => !bosses.spawned.some(spawn => spawn.season === season));
     if (!canControl || state.combat || defeated || state.failed || state.completed
       || state.world.currentChunkId !== request.chunkId || state.world.transitions !== request.transitions
-      || nextSeason !== request.season || !state.world.chunk.pois.some(poi => poi.id === request.poiId && poi.bossSeason === request.season)) cancelBossSummon();
+      || bosses?.nextAtTick === null || nextSeason !== request.season
+      || !state.world.chunk.pois.some(poi => poi.id === request.poiId && poi.bossSeason === request.season)) cancelBossSummon();
   }, [state, canControl, defeated, cancelBossSummon]);
 
   const confirmBossSummon = useCallback(() => {

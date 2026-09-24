@@ -19,17 +19,21 @@ export function SeasonBossMark({ season }: { season: Season }) {
 /** Simulation time is shared by the host and guests and pauses with the saved game. */
 export function SeasonBossTimer({ progress, tick, completed }: { progress: SeasonBossProgress; tick: number; completed: boolean }) {
   const nextSeason = SEASON_BOSS_ORDER.find(season => !progress.spawned.some(spawn => spawn.season === season));
-  const season = nextSeason ?? 'winter';
+  const currentBoss = progress.spawned.at(-1);
+  const awaitingVictory = !completed && progress.nextAtTick === null && !!currentBoss;
+  const countingDown = !completed && !!nextSeason && progress.nextAtTick !== null;
+  const season = awaitingVictory ? currentBoss!.season : nextSeason ?? 'winter';
   const milliseconds = progress.nextAtTick === null ? 0 : Math.max(0, (progress.nextAtTick - tick) * MOVEMENT_TICK_MS);
   const seconds = Math.ceil(milliseconds / 1000);
   const time = `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
-  const label = completed ? 'Четыре сезона пройдены' : nextSeason ? `Босс ${bossSeasonNames[season]}` : 'Боссы призваны';
-  return <section className="season-boss-timer" role="timer" aria-live="off" aria-label={`${label}${nextSeason && !completed ? ` через ${time}` : ''}`}
-    data-completed={completed} data-urgent={!completed && !!nextSeason && seconds <= 60}
+  const label = completed ? 'Четыре сезона пройдены' : awaitingVictory ? `Победите босса ${bossSeasonNames[season]}`
+    : nextSeason ? `Босс ${bossSeasonNames[season]}` : 'Боссы призваны';
+  return <section className="season-boss-timer" role={countingDown ? 'timer' : 'status'} aria-live={countingDown ? 'off' : 'polite'} aria-label={`${label}${countingDown ? ` через ${time}` : ''}`}
+    data-completed={completed} data-awaiting-victory={awaitingVictory} data-urgent={countingDown && seconds <= 60}
     style={{ '--season-boss-color': seasonColors[season], '--season-boss-remaining': completed ? 1 : Math.min(1, milliseconds / SEASON_BOSS_INTERVAL_MS) } as CSSProperties}>
-    <div className="season-boss-countdown"><SeasonBossMark season={season} /><span>{label}</span>{nextSeason && !completed && <time>{time}</time>}
+    <div className="season-boss-countdown"><SeasonBossMark season={season} /><span>{label}</span>{countingDown && <time>{time}</time>}
       <span className="season-boss-stages" aria-label={`Призвано ${progress.spawned.length} из 4`}>{SEASON_BOSS_ORDER.map(stage => <i key={stage} data-spawned={progress.spawned.some(spawn => spawn.season === stage)} />)}</span>
     </div>
-    <div className="season-boss-track" aria-hidden="true"><span /></div>
+    {(countingDown || completed) && <div className="season-boss-track" aria-hidden="true"><span /></div>}
   </section>;
 }

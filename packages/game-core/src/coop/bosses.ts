@@ -12,6 +12,11 @@ import { withinCoopBattleReach } from './battle-reach';
 
 export const SEASON_BOSS_INTERVAL_TICKS = SEASON_BOSS_INTERVAL_MS / MOVEMENT_TICK_MS;
 
+export function seasonBossPool(content: GameContent, season: Season) {
+  return content.enemies.filter(enemy => enemy.tags.includes('BOSS') && enemy.tags.includes(`SEASON_${season.toUpperCase()}`))
+    .sort((a, b) => compareCoopIds(a.id, b.id));
+}
+
 export function initialSeasonBosses(tick: number, content: GameContent): SeasonBossProgress | undefined {
   return SEASON_BOSS_ORDER.every(season => content.enemies.some(enemy => enemy.tags.includes('BOSS') && enemy.tags.includes(`SEASON_${season.toUpperCase()}`)))
     ? { nextAtTick: tick + SEASON_BOSS_INTERVAL_TICKS, spawned: [] } : undefined;
@@ -47,7 +52,10 @@ function spawnPosition(state: CoopState, chunk: WorldChunk, actor: CoopActor): G
 /** One event contains the seed-derived selection, schedule change and initial local contact. */
 export function summonSeasonBoss(state: CoopState, content: GameContent, requested?: { actorId: string; season: Season; poiId: string }): CoopState {
   const bosses = state.bosses;
-  if (!bosses || bosses.nextAtTick === null || bosses.spawned.length >= SEASON_BOSS_ORDER.length) throw new Error('Все сезонные боссы уже призваны.');
+  if (!bosses || bosses.spawned.length >= SEASON_BOSS_ORDER.length) throw new Error('Все сезонные боссы уже призваны.');
+  if (bosses.nextAtTick === null || bosses.spawned.some(boss => !state.killedEnemyIds.includes(boss.mobId))) {
+    throw new Error('Сначала победите уже призванного босса.');
+  }
   const season = SEASON_BOSS_ORDER[bosses.spawned.length];
   if (requested && requested.season !== season) throw new Error('Сначала призовите босса предыдущего сезона.');
   if (!requested && state.tick < bosses.nextAtTick) throw new Error('Время призыва ещё не наступило.');
@@ -58,8 +66,7 @@ export function summonSeasonBoss(state: CoopState, content: GameContent, request
   const rng = createEntityRng(state.seed, `season-summon:${season}`, 0);
   const actor = requested ? targets.find(hero => hero.id === requested.actorId) : targets[drawDie(targets.length, rng, 'EVENT') - 1];
   if (!actor) throw new Error('Призывающий герой недоступен.');
-  const pool = content.enemies.filter(enemy => enemy.tags.includes('BOSS') && enemy.tags.includes(`SEASON_${season.toUpperCase()}`))
-    .sort((a, b) => compareCoopIds(a.id, b.id));
+  const pool = seasonBossPool(content, season);
   if (!pool.length) throw new Error('Босс этого сезона не найден.');
   // Boss choice is the same for timer and altar; target selection has its own die.
   const bossRng = createEntityRng(state.seed, `season-boss:${season}`, 0);
@@ -71,7 +78,7 @@ export function summonSeasonBoss(state: CoopState, content: GameContent, request
   const spawned = [...bosses.spawned, { season, enemyId: enemy.id, mobId, chunkId: actor.chunkId, actorId: actor.id,
     summonedAtTick: state.tick, trigger: requested ? 'altar' as const : 'timer' as const }];
   state = { ...state, diceIndex: state.diceIndex + rng.diceIndex + bossRng.diceIndex,
-    bosses: { spawned, nextAtTick: spawned.length === SEASON_BOSS_ORDER.length ? null : state.tick + SEASON_BOSS_INTERVAL_TICKS },
+    bosses: { spawned, nextAtTick: null },
     interactedStructureIds: requested ? [...new Set([...state.interactedStructureIds, requested.poiId])] : state.interactedStructureIds,
     groups: { ...state.groups, [actor.chunkId]: [...state.groups[actor.chunkId], {
       id: mobId, category: 'miniboss', chases: true, home: position, mode: 'chase', targetActorId: actor.id, decision: 0, pauseMs: 0,
@@ -99,6 +106,14 @@ export function engageSeasonBosses(state: CoopState, content: GameContent, event
     events.push(event);
   }
   return state;
+}
+
+/** Battle-end is replayed at the same game tick by the host and every guest. */
+export function startNextSeasonBossCountdown(state: CoopState): CoopState {
+  const bosses = state.bosses;
+  if (!bosses || bosses.nextAtTick !== null || !bosses.spawned.length || bosses.spawned.length >= SEASON_BOSS_ORDER.length
+    || bosses.spawned.some(boss => !state.killedEnemyIds.includes(boss.mobId))) return state;
+  return { ...state, bosses: { ...bosses, nextAtTick: state.tick + SEASON_BOSS_INTERVAL_TICKS } };
 }
 
 export function seasonBossesDefeated(state: CoopState): boolean {

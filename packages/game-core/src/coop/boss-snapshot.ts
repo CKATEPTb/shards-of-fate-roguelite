@@ -44,9 +44,15 @@ export function restoreSeasonBosses(value: unknown, state: BossRestoreState, con
     same(data.nextAtTick, null, 'coop.bosses.nextAtTick');
     return { nextAtTick: null, spawned };
   }
-  const nextAtTick = integer(data.nextAtTick, 'coop.bosses.nextAtTick', INTERVAL_TICKS);
   const last = spawned.at(-1);
-  if (last) same(nextAtTick, last.summonedAtTick + INTERVAL_TICKS, 'coop.bosses.nextAtTick');
-  else if (nextAtTick > state.tick + INTERVAL_TICKS) throw new Error('Invalid initial seasonal boss countdown');
+  const awaitingVictory = spawned.some(boss => !state.killedEnemyIds.includes(boss.mobId));
+  if (awaitingVictory && data.nextAtTick === null) return { nextAtTick: null, spawned };
+  const nextAtTick = integer(data.nextAtTick, 'coop.bosses.nextAtTick',
+    (last?.summonedAtTick ?? 0) + INTERVAL_TICKS, state.tick + INTERVAL_TICKS);
+  // Older saves counted from the summon. A living boss now suspends that schedule;
+  // defeating the outstanding boss(es) will start a fresh full interval.
+  if (awaitingVictory) return { nextAtTick: null, spawned };
+  // The deadline itself preserves the victory-based countdown without storing a
+  // separate defeat timestamp or resetting it on reconnect.
   return { nextAtTick, spawned };
 }

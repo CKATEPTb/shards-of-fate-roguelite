@@ -24,7 +24,8 @@ export function readBattleInsets(element: Element | null | undefined): Pick<Batt
 interface FormationBounds { left: number; top: number; width: number; height: number }
 
 /** Fit the formation itself, leaving the landscape visible behind every UI layer. */
-function formation(total: number, bounds: FormationBounds, maximumScale: number, footer: number, singleRow = false): BattlePlacement[] {
+function formation(total: number, bounds: FormationBounds, maximumScale: number, footer: number, singleRow = false,
+  front?: 'left' | 'right'): BattlePlacement[] {
   let columns = total;
   let fittedScale = -Infinity;
   const firstColumn = singleRow ? total : 1;
@@ -37,7 +38,10 @@ function formation(total: number, bounds: FormationBounds, maximumScale: number,
   }
   const rows = Math.ceil(total / columns);
   const scale = Math.max(.4, fittedScale);
-  const spacing = bounds.width / columns;
+  // Pack desktop ranks towards the opposing team instead of filling an entire flank.
+  const spacing = front ? Math.min(bounds.width / columns, scale * 40 + 32) : bounds.width / columns;
+  const center = bounds.left + (front === 'right' ? bounds.width - spacing * columns / 2
+    : front === 'left' ? spacing * columns / 2 : bounds.width / 2);
   const bodyHeight = Math.max(48, scale * 40);
   const occupiedHeight = rows * (bodyHeight + footer);
   const start = bounds.top + Math.max(0, (bounds.height - occupiedHeight) / 2) + bodyHeight;
@@ -47,7 +51,7 @@ function formation(total: number, bounds: FormationBounds, maximumScale: number,
     const row = Math.floor(index / columns);
     const count = Math.min(columns, total - row * columns);
     return {
-      x: bounds.left + bounds.width / 2 + (index % columns - (count - 1) / 2) * spacing,
+      x: center + (index % columns - (count - 1) / 2) * spacing,
       y: Math.min(end, start + row * rowStride), scale,
       labelWidth: Math.max(28, Math.min(150, spacing - 8)),
       fontSize: spacing < 76 ? 9 : spacing < 105 ? 10 : 12,
@@ -77,6 +81,17 @@ export function battleLayout(team: Team, total: number, stage?: BattleStage): Ba
       return formation(total, bounds, team === 'heroes' ? 2.85 : 2.5, footer, team === 'heroes');
     }
     const margin = Math.max(18, Math.min(64, width * .035));
+    if (width >= 900 && !short) {
+      // Frame both formations together on wide displays. Keep the canvas full-screen
+      // and share these larger placements with DOM targets, auras and projectile anchors.
+      const fieldWidth = Math.min(width - margin * 2, Math.max(880, Math.min(1200, fieldHeight * 2.2)));
+      const left = (width - fieldWidth) / 2;
+      const gap = Math.min(76, fieldWidth * .07);
+      const flank = (fieldWidth - gap) / 2;
+      const bounds = { left: team === 'heroes' ? left : left + flank + gap, top, width: flank, height: fieldHeight };
+      return formation(total, bounds, team === 'heroes' ? 5 : 4.6, footer, false,
+        team === 'heroes' ? 'right' : 'left');
+    }
     const bounds = team === 'heroes'
       ? { left: margin, top, width: width * .38 - margin, height: fieldHeight }
       : { left: width * .46, top, width: width * .54 - margin, height: fieldHeight };

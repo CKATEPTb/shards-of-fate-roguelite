@@ -21,6 +21,7 @@ export function planPoiApproach(state: ExpeditionState, actorId: string, poiId: 
     const bosses = state.bosses ?? state.cooperative?.bosses;
     const next = bosses && SEASON_BOSS_ORDER.find(season => !bosses.spawned.some(spawn => spawn.season === season));
     if (!poi.bossSeason || !next) return { type: 'unavailable', reason: 'Все сезонные боссы уже призваны.' };
+    if (bosses?.nextAtTick === null) return { type: 'unavailable', reason: 'Сначала победите уже призванного сезонного босса.' };
     if (poi.bossSeason !== next) return { type: 'unavailable', reason: bosses?.spawned.some(spawn => spawn.season === poi.bossSeason)
       ? 'Босс этого сезона уже призван.' : 'Сначала призовите босса предыдущего сезона.' };
   }
@@ -43,6 +44,7 @@ export function poiApproachReadiness(approach: PoiApproach, state: ExpeditionSta
     || state.world.currentChunkId !== approach.chunkId || state.world.transitions !== approach.transitions) return 'cancel';
   const poi = state.world.chunk.pois.find(candidate => candidate.id === approach.poiId);
   if (!poi || !samePosition(poi.position, approach.position)) return 'cancel';
+  if (poi.kind === 'altar' && (state.bosses ?? state.cooperative?.bosses)?.nextAtTick === null) return 'cancel';
   const destination = actor.path.at(-1);
   if (destination) return samePosition(destination, approach.position) ? 'wait' : 'cancel';
   if (!samePosition(actor.position, approach.position)) return 'cancel';
@@ -52,5 +54,6 @@ export function poiApproachReadiness(approach: PoiApproach, state: ExpeditionSta
   if (!authoritativeActor || authoritativeActor.chunkId !== approach.chunkId) return 'wait';
   if (confirmed.failed || confirmed.completed || getCoopBattle(confirmed, actorId)
     || authoritativeActor.body && !isBodyAlive(authoritativeActor.body)) return 'cancel';
+  if (poi.kind === 'altar' && confirmed.bosses?.nextAtTick === null) return 'cancel';
   return !authoritativeActor.path.length && samePosition(authoritativeActor.position, approach.position) ? 'ready' : 'wait';
 }

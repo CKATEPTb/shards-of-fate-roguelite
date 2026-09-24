@@ -14,7 +14,7 @@ import { compareCoopIds, coopChunk } from './world';
 import { advanceCoopDice, coopBattleRng, coopDiceChanges } from './entity-dice';
 import { retreatPosition } from '../expedition/retreat';
 import { MOVEMENT_TICK_MS } from '../world/movement-speed';
-import { seasonBossesDefeated } from './bosses';
+import { seasonBossesDefeated, startNextSeasonBossCountdown } from './bosses';
 
 export const COOP_COMBAT_TURN_MS = COMBAT_TURN_MS;
 
@@ -261,6 +261,7 @@ export function finishCoopBattle(state: CoopState, battleId: string, content: Ga
     .filter(group => group.members.length);
   let next: CoopState = { ...state, actors, battles: state.battles.filter(candidate => candidate.id !== battleId),
     killedEnemyIds: [...new Set([...state.killedEnemyIds, ...killed])], groups: { ...state.groups, [battle.chunkId]: groups } };
+  next = startNextSeasonBossCountdown(next);
   if (battle.combat.status === 'victory') {
     const quality = state.groups[battle.chunkId].some(group => group.category === 'miniboss' && group.members.some(mob => battle.mobIds.includes(mob.id))) ? 'miniboss'
       : state.groups[battle.chunkId].some(group => group.category === 'epic' && group.members.some(mob => battle.mobIds.includes(mob.id))) ? 'epic' : 'normal';
